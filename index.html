@@ -30,6 +30,8 @@
           <li><a href="#home">Home</a></li>
           <li><a href="#historie">Historie</a></li>
           <li><a href="#hardware">Hardware</a></li>
+          <li><a href="#funkce">Funkce</a></li>
+          <li><a href="#infra">Infrastruktura</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#dashboard">Dashboard</a></li>
           <li><a href="#zarizeni">Zařízení</a></li>
@@ -227,19 +229,26 @@
         <div class="hw-evolution">
           <article class="hw-evo-card hw-evo-old">
             <div class="hw-evo-head">
-              <span class="hw-evo-badge">2019 → 2024</span>
-              <h3>Homey Pro (původní)</h3>
+              <span class="hw-evo-badge">Legacy · 2016—2019</span>
+              <h3>Homey Pro (Early 2019)</h3>
             </div>
             <ul class="hw-evo-specs">
-              <li>Single-core, méně RAM</li>
-              <li>Flow-based runtime</li>
-              <li>HomeyScripty omezené</li>
+              <li>Single-core procesor, omezený výkon</li>
+              <li>Z-Wave + Zigbee + 433 MHz + Wi-Fi + IR</li>
+              <li>Flow-based runtime, omezená HomeyScript podpora</li>
+              <li>Výrobcem podporováno do EOL</li>
             </ul>
             <p class="hw-evo-issue">
               <strong>Proč přestal stačit:</strong> S rostoucím počtem flows a
-              prvními HomeyScripty hub začal mít problémy s výkonem.
-              Paralelní skripty padaly na SIGABRT, runtime nestíhal real-time
-              eventy, větší automatizace blokovaly UI.
+              prvními HomeyScripty hub začal mít problémy s výkonem. Paralelní
+              skripty padaly na SIGABRT, runtime nestíhal real-time eventy,
+              větší automatizace blokovaly UI. Pro jakýkoli script-first přístup
+              prostě nebyl dimenzovaný.
+            </p>
+            <p class="hw-evo-link">
+              <a href="https://homey.app/en-us/wiki/homey-pro-2016-2019-changelog/" target="_blank" rel="noopener">
+                Oficiální changelog (2016—2019) →
+              </a>
             </p>
           </article>
 
@@ -247,20 +256,28 @@
 
           <article class="hw-evo-card hw-evo-new">
             <div class="hw-evo-head">
-              <span class="hw-evo-badge hw-evo-badge-current">Live · 2026</span>
-              <h3>Homey Pro 2026</h3>
+              <span class="hw-evo-badge hw-evo-badge-current">Live · současný</span>
+              <h3>Homey Pro (Early 2023)</h3>
             </div>
             <ul class="hw-evo-specs">
-              <li>Quad-core ARM @ 1,5 GHz</li>
-              <li>4 GB RAM</li>
-              <li>110+ skriptů paralelně bez SIGABRT</li>
+              <li><strong>CPU</strong>: 1,5 GHz Quad-core ARMv8</li>
+              <li><strong>RAM</strong>: 4 GB LPDDR4</li>
+              <li><strong>Storage</strong>: 8 GB eMMC Flash</li>
+              <li><strong>Wireless</strong>: Wi-Fi 2.4/5 GHz, BT 5.0, Matter v1.3, Thread (Border Router), Zigbee 3.0, Z-Wave 700, 433 MHz, IR</li>
               <li>Plný HomeyScript runtime + REST API</li>
+              <li>Updates garantovány <strong>do června 2031</strong></li>
             </ul>
             <p class="hw-evo-issue">
-              <strong>Co to umožnilo:</strong> Centralizovaná logika v JavaScriptu,
-              request-first pipeline, daily Gemini analýza logů, real-time
-              dashboardy přes REST API. Bez tohoto skoku by současný systém
-              nebyl možný.
+              <strong>Co to umožnilo:</strong> 110+ skriptů paralelně bez SIGABRT,
+              centralizovaná logika v JavaScriptu, request-first pipeline,
+              daily Gemini analýza logů, real-time dashboardy přes REST API.
+              Local-first processing — cloud jen jako záloha. Bez tohoto skoku
+              by současný systém nebyl možný.
+            </p>
+            <p class="hw-evo-link">
+              <a href="https://homey.app/en-us/homey-pro/" target="_blank" rel="noopener">
+                Oficiální specs Homey Pro →
+              </a>
             </p>
           </article>
         </div>
@@ -325,6 +342,664 @@
           <div class="hw-key-item">
             <strong>Raspberry Pi (WaveShare 10.1")</strong> — kiosk dashboard 1024×600 + dashboard proxy server na <code>localhost:8080</code>.
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNKCE -->
+    <section id="funkce" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">03 — Funkce</p>
+          <h2 class="section-title">Co systém reálně dělá</h2>
+          <p class="section-lead">
+            Konkrétní automatizace na úrovni denního provozu. Topení, ranní rutina,
+            multi-signal příchod/odchod, ovládání kostkou Aqara Cube. Každá feature
+            má pain point který řeší a multi-signal logiku, ne jednoduchý IF.
+          </p>
+        </header>
+
+        <!-- TOPENÍ -->
+        <article class="feature feature-heating">
+          <div class="feature-text">
+            <span class="feature-badge">🔥 Topení</span>
+            <h3>Elektrický kotel + 4 termostatické hlavice</h3>
+            <p>
+              Topí elektrický kotel <strong>Protherm RAY 9 KE</strong> (9 kW,
+              3-fázový). Místo původního termostatu kotle je
+              <strong>Fibaro FGS-214</strong> (Z-Wave relay), který spíná
+              cívku stykače <strong>ABB ESB 24-40</strong> (230V cívka,
+              24A/3~400V). Stykač pak spíná hlavní fáze kotle. FGS-214 si tahá
+              jen ~5 W, ne plný proud kotle — bezpečné a tichý spínač.
+            </p>
+            <p>
+              V každé místnosti se reguluje radiátor přes
+              <strong>4× Fibaro Radiator Thermostat FGT-001</strong>
+              (jídelna, ložnice, koupelna, toaleta). Každá zóna má vlastní
+              týdenní schedule a vlastní target teplotu.
+            </p>
+            <h4>3 režimy</h4>
+            <ul class="feature-list">
+              <li><strong>AUTO</strong> — týdenní schedule + AI vrstvy modifikují target v reálném čase (preWakeBoost, weatherAdjust, occupancyBonus).</li>
+              <li><strong>MANUAL</strong> — schedule 1:1, žádné AI. Pro hosta nebo testing.</li>
+              <li><strong>OFF</strong> — všechny zóny anti-freeze 7 °C, kotel zapne jen když opravdu hrozí mráz.</li>
+            </ul>
+            <h4>State-aware hystereze</h4>
+            <p>
+              Kotel OFF → zapnout až když <em>current &lt; target − 0.5 °C</em>.
+              Kotel ON → vypnout až když <em>current ≥ target + 0.1 °C</em>.
+              Asymetrická hystereze (cold 0.5, warm 0.1) eliminuje cycling
+              a drží stabilní teplotu v pásu cca 0,6 °C kolem cíle.
+            </p>
+            <h4>kWh tracking</h4>
+            <p>
+              <code>runtime_today_s</code> += 120 s každý cron tick když boiler ON.
+              <code>kWh = (runtime / 3600) × 9 kW</code>. Přesnost ~95 % (Protherm
+              moduluje stage 3/6/9 kW podle teploty vody).
+              Real měření v plánu přes Shelly 3EM CT clamp.
+            </p>
+          </div>
+          <div class="feature-visual">
+            <svg viewBox="0 0 400 280" class="diagram" aria-label="Topení: kotel + stykač + FGS-214 + 4 TRV">
+              <defs>
+                <linearGradient id="boilerGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ef4444" stop-opacity="0.4" />
+                  <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.2" />
+                </linearGradient>
+              </defs>
+              <rect x="10" y="50" width="80" height="180" rx="8" fill="url(#boilerGrad)" stroke="#ef4444" stroke-width="2"/>
+              <text x="50" y="80" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="700">PROTHERM</text>
+              <text x="50" y="95" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="700">RAY 9 KE</text>
+              <text x="50" y="155" text-anchor="middle" fill="#fff" font-size="20" font-weight="800">9 kW</text>
+              <text x="50" y="180" text-anchor="middle" fill="#aab4c2" font-size="10">3-fáze</text>
+
+              <line x1="90" y1="140" x2="130" y2="140" stroke="#00e5ff" stroke-width="2"/>
+              <rect x="130" y="115" width="80" height="50" rx="6" fill="#1c2330" stroke="#00e5ff" stroke-width="1.5"/>
+              <text x="170" y="135" text-anchor="middle" fill="#00e5ff" font-size="11" font-weight="600">Stykač ABB</text>
+              <text x="170" y="155" text-anchor="middle" fill="#aab4c2" font-size="10">ESB 24-40</text>
+
+              <line x1="210" y1="140" x2="250" y2="140" stroke="#00e5ff" stroke-width="2"/>
+              <rect x="250" y="115" width="80" height="50" rx="6" fill="#1c2330" stroke="#7c3aed" stroke-width="1.5"/>
+              <text x="290" y="135" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="600">Fibaro</text>
+              <text x="290" y="153" text-anchor="middle" fill="#aab4c2" font-size="10">FGS-214</text>
+
+              <line x1="330" y1="140" x2="370" y2="140" stroke="#22c55e" stroke-width="2" stroke-dasharray="3,3"/>
+              <text x="370" y="135" text-anchor="end" fill="#22c55e" font-size="9">Z-Wave</text>
+
+              <g transform="translate(40,10)">
+                <rect x="0" y="0" width="50" height="28" rx="4" fill="#131820" stroke="#fbbf24" stroke-width="1"/>
+                <text x="25" y="18" text-anchor="middle" fill="#fbbf24" font-size="9">TRV jídelna</text>
+              </g>
+              <g transform="translate(110,10)">
+                <rect x="0" y="0" width="50" height="28" rx="4" fill="#131820" stroke="#fbbf24" stroke-width="1"/>
+                <text x="25" y="18" text-anchor="middle" fill="#fbbf24" font-size="9">TRV ložnice</text>
+              </g>
+              <g transform="translate(180,10)">
+                <rect x="0" y="0" width="50" height="28" rx="4" fill="#131820" stroke="#fbbf24" stroke-width="1"/>
+                <text x="25" y="18" text-anchor="middle" fill="#fbbf24" font-size="9">TRV koup.</text>
+              </g>
+              <g transform="translate(250,10)">
+                <rect x="0" y="0" width="50" height="28" rx="4" fill="#131820" stroke="#fbbf24" stroke-width="1"/>
+                <text x="25" y="18" text-anchor="middle" fill="#fbbf24" font-size="9">TRV toaleta</text>
+              </g>
+
+              <text x="200" y="260" text-anchor="middle" fill="#6b7686" font-size="10">FGS-214 spíná cívku stykače (~5W) → stykač spíná kotel</text>
+            </svg>
+            <p class="diagram-cap">Schéma: FGS-214 spíná cívku stykače, ne kotel přímo. 4× TRV regulují radiátory v jednotlivých zónách.</p>
+          </div>
+        </article>
+
+        <!-- RANNÍ RUTINA -->
+        <article class="feature">
+          <div class="feature-text">
+            <span class="feature-badge">🌅 Ranní rutina</span>
+            <h3>3:15 budík vs. 5:15 víkend</h3>
+            <p>
+              Pracovní dny vstávám v <strong>3:15</strong>, víkend
+              v <strong>5:15</strong>. Tento extrémní rytmus formoval celou
+              ranní architekturu — systém startuje v čas, kdy většina lidí
+              ještě tvrdě spí.
+            </p>
+            <p>
+              Homey má event <code>any_alarm_is_due</code>, který přijde
+              <strong>15 minut před</strong> reálným budíkem (3:00 nebo 5:00).
+              To je okamžik, kdy se rozjede skript <code>sh_morning_brain_v1</code>:
+            </p>
+            <ol class="feature-timeline">
+              <li><span class="t-time">−15 min</span><span class="t-act">pre-alarm event → spustí ranní brain</span></li>
+              <li><span class="t-time">−14 min</span><span class="t-act">rádio v kuchyni se zapne (Cast Mini)</span></li>
+              <li><span class="t-time">−10 min</span><span class="t-act">koupelna boost na 23 °C, sunrise simulace ložnice</span></li>
+              <li><span class="t-time">0 min</span><span class="t-act">budík zvoní, světla už nasvícená</span></li>
+              <li><span class="t-time">+motion</span><span class="t-act">motion v kuchyni → Gemini briefing přes TTS (počasí, kalendář, kotel včera)</span></li>
+              <li><span class="t-time">+rutina</span><span class="t-act">přepnout heating preset na home, shrnutí dne na dashboard</span></li>
+            </ol>
+            <p>
+              Window guard 3:00–10:00 zabraňuje aby skript reagoval na náhodný
+              pohyb v noci. <strong>Multi-signal wake confirmation</strong>:
+              motion ložnice + motion kuchyně + mmWave presence + čas v okně =
+              confidence score. Teprve při dostatečné konfidenci prohlásí
+              „uživatel vstal".
+            </p>
+          </div>
+          <div class="feature-visual">
+            <div class="day-clock">
+              <svg viewBox="0 0 200 200" class="day-clock-svg" aria-hidden="true">
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#1c2330" stroke-width="20"/>
+                <circle cx="100" cy="100" r="90" fill="none" stroke="url(#dayGrad)" stroke-width="20" stroke-dasharray="565" stroke-dashoffset="282" transform="rotate(-90 100 100)"/>
+                <defs>
+                  <linearGradient id="dayGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#fbbf24"/>
+                    <stop offset="100%" stop-color="#00e5ff"/>
+                  </linearGradient>
+                </defs>
+                <text x="100" y="92" text-anchor="middle" fill="#fff" font-size="28" font-weight="800">3:15</text>
+                <text x="100" y="115" text-anchor="middle" fill="#aab4c2" font-size="11">PO–PÁ budík</text>
+                <text x="100" y="135" text-anchor="middle" fill="#fbbf24" font-size="11">5:15 SO–NE</text>
+              </svg>
+            </div>
+            <p class="diagram-cap">Brain spouští sekvenci 15 min před budíkem. Multi-signal confirmation eliminuje falešné triggery.</p>
+          </div>
+        </article>
+
+        <!-- PŘÍCHOD / ODCHOD -->
+        <article class="feature feature-reverse">
+          <div class="feature-text">
+            <span class="feature-badge">🚶 Příchod / odchod</span>
+            <h3>Tlačítko vs. telefon vs. geofence</h3>
+            <p>
+              Otázka „je někdo doma?" se nikdy neodvozuje z jediného zdroje —
+              vždy <strong>multi-signal</strong>. Tady jsou tři nezávislé
+              cesty, jak systém pozná příchod a odchod:
+            </p>
+            <div class="signal-grid">
+              <div class="signal-card">
+                <span class="signal-num">1</span>
+                <h4>Odchodové tlačítko</h4>
+                <p>
+                  <strong>Aqara button u dveří.</strong> Explicitní signál
+                  „odcházím právě teď". Spustí <code>sh_presence_router_v1</code>
+                  → preset=away → topení 16 °C, kamery aktivní, nepotřebné spotřebiče
+                  off, dashboard přepne na „pryč" mód.
+                </p>
+                <p class="signal-pros">✅ Vždy jistý: „je to úmyslné"<br>⚠ Zapomenu zmáčknout</p>
+              </div>
+              <div class="signal-card">
+                <span class="signal-num">2</span>
+                <h4>Telefon v Homey appce</h4>
+                <p>
+                  Homey appka monitoruje BT/Wi-Fi přítomnost telefonu.
+                  Když telefon zmizí ze sítě déle než 5 minut, systém to
+                  vyhodnotí jako odchod (s timeoutem proti falešným disconnect).
+                </p>
+                <p class="signal-pros">✅ Auto, bez akce<br>⚠ Wi-Fi flap může simulovat odchod</p>
+              </div>
+              <div class="signal-card">
+                <span class="signal-num">3</span>
+                <h4>Telefon geofence</h4>
+                <p>
+                  GPS geofence kolem domu (~150 m). Když telefon překročí
+                  hranici, Homey appka pošle event. Funguje i v práci 200 km daleko —
+                  systém jasně ví „uživatel je daleko, ne na záchodě".
+                </p>
+                <p class="signal-pros">✅ Distance-aware<br>⚠ GPS šum v blízkosti hranice</p>
+              </div>
+            </div>
+            <p>
+              Multi-signal kombinace: pokud souhlasí <strong>2+ signály</strong>,
+              systém přepne preset. Když jeden signál říká „odešel", ale ostatní
+              ne, čeká na potvrzení. Žádné akce z jednoho signálu = žádné
+              falešné odchody.
+            </p>
+          </div>
+        </article>
+
+        <!-- AQARA CUBE -->
+        <article class="feature feature-cube">
+          <div class="feature-text">
+            <span class="feature-badge">🎲 Aqara Cube T1 Pro</span>
+            <h3>Šestistranná kostka jako fyzický kontroler</h3>
+            <p>
+              Malá Zigbee kostka (~5 × 5 × 5 cm) která má <strong>6 stran +
+              3 typy gestů</strong>. Leží na nočním stolku v ložnici a v kuchyni.
+              Každá akce je tichá, fyzická, intuitivní — bez vytahování telefonu.
+            </p>
+
+            <div class="cube-uses">
+              <div class="cube-use">
+                <h4>Ovládání scén — otočit na stranu</h4>
+                <p>
+                  Postavit kostku na konkrétní stranu = aktivovat scénu.
+                  6 stran = 6 scén:
+                </p>
+                <ul class="scene-list">
+                  <li><span class="scene-emoji">🟢</span> <strong>Relax</strong> — tlumené světlo + chillout rádio</li>
+                  <li><span class="scene-emoji">🔵</span> <strong>Práce</strong> — pracovna full bright + Pomodoro</li>
+                  <li><span class="scene-emoji">🟣</span> <strong>Audio</strong> — radio router prepuje na ložnici</li>
+                  <li><span class="scene-emoji">🟡</span> <strong>Kino</strong> — TV on, světla off, AV mode</li>
+                  <li><span class="scene-emoji">🟠</span> <strong>Romantika</strong> — warm white 20 % + soft jazz</li>
+                  <li><span class="scene-emoji">⚫</span> <strong>Spát</strong> — sleep brain → vše off, night temps</li>
+                </ul>
+              </div>
+
+              <div class="cube-use">
+                <h4>Hlasitost — rotovat</h4>
+                <p>
+                  Otáčení kostky kolem vertikální osy = změna hlasitosti
+                  aktuálního zdroje audio. <strong>Po směru hodinových ručiček = nahlas</strong>,
+                  proti směru = potichu. Step ~5 % per ~30° rotace.
+                </p>
+              </div>
+
+              <div class="cube-use">
+                <h4>Sleep tlačítko — strana „Spát"</h4>
+                <p>
+                  Specifická strana kostky = <strong>sleep mode</strong>. Spouští
+                  <code>sh_sleep_brain_v2</code>:
+                </p>
+                <ul class="feature-list">
+                  <li>všechna světla v open space pomalu fadeout (60s)</li>
+                  <li>audio pipeline → idle (přerušit rádio, žádné TTS)</li>
+                  <li>topení preset boost → home (cleanup user override)</li>
+                  <li>kamery aktivní v noci (motion-driven recording)</li>
+                  <li><code>sh_spim=yes</code> → SLEEP RESPECT pro celý systém</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="feature-visual">
+            <!-- Aqara Cube SVG illustration -->
+            <svg viewBox="0 0 280 280" class="cube-illust" aria-label="Aqara Cube T1 Pro — stylizovaná ilustrace">
+              <defs>
+                <linearGradient id="cubeFront" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f8f8f8"/>
+                  <stop offset="100%" stop-color="#d0d0d0"/>
+                </linearGradient>
+                <linearGradient id="cubeTop" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#e8e8e8"/>
+                </linearGradient>
+                <linearGradient id="cubeRight" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#c0c0c0"/>
+                  <stop offset="100%" stop-color="#909090"/>
+                </linearGradient>
+              </defs>
+              <!-- Cube top face -->
+              <polygon points="80,80 200,80 230,50 110,50" fill="url(#cubeTop)" stroke="#888" stroke-width="1"/>
+              <!-- Cube front face -->
+              <polygon points="80,80 200,80 200,200 80,200" fill="url(#cubeFront)" stroke="#888" stroke-width="1"/>
+              <!-- Cube right face -->
+              <polygon points="200,80 230,50 230,170 200,200" fill="url(#cubeRight)" stroke="#888" stroke-width="1"/>
+              <!-- Aqara dot pattern on front face -->
+              <g fill="#888" opacity="0.5">
+                <circle cx="105" cy="105" r="2"/><circle cx="125" cy="105" r="2"/><circle cx="145" cy="105" r="2"/><circle cx="165" cy="105" r="2"/><circle cx="185" cy="105" r="2"/>
+                <circle cx="105" cy="125" r="2"/><circle cx="125" cy="125" r="2"/><circle cx="145" cy="125" r="2"/><circle cx="165" cy="125" r="2"/><circle cx="185" cy="125" r="2"/>
+                <circle cx="105" cy="145" r="2"/><circle cx="125" cy="145" r="2"/><circle cx="145" cy="145" r="2"/><circle cx="165" cy="145" r="2"/><circle cx="185" cy="145" r="2"/>
+                <circle cx="105" cy="165" r="2"/><circle cx="125" cy="165" r="2"/><circle cx="145" cy="165" r="2"/><circle cx="165" cy="165" r="2"/><circle cx="185" cy="165" r="2"/>
+                <circle cx="105" cy="185" r="2"/><circle cx="125" cy="185" r="2"/><circle cx="145" cy="185" r="2"/><circle cx="165" cy="185" r="2"/><circle cx="185" cy="185" r="2"/>
+              </g>
+              <!-- Aqara logo dot on top -->
+              <circle cx="140" cy="65" r="3" fill="#22c55e" opacity="0.7"/>
+              <text x="155" y="69" fill="#444" font-size="9" font-weight="600">AQARA</text>
+
+              <!-- Rotation arrows -->
+              <path d="M 60 240 Q 90 230 120 245" stroke="#00e5ff" stroke-width="2" fill="none" marker-end="url(#arrowend)"/>
+              <path d="M 220 245 Q 190 235 160 245" stroke="#00e5ff" stroke-width="2" fill="none" marker-end="url(#arrowend)"/>
+              <defs>
+                <marker id="arrowend" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#00e5ff"/>
+                </marker>
+              </defs>
+              <text x="140" y="265" text-anchor="middle" fill="#aab4c2" font-size="11">otáčení = hlasitost</text>
+              <text x="140" y="35" text-anchor="middle" fill="#aab4c2" font-size="11">strana = scéna</text>
+            </svg>
+            <p class="diagram-cap">Stylizovaná ilustrace Aqara Cube T1 Pro. Skutečná kostka cca 5 × 5 × 5 cm, plast s tečkovou texturou.</p>
+          </div>
+        </article>
+
+        <!-- KOUPELNA PIPELINE -->
+        <article class="feature">
+          <div class="feature-text">
+            <span class="feature-badge">🚿 Koupelna</span>
+            <h3>Vstoupíš → svítí → hraje rádio</h3>
+            <p>
+              Klasický příklad multi-signal pipeline. Cílem je: <strong>vstoupit
+              ráno do koupelny a aniž bych se něčeho dotknul, mám světlo
+              a rádio</strong>. Bez pohybu žádné akce — žádný šum.
+            </p>
+            <ol class="feature-timeline">
+              <li><span class="t-time">trigger</span><span class="t-act">SNZB-03 motion v koupelně → event</span></li>
+              <li><span class="t-time">guard</span><span class="t-act">checki: režim doma? sleep mód? čas v okně?</span></li>
+              <li><span class="t-time">light</span><span class="t-act">light_request → router → setCapability(on, intensity dle denní doby)</span></li>
+              <li><span class="t-time">audio</span><span class="t-act">jen v ranním okně 3:00–10:00 → audio_request=radio_bathroom → speaker router → Cast Mini Koupelna</span></li>
+              <li><span class="t-time">no-op</span><span class="t-act">v noci žádné rádio (SLEEP RESPECT), jen tlumené světlo 5 %</span></li>
+              <li><span class="t-time">timeout</span><span class="t-act">žádný motion 5 min → light fade out, audio idle</span></li>
+            </ol>
+            <p>
+              Klíčová pointa: <strong>akce závisí na kontextu</strong>. Stejný
+              pohyb v koupelně vyvolá různé reakce podle:
+              denní doby (intensity světla 5–100 %), režimu (doma vs. pryč
+              = ignore), spánku (žádné rádio), boost preset topení (preheat
+              koupelny 23 °C před budíkem 15 min předem).
+            </p>
+          </div>
+          <div class="feature-visual">
+            <svg viewBox="0 0 320 240" class="diagram" aria-label="Koupelna pipeline: motion → guards → akce">
+              <rect x="10" y="100" width="60" height="50" rx="6" fill="#1c2330" stroke="#fbbf24" stroke-width="1.5"/>
+              <text x="40" y="120" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">Motion</text>
+              <text x="40" y="135" text-anchor="middle" fill="#aab4c2" font-size="9">SNZB-03</text>
+
+              <line x1="70" y1="125" x2="105" y2="125" stroke="#00e5ff" stroke-width="2"/>
+              <polygon points="100,120 110,125 100,130" fill="#00e5ff"/>
+
+              <rect x="110" y="95" width="80" height="60" rx="6" fill="#1c2330" stroke="#00e5ff" stroke-width="1.5"/>
+              <text x="150" y="113" text-anchor="middle" fill="#00e5ff" font-size="10" font-weight="600">Guards</text>
+              <text x="150" y="128" text-anchor="middle" fill="#aab4c2" font-size="8">režim · sleep</text>
+              <text x="150" y="142" text-anchor="middle" fill="#aab4c2" font-size="8">denní okno</text>
+
+              <line x1="190" y1="125" x2="225" y2="125" stroke="#00e5ff" stroke-width="2"/>
+              <polygon points="220,120 230,125 220,130" fill="#00e5ff"/>
+
+              <g>
+                <rect x="230" y="50" width="80" height="40" rx="6" fill="#1c2330" stroke="#fbbf24" stroke-width="1.5"/>
+                <text x="270" y="68" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">💡 Světlo</text>
+                <text x="270" y="82" text-anchor="middle" fill="#aab4c2" font-size="8">intensity by time</text>
+              </g>
+              <g>
+                <rect x="230" y="105" width="80" height="40" rx="6" fill="#1c2330" stroke="#7c3aed" stroke-width="1.5"/>
+                <text x="270" y="123" text-anchor="middle" fill="#7c3aed" font-size="10" font-weight="600">🔊 Rádio</text>
+                <text x="270" y="137" text-anchor="middle" fill="#aab4c2" font-size="8">jen 3:00–10:00</text>
+              </g>
+              <g>
+                <rect x="230" y="160" width="80" height="40" rx="6" fill="#1c2330" stroke="#ef4444" stroke-width="1.5"/>
+                <text x="270" y="178" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="600">🔥 Boost</text>
+                <text x="270" y="192" text-anchor="middle" fill="#aab4c2" font-size="8">preheat 23°C</text>
+              </g>
+
+              <text x="150" y="220" text-anchor="middle" fill="#6b7686" font-size="10">Stejný pohyb → různé akce podle kontextu</text>
+            </svg>
+            <p class="diagram-cap">Pipeline koupelny: jeden pohybový event projde guard checky a vygeneruje různé akce podle denní doby, režimu a spánku.</p>
+          </div>
+        </article>
+
+        <!-- LIGHT INTENSITY BY TIME -->
+        <article class="feature feature-reverse">
+          <div class="feature-text">
+            <span class="feature-badge">🌗 Adaptivní intenzita</span>
+            <h3>Světlo se přizpůsobuje denní době</h3>
+            <p>
+              Jeden ze základních principů: <strong>stejný motion event = různá
+              intenzita světla podle času</strong>. Brutální 100 % brightness
+              ve 3 ráno tě probudí jak ránu kladivem. Stejně tak 5 % v poledne
+              je k ničemu.
+            </p>
+            <p>
+              Mapping je v <code>sh_light_intensity_router_v1</code>:
+            </p>
+            <table class="intensity-table">
+              <thead>
+                <tr><th>Časové okno</th><th>Intensity</th><th>Color temp</th><th>Důvod</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>00:00 — 03:00</td><td>5 %</td><td>warm 2700 K</td><td>noční rozhled, nerušit spánek</td></tr>
+                <tr><td>03:00 — 06:00</td><td>30 → 60 %</td><td>warm → neutral</td><td>ranní rutina, fade-in jako východ slunce</td></tr>
+                <tr><td>06:00 — 09:00</td><td>80 %</td><td>cool 4000 K</td><td>aktivní ráno, rozcvičit mozek</td></tr>
+                <tr><td>09:00 — 17:00</td><td>100 %</td><td>cool 5000 K</td><td>denní práce, full focus</td></tr>
+                <tr><td>17:00 — 22:00</td><td>70 → 40 %</td><td>warm down</td><td>večerní fade k uvolnění</td></tr>
+                <tr><td>22:00 — 00:00</td><td>20 %</td><td>warm 2700 K</td><td>příprava na spánek</td></tr>
+              </tbody>
+            </table>
+            <p>
+              Bonusová vrstva: <strong>circadian shift</strong>. V zimě (kratší
+              dny) se přechody posouvají, v létě naopak — schedule není fixní,
+              čte aktuální slunce ze sunrise/sunset API.
+            </p>
+          </div>
+          <div class="feature-visual">
+            <svg viewBox="0 0 280 280" class="diagram" aria-label="Adaptivní intenzita světla během 24h">
+              <!-- 24h ring -->
+              <circle cx="140" cy="140" r="100" fill="none" stroke="#1c2330" stroke-width="32"/>
+              <!-- Segments by time -->
+              <circle cx="140" cy="140" r="100" fill="none" stroke="#1c2330" stroke-width="32" stroke-dasharray="78 550" transform="rotate(-90 140 140)"/>
+              <circle cx="140" cy="140" r="100" fill="none" stroke="#fbbf24" stroke-width="32" stroke-dasharray="78 550" stroke-dashoffset="-78" transform="rotate(-90 140 140)"/>
+              <circle cx="140" cy="140" r="100" fill="none" stroke="#00e5ff" stroke-width="32" stroke-dasharray="78 550" stroke-dashoffset="-156" transform="rotate(-90 140 140)"/>
+              <circle cx="140" cy="140" r="100" fill="none" stroke="#7c3aed" stroke-width="32" stroke-dasharray="210 550" stroke-dashoffset="-234" transform="rotate(-90 140 140)"/>
+              <circle cx="140" cy="140" r="100" fill="none" stroke="#fbbf24" stroke-width="32" stroke-dasharray="130 550" stroke-dashoffset="-444" transform="rotate(-90 140 140)"/>
+              <circle cx="140" cy="140" r="100" fill="none" stroke="#1c2330" stroke-width="32" stroke-dasharray="50 550" stroke-dashoffset="-574" transform="rotate(-90 140 140)"/>
+
+              <!-- Hour markers -->
+              <text x="140" y="32" text-anchor="middle" fill="#aab4c2" font-size="11" font-weight="600">00</text>
+              <text x="248" y="146" text-anchor="middle" fill="#aab4c2" font-size="11" font-weight="600">06</text>
+              <text x="140" y="260" text-anchor="middle" fill="#aab4c2" font-size="11" font-weight="600">12</text>
+              <text x="32" y="146" text-anchor="middle" fill="#aab4c2" font-size="11" font-weight="600">18</text>
+
+              <!-- Center -->
+              <text x="140" y="135" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">24h</text>
+              <text x="140" y="155" text-anchor="middle" fill="#aab4c2" font-size="11">světelný cyklus</text>
+
+              <!-- Legend -->
+              <circle cx="20" cy="265" r="5" fill="#1c2330"/><text x="32" y="269" fill="#6b7686" font-size="9">noc 5%</text>
+              <circle cx="80" cy="265" r="5" fill="#fbbf24"/><text x="92" y="269" fill="#6b7686" font-size="9">ráno warm</text>
+              <circle cx="155" cy="265" r="5" fill="#00e5ff"/><text x="167" y="269" fill="#6b7686" font-size="9">aktiv cool</text>
+              <circle cx="220" cy="265" r="5" fill="#7c3aed"/><text x="232" y="269" fill="#6b7686" font-size="9">denní 100%</text>
+            </svg>
+            <p class="diagram-cap">24h cyklus intenzity. Smooth transitions, žádné skokové změny — circadian-aligned.</p>
+          </div>
+        </article>
+
+        <!-- VYSAVAČ GIUSEPPE -->
+        <article class="feature">
+          <div class="feature-text">
+            <span class="feature-badge">🤖 Giuseppe</span>
+            <h3>Vysavač jako autonomní agent</h3>
+            <p>
+              <strong>Xiaomi Viomi V8 robot vysavač</strong>, doma jménem
+              <strong>Giuseppe</strong> (každé zařízení má jméno, je to
+              přátelštější než „vysavač_01"). Wi-Fi, fixní IP, integrovaný
+              v Homey přes komunitní app.
+            </p>
+            <h4>Plán úklidu</h4>
+            <ul class="feature-list">
+              <li><strong>Schedule</strong>: <code>sh_vacuum_router_v1</code> spouští úklid v okně, kdy nikdo není doma (geofence + telefon + scheduler).</li>
+              <li><strong>Žádné rušení</strong>: pokud je v bytě motion (skutečný — ne falešný), úklid se odloží. Žádný robot vám neproletí kolem nohou.</li>
+              <li><strong>Sleep guard</strong>: nikdy se neuklízí v noci ani když svítí <code>sh_spim=yes</code>.</li>
+              <li><strong>Per-zone úklid</strong>: speciální flow „vyluxuj jen kuchyni" (po vaření, manuální trigger z dashboardu nebo z kostky).</li>
+            </ul>
+            <h4>Token security saga</h4>
+            <p>
+              Pairing Viomi v Homey vyžaduje <strong>cloud token z Mi Home</strong>.
+              Token je <em>session-only</em> — rotuje při každém Wi-Fi reconnect,
+              což znamená že po reset routeru / výměně Wi-Fi sítě se musí
+              znovu získat. 5-hodinová epická saga: factory reset → AP mód
+              (vlastní SSID <code>viomi-vacuum-v8</code>) → discover token →
+              configure_wifi → re-pair v Homey. Po té už running stable.
+            </p>
+            <h4>Diagnostika</h4>
+            <p>
+              Battery, mode, last_clean_time, error_code se logují každou hodinu
+              do EventLog. <code>sh_self_healing_v4</code> má vlastní detector:
+              pokud je Giuseppe stuck (battery se nemění + mode = error) →
+              alert. Reálný incident: zachycená nožička stoličky, robot
+              v dead-loop. Health detect to chytil dřív než já.
+            </p>
+          </div>
+          <div class="feature-visual">
+            <svg viewBox="0 0 280 280" class="diagram" aria-label="Robot vysavač Giuseppe">
+              <defs>
+                <radialGradient id="vacuumBody" cx="50%" cy="40%" r="60%">
+                  <stop offset="0%" stop-color="#e8e8e8"/>
+                  <stop offset="100%" stop-color="#999999"/>
+                </radialGradient>
+              </defs>
+              <!-- Robot body (circle, top view) -->
+              <circle cx="140" cy="140" r="90" fill="url(#vacuumBody)" stroke="#666" stroke-width="2"/>
+              <!-- Lidar dome -->
+              <circle cx="140" cy="100" r="24" fill="#1c2330" stroke="#444" stroke-width="2"/>
+              <circle cx="140" cy="100" r="16" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+              <!-- Lidar beams -->
+              <line x1="140" y1="100" x2="140" y2="40" stroke="#00e5ff" stroke-width="1" opacity="0.4" stroke-dasharray="2,3"/>
+              <line x1="140" y1="100" x2="80" y2="60" stroke="#00e5ff" stroke-width="1" opacity="0.4" stroke-dasharray="2,3"/>
+              <line x1="140" y1="100" x2="200" y2="60" stroke="#00e5ff" stroke-width="1" opacity="0.4" stroke-dasharray="2,3"/>
+
+              <!-- Brushes -->
+              <circle cx="100" cy="180" r="12" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+              <circle cx="180" cy="180" r="12" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+
+              <!-- Buttons -->
+              <circle cx="140" cy="155" r="6" fill="#22c55e"/>
+              <text x="140" y="159" text-anchor="middle" fill="#000" font-size="8" font-weight="700">⏵</text>
+
+              <!-- Name tag -->
+              <rect x="80" y="220" width="120" height="30" rx="6" fill="#0a0e14" stroke="#00e5ff"/>
+              <text x="140" y="240" text-anchor="middle" fill="#00e5ff" font-size="13" font-weight="700">GIUSEPPE</text>
+
+              <!-- Status indicator -->
+              <text x="140" y="270" text-anchor="middle" fill="#22c55e" font-size="10">● ready · battery 87%</text>
+
+              <!-- Decorative dust trail -->
+              <circle cx="40" cy="90" r="2" fill="#aab4c2" opacity="0.5"/>
+              <circle cx="50" cy="100" r="1.5" fill="#aab4c2" opacity="0.4"/>
+              <circle cx="35" cy="120" r="2" fill="#aab4c2" opacity="0.4"/>
+              <circle cx="240" cy="200" r="2" fill="#aab4c2" opacity="0.5"/>
+              <circle cx="250" cy="220" r="1.5" fill="#aab4c2" opacity="0.4"/>
+            </svg>
+            <p class="diagram-cap">Stylizovaná ilustrace Giuseppe (Xiaomi Viomi V8) z pohledu shora. Lidar dome, dvě boční kartáče, status LED.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- INFRASTRUKTURA -->
+    <section id="infra" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">04 — Infrastruktura</p>
+          <h2 class="section-title">Co drží systém pohromadě</h2>
+          <p class="section-lead">
+            Homey Pro je hlavní hub, ale není sám. Raspberry Pi, Home Assistant,
+            GitHub repo a GitHub Actions tvoří backup + observability vrstvu,
+            která dělá systém spolehlivý mimo lokální síť.
+          </p>
+        </header>
+
+        <div class="infra-grid">
+          <article class="infra-card">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">🖥️</span>
+              <h3>Raspberry Pi (kiosek + proxy)</h3>
+            </div>
+            <p>
+              <strong>Raspberry Pi 4</strong> s WaveShare 10.1" HDMI LCD
+              (1024 × 600). Běží 24/7 v předsíni jako vždy zapnutý touch
+              kiosek dashboardu. Chromium v full-screen kiosk módu, autostart
+              přes systemd.
+            </p>
+            <p>
+              Druhá role: <strong>dashboard proxy</strong>. Python skript
+              <code>dashboard_server.py</code> na <code>localhost:8080</code>
+              překlápí požadavky z dashboardu na Homey REST API.
+              Tím dashboard funguje i když cloud Homey nedostupný — stačí lokální síť.
+            </p>
+            <p>
+              Třetí role: <strong>další služby</strong>. Tailscale (přístup z práce
+              přes VPN), Apps Script proxy, případně další skripty.
+            </p>
+          </article>
+
+          <article class="infra-card">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">🏠</span>
+              <h3>Home Assistant (mirror + observer)</h3>
+            </div>
+            <p>
+              Druhý Raspberry Pi s <strong>Home Assistant OS</strong>. Hlavní role
+              není primární řízení (to dělá Homey) — HA je <strong>read-only
+              observer + backup target</strong>.
+            </p>
+            <p>
+              Konkrétně:
+            </p>
+            <ul class="infra-list">
+              <li>HA Energy Dashboard agreguje data ze Shelly plugů (lednice, trouba, mikrovlnka).</li>
+              <li>Long-term storage telemetrie — Homey má krátkou paměť, HA drží roky.</li>
+              <li>Samostatný backup target pro git repa (cron auto-pull každou hodinu).</li>
+              <li>Failover: kdyby Homey padl, HA zná aktuální stav.</li>
+            </ul>
+            <p>
+              Komunikace: HA přistupuje k Homey přes REST API (Bearer token),
+              Homey k HA přes webhook + REST sensor. Žádné dvojí ovládání —
+              jen sdílená observability.
+            </p>
+          </article>
+
+          <article class="infra-card">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">📦</span>
+              <h3>GitHub repos (single source of truth)</h3>
+            </div>
+            <p>
+              Veškerý kód, dokumentace, snapshoty a konfigurace v
+              <strong>privátních GitHub repech</strong>. Tři aktivní:
+            </p>
+            <ul class="infra-list">
+              <li><code>smart-home-homey</code> — všechny <code>sh_*</code> skripty, audity, deployment plány, denní snapshoty exportu z Homey REST API.</li>
+              <li><code>smart-home-dashboards</code> — HTML/CSS/JS dashboardy ve všech rozlišeních + Python phase patchery.</li>
+              <li><code>lk-finance</code> — privátní finance (encrypted-at-rest přes transcrypt + AES-256-CBC + PBKDF2). Stejný pattern, jiná data.</li>
+            </ul>
+            <p>
+              <strong>Daily backup pipeline</strong>: HAOS skript
+              <code>backup_homey.sh</code> se spustí každý den v 02:00,
+              zavolá Homey REST API, vyexportuje devices/variables/flows/scripts,
+              commitne do <code>backup_homey/</code> a pushne na GitHub.
+              SSH deploy key, žádný uložený token v repo.
+            </p>
+          </article>
+
+          <article class="infra-card">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">⚙️</span>
+              <h3>GitHub Actions (automatizované úkony)</h3>
+            </div>
+            <p>
+              Část úkolů běží <strong>v cloudu na GitHub Actions</strong>,
+              ne na Homey. Konkrétně:
+            </p>
+            <ul class="infra-list">
+              <li><code>daily_backup.yml</code> — denní snapshot Homey state, cron na GitHub straně (failover pokud HAOS padne).</li>
+              <li><code>weekly_audit.yml</code> — týdenní statická analýza skriptů: hledá hardcoded names, missing guards, deprecated patterns. Vytvoří issue.</li>
+              <li><code>memory_watchdog.yml</code> — sleduje memory soubory, pokud někde duplicita / stale info → alert.</li>
+              <li><code>cleanup_phase4_delete.yml</code> — naplánovaný auto-delete cleanup wave skriptů. Pre-checks: Brain Guardian score, EventLog exceptions. Pokud red flag → action selže, žádný delete.</li>
+            </ul>
+            <p>
+              Výhoda: <strong>akce běží mimo dům</strong>. I kdyby Homey padl,
+              GitHub Actions stále hlídají repo a provádějí naplánované úkony.
+              Tokens jsou v GitHub Secrets, ne v kódu.
+            </p>
+          </article>
+
+          <article class="infra-card infra-card-finance">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">🔐</span>
+              <h3>Finance (paralelní privátní stack)</h3>
+            </div>
+            <p>
+              Stejný pattern jako smart home, ale pro <strong>osobní finance</strong>:
+              privátní GitHub repo + HAOS mirror. Klíčový rozdíl —
+              <strong>encryption-at-rest</strong>.
+            </p>
+            <p>
+              Soubory typu <code>*.pdf, *.xlsx, *.csv, *.docx, *.zip</code>
+              jsou před commitem šifrované přes
+              <strong>transcrypt + AES-256-CBC + PBKDF2 (100k iter)</strong>.
+              GitHub vidí jen <code>U2FsdGVk...</code> bloby, žádný plaintext.
+              Master heslo lokálně, mimo repo, offline backup na USB +
+              papír v sejfu.
+            </p>
+            <p>
+              Z webu sem nic nepatří — finance jsou striktně privátní.
+              Ale architektura je sdílená: stejný auto-backup pattern,
+              stejné principy, jen vyšší ochrana dat.
+            </p>
+          </article>
         </div>
       </div>
     </section>
