@@ -29,10 +29,12 @@
         <ul id="nav-list" class="nav-list">
           <li><a href="#home">Home</a></li>
           <li><a href="#historie">Historie</a></li>
+          <li><a href="#hardware">Hardware</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#dashboard">Dashboard</a></li>
           <li><a href="#zarizeni">Zařízení</a></li>
           <li><a href="#architektura">Architektura</a></li>
+          <li><a href="#vyzvy">Výzvy</a></li>
           <li><a href="#ai-brain">AI Brain</a></li>
           <li><a href="#kontakt">Kontakt</a></li>
         </ul>
@@ -55,31 +57,33 @@
           </h1>
           <p class="hero-lead">
             Domácnost řízená script-first architekturou nad <strong>Homey Pro 2026</strong>.
-            Stovky skriptů, vlastní AI Brain Guardian, multi-resolution dashboardy a důsledné
-            multi-signal rozhodování. Vše vyvíjené v jednom bytě v Semilech.
+            Garsonka v přízemí, 73 zařízení ve 12 zónách, 110+ HomeyScriptů,
+            vlastní AI Brain Guardian a multi-resolution dashboardy. Vše vyvíjené
+            v jednom bytě v Semilech jako roky tichého refaktoringu od první
+            žárovky k samodiagnostickému systému.
           </p>
           <div class="hero-cta">
             <a href="#architektura" class="btn btn-primary">Jak to funguje</a>
-            <a href="#blog" class="btn btn-ghost">Novinky</a>
+            <a href="#vyzvy" class="btn btn-ghost">S čím jsem bojoval</a>
           </div>
         </div>
 
         <aside class="hero-stats" aria-label="Klíčová čísla">
           <div class="stat">
-            <span class="stat-num" data-count="136">136</span>
+            <span class="stat-num" data-count="110">110</span>
             <span class="stat-label">HomeyScriptů</span>
           </div>
           <div class="stat">
-            <span class="stat-num" data-count="200">200</span>
+            <span class="stat-num" data-count="184">184</span>
             <span class="stat-label">Flows</span>
           </div>
           <div class="stat">
-            <span class="stat-num" data-count="309">309</span>
-            <span class="stat-label">Dashboard akcí</span>
+            <span class="stat-num" data-count="73">73</span>
+            <span class="stat-label">Zařízení</span>
           </div>
           <div class="stat">
-            <span class="stat-num" data-count="92">92</span>
-            <span class="stat-label">Brain Guardian score</span>
+            <span class="stat-num" data-count="12">12</span>
+            <span class="stat-label">Zón v bytě</span>
           </div>
         </aside>
       </div>
@@ -93,8 +97,9 @@
           <p class="section-eyebrow">01 — Historie</p>
           <h2 class="section-title">Jak systém vznikal</h2>
           <p class="section-lead">
-            Od první žárovky a flow „když přijdeš domů, rozsvítit" k autonomnímu systému,
-            který se sám diagnostikuje a opravuje.
+            Od první žárovky a flow „když přijdeš domů, rozsvítit" k autonomnímu
+            systému, který se sám diagnostikuje a opravuje. Roky postupných
+            přechodů — vždy z konkrétního pain pointu, nikdy ne z teorie.
           </p>
         </header>
 
@@ -102,12 +107,29 @@
           <li class="timeline-item">
             <span class="timeline-dot" aria-hidden="true"></span>
             <div class="timeline-content">
-              <p class="timeline-date">Začátek · Homey Pro (2023)</p>
-              <h3>První kroky</h3>
+              <p class="timeline-date">Začátek · Garsonka v Semilech</p>
+              <h3>Proč vůbec smart home</h3>
+              <p>
+                Byt v přízemí přinesl specifický problém: <strong>efekt akvária</strong>.
+                Když svítí v jídelně a roleta je nahoře, kolemjdoucí vidí dovnitř.
+                První motivace pro automatizaci nebylo „cool gadgets", ale
+                jednoduchá ochrana soukromí — privacy interlock mezi roletou a
+                světly se stal jedním z nejdřívějších a nejdůležitějších pravidel.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Homey Pro 2019 (původní generace)</p>
+              <h3>První Homey</h3>
               <p>
                 Klasické flow-based řízení. Pohyb → světlo → časovač. Funkční,
                 ale s rostoucím počtem zařízení se logika začala duplikovat
-                a kolidovat.
+                a kolidovat. Vrchol byl, když HW přestal stíhat — desítky paralelních
+                Flow karet a první HomeyScripty rozbíjely runtime.
+                Vznikla potřeba většího výkonu a otevřenější platformy.
               </p>
             </div>
           </li>
@@ -118,9 +140,11 @@
               <p class="timeline-date">Přechod · Homey Pro 2026</p>
               <h3>Nová generace HW</h3>
               <p>
-                Migrace na Homey Pro 2026 přinesla výkon na dlouhodobě běžící
-                HomeyScripty. Otevřela se cesta k centralizované logice
-                v JavaScriptu místo lepení flows.
+                Quad-core ARM @ 1,5 GHz se 4 GB RAM. Po migraci jsem konečně
+                mohl spouštět <strong>110+ skriptů paralelně</strong> bez SIGABRT
+                krachů. Otevřela se cesta k centralizované logice v JavaScriptu
+                místo lepení flows. Jeden investiční krok, který odemkl všechnu
+                další architekturu.
               </p>
             </div>
           </li>
@@ -132,9 +156,10 @@
               <h3>Pravidlo „logika do skriptu, ne do flow"</h3>
               <p>
                 Veškerá rozhodovací logika přesunuta do <code>sh_*</code> skriptů.
-                Flows zůstávají jako tenké triggery + akce. Vznikly routery
-                (open space lighting, roleta, audio, vacuum) a request-first
-                pipeline.
+                Flow zůstávají jako tenké triggery (set variable + run script),
+                nic víc. Vznikly routery (open space lighting, roleta, audio,
+                vacuum) a request-first pipeline. Debugování se stalo řádově
+                jednodušším — jedno místo, jeden soubor, jasná cesta.
               </p>
             </div>
           </li>
@@ -147,7 +172,9 @@
               <p>
                 Žádná akce z jednoho senzoru — vždy 2+ signály. Žádný hardcoded
                 device name — vše přes Device Map. Žádný nový skript pokud
-                lze rozšířit existující.
+                lze rozšířit existující. Pravidla nejsou akademická — každé vzniklo
+                z konkrétního incidentu (ranní rutina spuštěná ve 3 ráno kočkou,
+                přejmenování senzoru přetrhající 20 skriptů, …).
               </p>
             </div>
           </li>
@@ -159,8 +186,9 @@
               <h3>UI pro 3 obrazovky</h3>
               <p>
                 Greenfield redesign s premium dark layoutem. Tři varianty
-                (1920×1080 notebook, 2880×1800 monitor, 1024×600 RPi kiosek)
-                sdílející stejnou architekturu.
+                (1920×1080 notebook, 2880×1800 master monitor, 1024×600 RPi
+                kiosek WaveShare 10.1") sdílející stejnou architekturu.
+                Cyklus V3.7 → V7 dokončen za dva týdny šesti iteracemi.
               </p>
             </div>
           </li>
@@ -172,9 +200,11 @@
               <h3>Supervisor vrstva</h3>
               <p>
                 Skripty <code>sh_state_validator</code>,
-                <code>sh_brain_guardian</code> a <code>sh_release_guard</code>
+                <code>sh_brain_guardian</code>, <code>sh_release_guard</code>,
+                <code>sh_self_healing</code> a <code>sh_gemini_diagnostic</code>
                 tvoří meta-vrstvu, která kontroluje očekávaný stav, detekuje
-                ghost values a blokuje nasazení rozbitých změn.
+                ghost values, blokuje nasazení rozbitých změn a denně analyzuje
+                logy přes Gemini.
               </p>
             </div>
           </li>
@@ -182,11 +212,128 @@
       </div>
     </section>
 
-    <!-- BLOG -->
-    <section id="blog" class="section section-alt">
+    <!-- HARDWARE -->
+    <section id="hardware" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">02 — Blog</p>
+          <p class="section-eyebrow">02 — Hardware</p>
+          <h2 class="section-title">Co tu fyzicky stojí</h2>
+          <p class="section-lead">
+            Hub, sensorová síť přes 4 protokoly, 73 zařízení v 12 zónách.
+            Postupně vrstvené hardware vrstvy, každá s vlastní rolí.
+          </p>
+        </header>
+
+        <div class="hw-evolution">
+          <article class="hw-evo-card hw-evo-old">
+            <div class="hw-evo-head">
+              <span class="hw-evo-badge">2019 → 2024</span>
+              <h3>Homey Pro (původní)</h3>
+            </div>
+            <ul class="hw-evo-specs">
+              <li>Single-core, méně RAM</li>
+              <li>Flow-based runtime</li>
+              <li>HomeyScripty omezené</li>
+            </ul>
+            <p class="hw-evo-issue">
+              <strong>Proč přestal stačit:</strong> S rostoucím počtem flows a
+              prvními HomeyScripty hub začal mít problémy s výkonem.
+              Paralelní skripty padaly na SIGABRT, runtime nestíhal real-time
+              eventy, větší automatizace blokovaly UI.
+            </p>
+          </article>
+
+          <div class="hw-evo-arrow" aria-hidden="true">→</div>
+
+          <article class="hw-evo-card hw-evo-new">
+            <div class="hw-evo-head">
+              <span class="hw-evo-badge hw-evo-badge-current">Live · 2026</span>
+              <h3>Homey Pro 2026</h3>
+            </div>
+            <ul class="hw-evo-specs">
+              <li>Quad-core ARM @ 1,5 GHz</li>
+              <li>4 GB RAM</li>
+              <li>110+ skriptů paralelně bez SIGABRT</li>
+              <li>Plný HomeyScript runtime + REST API</li>
+            </ul>
+            <p class="hw-evo-issue">
+              <strong>Co to umožnilo:</strong> Centralizovaná logika v JavaScriptu,
+              request-first pipeline, daily Gemini analýza logů, real-time
+              dashboardy přes REST API. Bez tohoto skoku by současný systém
+              nebyl možný.
+            </p>
+          </article>
+        </div>
+
+        <h3 class="hw-section-title">Bezdrátové protokoly</h3>
+        <div class="protocol-grid">
+          <article class="protocol-card">
+            <span class="protocol-icon">🔵</span>
+            <h4>Zigbee</h4>
+            <p>
+              Páteř senzorové sítě. Sonoff SNZB-06P (mmWave presence),
+              SNZB-03/04 motion + door/window, Aqara P1, IKEA Fyrtur roleta,
+              Aqara Cube T1 Pro (6-stranný kontroler).
+            </p>
+          </article>
+          <article class="protocol-card">
+            <span class="protocol-icon">🟣</span>
+            <h4>Z-Wave</h4>
+            <p>
+              Fibaro FGMS multisenzor (pohyb + lux + teplota) v kuchyni,
+              FGS-214 relay pro topný okruh. Pomalejší ale stabilnější
+              pro klíčové instalace.
+            </p>
+          </article>
+          <article class="protocol-card">
+            <span class="protocol-icon">📶</span>
+            <h4>Wi-Fi</h4>
+            <p>
+              Xiaomi (Giuseppe robot vysavač, čistička vzduchu, senzory),
+              Shelly Plug S (trouba/mikrovlnka/lednice — power monitoring),
+              Nanoleaf Matter žárovky kuchyně.
+            </p>
+          </article>
+          <article class="protocol-card">
+            <span class="protocol-icon">🔊</span>
+            <h4>Google Cast</h4>
+            <p>
+              Tři reproduktory: Nest Mini Kuchyn (primární výstup),
+              Nest Hub Max Ložnice 2, Nest Mini Koupelna. Plus TTS pipeline
+              s rate limiting na 200 char.
+            </p>
+          </article>
+        </div>
+
+        <h3 class="hw-section-title">Klíčová zařízení</h3>
+        <div class="hw-key-list">
+          <div class="hw-key-item">
+            <strong>Roleta Fyrtur1</strong> (jídelna) — privacy interlock pro open space.
+          </div>
+          <div class="hw-key-item">
+            <strong>Giuseppe</strong> (Xiaomi robot vysavač) — autonomní úklid s Homey scheduling.
+          </div>
+          <div class="hw-key-item">
+            <strong>Air Purifier 4 Lite</strong> — PM2.5 monitoring + auto mode + alerts.
+          </div>
+          <div class="hw-key-item">
+            <strong>Android TV ložnice</strong> — plná integrace přes <code>com.android.tv:remote</code> (31+ capabilities, native remote).
+          </div>
+          <div class="hw-key-item">
+            <strong>Aqara Cube T1 Pro</strong> — 6-stranný controller pro audio scény, světla, TV remote.
+          </div>
+          <div class="hw-key-item">
+            <strong>Raspberry Pi (WaveShare 10.1")</strong> — kiosk dashboard 1024×600 + dashboard proxy server na <code>localhost:8080</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">03 — Blog</p>
           <h2 class="section-title">Novinky a changelogy</h2>
           <p class="section-lead">
             Pravidelné poznámky o tom, co se v systému změnilo, co se rozbilo a jak se to fixovalo.
@@ -244,10 +391,10 @@
     </section>
 
     <!-- DASHBOARD -->
-    <section id="dashboard" class="section">
+    <section id="dashboard" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">03 — Dashboard</p>
+          <p class="section-eyebrow">04 — Dashboard</p>
           <h2 class="section-title">Tři obrazovky, jeden systém</h2>
           <p class="section-lead">
             Sdílená architektura, různá rozlišení. Každá varianta optimalizovaná pro jiný
@@ -255,67 +402,86 @@
           </p>
         </header>
 
-        <div class="device-grid">
-          <figure class="device-card">
-            <div class="device-frame device-frame-monitor">
-              <div class="device-screen device-screen-2880">
-                <span class="device-screen-label">2880 × 1800</span>
-              </div>
+        <div class="gallery-grid">
+          <figure class="gallery-item">
+            <div class="gallery-thumb">
+              <img src="assets/screenshots/dashboard-2880x1800.png"
+                   alt="Dashboard 2880×1800 — master 32&quot; monitor"
+                   loading="lazy" />
             </div>
             <figcaption>
               <h3>Master 32" monitor</h3>
-              <p>
-                <strong>2880 × 1800 (16:10).</strong> Plná verze pro pracovnu —
-                všech 14 stránek, full sidebar, detaily zón a real-time grafy.
-              </p>
+              <p><strong>2880 × 1800 (16:10)</strong>. Plná verze pro pracovnu — všech 14 stránek, full sidebar, detail zón a real-time grafy.</p>
             </figcaption>
           </figure>
 
-          <figure class="device-card">
-            <div class="device-frame device-frame-laptop">
-              <div class="device-screen device-screen-1920">
-                <span class="device-screen-label">1920 × 1080</span>
-              </div>
+          <figure class="gallery-item">
+            <div class="gallery-thumb">
+              <img src="assets/screenshots/dashboard-1920x1080.png"
+                   alt="Dashboard 1920×1080 — 14&quot; notebook"
+                   loading="lazy" />
             </div>
             <figcaption>
               <h3>14" notebook</h3>
-              <p>
-                <strong>1920 × 1080 (16:9).</strong> Mobilní varianta pro práci
-                kdekoli v bytě — sidebar collapses na 64px pod 1280px.
-              </p>
+              <p><strong>1920 × 1080 (16:9)</strong>. Mobilní varianta pro práci kdekoli v bytě — sidebar collapses na 64px pod 1280px.</p>
             </figcaption>
           </figure>
 
-          <figure class="device-card">
-            <div class="device-frame device-frame-rpi">
-              <div class="device-screen device-screen-1024">
-                <span class="device-screen-label">1024 × 600</span>
-              </div>
+          <figure class="gallery-item">
+            <div class="gallery-thumb">
+              <img src="assets/screenshots/dashboard-1024x600.png"
+                   alt="Dashboard 1024×600 — RPi WaveShare kiosek"
+                   loading="lazy" />
             </div>
             <figcaption>
               <h3>RPi kiosek</h3>
-              <p>
-                <strong>1024 × 600 (WaveShare 10.1").</strong> Vždy zapnutý touch
-                kiosek. Compact 4-col grid, 8 zúžených stránek, větší dotykové cíle.
-              </p>
+              <p><strong>1024 × 600 (WaveShare 10.1")</strong>. Vždy zapnutý touch kiosek. Compact 4-col grid, 8 zúžených stránek, větší dotykové cíle.</p>
             </figcaption>
           </figure>
         </div>
 
-        <div class="gallery-empty">
-          <p>
-            <strong>Galerie screenshotů:</strong> obrázky se nahrávají do
-            <code>/assets/screenshots/</code>. Po commit + push se objeví zde.
+        <div class="dashboard-extra">
+          <h3>Co dashboard ukazuje</h3>
+          <div class="dashboard-features">
+            <div class="dashboard-feat">
+              <strong>Zónové dlaždice</strong> — každá místnost má kartu se stavy zařízení, teplotou, světlem.
+            </div>
+            <div class="dashboard-feat">
+              <strong>Audio mix</strong> — co hraje, kde, kdo má prioritu (rádio / TTS / scéna).
+            </div>
+            <div class="dashboard-feat">
+              <strong>Health score</strong> — 0–100, viditelný v reálném čase, klesá při problémech.
+            </div>
+            <div class="dashboard-feat">
+              <strong>Brain panel</strong> — výsledky denní Gemini analýzy + alerty.
+            </div>
+            <div class="dashboard-feat">
+              <strong>TV remote overlay</strong> — full controls (D-pad, numpad, Home/Back, kanály, hlasitost).
+            </div>
+            <div class="dashboard-feat">
+              <strong>Pomodoro timer</strong> — pracovna, 25/5 cykly s TTS oznámeními.
+            </div>
+            <div class="dashboard-feat">
+              <strong>Sparkline grafy</strong> — spotřeba lednice, trouby, mikrovlnky (120 vzorků).
+            </div>
+            <div class="dashboard-feat">
+              <strong>Weather 3-day</strong> — předpověď agregovaná z OWM.
+            </div>
+          </div>
+          <p class="dashboard-note">
+            Screenshoty výše ukazují <strong>statickou demo verzi</strong> dashboardu
+            (offline mockup designu). Live verze běží lokálně přes Homey REST API
+            a není přístupná zvenčí — to je záměr.
           </p>
         </div>
       </div>
     </section>
 
     <!-- ZAŘÍZENÍ -->
-    <section id="zarizeni" class="section section-alt">
+    <section id="zarizeni" class="section">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">04 — Zařízení</p>
+          <p class="section-eyebrow">05 — Zařízení</p>
           <h2 class="section-title">Co všechno systém řídí</h2>
           <p class="section-lead">
             Zařízení rozdělená do funkčních kategorií. Každá kategorie má svůj router
@@ -329,7 +495,8 @@
             <h3>Světla</h3>
             <p>
               Open space + ložnice + pracovna. Multi-signal: FP2 presence + Z-Wave motion.
-              Privacy režim (roleta nahoře = open space LED off).
+              Privacy režim (roleta nahoře = open space LED off). Sunrise simulace
+              při ranním buzení.
             </p>
           </article>
 
@@ -338,7 +505,8 @@
             <h3>Topení</h3>
             <p>
               FGS-214 + 4× TRV. Tři režimy (auto / manual / off), state-aware hystereze,
-              anti-cycling, runtime-based kWh tracking.
+              anti-cycling, runtime-based kWh tracking. Plánováno: AI vrstvy
+              (preWakeBoost, weatherAdjust, occupancyBonus).
             </p>
           </article>
 
@@ -346,8 +514,9 @@
             <span class="category-icon" aria-hidden="true">🔊</span>
             <h3>Audio</h3>
             <p>
-              Cast speakery + TTS pipeline s 200-char split. Sleep-respect (žádné TTS
-              v noci), priority engine, radio router.
+              Cast speakery + TTS pipeline s 200-char split (Google Cast hard limit).
+              Sleep-respect (žádné TTS v noci), priority engine, radio router,
+              briefing každé ráno přes Gemini.
             </p>
           </article>
 
@@ -355,8 +524,8 @@
             <span class="category-icon" aria-hidden="true">📡</span>
             <h3>Senzory</h3>
             <p>
-              FP2 presence, Z-Wave motion, door/window kontakty, lux, teplota, vlhkost,
-              PM2.5. Vše pipuje do request-first decisioningu.
+              FP2 mmWave presence, Z-Wave motion, door/window kontakty, lux,
+              teplota, vlhkost, PM2.5. Vše pipuje do request-first decisioningu.
             </p>
           </article>
 
@@ -365,7 +534,7 @@
             <h3>Kamery</h3>
             <p>
               Indoor + outdoor. Stream přes Homey, automatika spínání během odchodu /
-              při alarm triggeru, nahrávání do encrypted storage.
+              při alarm triggeru. Live preview na dashboardu (vchodu).
             </p>
           </article>
 
@@ -374,7 +543,7 @@
             <h3>Rolety</h3>
             <p>
               Lux-driven + rezim_doma + roleta_router v3. Hysterezis pro stable řízení,
-              privacy guard pro open space.
+              privacy guard pro open space, ranní/večerní časová okna.
             </p>
           </article>
 
@@ -382,8 +551,8 @@
             <span class="category-icon" aria-hidden="true">🧠</span>
             <h3>AI / Diagnostika</h3>
             <p>
-              Brain Guardian, state validator, expected state engine, release guard.
-              Meta-vrstva nad celým systémem.
+              Brain Guardian, state validator, expected state engine, release guard,
+              self-healing engine, daily Gemini analýza. Meta-vrstva nad celým systémem.
             </p>
           </article>
         </div>
@@ -391,10 +560,10 @@
     </section>
 
     <!-- ARCHITEKTURA -->
-    <section id="architektura" class="section">
+    <section id="architektura" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">05 — Architektura</p>
+          <p class="section-eyebrow">06 — Architektura</p>
           <h2 class="section-title">Script-first princip</h2>
           <p class="section-lead">
             Veškerá logika v jednom místě. Flow je trigger, skript je mozek, router je
@@ -434,26 +603,88 @@
           </div>
         </div>
 
+        <h3 class="arch-rules-title">12 pravidel která jsem si zavedl</h3>
+        <p class="arch-rules-lead">
+          Každé pravidlo vzniklo z konkrétního incidentu, ne z teorie. Tady jsou všechna
+          která dnes drží systém pohromadě.
+        </p>
+
         <div class="arch-principles">
           <article class="principle">
             <span class="principle-tag">REUSE FIRST</span>
             <p>
-              Před vytvořením nové entity (skript, flow, proměnná) zkontroluj zda
-              podobná již neexistuje. Refaktor &gt; nový kód.
+              Před vytvořením nové entity (skript, flow, proměnná) zkontroluj
+              zda podobná již neexistuje. Refaktor &gt; nový kód.
             </p>
           </article>
           <article class="principle">
-            <span class="principle-tag">MULTI-SIGNAL</span>
+            <span class="principle-tag">SCRIPT-FIRST</span>
             <p>
-              Žádné rozhodnutí z jednoho senzoru. Vždy 2+ nezávislé signály
-              (např. FP2 presence + Z-Wave motion).
+              Flow = trigger + set variable + run script. Žádná logika v Flow kartách.
+              Logika ve skriptech je verzovatelná, debugovatelná, testovatelná.
             </p>
           </article>
           <article class="principle">
             <span class="principle-tag">DEVICE MAP</span>
             <p>
-              Žádný hardcoded device name. Vše přes centrální mapu — když se zařízení
-              přejmenuje, opraví se na jednom místě.
+              Žádný hardcoded device name. Vše přes <code>sh_device_map_v1</code>.
+              Přejmenování zařízení = jedna změna, ne 20 broken skriptů.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">MULTI-SIGNAL</span>
+            <p>
+              Žádné kritické rozhodnutí z jediného senzoru. Vždy 2+ nezávislé
+              signály (FP2 + Z-Wave motion, button + geofence).
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">SLEEP RESPECT</span>
+            <p>
+              Žádné TTS, hlasité akce ani světla při <code>sh_spim=yes</code>.
+              Výjimky: morning briefing, kritické alarmy.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">PRIVACY INTERLOCK</span>
+            <p>
+              Roleta otevřená → open space světla blokována. Garsonka v přízemí,
+              kolemjdoucí vidí dovnitř. Efekt akvária.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">IDLE RESET</span>
+            <p>
+              Každý dočasný request musí být po dokončení akce resetován na
+              <code>idle</code>. Bez resetu = stuck pipeline + ráno bez rádia.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">WINDOW GUARDS</span>
+            <p>
+              Triggery mají časová okna — ranní rutina 3:00–10:00, noční 22:00–6:00.
+              Mimo okno skript odmítne pokračovat.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">NO THROW</span>
+            <p>
+              Nikdy <code>throw new Error()</code>. Vždy <code>log + return false</code>.
+              Throw crashne před cleanup, zanechá proměnné v nekonzistentním stavu.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">VARIABLE CACHE</span>
+            <p>
+              Každý skript cacheuje proměnné (<code>_varCache + _loadVars()</code>).
+              Bez cache = SIGABRT na 200+ proměnných.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">IDEMPOTENCE</span>
+            <p>
+              <code>setCapabilityValue</code> jen pokud se hodnota fakticky mění.
+              Slepý set = kaskáda Flow triggerů a zbytečné zatížení.
             </p>
           </article>
           <article class="principle">
@@ -467,15 +698,213 @@
       </div>
     </section>
 
+    <!-- VÝZVY -->
+    <section id="vyzvy" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">07 — Výzvy</p>
+          <h2 class="section-title">S čím systém musí bojovat</h2>
+          <p class="section-lead">
+            Smart home v reálném světě není „set and forget". Tady je seznam reálných
+            problémů, které jsem řešil — a které řešit musíš taky, jakmile překročíš
+            úroveň „pár chytrých žárovek".
+          </p>
+        </header>
+
+        <div class="challenge-grid">
+          <article class="challenge-card challenge-hw">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🔋</span>
+              <h3>Zigbee battery devices &amp; deep sleep</h3>
+            </div>
+            <p>
+              Zigbee senzory na baterce (door/window, motion) chodí spát kvůli
+              úspoře energie. Když je probudíš a hned dotáz, často odpoví až
+              po několika sekundách — nebo neodpoví vůbec. Některé starší kusy
+              padají do <strong>deep sleep, ze kterého se hub jejich přítomnost
+              ztrácí</strong> (zařízení vypadá offline i s plnou baterkou).
+            </p>
+            <p>
+              <strong>Konkrétní incident</strong>: Door/Window Sensor SNZB-04
+              v jídelně. Známý firmware bug — periodicky padá do unreachable
+              stavu i 2 metry od hubu, plná baterka. Způsobil 23. dubna
+              20-minutové zpoždění reakce na příchod (čistička se nevypnula
+              při otevření okna). Řešení: <strong>náhrada za Aqara P2</strong>
+              (Matter/Thread, stabilnější firmware). V mezičase — multi-signal
+              fallback (motion v kuchyni jako backup signál).
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-hw">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🆔</span>
+              <h3>Re-pair = nové UUID = silent fail</h3>
+            </div>
+            <p>
+              Když vyměníš baterku nebo re-installuješ Zigbee zařízení, Homey
+              vygeneruje <strong>nové UUID</strong>. Flow karty + skripty +
+              device map referencující OLD UUID <strong>silently fail</strong>
+              — žádný error v UI, automatizace prostě nereaguje.
+            </p>
+            <p>
+              <strong>Reálný case 26.4.</strong>: Door/Window Sensor Jidelna1
+              re-pair → 3 flows broken, čistička se nevypínala při otevření okna.
+              Diagnóza: <code>GET /devices/device/&lt;old_id&gt;</code> → 404.
+              Fix: bulk OLD→NEW swap přes PUT každého affected flow.
+              Preventivní scanner <code>find_orphan_device_refs.py</code>
+              v backlogu.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-runtime">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">💥</span>
+              <h3>SIGABRT — Homey zabije skript bez vysvětlení</h3>
+            </div>
+            <p>
+              Homey runtime zabije procesy při detekci problémů (nekonečná smyčka,
+              příliš mnoho paralelních skriptů, memory leak). <strong>Nikdy
+              nepíše proč</strong> — skript prostě zmizí z exec logu. Debugging
+              SIGABRT je čistá detektivka: izolace, binární search, test.
+            </p>
+            <p>
+              Klasická past: <code>setValue()</code> volá <code>logEvent()</code>,
+              <code>logEvent()</code> volá <code>setValue()</code> pro zápis do
+              <code>sh_log_payload</code> → <strong>nekonečná rekurze → SIGABRT</strong>.
+              Pravidlo: <code>setValue()</code> smí volat jen <code>getVar +
+              updateVariable + log</code>. Nikdy <code>logEvent()</code>.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-runtime">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">⏱</span>
+              <h3>setTimeout neexistuje (a crashne)</h3>
+            </div>
+            <p>
+              Přirozený JS reflex pro async delay je <code>setTimeout</code>.
+              V HomeyScript runtime <strong>není dostupné</strong> a volání
+              vede k záhadnému crashi bez error message — skript jednoduše
+              přestane existovat.
+            </p>
+            <p>
+              Řešení: vlastní <code>wait()</code> funkce v kombinaci s
+              <code>Promise.race()</code> pro timeouty HTTP volání.
+              Tohle jsem musel opravit v desítkách skriptů — bylo to systematické,
+              ne ojedinělé.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-runtime">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🗑</span>
+              <h3>Smazání skriptu = nové UUID = broken flows</h3>
+            </div>
+            <p>
+              V Homey <strong>nikdy nesmím smazat HomeyScript</strong>.
+              Smazání vygeneruje nové UUID, což přetrhne všechny Flow karty
+              odkazující na skript. Jediná bezpečná editace je
+              <strong>in-place</strong>: otevři skript, Ctrl+A, paste, Save.
+            </p>
+            <p>
+              Tohle pravidlo způsobilo jeden velký výpadek než jsem to pochopil.
+              Cleanup wave skriptů (20× DELETE_CANDIDATE) má proto vlastní
+              workflow s 48h soak monitoring + canary testing před skutečným
+              delete přes GitHub Actions.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-runtime">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🔇</span>
+              <h3>Audio pipeline race conditions</h3>
+            </div>
+            <p>
+              Audio bylo nejtvrdší technický oříšek. Mnoho pohyblivých částí —
+              priority engine, audio brain, speaker router, TTS orchestrátor,
+              Cast Flow, resume logika. Každý díl měl race conditions, každá
+              kombinace stavů přidávala edge case.
+            </p>
+            <p>
+              <strong>Příklad</strong>: briefing v 3:20 ráno. Pipeline:
+              Gemini API (15s timeout) → TTS text → priority 55 &gt; rádio 50 →
+              audio brain přeruší rádio → Cast TTS → resume rádio. Každý krok
+              mohl selhat. Crashy: <code>setTimeout</code>, Google Cast 200 char
+              limit, priority conflict, resume race condition. Watchdog
+              <code>sh_audio_pipeline_watchdog_v1</code> hlídá stuck stav každou
+              minutu.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-data">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">👻</span>
+              <h3>Ghost values — proměnné, které lžou</h3>
+            </div>
+            <p>
+              <code>sh_audio_request</code> zůstal na hodnotě
+              <code>tts_kitchen_alert</code> přes noc. Ráno se rádio nespustilo,
+              protože audio brain viděl nevyřízený request — proměnná
+              <strong>tvrdila stav, který už neplatil</strong>.
+            </p>
+            <p>
+              Řešení vyústilo v <code>sh_state_validator_v1</code>, který
+              porovnává očekávaný a reálný stav. První produkční detekce:
+              <code>priority_active=tts</code> ghost, který blokoval
+              audio pipeline od 00:40 do rána. Bez validátoru by se to
+              opakovalo donekonečna.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-data">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🌀</span>
+              <h3>Args[] z Flow nejsou spolehlivé</h3>
+            </div>
+            <p>
+              Homey Flow umí předat argument skriptu přes
+              „<em>con l'argomento</em>". Jenže <code>args[]</code> je nespolehlivý —
+              hodnota někdy chybí, race condition mezi triggerem a skriptem.
+            </p>
+            <p>
+              Dnes všechny módy jdou přes dedikované Homey Logic proměnné
+              (<code>sh_kitchen_mode</code>, <code>sh_energy_mode</code>),
+              ne přes args. Flow vždy: <em>set variable → run script</em>.
+              Skript čte z proměnné, ne z argumentu.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-data">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🚫</span>
+              <h3>Některé API jsou prostě nedostupné</h3>
+            </div>
+            <p>
+              <code>Homey.notifications.createNotification</code> existuje
+              v dokumentaci, vypadá funkčně, ale v HomeyScript kontextu
+              <strong>není dostupné</strong>. Výsledek: <code>is not a function</code>.
+              19 tichých chyb za jediný den v logu, než jsem to našel.
+            </p>
+            <p>
+              Stejný pattern: <code>castRadio</code> (jen flow-only), některé
+              <code>Homey.scripts</code> volání. Pravidlo: API se musí
+              <strong>empiricky ověřit</strong> v sandboxu, ne věřit dokumentaci.
+              Tichá selhání jsou nejhorší kategorie.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- AI BRAIN -->
     <section id="ai-brain" class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">06 — AI Brain</p>
+          <p class="section-eyebrow">08 — AI Brain</p>
           <h2 class="section-title">Guardian vrstva nad systémem</h2>
           <p class="section-lead">
             Smart home, který se sám kontroluje. Detekuje ghost values, ověřuje
-            očekávaný stav, blokuje rozbité nasazení.
+            očekávaný stav, blokuje rozbité nasazení, denně analyzuje logy přes Gemini.
           </p>
         </header>
 
@@ -501,7 +930,8 @@
             <h3>Expected State Engine</h3>
             <p>
               Pro každý čas + režim spočítá co <em>by mělo</em> být zapnuté
-              / vypnuté. Slouží jako reference proti reálnému stavu.
+              / vypnuté. Slouží jako reference proti reálnému stavu —
+              základ pro detekci anomálií.
             </p>
           </article>
 
@@ -514,7 +944,7 @@
             <p>
               Porovnává očekávaný a reálný stav. Detekuje ghost values
               (proměnné, které lžou) a stuck flagy. První produkční detekce:
-              <code>priority_active=tts</code> ghost.
+              <code>priority_active=tts</code> ghost po 00:40.
             </p>
           </article>
 
@@ -530,6 +960,32 @@
               release se zablokuje a starý skript zůstává.
             </p>
           </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_self_healing_v4</code>
+            </div>
+            <h3>Self-Healing Engine</h3>
+            <p>
+              4 detektory každých 10 minut: orphan requests, stuck events,
+              audio deadlocks, offline kritická zařízení. Auto-reset bez mé
+              intervence.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_gemini_diagnostic_v1</code>
+            </div>
+            <h3>Gemini Diagnostika</h3>
+            <p>
+              Každý den v 11:40. Načte logy ze Sheets, pošle Gemini Flash
+              s diagnostickým promptem, výsledek (priority + fix suggestion)
+              uloží do dashboardu na AI stránce.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -538,7 +994,7 @@
     <section id="kontakt" class="section section-contact">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">07 — O projektu</p>
+          <p class="section-eyebrow">09 — O projektu</p>
           <h2 class="section-title">Kdo a proč</h2>
         </header>
 
@@ -569,6 +1025,7 @@
               <li>HomeyScript (JavaScript runtime)</li>
               <li>Google Sheets jako event log</li>
               <li>Home Assistant OS (mirror + observer)</li>
+              <li>Gemini API (denní diagnostika)</li>
               <li>HTML/CSS/JS dashboardy</li>
               <li>GitHub jako single source of truth</li>
             </ul>
