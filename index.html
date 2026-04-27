@@ -259,20 +259,43 @@
               <span class="hw-evo-badge hw-evo-badge-current">Live · současný</span>
               <h3>Homey Pro (Early 2023)</h3>
             </div>
+            <figure class="hw-evo-photo">
+              <img src="assets/photos/homey-pro.png" alt="Homey Pro Early 2023 — oficiální produktová fotografie" loading="lazy" class="zoomable" />
+              <figcaption>© Athom B.V. — oficiální press image</figcaption>
+            </figure>
+            <h4 class="hw-evo-spec-title">Hardware specs</h4>
             <ul class="hw-evo-specs">
               <li><strong>CPU</strong>: 1,5 GHz Quad-core ARMv8</li>
               <li><strong>RAM</strong>: 4 GB LPDDR4</li>
               <li><strong>Storage</strong>: 8 GB eMMC Flash</li>
-              <li><strong>Wireless</strong>: Wi-Fi 2.4/5 GHz, BT 5.0, Matter v1.3, Thread (Border Router), Zigbee 3.0, Z-Wave 700, 433 MHz, IR</li>
-              <li>Plný HomeyScript runtime + REST API</li>
-              <li>Updates garantovány <strong>do června 2031</strong></li>
+              <li><strong>Updates garantovány do června 2031</strong></li>
+            </ul>
+            <h4 class="hw-evo-spec-title">Bezdrátové protokoly</h4>
+            <ul class="hw-evo-specs">
+              <li><strong>Wi-Fi</strong> 2.4 GHz + 5 GHz</li>
+              <li><strong>Bluetooth</strong> Low Energy 5.0</li>
+              <li><strong>Matter</strong> v1.3 (controller)</li>
+              <li><strong>Thread</strong> (Border Router capability)</li>
+              <li><strong>Zigbee</strong> 3.0 (coordinator)</li>
+              <li><strong>Z-Wave</strong> 700 Series</li>
+              <li><strong>433 MHz</strong> (legacy senzory)</li>
+              <li><strong>Infrared</strong> (TV remote learning)</li>
+              <li>Volitelný <strong>Ethernet adapter</strong> (USB-C)</li>
+            </ul>
+            <h4 class="hw-evo-spec-title">Co umí</h4>
+            <ul class="hw-evo-specs">
+              <li><strong>Local-first processing</strong> — cloud jen jako backup, automatizace běží lokálně</li>
+              <li><strong>Advanced Flow</strong> automation (zdarma, bez subscription)</li>
+              <li><strong>HomeyScript</strong> runtime — full JavaScript pro custom skripty</li>
+              <li><strong>REST API</strong> s Bearer tokenem pro externí integrace</li>
+              <li><strong>Satellite Mode</strong> — extends range přes Homey Bridge</li>
+              <li><strong>Experimental features</strong>: SSH access, virtual devices, power user tools</li>
             </ul>
             <p class="hw-evo-issue">
               <strong>Co to umožnilo:</strong> 110+ skriptů paralelně bez SIGABRT,
               centralizovaná logika v JavaScriptu, request-first pipeline,
               daily Gemini analýza logů, real-time dashboardy přes REST API.
-              Local-first processing — cloud jen jako záloha. Bez tohoto skoku
-              by současný systém nebyl možný.
+              Bez tohoto skoku by současný systém nebyl možný.
             </p>
             <p class="hw-evo-link">
               <a href="https://homey.app/en-us/homey-pro/" target="_blank" rel="noopener">
@@ -353,9 +376,11 @@
           <p class="section-eyebrow">03 — Funkce</p>
           <h2 class="section-title">Co systém reálně dělá</h2>
           <p class="section-lead">
-            Konkrétní automatizace na úrovni denního provozu. Topení, ranní rutina,
-            multi-signal příchod/odchod, ovládání kostkou Aqara Cube. Každá feature
-            má pain point který řeší a multi-signal logiku, ne jednoduchý IF.
+            Konkrétní věci, co systém každý den dělá. Topení, ranní vstávání,
+            poznání jestli jsem doma nebo pryč, ovládání hlasitosti otáčením
+            kostky. Pokud možno bez toho, abych se musel něčeho dotknout —
+            a hlavně bez falešných reakcí, kdy by se rozsvítilo světlo na kočku
+            v noci.
           </p>
         </header>
 
@@ -367,10 +392,10 @@
             <p>
               Topí elektrický kotel <strong>Protherm RAY 9 KE</strong> (9 kW,
               3-fázový). Místo původního termostatu kotle je
-              <strong>Fibaro FGS-214</strong> (Z-Wave relay), který spíná
-              cívku stykače <strong>ABB ESB 24-40</strong> (230V cívka,
-              24A/3~400V). Stykač pak spíná hlavní fáze kotle. FGS-214 si tahá
-              jen ~5 W, ne plný proud kotle — bezpečné a tichý spínač.
+              <strong>Fibaro FGS-214</strong> (Z-Wave Single Switch 2), který
+              přes výkonový mezičlánek spíná hlavní silové fáze kotle.
+              FGS-214 sám přenáší jen řídicí signál — nikdy plný proud
+              kotle.
             </p>
             <p>
               V každé místnosti se reguluje radiátor přes
@@ -380,72 +405,152 @@
             </p>
             <h4>3 režimy</h4>
             <ul class="feature-list">
-              <li><strong>AUTO</strong> — týdenní schedule + AI vrstvy modifikují target v reálném čase (preWakeBoost, weatherAdjust, occupancyBonus).</li>
-              <li><strong>MANUAL</strong> — schedule 1:1, žádné AI. Pro hosta nebo testing.</li>
-              <li><strong>OFF</strong> — všechny zóny anti-freeze 7 °C, kotel zapne jen když opravdu hrozí mráz.</li>
+              <li><strong>AUTO (chytrý)</strong> — týdenní rozvrh, který se sám upraví podle počasí, blížícího se budíku a podle toho, kdo je v jaké místnosti.</li>
+              <li><strong>RUČNÍ</strong> — drží přesně rozvrh, žádné chytrosti. Pro hosta nebo když si chci hrát.</li>
+              <li><strong>VYPNUTO</strong> — všude bezpečnostní 7 °C. Kotel zapne jen když by reálně hrozilo zamrznutí trubek.</li>
             </ul>
-            <h4>State-aware hystereze</h4>
+            <h4>Chytré spínání</h4>
             <p>
-              Kotel OFF → zapnout až když <em>current &lt; target − 0.5 °C</em>.
-              Kotel ON → vypnout až když <em>current ≥ target + 0.1 °C</em>.
-              Asymetrická hystereze (cold 0.5, warm 0.1) eliminuje cycling
-              a drží stabilní teplotu v pásu cca 0,6 °C kolem cíle.
+              Kotel se nezapíná na každou desetinu stupně dolů, jinak by
+              cyklicky tikal. Funguje to s rozdílem teplot: musí spadnout
+              pod cíl o víc než půl stupně, než se sepne. A vypne až když
+              přesáhne cíl o desetinu stupně. Výsledek: stabilní teplota
+              v pásu cca 0,6 °C kolem nastavené hodnoty, žádné neustálé
+              klikání relé.
             </p>
-            <h4>kWh tracking</h4>
+            <h4>Spotřeba v kWh</h4>
             <p>
-              <code>runtime_today_s</code> += 120 s každý cron tick když boiler ON.
-              <code>kWh = (runtime / 3600) × 9 kW</code>. Přesnost ~95 % (Protherm
-              moduluje stage 3/6/9 kW podle teploty vody).
-              Real měření v plánu přes Shelly 3EM CT clamp.
+              Systém měří, jak dlouho byl kotel zapnutý a vynásobí to jeho
+              příkonem (9 kW). Přesnost asi 95 % — kotel reálně moduluje výkon
+              (3/6/9 kW podle potřeby), takže přesné měření plánuju přes
+              Shelly měřák, jakmile bude čas.
             </p>
           </div>
           <div class="feature-visual">
-            <svg viewBox="0 0 400 280" class="diagram" aria-label="Topení: kotel + stykač + FGS-214 + 4 TRV">
+            <svg viewBox="0 0 480 360" class="diagram" aria-label="Topení: Homey → FGS-214 → kotel + 4 termo hlavice na radiátorech">
               <defs>
                 <linearGradient id="boilerGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#ef4444" stop-opacity="0.4" />
-                  <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.2" />
+                  <stop offset="0%" stop-color="#ef4444" stop-opacity="0.5" />
+                  <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.25" />
+                </linearGradient>
+                <linearGradient id="radGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.1"/>
                 </linearGradient>
               </defs>
-              <rect x="10" y="50" width="80" height="180" rx="8" fill="url(#boilerGrad)" stroke="#ef4444" stroke-width="2"/>
-              <text x="50" y="80" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="700">PROTHERM</text>
-              <text x="50" y="95" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="700">RAY 9 KE</text>
-              <text x="50" y="155" text-anchor="middle" fill="#fff" font-size="20" font-weight="800">9 kW</text>
-              <text x="50" y="180" text-anchor="middle" fill="#aab4c2" font-size="10">3-fáze</text>
 
-              <line x1="90" y1="140" x2="130" y2="140" stroke="#00e5ff" stroke-width="2"/>
-              <rect x="130" y="115" width="80" height="50" rx="6" fill="#1c2330" stroke="#00e5ff" stroke-width="1.5"/>
-              <text x="170" y="135" text-anchor="middle" fill="#00e5ff" font-size="11" font-weight="600">Stykač ABB</text>
-              <text x="170" y="155" text-anchor="middle" fill="#aab4c2" font-size="10">ESB 24-40</text>
+              <!-- HOMEY -->
+              <rect x="20" y="20" width="100" height="60" rx="10" fill="#1c2330" stroke="#00e5ff" stroke-width="2"/>
+              <text x="70" y="45" text-anchor="middle" fill="#00e5ff" font-size="13" font-weight="700">HOMEY PRO</text>
+              <text x="70" y="62" text-anchor="middle" fill="#aab4c2" font-size="10">řídicí jednotka</text>
 
-              <line x1="210" y1="140" x2="250" y2="140" stroke="#00e5ff" stroke-width="2"/>
-              <rect x="250" y="115" width="80" height="50" rx="6" fill="#1c2330" stroke="#7c3aed" stroke-width="1.5"/>
-              <text x="290" y="135" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="600">Fibaro</text>
-              <text x="290" y="153" text-anchor="middle" fill="#aab4c2" font-size="10">FGS-214</text>
+              <!-- Z-Wave dotted line: Homey → FGS-214 -->
+              <line x1="120" y1="50" x2="200" y2="50" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,4"/>
+              <text x="160" y="42" text-anchor="middle" fill="#22c55e" font-size="9">Z-Wave</text>
 
-              <line x1="330" y1="140" x2="370" y2="140" stroke="#22c55e" stroke-width="2" stroke-dasharray="3,3"/>
-              <text x="370" y="135" text-anchor="end" fill="#22c55e" font-size="9">Z-Wave</text>
+              <!-- FGS-214 -->
+              <rect x="200" y="20" width="120" height="60" rx="10" fill="#1c2330" stroke="#7c3aed" stroke-width="2"/>
+              <text x="260" y="45" text-anchor="middle" fill="#7c3aed" font-size="13" font-weight="700">FGS-214</text>
+              <text x="260" y="62" text-anchor="middle" fill="#aab4c2" font-size="10">spínač kotle</text>
 
-              <g transform="translate(40,10)">
-                <rect x="0" y="0" width="50" height="28" rx="4" fill="#131820" stroke="#fbbf24" stroke-width="1"/>
-                <text x="25" y="18" text-anchor="middle" fill="#fbbf24" font-size="9">TRV jídelna</text>
+              <!-- Cable line: FGS-214 → kotel -->
+              <line x1="320" y1="50" x2="400" y2="50" stroke="#ef4444" stroke-width="2"/>
+              <text x="360" y="42" text-anchor="middle" fill="#ef4444" font-size="9">silová linka</text>
+
+              <!-- KOTEL -->
+              <rect x="400" y="10" width="70" height="80" rx="8" fill="url(#boilerGrad)" stroke="#ef4444" stroke-width="2"/>
+              <text x="435" y="35" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="700">KOTEL</text>
+              <text x="435" y="50" text-anchor="middle" fill="#aab4c2" font-size="9">Protherm</text>
+              <text x="435" y="64" text-anchor="middle" fill="#aab4c2" font-size="9">RAY 9 KE</text>
+              <text x="435" y="82" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="700">9 kW</text>
+
+              <!-- Heating water circuit (decorative) -->
+              <path d="M 435 90 Q 435 130 320 145 L 80 145 Q 50 145 50 175 L 50 245" stroke="#ef4444" stroke-width="2" fill="none" opacity="0.5"/>
+              <text x="240" y="138" text-anchor="middle" fill="#ef4444" font-size="9" opacity="0.7">teplá voda do radiátorů</text>
+
+              <!-- 4 RADIATORS with TRV heads -->
+              <!-- Radiator + TRV: jídelna -->
+              <g transform="translate(40,180)">
+                <!-- Radiator body (vertical lines) -->
+                <rect x="0" y="20" width="80" height="60" rx="3" fill="url(#radGrad)" stroke="#fbbf24" stroke-width="1"/>
+                <line x1="10" y1="25" x2="10" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="22" y1="25" x2="22" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="34" y1="25" x2="34" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="46" y1="25" x2="46" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="58" y1="25" x2="58" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="70" y1="25" x2="70" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <!-- TRV head (white cylinder on top) -->
+                <ellipse cx="-5" cy="40" rx="14" ry="10" fill="#e8e8e8" stroke="#666"/>
+                <rect x="-19" y="35" width="28" height="14" rx="3" fill="#e8e8e8" stroke="#666"/>
+                <text x="-5" y="44" text-anchor="middle" fill="#444" font-size="7" font-weight="700">21°</text>
+                <text x="40" y="100" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">jídelna</text>
               </g>
-              <g transform="translate(110,10)">
-                <rect x="0" y="0" width="50" height="28" rx="4" fill="#131820" stroke="#fbbf24" stroke-width="1"/>
-                <text x="25" y="18" text-anchor="middle" fill="#fbbf24" font-size="9">TRV ložnice</text>
-              </g>
-              <g transform="translate(180,10)">
-                <rect x="0" y="0" width="50" height="28" rx="4" fill="#131820" stroke="#fbbf24" stroke-width="1"/>
-                <text x="25" y="18" text-anchor="middle" fill="#fbbf24" font-size="9">TRV koup.</text>
-              </g>
-              <g transform="translate(250,10)">
-                <rect x="0" y="0" width="50" height="28" rx="4" fill="#131820" stroke="#fbbf24" stroke-width="1"/>
-                <text x="25" y="18" text-anchor="middle" fill="#fbbf24" font-size="9">TRV toaleta</text>
+
+              <!-- Radiator + TRV: ložnice -->
+              <g transform="translate(150,180)">
+                <rect x="0" y="20" width="80" height="60" rx="3" fill="url(#radGrad)" stroke="#fbbf24" stroke-width="1"/>
+                <line x1="10" y1="25" x2="10" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="22" y1="25" x2="22" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="34" y1="25" x2="34" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="46" y1="25" x2="46" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="58" y1="25" x2="58" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="70" y1="25" x2="70" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <ellipse cx="-5" cy="40" rx="14" ry="10" fill="#e8e8e8" stroke="#666"/>
+                <rect x="-19" y="35" width="28" height="14" rx="3" fill="#e8e8e8" stroke="#666"/>
+                <text x="-5" y="44" text-anchor="middle" fill="#444" font-size="7" font-weight="700">19°</text>
+                <text x="40" y="100" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">ložnice</text>
               </g>
 
-              <text x="200" y="260" text-anchor="middle" fill="#6b7686" font-size="10">FGS-214 spíná cívku stykače (~5W) → stykač spíná kotel</text>
+              <!-- Radiator + TRV: koupelna -->
+              <g transform="translate(260,180)">
+                <rect x="0" y="20" width="80" height="60" rx="3" fill="url(#radGrad)" stroke="#fbbf24" stroke-width="1"/>
+                <line x1="10" y1="25" x2="10" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="22" y1="25" x2="22" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="34" y1="25" x2="34" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="46" y1="25" x2="46" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="58" y1="25" x2="58" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="70" y1="25" x2="70" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <ellipse cx="-5" cy="40" rx="14" ry="10" fill="#e8e8e8" stroke="#666"/>
+                <rect x="-19" y="35" width="28" height="14" rx="3" fill="#e8e8e8" stroke="#666"/>
+                <text x="-5" y="44" text-anchor="middle" fill="#444" font-size="7" font-weight="700">22°</text>
+                <text x="40" y="100" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">koupelna</text>
+              </g>
+
+              <!-- Radiator + TRV: toaleta -->
+              <g transform="translate(370,180)">
+                <rect x="0" y="20" width="80" height="60" rx="3" fill="url(#radGrad)" stroke="#fbbf24" stroke-width="1"/>
+                <line x1="10" y1="25" x2="10" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="22" y1="25" x2="22" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="34" y1="25" x2="34" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="46" y1="25" x2="46" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="58" y1="25" x2="58" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <line x1="70" y1="25" x2="70" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
+                <ellipse cx="-5" cy="40" rx="14" ry="10" fill="#e8e8e8" stroke="#666"/>
+                <rect x="-19" y="35" width="28" height="14" rx="3" fill="#e8e8e8" stroke="#666"/>
+                <text x="-5" y="44" text-anchor="middle" fill="#444" font-size="7" font-weight="700">18°</text>
+                <text x="40" y="100" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">toaleta</text>
+              </g>
+
+              <!-- Z-Wave wireless rays from Homey to TRV heads -->
+              <g stroke="#22c55e" stroke-width="1" stroke-dasharray="2,3" opacity="0.5" fill="none">
+                <path d="M 60 80 Q 50 130 35 220"/>
+                <path d="M 80 80 Q 130 130 145 220"/>
+                <path d="M 100 80 Q 200 130 255 220"/>
+                <path d="M 120 80 Q 280 130 365 220"/>
+              </g>
+
+              <!-- Legend -->
+              <g transform="translate(20,310)">
+                <rect x="0" y="0" width="14" height="3" fill="#ef4444"/>
+                <text x="20" y="5" fill="#aab4c2" font-size="10">silová linka 230 V</text>
+                <line x1="160" y1="2" x2="180" y2="2" stroke="#22c55e" stroke-width="2" stroke-dasharray="3,3"/>
+                <text x="186" y="5" fill="#aab4c2" font-size="10">Z-Wave bezdrátový signál</text>
+                <line x1="340" y1="2" x2="360" y2="2" stroke="#ef4444" stroke-width="1" opacity="0.5"/>
+                <text x="366" y="5" fill="#aab4c2" font-size="10">trubky s teplou vodou</text>
+              </g>
+              <text x="240" y="340" text-anchor="middle" fill="#6b7686" font-size="11">Každá místnost má svoji termo hlavici co reguluje teplotu na radiátoru.</text>
             </svg>
-            <p class="diagram-cap">Schéma: FGS-214 spíná cívku stykače, ne kotel přímo. 4× TRV regulují radiátory v jednotlivých zónách.</p>
+            <p class="diagram-cap">Schéma topení: Homey řídí spínač kotle (FGS-214) přes Z-Wave. Kotel ohřívá vodu, která teče do radiátorů. Na každém radiátoru je termostatická hlavice (Fibaro FGT-001), která sama otevírá/zavírá přívod podle nastavené teploty v dané místnosti.</p>
           </div>
         </article>
 
@@ -461,9 +566,9 @@
               ještě tvrdě spí.
             </p>
             <p>
-              Homey má event <code>any_alarm_is_due</code>, který přijde
-              <strong>15 minut před</strong> reálným budíkem (3:00 nebo 5:00).
-              To je okamžik, kdy se rozjede skript <code>sh_morning_brain_v1</code>:
+              Homey ví o nastaveném budíku v telefonu předem a pošle systému
+              upozornění <strong>15 minut před</strong> reálným zvoněním
+              (3:00 nebo 5:00). To je signál „začni budit byt":
             </p>
             <ol class="feature-timeline">
               <li><span class="t-time">−15 min</span><span class="t-act">pre-alarm event → spustí ranní brain</span></li>
@@ -502,55 +607,55 @@
         </article>
 
         <!-- PŘÍCHOD / ODCHOD -->
-        <article class="feature feature-reverse">
-          <div class="feature-text">
+        <article class="feature feature-fullwidth">
+          <div class="feature-fullwidth-intro">
             <span class="feature-badge">🚶 Příchod / odchod</span>
             <h3>Tlačítko vs. telefon vs. geofence</h3>
             <p>
               Otázka „je někdo doma?" se nikdy neodvozuje z jediného zdroje —
-              vždy <strong>multi-signal</strong>. Tady jsou tři nezávislé
-              cesty, jak systém pozná příchod a odchod:
-            </p>
-            <div class="signal-grid">
-              <div class="signal-card">
-                <span class="signal-num">1</span>
-                <h4>Odchodové tlačítko</h4>
-                <p>
-                  <strong>Aqara button u dveří.</strong> Explicitní signál
-                  „odcházím právě teď". Spustí <code>sh_presence_router_v1</code>
-                  → preset=away → topení 16 °C, kamery aktivní, nepotřebné spotřebiče
-                  off, dashboard přepne na „pryč" mód.
-                </p>
-                <p class="signal-pros">✅ Vždy jistý: „je to úmyslné"<br>⚠ Zapomenu zmáčknout</p>
-              </div>
-              <div class="signal-card">
-                <span class="signal-num">2</span>
-                <h4>Telefon v Homey appce</h4>
-                <p>
-                  Homey appka monitoruje BT/Wi-Fi přítomnost telefonu.
-                  Když telefon zmizí ze sítě déle než 5 minut, systém to
-                  vyhodnotí jako odchod (s timeoutem proti falešným disconnect).
-                </p>
-                <p class="signal-pros">✅ Auto, bez akce<br>⚠ Wi-Fi flap může simulovat odchod</p>
-              </div>
-              <div class="signal-card">
-                <span class="signal-num">3</span>
-                <h4>Telefon geofence</h4>
-                <p>
-                  GPS geofence kolem domu (~150 m). Když telefon překročí
-                  hranici, Homey appka pošle event. Funguje i v práci 200 km daleko —
-                  systém jasně ví „uživatel je daleko, ne na záchodě".
-                </p>
-                <p class="signal-pros">✅ Distance-aware<br>⚠ GPS šum v blízkosti hranice</p>
-              </div>
-            </div>
-            <p>
-              Multi-signal kombinace: pokud souhlasí <strong>2+ signály</strong>,
-              systém přepne preset. Když jeden signál říká „odešel", ale ostatní
-              ne, čeká na potvrzení. Žádné akce z jednoho signálu = žádné
-              falešné odchody.
+              vždy <strong>multi-signal</strong>. Tři nezávislé cesty, jak
+              systém pozná příchod a odchod:
             </p>
           </div>
+          <div class="signal-grid signal-grid-wide">
+            <div class="signal-card">
+              <span class="signal-num">1</span>
+              <h4>Odchodové tlačítko</h4>
+              <p>
+                <strong>Aqara button u dveří.</strong> Explicitní signál
+                „odcházím právě teď". Spustí <code>sh_presence_router_v1</code>
+                → preset=away → topení 16 °C, kamery aktivní, nepotřebné
+                spotřebiče off, dashboard přepne na „pryč" mód.
+              </p>
+              <p class="signal-pros">✅ Vždy jistý: „je to úmyslné"<br>⚠ Zapomenu zmáčknout</p>
+            </div>
+            <div class="signal-card">
+              <span class="signal-num">2</span>
+              <h4>Telefon v Homey appce</h4>
+              <p>
+                Homey appka monitoruje BT/Wi-Fi přítomnost telefonu. Když
+                telefon zmizí ze sítě déle než 5 minut, systém to vyhodnotí
+                jako odchod (s timeoutem proti falešným disconnect).
+              </p>
+              <p class="signal-pros">✅ Auto, bez akce<br>⚠ Wi-Fi flap může simulovat odchod</p>
+            </div>
+            <div class="signal-card">
+              <span class="signal-num">3</span>
+              <h4>Telefon geofence</h4>
+              <p>
+                GPS geofence kolem domu (~150 m). Když telefon překročí hranici,
+                Homey appka pošle event. Funguje i v práci 200 km daleko —
+                systém jasně ví „uživatel je daleko, ne na záchodě".
+              </p>
+              <p class="signal-pros">✅ Distance-aware<br>⚠ GPS šum v blízkosti hranice</p>
+            </div>
+          </div>
+          <p class="feature-fullwidth-note">
+            Multi-signal kombinace: pokud souhlasí <strong>2+ signály</strong>,
+            systém přepne preset. Když jeden signál říká „odešel", ale ostatní
+            ne, čeká na potvrzení. Žádné akce z jednoho signálu = žádné
+            falešné odchody.
+          </p>
         </article>
 
         <!-- AQARA CUBE -->
@@ -607,52 +712,13 @@
             </div>
           </div>
           <div class="feature-visual">
-            <!-- Aqara Cube SVG illustration -->
-            <svg viewBox="0 0 280 280" class="cube-illust" aria-label="Aqara Cube T1 Pro — stylizovaná ilustrace">
-              <defs>
-                <linearGradient id="cubeFront" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#f8f8f8"/>
-                  <stop offset="100%" stop-color="#d0d0d0"/>
-                </linearGradient>
-                <linearGradient id="cubeTop" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="100%" stop-color="#e8e8e8"/>
-                </linearGradient>
-                <linearGradient id="cubeRight" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#c0c0c0"/>
-                  <stop offset="100%" stop-color="#909090"/>
-                </linearGradient>
-              </defs>
-              <!-- Cube top face -->
-              <polygon points="80,80 200,80 230,50 110,50" fill="url(#cubeTop)" stroke="#888" stroke-width="1"/>
-              <!-- Cube front face -->
-              <polygon points="80,80 200,80 200,200 80,200" fill="url(#cubeFront)" stroke="#888" stroke-width="1"/>
-              <!-- Cube right face -->
-              <polygon points="200,80 230,50 230,170 200,200" fill="url(#cubeRight)" stroke="#888" stroke-width="1"/>
-              <!-- Aqara dot pattern on front face -->
-              <g fill="#888" opacity="0.5">
-                <circle cx="105" cy="105" r="2"/><circle cx="125" cy="105" r="2"/><circle cx="145" cy="105" r="2"/><circle cx="165" cy="105" r="2"/><circle cx="185" cy="105" r="2"/>
-                <circle cx="105" cy="125" r="2"/><circle cx="125" cy="125" r="2"/><circle cx="145" cy="125" r="2"/><circle cx="165" cy="125" r="2"/><circle cx="185" cy="125" r="2"/>
-                <circle cx="105" cy="145" r="2"/><circle cx="125" cy="145" r="2"/><circle cx="145" cy="145" r="2"/><circle cx="165" cy="145" r="2"/><circle cx="185" cy="145" r="2"/>
-                <circle cx="105" cy="165" r="2"/><circle cx="125" cy="165" r="2"/><circle cx="145" cy="165" r="2"/><circle cx="165" cy="165" r="2"/><circle cx="185" cy="165" r="2"/>
-                <circle cx="105" cy="185" r="2"/><circle cx="125" cy="185" r="2"/><circle cx="145" cy="185" r="2"/><circle cx="165" cy="185" r="2"/><circle cx="185" cy="185" r="2"/>
-              </g>
-              <!-- Aqara logo dot on top -->
-              <circle cx="140" cy="65" r="3" fill="#22c55e" opacity="0.7"/>
-              <text x="155" y="69" fill="#444" font-size="9" font-weight="600">AQARA</text>
-
-              <!-- Rotation arrows -->
-              <path d="M 60 240 Q 90 230 120 245" stroke="#00e5ff" stroke-width="2" fill="none" marker-end="url(#arrowend)"/>
-              <path d="M 220 245 Q 190 235 160 245" stroke="#00e5ff" stroke-width="2" fill="none" marker-end="url(#arrowend)"/>
-              <defs>
-                <marker id="arrowend" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#00e5ff"/>
-                </marker>
-              </defs>
-              <text x="140" y="265" text-anchor="middle" fill="#aab4c2" font-size="11">otáčení = hlasitost</text>
-              <text x="140" y="35" text-anchor="middle" fill="#aab4c2" font-size="11">strana = scéna</text>
-            </svg>
-            <p class="diagram-cap">Stylizovaná ilustrace Aqara Cube T1 Pro. Skutečná kostka cca 5 × 5 × 5 cm, plast s tečkovou texturou.</p>
+            <figure class="product-photo">
+              <img src="assets/photos/aqara-cube-t1-pro.png"
+                   alt="Aqara Cube T1 Pro — oficiální produktová fotografie"
+                   loading="lazy"
+                   class="zoomable" />
+              <figcaption>© Lumi United Technology Co., Ltd. (Aqara) — oficiální produktová fotografie. Skutečná kostka cca 5 × 5 × 5 cm.</figcaption>
+            </figure>
           </div>
         </article>
 
@@ -1082,7 +1148,8 @@
             <div class="gallery-thumb">
               <img src="assets/screenshots/dashboard-2880x1800.png"
                    alt="Dashboard 2880×1800 — master 32&quot; monitor"
-                   loading="lazy" />
+                   loading="lazy" class="zoomable" />
+              <span class="zoom-hint" aria-hidden="true">🔍 klikni pro zvětšení</span>
             </div>
             <figcaption>
               <h3>Master 32" monitor</h3>
@@ -1094,7 +1161,8 @@
             <div class="gallery-thumb">
               <img src="assets/screenshots/dashboard-1920x1080.png"
                    alt="Dashboard 1920×1080 — 14&quot; notebook"
-                   loading="lazy" />
+                   loading="lazy" class="zoomable" />
+              <span class="zoom-hint" aria-hidden="true">🔍 klikni pro zvětšení</span>
             </div>
             <figcaption>
               <h3>14" notebook</h3>
@@ -1106,7 +1174,8 @@
             <div class="gallery-thumb">
               <img src="assets/screenshots/dashboard-1024x600.png"
                    alt="Dashboard 1024×600 — RPi WaveShare kiosek"
-                   loading="lazy" />
+                   loading="lazy" class="zoomable" />
+              <span class="zoom-hint" aria-hidden="true">🔍 klikni pro zvětšení</span>
             </div>
             <figcaption>
               <h3>RPi kiosek</h3>
@@ -1709,6 +1778,13 @@
       </div>
     </section>
   </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
 
   <footer class="site-footer">
     <div class="container footer-inner">

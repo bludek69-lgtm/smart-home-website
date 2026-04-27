@@ -57,6 +57,54 @@
     sections.forEach((s) => observer.observe(s));
   }
 
+  // ── Lightbox for zoomable images ─────────────────────────────
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    const lbImg = lightbox.querySelector('.lightbox-img');
+    const lbCap = lightbox.querySelector('.lightbox-cap');
+    const lbClose = lightbox.querySelector('.lightbox-close');
+
+    const openLightbox = (src, alt, caption) => {
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lbCap.textContent = caption || alt || '';
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeLightbox = () => {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('img.zoomable').forEach((img) => {
+      img.addEventListener('click', () => {
+        const fig = img.closest('figure');
+        const cap = fig ? (fig.querySelector('figcaption')?.textContent || '') : '';
+        openLightbox(img.src, img.alt, cap);
+      });
+    });
+    // also click on .gallery-thumb (for the .zoom-hint overlay)
+    document.querySelectorAll('.gallery-thumb').forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const img = thumb.querySelector('img.zoomable');
+        const fig = thumb.closest('figure');
+        const cap = fig ? (fig.querySelector('figcaption h3')?.textContent || '') : '';
+        if (img) openLightbox(img.src, img.alt, cap);
+      });
+    });
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target === lbImg) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+    });
+  }
+
   // ── Animated counter for hero stats ──────────────────────────
   const counters = document.querySelectorAll('[data-count]');
   if (counters.length && 'IntersectionObserver' in window) {
