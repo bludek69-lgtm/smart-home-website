@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SMART HOME projekt – Homey Pro 2026, script-first architektura, AI guardian. Semily." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>SMART HOME – projekt Luďka Budínského</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#home" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#historie">Historie</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#dashboard">Dashboard</a></li>
+          <li><a href="#zarizeni">Zařízení</a></li>
+          <li><a href="#architektura">Architektura</a></li>
+          <li><a href="#ai-brain">AI Brain</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="section section-hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">
+            <span class="status-dot" aria-hidden="true"></span>
+            Live · Homey Pro 2026 · Semily
+          </p>
+          <h1 class="hero-title">
+            Smart home jako<br />
+            <span class="grad-text">živý organismus</span>
+          </h1>
+          <p class="hero-lead">
+            Domácnost řízená script-first architekturou nad <strong>Homey Pro 2026</strong>.
+            Stovky skriptů, vlastní AI Brain Guardian, multi-resolution dashboardy a důsledné
+            multi-signal rozhodování. Vše vyvíjené v jednom bytě v Semilech.
+          </p>
+          <div class="hero-cta">
+            <a href="#architektura" class="btn btn-primary">Jak to funguje</a>
+            <a href="#blog" class="btn btn-ghost">Novinky</a>
+          </div>
+        </div>
+
+        <aside class="hero-stats" aria-label="Klíčová čísla">
+          <div class="stat">
+            <span class="stat-num" data-count="136">136</span>
+            <span class="stat-label">HomeyScriptů</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-count="200">200</span>
+            <span class="stat-label">Flows</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-count="309">309</span>
+            <span class="stat-label">Dashboard akcí</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" data-count="92">92</span>
+            <span class="stat-label">Brain Guardian score</span>
+          </div>
+        </aside>
+      </div>
+      <div class="hero-glow" aria-hidden="true"></div>
+    </section>
+
+    <!-- HISTORIE -->
+    <section id="historie" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">01 — Historie</p>
+          <h2 class="section-title">Jak systém vznikal</h2>
+          <p class="section-lead">
+            Od první žárovky a flow „když přijdeš domů, rozsvítit" k autonomnímu systému,
+            který se sám diagnostikuje a opravuje.
+          </p>
+        </header>
+
+        <ol class="timeline">
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Začátek · Homey Pro (2023)</p>
+              <h3>První kroky</h3>
+              <p>
+                Klasické flow-based řízení. Pohyb → světlo → časovač. Funkční,
+                ale s rostoucím počtem zařízení se logika začala duplikovat
+                a kolidovat.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Přechod · Homey Pro 2026</p>
+              <h3>Nová generace HW</h3>
+              <p>
+                Migrace na Homey Pro 2026 přinesla výkon na dlouhodobě běžící
+                HomeyScripty. Otevřela se cesta k centralizované logice
+                v JavaScriptu místo lepení flows.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Refaktor · Script-first</p>
+              <h3>Pravidlo „logika do skriptu, ne do flow"</h3>
+              <p>
+                Veškerá rozhodovací logika přesunuta do <code>sh_*</code> skriptů.
+                Flows zůstávají jako tenké triggery + akce. Vznikly routery
+                (open space lighting, roleta, audio, vacuum) a request-first
+                pipeline.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Multi-signal · REUSE FIRST</p>
+              <h3>Architektonická pravidla</h3>
+              <p>
+                Žádná akce z jednoho senzoru — vždy 2+ signály. Žádný hardcoded
+                device name — vše přes Device Map. Žádný nový skript pokud
+                lze rozšířit existující.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Dashboardy · multi-resolution</p>
+              <h3>UI pro 3 obrazovky</h3>
+              <p>
+                Greenfield redesign s premium dark layoutem. Tři varianty
+                (1920×1080 notebook, 2880×1800 monitor, 1024×600 RPi kiosek)
+                sdílející stejnou architekturu.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Live · AI Brain Guardian</p>
+              <h3>Supervisor vrstva</h3>
+              <p>
+                Skripty <code>sh_state_validator</code>,
+                <code>sh_brain_guardian</code> a <code>sh_release_guard</code>
+                tvoří meta-vrstvu, která kontroluje očekávaný stav, detekuje
+                ghost values a blokuje nasazení rozbitých změn.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">02 — Blog</p>
+          <h2 class="section-title">Novinky a changelogy</h2>
+          <p class="section-lead">
+            Pravidelné poznámky o tom, co se v systému změnilo, co se rozbilo a jak se to fixovalo.
+          </p>
+        </header>
+
+        <div class="post-grid">
+          <article class="post-card">
+            <a href="posts/dashboard-v7.html" class="post-card-link" aria-label="Dashboard V7 – nový layout a vizuální kontrola">
+              <div class="post-card-thumb">
+                <span class="post-card-badge">DASHBOARD</span>
+              </div>
+              <div class="post-card-body">
+                <p class="post-card-meta">26. dubna 2026 · 6 min čtení</p>
+                <h3 class="post-card-title">Dashboard V7 — nový layout a vizuální kontrola</h3>
+                <p class="post-card-excerpt">
+                  Sidebar 240px, status pills v topbaru, premium CSS layer aplikovaný do
+                  všech 6 dashboardů. Cyklus V3.7 → V7 dokončen, focus se přesouvá na
+                  Brain Guardian.
+                </p>
+                <span class="post-card-cta">Číst příspěvek →</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="post-card post-card-placeholder">
+            <div class="post-card-thumb post-card-thumb-soon">
+              <span class="post-card-badge">SOON</span>
+            </div>
+            <div class="post-card-body">
+              <p class="post-card-meta">Připravuje se</p>
+              <h3 class="post-card-title">Brain Guardian V1 — supervisor v ostrém provozu</h3>
+              <p class="post-card-excerpt">
+                Jak vznikla meta-vrstva nad celým smart home systémem a co první týden
+                provozu odhalil.
+              </p>
+            </div>
+          </article>
+
+          <article class="post-card post-card-placeholder">
+            <div class="post-card-thumb post-card-thumb-soon">
+              <span class="post-card-badge">SOON</span>
+            </div>
+            <div class="post-card-body">
+              <p class="post-card-meta">Připravuje se</p>
+              <h3 class="post-card-title">Heating Fáze C — AI vrstvy nad topením</h3>
+              <p class="post-card-excerpt">
+                preWakeBoost, weatherAdjust, occupancyBonus. Topení, které předvídá
+                a šetří podle obsazenosti místností.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">03 — Dashboard</p>
+          <h2 class="section-title">Tři obrazovky, jeden systém</h2>
+          <p class="section-lead">
+            Sdílená architektura, různá rozlišení. Každá varianta optimalizovaná pro jiný
+            fyzický kontext — od kiosku v předsíni po pracovní monitor.
+          </p>
+        </header>
+
+        <div class="device-grid">
+          <figure class="device-card">
+            <div class="device-frame device-frame-monitor">
+              <div class="device-screen device-screen-2880">
+                <span class="device-screen-label">2880 × 1800</span>
+              </div>
+            </div>
+            <figcaption>
+              <h3>Master 32" monitor</h3>
+              <p>
+                <strong>2880 × 1800 (16:10).</strong> Plná verze pro pracovnu —
+                všech 14 stránek, full sidebar, detaily zón a real-time grafy.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="device-card">
+            <div class="device-frame device-frame-laptop">
+              <div class="device-screen device-screen-1920">
+                <span class="device-screen-label">1920 × 1080</span>
+              </div>
+            </div>
+            <figcaption>
+              <h3>14" notebook</h3>
+              <p>
+                <strong>1920 × 1080 (16:9).</strong> Mobilní varianta pro práci
+                kdekoli v bytě — sidebar collapses na 64px pod 1280px.
+              </p>
+            </figcaption>
+          </figure>
+
+          <figure class="device-card">
+            <div class="device-frame device-frame-rpi">
+              <div class="device-screen device-screen-1024">
+                <span class="device-screen-label">1024 × 600</span>
+              </div>
+            </div>
+            <figcaption>
+              <h3>RPi kiosek</h3>
+              <p>
+                <strong>1024 × 600 (WaveShare 10.1").</strong> Vždy zapnutý touch
+                kiosek. Compact 4-col grid, 8 zúžených stránek, větší dotykové cíle.
+              </p>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="gallery-empty">
+          <p>
+            <strong>Galerie screenshotů:</strong> obrázky se nahrávají do
+            <code>/assets/screenshots/</code>. Po commit + push se objeví zde.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZAŘÍZENÍ -->
+    <section id="zarizeni" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">04 — Zařízení</p>
+          <h2 class="section-title">Co všechno systém řídí</h2>
+          <p class="section-lead">
+            Zařízení rozdělená do funkčních kategorií. Každá kategorie má svůj router
+            a svá pravidla.
+          </p>
+        </header>
+
+        <div class="category-grid">
+          <article class="category-card">
+            <span class="category-icon" aria-hidden="true">💡</span>
+            <h3>Světla</h3>
+            <p>
+              Open space + ložnice + pracovna. Multi-signal: FP2 presence + Z-Wave motion.
+              Privacy režim (roleta nahoře = open space LED off).
+            </p>
+          </article>
+
+          <article class="category-card">
+            <span class="category-icon" aria-hidden="true">🔥</span>
+            <h3>Topení</h3>
+            <p>
+              FGS-214 + 4× TRV. Tři režimy (auto / manual / off), state-aware hystereze,
+              anti-cycling, runtime-based kWh tracking.
+            </p>
+          </article>
+
+          <article class="category-card">
+            <span class="category-icon" aria-hidden="true">🔊</span>
+            <h3>Audio</h3>
+            <p>
+              Cast speakery + TTS pipeline s 200-char split. Sleep-respect (žádné TTS
+              v noci), priority engine, radio router.
+            </p>
+          </article>
+
+          <article class="category-card">
+            <span class="category-icon" aria-hidden="true">📡</span>
+            <h3>Senzory</h3>
+            <p>
+              FP2 presence, Z-Wave motion, door/window kontakty, lux, teplota, vlhkost,
+              PM2.5. Vše pipuje do request-first decisioningu.
+            </p>
+          </article>
+
+          <article class="category-card">
+            <span class="category-icon" aria-hidden="true">📷</span>
+            <h3>Kamery</h3>
+            <p>
+              Indoor + outdoor. Stream přes Homey, automatika spínání během odchodu /
+              při alarm triggeru, nahrávání do encrypted storage.
+            </p>
+          </article>
+
+          <article class="category-card">
+            <span class="category-icon" aria-hidden="true">🪟</span>
+            <h3>Rolety</h3>
+            <p>
+              Lux-driven + rezim_doma + roleta_router v3. Hysterezis pro stable řízení,
+              privacy guard pro open space.
+            </p>
+          </article>
+
+          <article class="category-card category-card-accent">
+            <span class="category-icon" aria-hidden="true">🧠</span>
+            <h3>AI / Diagnostika</h3>
+            <p>
+              Brain Guardian, state validator, expected state engine, release guard.
+              Meta-vrstva nad celým systémem.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITEKTURA -->
+    <section id="architektura" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">05 — Architektura</p>
+          <h2 class="section-title">Script-first princip</h2>
+          <p class="section-lead">
+            Veškerá logika v jednom místě. Flow je trigger, skript je mozek, router je
+            switchboard, device je výstup.
+          </p>
+        </header>
+
+        <div class="arch-flow" role="img" aria-label="Tok dat: Flow přes Script, Request, Router, Device">
+          <div class="arch-node">
+            <div class="arch-node-icon">⚡</div>
+            <div class="arch-node-name">Flow</div>
+            <div class="arch-node-desc">Trigger (čas, sensor, button)</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-node">
+            <div class="arch-node-icon">📜</div>
+            <div class="arch-node-name">Script</div>
+            <div class="arch-node-desc">Logika + multi-signal eval</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-node">
+            <div class="arch-node-icon">📨</div>
+            <div class="arch-node-name">Request</div>
+            <div class="arch-node-desc">Strukturovaný požadavek</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-node">
+            <div class="arch-node-icon">🔀</div>
+            <div class="arch-node-name">Router</div>
+            <div class="arch-node-desc">Priority + adresace</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-node">
+            <div class="arch-node-icon">📦</div>
+            <div class="arch-node-name">Device</div>
+            <div class="arch-node-desc">Reálná akce (light, TRV, speaker)</div>
+          </div>
+        </div>
+
+        <div class="arch-principles">
+          <article class="principle">
+            <span class="principle-tag">REUSE FIRST</span>
+            <p>
+              Před vytvořením nové entity (skript, flow, proměnná) zkontroluj zda
+              podobná již neexistuje. Refaktor &gt; nový kód.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">MULTI-SIGNAL</span>
+            <p>
+              Žádné rozhodnutí z jednoho senzoru. Vždy 2+ nezávislé signály
+              (např. FP2 presence + Z-Wave motion).
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">DEVICE MAP</span>
+            <p>
+              Žádný hardcoded device name. Vše přes centrální mapu — když se zařízení
+              přejmenuje, opraví se na jednom místě.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">NO REGRESSION</span>
+            <p>
+              Před úpravou existujícího skriptu: přečíst celý, ověřit volající,
+              minimální change. „Už to fungovalo" = nesahat přes silnou potřebu.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI BRAIN -->
+    <section id="ai-brain" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">06 — AI Brain</p>
+          <h2 class="section-title">Guardian vrstva nad systémem</h2>
+          <p class="section-lead">
+            Smart home, který se sám kontroluje. Detekuje ghost values, ověřuje
+            očekávaný stav, blokuje rozbité nasazení.
+          </p>
+        </header>
+
+        <div class="module-grid">
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_brain_guardian_v1</code>
+            </div>
+            <h3>Brain Guardian</h3>
+            <p>
+              Top-level supervisor. Agreguje výstupy validátoru a expected state
+              engine, vypočítává <strong>health score</strong> (aktuálně 92/100).
+              Při kritickém poklesu vyhlásí alarm.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_expected_state_engine_v1</code>
+            </div>
+            <h3>Expected State Engine</h3>
+            <p>
+              Pro každý čas + režim spočítá co <em>by mělo</em> být zapnuté
+              / vypnuté. Slouží jako reference proti reálnému stavu.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_state_validator_v1</code>
+            </div>
+            <h3>State Validator</h3>
+            <p>
+              Porovnává očekávaný a reálný stav. Detekuje ghost values
+              (proměnné, které lžou) a stuck flagy. První produkční detekce:
+              <code>priority_active=tts</code> ghost.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_release_guard_v1</code>
+            </div>
+            <h3>Release Guard</h3>
+            <p>
+              Před nasazením nové verze skriptu spustí canary checks
+              (3 testovací volání). Pokud Brain Guardian score klesne,
+              release se zablokuje a starý skript zůstává.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section id="kontakt" class="section section-contact">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">07 — O projektu</p>
+          <h2 class="section-title">Kdo a proč</h2>
+        </header>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Autor</h3>
+            <p>
+              <strong>Luděk Budínský</strong>, Semily.<br />
+              Architekt a programátor systému ve spolupráci s Claude Code
+              (Anthropic) jako asistovaný coding agent.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>Účel webu</h3>
+            <p>
+              Veřejná prezentace projektu — historie, architektura, novinky.
+              Web <strong>není ovládací panel</strong>. Žádná zařízení odsud
+              nelze ovládat, žádné API tokeny ani lokální adresy nejsou
+              zveřejněné.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>Stack</h3>
+            <ul class="stack-list">
+              <li>Homey Pro 2026</li>
+              <li>HomeyScript (JavaScript runtime)</li>
+              <li>Google Sheets jako event log</li>
+              <li>Home Assistant OS (mirror + observer)</li>
+              <li>HTML/CSS/JS dashboardy</li>
+              <li>GitHub jako single source of truth</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">
+        Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

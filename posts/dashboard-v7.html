@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dashboard V7 — nový layout a vizuální kontrola. Sidebar 240px, status pills, premium CSS layer." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Dashboard V7 — nový layout a vizuální kontrola | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../index.html#blog">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../index.html#blog" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">26. dubna 2026 · Dashboard · 6 min čtení</p>
+        <h1>Dashboard V7 — nový layout a vizuální kontrola</h1>
+
+        <p>
+          Cyklus redesignu V3.7 → V4 → V5 → V6 → V7 je dokončený. Dashboard, který
+          dnes běží na třech obrazovkách (32" monitor 2880×1800, 14" notebook
+          1920×1080 a RPi kiosek WaveShare 1024×600), prošel během dvou týdnů
+          šesti kompletními iteracemi.
+        </p>
+
+        <p>
+          Tenhle příspěvek shrnuje co se změnilo, co fungovalo, co ne a proč
+          nakonec dashboard work pauzujeme.
+        </p>
+
+        <h2>Klíčové změny ve V7</h2>
+
+        <ul>
+          <li>
+            <strong>Sidebar 240px</strong> jako primární navigace. Pod 1280px
+            collapses na 64px (jen ikony), pod 768px se schová úplně do
+            hamburger menu.
+          </li>
+          <li>
+            <strong>5 status pills v topbaru</strong>: REŽIM, SECURITY, ALARM, AI,
+            WEATHER. Každá s vlastní barvou stavu (zelená OK / žlutá warning /
+            červená alarm) a tooltipem s detailem.
+          </li>
+          <li>
+            <strong>Premium CSS layer</strong> (~20 KB). Glass cards s
+            backdrop-blur, subtle gradient borders, glow accenty na hover, jednotná
+            typografie přes všech 6 dashboardů.
+          </li>
+          <li>
+            <strong>Zachované hard locks</strong>: 309+ onclick eventů, 200 flows,
+            136 scripts. Žádné JS handlery se nepřejmenovaly, žádná ID se neměnila —
+            redesign je čistě vizuální.
+          </li>
+        </ul>
+
+        <h2>Tři obrazovky, tři varianty</h2>
+
+        <p>
+          Sdílená architektura (stejná HTML struktura, stejné JS handlery), různé
+          rozlišení a optimalizace pro fyzický kontext:
+        </p>
+
+        <ul>
+          <li>
+            <strong>2880×1800 (32" monitor)</strong> — full sidebar, všech 14
+            stránek, detailní zone views, real-time grafy.
+          </li>
+          <li>
+            <strong>1920×1080 (14" notebook)</strong> — sidebar collapses na 64px
+            pod breakpointem, layout prioritizuje denní pohled.
+          </li>
+          <li>
+            <strong>1024×600 (RPi kiosek)</strong> — compact 4-col grid, 8 zúžených
+            stránek, větší dotykové cíle (min 44px), žádné hover stavy.
+          </li>
+        </ul>
+
+        <h2>Co fungovalo</h2>
+
+        <p>
+          <strong>Konvence <code>v5-*</code> ID prefix.</strong> Po V5 jsme zavedli,
+          že nové komponenty mají prefix podle iterace, ve které vznikly. Při
+          V7 review okamžitě vidíš, co je čerstvé a co stabilní — a je jasné,
+          že staré ID (bez prefixu) se nesahají.
+        </p>
+
+        <p>
+          <strong>Shell math před detailem.</strong> Každou iteraci jsme začali
+          výpočtem grid systému (kolik kolonek, jaké breakpointy, jak se redukuje)
+          PŘED kreslením komponent. Šetří to půl dne přepracovávání.
+        </p>
+
+        <p>
+          <strong>Hard locks list.</strong> Před každým redesignem se sepsal
+          seznam ID a handlerů které se NESMÍ změnit. Pak validační script
+          po redesignu projde HTML a porovná. Žádné regrese.
+        </p>
+
+        <h2>Co nefungovalo</h2>
+
+        <p>
+          <strong>V3.7 → V4 jako single-shot.</strong> První pokus o velký skok
+          (sidebar + topbar + nový grid + nová typografie) všechno najednou.
+          Výsledek byl rozbitý, museli jsme se vrátit a iterovat menší kroky.
+        </p>
+
+        <p>
+          <strong>"Vše dobře vypadá v Figmě."</strong> Real device test je
+          nezbytný. RPi 1024×600 vypadal v simulaci 1280×800 ok, ale na reálném
+          WaveShare displeji byl vertikálně squeezed. Až po fyzickém testu
+          vznikla varianta <code>smart_home_v3_rpi_1024.html</code>.
+        </p>
+
+        <h2>Proč dashboard pauzujeme</h2>
+
+        <p>
+          Dashboard je ve stavu kde funguje, vypadá dobře a hard locks drží.
+          Marginal value každé další iterace klesá — další úpravy jsou už jen
+          micro-tuning na úrovni jednotlivých stránek (Wave A/B/C v backlogu).
+        </p>
+
+        <p>
+          Mezitím se objevila vyšší priorita: <strong>Brain Guardian V1</strong>.
+          Meta-vrstva nad celým systémem která detekuje ghost values, ověřuje
+          očekávaný stav a blokuje rozbitá nasazení. Tam je teď reálná
+          architektonická value.
+        </p>
+
+        <blockquote>
+          Dashboard work paused, ne abandoned. Wave A/B/C zůstává v backlogu pro
+          page-by-page micro-iterations až bude prostor.
+        </blockquote>
+
+        <h2>Co dál</h2>
+
+        <ul>
+          <li>Brain Guardian 24h soak review</li>
+          <li>Bug E root-cause fix v <code>sh_priority_engine_v1</code></li>
+          <li>Heating Fáze C — AI vrstvy (preWakeBoost, weatherAdjust, occupancyBonus)</li>
+          <li>Aqara P2 SNZB-04 replacement</li>
+        </ul>
+
+        <p>
+          Detailní changelog konkrétních CSS pravidel a HTML struktur je
+          interní dokumentace — tady jen high-level pohled na to, co se v tom
+          týdnu vlastně dělo.
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
