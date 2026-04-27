@@ -59,10 +59,11 @@
           </h1>
           <p class="hero-lead">
             Domácnost řízená script-first architekturou nad <strong>Homey Pro 2026</strong>.
-            Garsonka v přízemí, 73 zařízení ve 12 zónách, 110+ HomeyScriptů,
-            vlastní AI Brain Guardian a multi-resolution dashboardy. Vše vyvíjené
-            v jednom bytě v Semilech jako roky tichého refaktoringu od první
-            žárovky k samodiagnostickému systému.
+            Garsonka v přízemí, 77 zařízení v 16 zónách, 110 HomeyScriptů,
+            201 flow automatizací, 508 proměnných, vlastní AI Brain Guardian
+            a multi-resolution dashboardy. Vše vyvíjené v jednom bytě
+            v Semilech jako roky tichého refaktoringu od první žárovky
+            k samodiagnostickému systému.
           </p>
           <div class="hero-cta">
             <a href="#architektura" class="btn btn-primary">Jak to funguje</a>
@@ -76,15 +77,15 @@
             <span class="stat-label">HomeyScriptů</span>
           </div>
           <div class="stat">
-            <span class="stat-num" data-count="184">184</span>
+            <span class="stat-num" data-count="201">201</span>
             <span class="stat-label">Flows</span>
           </div>
           <div class="stat">
-            <span class="stat-num" data-count="73">73</span>
+            <span class="stat-num" data-count="77">77</span>
             <span class="stat-label">Zařízení</span>
           </div>
           <div class="stat">
-            <span class="stat-num" data-count="12">12</span>
+            <span class="stat-num" data-count="16">16</span>
             <span class="stat-label">Zón v bytě</span>
           </div>
         </aside>
@@ -398,10 +399,11 @@
               kotle.
             </p>
             <p>
-              V každé místnosti se reguluje radiátor přes
-              <strong>4× Fibaro Radiator Thermostat FGT-001</strong>
-              (jídelna, ložnice, koupelna, toaleta). Každá zóna má vlastní
-              týdenní schedule a vlastní target teplotu.
+              Radiátory v jednotlivých místnostech regulují
+              <strong>3× Fibaro Radiator Thermostat FGT-001</strong>
+              (jídelna, koupelna, toaleta — ověřeno přímo v Homey API).
+              Každá místnost má vlastní týdenní rozvrh a cílovou teplotu.
+              Ložnice zatím nemá vlastní termo hlavici, je v plánu.
             </p>
             <h4>3 režimy</h4>
             <ul class="feature-list">
@@ -468,10 +470,9 @@
               <path d="M 435 90 Q 435 130 320 145 L 80 145 Q 50 145 50 175 L 50 245" stroke="#ef4444" stroke-width="2" fill="none" opacity="0.5"/>
               <text x="240" y="138" text-anchor="middle" fill="#ef4444" font-size="9" opacity="0.7">teplá voda do radiátorů</text>
 
-              <!-- 4 RADIATORS with TRV heads -->
+              <!-- 3 RADIATORS with TRV heads (verified in Homey API) -->
               <!-- Radiator + TRV: jídelna -->
-              <g transform="translate(40,180)">
-                <!-- Radiator body (vertical lines) -->
+              <g transform="translate(80,180)">
                 <rect x="0" y="20" width="80" height="60" rx="3" fill="url(#radGrad)" stroke="#fbbf24" stroke-width="1"/>
                 <line x1="10" y1="25" x2="10" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
                 <line x1="22" y1="25" x2="22" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
@@ -479,30 +480,14 @@
                 <line x1="46" y1="25" x2="46" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
                 <line x1="58" y1="25" x2="58" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
                 <line x1="70" y1="25" x2="70" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
-                <!-- TRV head (white cylinder on top) -->
                 <ellipse cx="-5" cy="40" rx="14" ry="10" fill="#e8e8e8" stroke="#666"/>
                 <rect x="-19" y="35" width="28" height="14" rx="3" fill="#e8e8e8" stroke="#666"/>
                 <text x="-5" y="44" text-anchor="middle" fill="#444" font-size="7" font-weight="700">21°</text>
                 <text x="40" y="100" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">jídelna</text>
               </g>
 
-              <!-- Radiator + TRV: ložnice -->
-              <g transform="translate(150,180)">
-                <rect x="0" y="20" width="80" height="60" rx="3" fill="url(#radGrad)" stroke="#fbbf24" stroke-width="1"/>
-                <line x1="10" y1="25" x2="10" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
-                <line x1="22" y1="25" x2="22" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
-                <line x1="34" y1="25" x2="34" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
-                <line x1="46" y1="25" x2="46" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
-                <line x1="58" y1="25" x2="58" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
-                <line x1="70" y1="25" x2="70" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
-                <ellipse cx="-5" cy="40" rx="14" ry="10" fill="#e8e8e8" stroke="#666"/>
-                <rect x="-19" y="35" width="28" height="14" rx="3" fill="#e8e8e8" stroke="#666"/>
-                <text x="-5" y="44" text-anchor="middle" fill="#444" font-size="7" font-weight="700">19°</text>
-                <text x="40" y="100" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">ložnice</text>
-              </g>
-
               <!-- Radiator + TRV: koupelna -->
-              <g transform="translate(260,180)">
+              <g transform="translate(220,180)">
                 <rect x="0" y="20" width="80" height="60" rx="3" fill="url(#radGrad)" stroke="#fbbf24" stroke-width="1"/>
                 <line x1="10" y1="25" x2="10" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
                 <line x1="22" y1="25" x2="22" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
@@ -517,7 +502,7 @@
               </g>
 
               <!-- Radiator + TRV: toaleta -->
-              <g transform="translate(370,180)">
+              <g transform="translate(360,180)">
                 <rect x="0" y="20" width="80" height="60" rx="3" fill="url(#radGrad)" stroke="#fbbf24" stroke-width="1"/>
                 <line x1="10" y1="25" x2="10" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
                 <line x1="22" y1="25" x2="22" y2="75" stroke="#fbbf24" stroke-width="1.5"/>
@@ -531,12 +516,11 @@
                 <text x="40" y="100" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">toaleta</text>
               </g>
 
-              <!-- Z-Wave wireless rays from Homey to TRV heads -->
+              <!-- Z-Wave wireless rays from Homey to 3 TRV heads -->
               <g stroke="#22c55e" stroke-width="1" stroke-dasharray="2,3" opacity="0.5" fill="none">
-                <path d="M 60 80 Q 50 130 35 220"/>
-                <path d="M 80 80 Q 130 130 145 220"/>
-                <path d="M 100 80 Q 200 130 255 220"/>
-                <path d="M 120 80 Q 280 130 365 220"/>
+                <path d="M 70 80 Q 70 140 75 220"/>
+                <path d="M 90 80 Q 170 140 215 220"/>
+                <path d="M 110 80 Q 280 140 355 220"/>
               </g>
 
               <!-- Legend -->
@@ -658,66 +642,74 @@
           </p>
         </article>
 
-        <!-- AQARA CUBE -->
-        <article class="feature feature-cube">
+        <!-- FYZICKÁ TLAČÍTKA -->
+        <article class="feature">
           <div class="feature-text">
-            <span class="feature-badge">🎲 Aqara Cube T1 Pro</span>
-            <h3>Šestistranná kostka jako fyzický kontroler</h3>
+            <span class="feature-badge">🎛 Fyzická tlačítka</span>
+            <h3>Bez telefonu — tlačítkem nebo dálkovým ovladačem</h3>
             <p>
-              Malá Zigbee kostka (~5 × 5 × 5 cm) která má <strong>6 stran +
-              3 typy gestů</strong>. Leží na nočním stolku v ložnici a v kuchyni.
-              Každá akce je tichá, fyzická, intuitivní — bez vytahování telefonu.
+              Když chci „spát" nebo „odcházím", nechci hledat appku v telefonu.
+              Stačí mi tichý fyzický stisk u dveří nebo na nočním stolku.
+              Systém má <strong>7 fyzických ovladačů</strong> (ověřeno v Homey API),
+              každý se svojí rolí.
             </p>
 
             <div class="cube-uses">
               <div class="cube-use">
-                <h4>Ovládání scén — otočit na stranu</h4>
+                <h4>Fibaro Button (FGPB-101) — 2 ks</h4>
                 <p>
-                  Postavit kostku na konkrétní stranu = aktivovat scénu.
-                  6 stran = 6 scén:
-                </p>
-                <ul class="scene-list">
-                  <li><span class="scene-emoji">🟢</span> <strong>Relax</strong> — tlumené světlo + chillout rádio</li>
-                  <li><span class="scene-emoji">🔵</span> <strong>Práce</strong> — pracovna full bright + Pomodoro</li>
-                  <li><span class="scene-emoji">🟣</span> <strong>Audio</strong> — radio router prepuje na ložnici</li>
-                  <li><span class="scene-emoji">🟡</span> <strong>Kino</strong> — TV on, světla off, AV mode</li>
-                  <li><span class="scene-emoji">🟠</span> <strong>Romantika</strong> — warm white 20 % + soft jazz</li>
-                  <li><span class="scene-emoji">⚫</span> <strong>Spát</strong> — sleep brain → vše off, night temps</li>
-                </ul>
-              </div>
-
-              <div class="cube-use">
-                <h4>Hlasitost — rotovat</h4>
-                <p>
-                  Otáčení kostky kolem vertikální osy = změna hlasitosti
-                  aktuálního zdroje audio. <strong>Po směru hodinových ručiček = nahlas</strong>,
-                  proti směru = potichu. Step ~5 % per ~30° rotace.
+                  Klasický Z-Wave kulatý knoflík, vydrží roky na knoflíkové
+                  baterii. Mám dva: jeden u dveří (<strong>away/home</strong> — odchod
+                  z bytu), druhý u postele (<strong>spát</strong> — spustí sleep
+                  rutinu). Single-click, double-click, hold = různé akce.
                 </p>
               </div>
 
               <div class="cube-use">
-                <h4>Sleep tlačítko — strana „Spát"</h4>
+                <h4>Aqara H1 Wireless Remote — 4 tlačítka</h4>
                 <p>
-                  Specifická strana kostky = <strong>sleep mode</strong>. Spouští
-                  <code>sh_sleep_brain_v2</code>:
+                  Dvojitý bezdrátový ovladač s 4 tlačítky. Funguje jako
+                  „dálkové" pro celý byt — možnost přiřadit scény (kino,
+                  relax, dobrou noc, audio mix) přímo na konkrétní tlačítka.
                 </p>
-                <ul class="feature-list">
-                  <li>všechna světla v open space pomalu fadeout (60s)</li>
-                  <li>audio pipeline → idle (přerušit rádio, žádné TTS)</li>
-                  <li>topení preset boost → home (cleanup user override)</li>
-                  <li>kamery aktivní v noci (motion-driven recording)</li>
-                  <li><code>sh_spim=yes</code> → SLEEP RESPECT pro celý systém</li>
-                </ul>
+              </div>
+
+              <div class="cube-use">
+                <h4>Aqara WB01 nástěnné spínače — 2 ks</h4>
+                <p>
+                  „<strong>vypinač kuchyně</strong>" a „<strong>stůl</strong>" —
+                  bezdrátové wireless mini switche v podobě klasického vypínače.
+                  Tichá baterie, lepí se přímo na zeď nebo nábytek.
+                  Specifické scény: kuchyně světlo, jídelní pohoda.
+                </p>
+              </div>
+
+              <div class="cube-use">
+                <h4>Xiaomi Wireless Mini Switch — 2 ks</h4>
+                <p>
+                  Malé Zigbee tlačítka pro doplňkové scény. Snadno se
+                  přemisťují — jedno na nočním stolku, druhé v koupelně.
+                </p>
+              </div>
+
+              <div class="cube-use cube-use-planned">
+                <h4>🔮 Plánováno: Aqara Cube T1 Pro</h4>
+                <p>
+                  Šestistranná Zigbee kostka (~5×5×5 cm). Postavit na konkrétní
+                  stranu = aktivovat scénu, otáčení = změna hlasitosti.
+                  Plus tap & flip gesta. Zatím není zapárovaná v Homey,
+                  čeká na rozhodnutí, jestli ji koupit.
+                </p>
               </div>
             </div>
           </div>
           <div class="feature-visual">
             <figure class="product-photo">
               <img src="assets/photos/aqara-cube-t1-pro.png"
-                   alt="Aqara Cube T1 Pro — oficiální produktová fotografie"
+                   alt="Aqara Cube T1 Pro — oficiální produktová fotografie (plánovaný kontroler)"
                    loading="lazy"
                    class="zoomable" />
-              <figcaption>© Lumi United Technology Co., Ltd. (Aqara) — oficiální produktová fotografie. Skutečná kostka cca 5 × 5 × 5 cm.</figcaption>
+              <figcaption>Aqara Cube T1 Pro — plánovaný šestistranný kontroler. © Lumi United Technology Co., Ltd. (oficiální produktová fotografie).</figcaption>
             </figure>
           </div>
         </article>
@@ -858,10 +850,11 @@
             <span class="feature-badge">🤖 Giuseppe</span>
             <h3>Vysavač jako autonomní agent</h3>
             <p>
-              <strong>Xiaomi Viomi V8 robot vysavač</strong>, doma jménem
+              <strong>Xiaomi Viomi V7 robot vysavač</strong>, doma jménem
               <strong>Giuseppe</strong> (každé zařízení má jméno, je to
               přátelštější než „vysavač_01"). Wi-Fi, fixní IP, integrovaný
-              v Homey přes komunitní app.
+              v Homey přes Mi-Home komunitní app
+              (driver <code>vacuum_viomi_vacuum_v7</code> ověřeno v Homey API).
             </p>
             <h4>Plán úklidu</h4>
             <ul class="feature-list">
