@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Energie a spotřeba | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger is-active">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html" aria-current="page"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="energie" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🏠 Prožívání · Energie a spotřeba</p>
+        <h1 class="hero-title">Energie kterou <span class="grad-text">vidíš, ne hádáš</span></h1>
+        <p class="hero-lead">
+          Runtime-based kWh estimate kotle, plug devices s power metering, rolling daily
+          a yearly tracking. Žádný hi-end energy meter zatím, ale 95 % přesnost ze čtení
+          stavu zařízení a počítání času. Plánovaný Shelly 3EM doplní finální 5 % až
+          bude rozpočet a čas.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">9 kW</span><span class="uc-stat-label">Příkon kotle</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">11</span><span class="uc-stat-label">Plug devices</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">~95 %</span><span class="uc-stat-label">Přesnost odhadu</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">2 min</span><span class="uc-stat-label">Sample interval</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Měření tam, kde to jde, odhad kde to nejde</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            Hlavní spotřebič je elektrický kotel <strong>9 kW Protherm RAY</strong>. Reálný
+            měřák zatím není — místo toho se počítá runtime: každé 2 minuty demand cron
+            inkrementuje counter, když je kotel zapnutý. Na konci dne se spočítá
+            <code>kwh = (runtime_today_s / 3600) × kotel_kw</code>. Přesnost asi 95 %, protože
+            kotel interně moduluje 3 / 6 / 9 kW podle teploty vody.
+          </p>
+          <p>
+            Plug devices (zásuvky se Z-wave power metering) měří přímo — kromě on/off mají
+            capability <code>measure_power</code> v wattech. Aktuální spotřeba se vzorkuje
+            do EventLog a denní integrace dá kWh. Některé zásuvky mají i <code>meter_power</code>
+            (kumulativní counter, zpřesňuje měření přes restarty).
+          </p>
+          <p>
+            Cíl není absolutní přesnost faktura-grade — cíl je vědět, který spotřebič žere
+            kolik a kdy. Z toho jde odvodit, že kotel ročně sebere ~3 500 kWh, ledničce
+            stačí ~250, počítač v idle ~80, ostatní zanedbatelně. Pro reálné fakturační
+            měření je v plánu Shelly 3EM (CT clamp na 3 fáze v rozvaděči).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DENNÍ PROVOZ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Denní provoz</p>
+          <h2 class="section-title">Jak se měří přes den</h2>
+          <p class="section-lead">Kontinuální vzorkování, denní agregace, rolling history.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">Continuous</span>
+            <h3>Sample every 2 min</h3>
+            <p>
+              <code>sh_heating_demand_v1</code> cron: pokud boiler_state='on',
+              <code>runtime_today_s += 120</code>. Plug devices měří capability
+              <code>measure_power</code> v real-time, vzorkují se passively.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">00:00</span>
+            <h3>Daily reset</h3>
+            <p>
+              Půlnoc → <code>runtime_yesterday_s = runtime_today_s</code> a
+              <code>runtime_today_s = 0</code>. Yesterday hodnota slouží pro briefing
+              („Včera kotel X min, asi Y kWh"). Reset_date track se zapisuje pro
+              audit trail.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Weekly</span>
+            <h3>Trend aggregation</h3>
+            <p>
+              Týdenní průměr se počítá z 7 yesterday hodnot. Slouží pro detekci anomálií
+              (kotel běžel 50 % déle než průměr → něco je špatně se zateplením? otevřená
+              okna? bug v scheduler?).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Yearly</span>
+            <h3>Cumulative total</h3>
+            <p>
+              <code>runtime_total_s</code> nikdy se nereetuje — kumulativní counter pro
+              celý život skriptu. Z toho lze odvodit life-cycle spotřebu kotle, predict
+              kdy bude vyžadovat servis, atd.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SCÉNY -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Scény</p>
+          <h2 class="section-title">Pět situací kde se měření hodí</h2>
+          <p class="section-lead">Některé jsou dashboard-driven, jiné automatické alerty.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">📊</span>
+            <h3>Dashboard tile</h3>
+            <p>
+              Heating page má kWh today + runtime today. Realtime hodnota čtená přímo
+              z proměnných. Yesterday hodnota pro porovnání. Týdenní průměr jako sparkline.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🔔</span>
+            <h3>Briefing zmínka</h3>
+            <p>
+              Když yesterday ≥ 0,5 kWh, briefing fáze 2 zmíní: „Včera kotel X min, asi
+              Y kWh". Konkrétní data v ranní řeči, žádné odhady „možná hodně".
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">📈</span>
+            <h3>Anomaly alert</h3>
+            <p>
+              Brain Guardian: pokud runtime jednoho dne &gt; 200 % týdenního průměru,
+              alert do EventLog. Suggested checks: otevřená okna, scheduler bug, anti-cycling
+              guard issue.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🔌</span>
+            <h3>Plug power log</h3>
+            <p>
+              Každé 5 min se vzorkuje <code>measure_power</code> všech plug devices do
+              EventLog. Z toho se konstruuje denní křivka — kdy se PC zapnul / vypnul,
+              kdy se vařilo, kdy běžela pračka.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">📅</span>
+            <h3>Yearly review</h3>
+            <p>
+              Cumulative total per device → roční přehled. Plán: GitHub Actions cron 1.1.
+              vygeneruje yearly report .md do repa, automaticky pushne. Manuál pak ze
+              srovnání s předchozími lety.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware</p>
+          <h2 class="section-title">Co reálně měří</h2>
+          <p class="section-lead">Plug-level metering tam kde má smysl, runtime estimate kde není volba.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🔌</div>
+            <h3>11× Plug devices</h3>
+            <p class="hw-tag">Z-wave / Wi-Fi · power + meter</p>
+            <p>
+              Zásuvky s capability <code>measure_power</code> (real-time W) a
+              <code>meter_power</code> (kumulativní kWh). Nasazené na: PC, lednička,
+              monitor, audio system, charger, atd. Levný způsob jak měřit jeden spotřebič.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">⚡</div>
+            <h3>Fibaro FGS-214 (kotel)</h3>
+            <p class="hw-tag">Z-wave switch · runtime tracking</p>
+            <p>
+              Hlavní switch pro kotel. Sám nemá power metering (jen on/off + status),
+              proto runtime-based estimate. Při budoucím Shelly 3EM se runtime estimate
+              kombinuje s real measurement pro cross-check.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🌡</div>
+            <h3>4× Fibaro FGT-001 (TRV)</h3>
+            <p class="hw-tag">Termo hlavice · battery powered</p>
+            <p>
+              Nemá power metering pro topný okruh — měří jen sebe (battery level). Užitečné
+              jako sekundární data — když TRV ventil zavřený, ale kotel běží, něco je
+              nezpojené. Tracking přes runtime + comparison.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">📊</div>
+            <h3>FGS-223 (rezerva)</h3>
+            <p class="hw-tag">Double Switch 2 · power metering · unmapped</p>
+            <p>
+              Z-wave switch s native power metering capability. Aktuálně nezapojený —
+              kandidát pro oběhové čerpadlo topení (heating Fáze C+) nebo bojler. Až
+              fyzická instalace, nový metric stream do energy tracking.
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🔬</div>
+            <h3>Shelly 3EM <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">CT clamp · 3-phase · Wi-Fi · MQTT</p>
+            <p>
+              Zlatý standard. Tři proudové cívky se navinou na 3 fáze v rozvaděči, měří
+              real-time + kumulativní kWh per fáze. Doplní runtime estimate přesným
+              měřením, plus dá granularitu „kuchyňská linka vs. lednička vs. PC pokoj".
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Runtime tracking, plug sampling, HA Energy Dashboard plánovaný.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Runtime → kWh formula</summary>
+            <pre><code>// In sh_heating_demand_v1 (cron 2 min)
+if (boiler_state === 'on') {
+  runtime_today_s += 120;  // = sample interval
+}
+
+// kWh estimate
+kwh_today = (runtime_today_s / 3600) * kotel_kw;
+// kotel_kw = 9 (configured per device)</code></pre>
+            <p>
+              Zdroj nepřesnosti:
+            </p>
+            <ul>
+              <li>Kotel moduluje 3 / 6 / 9 kW podle teploty vody — odhad používá max 9 kW</li>
+              <li>Sample interval 2 min — chyba ±60 s na on/off transition</li>
+              <li>Boiler_state zaznamenán až 1–2 s po fyzickém přechodu (Z-wave latence)</li>
+            </ul>
+            <p>
+              Net effect: estimate slightly nadhodnocuje (~95 %). Pro fakturaci málo, pro
+              trend analýzu dost.
+            </p>
+          </details>
+
+          <details>
+            <summary>Plug power sampling</summary>
+            <p>
+              <code>sh_plug_sampler_v1</code> cron 5 min iteruje 11 plug devices, čte
+              <code>measure_power</code> capability a zapisuje do EventLog s timestamp.
+              Z toho se konstruuje historie:
+            </p>
+            <ul>
+              <li><strong>Real-time</strong>: aktuální W per plug</li>
+              <li><strong>Daily integral</strong>: ∫(W) dt = denní kWh</li>
+              <li><strong>Capability meter_power</strong>: kumulativní counter, zpřesňuje přes restarty</li>
+            </ul>
+            <p>
+              Devices které nemají <code>measure_power</code> (jen on/off) se ignorují —
+              runtime tracking pro ně ne stojí za to.
+            </p>
+          </details>
+
+          <details>
+            <summary>HA Energy Dashboard (plánováno)</summary>
+            <p>
+              <code>todo_homeassistant_rpi_integration.md</code> — fáze 5 plánu. Home
+              Assistant na RPi4 jako read-only observer pro 11 plug devices. Energy
+              Dashboard dá per-device + total view.
+            </p>
+            <p>
+              Pipeline: Homey → MQTT → HA → Energy Dashboard. Integration přes HACS Homey
+              add-on (pokud existuje), jinak custom MQTT bridge. User pending: Long-Lived
+              Token + Terminal & SSH add-on.
+            </p>
+          </details>
+
+          <details>
+            <summary>Yearly aggregation (GitHub Actions cron)</summary>
+            <p>
+              Plán pro 1.1.: GitHub Actions cron stáhne EventLog yearly export, vypočte
+              per-device kWh totals, vygeneruje
+              <code>reports/yearly_&lt;rok&gt;.md</code> a auto-pushne do
+              smart-home-website repa. Read-only output pro web (Phase D — case studies
+              like „Year of heating").
+            </p>
+            <p>
+              Implementace nezávisí na Homey — GitHub Action stáhne EventLog z Google Sheets
+              přes Apps Script API + zpracuje openpyxl / pandas + commit.
+            </p>
+          </details>
+
+          <details>
+            <summary>Anomaly detection (runtime &gt; 200 % avg)</summary>
+            <p>
+              Brain Guardian invariant: pokud denní runtime &gt; 200 % rolling 7-day average,
+              alert. Možné příčiny:
+            </p>
+            <ul>
+              <li>Otevřené okno (heating ztráta) — door/window sensor by měl detekovat</li>
+              <li>Scheduler bug (target_temp zaseknutý nahoře)</li>
+              <li>Anti-cycling guard nefunguje (cooldown bug 25.4. resolved)</li>
+              <li>TRV ventil mechanicky zaseknutý (battery battery? nejde zavřít?)</li>
+              <li>Sezónní změna (extra studené týdny) — false positive</li>
+            </ul>
+            <p>
+              Alert je read-only flag, žádné auto-akce. User si musí ověřit a rozhodnout.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti v kontextu webu</h2>
+        </header>
+        <div class="related-grid">
+          <a href="topeni-klima.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔥</span>
+            <h3>Topení a klima</h3>
+            <p>Hlavní spotřebič co měříme — runtime tracking, anti-cycling, schedule.</p>
+          </a>
+          <a href="infra.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🛠</span>
+            <h3>Infrastruktura</h3>
+            <p>HA RPi4, GitHub Actions, MQTT bridge plánovaný pro Energy Dashboard.</p>
+          </a>
+          <a href="ai-brain.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🧠</span>
+            <h3>AI Brain</h3>
+            <p>Brain Guardian anomaly detection — runtime &gt; 200 % avg invariant.</p>
+          </a>
+          <a href="hardware.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">📦</span>
+            <h3>Hardware</h3>
+            <p>FGS-223 rezerva, Shelly 3EM specs, plug devices detail.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

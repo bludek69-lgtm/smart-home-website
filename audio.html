@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Audio a TTS | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger is-active">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html" aria-current="page"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="audio" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🏠 Prožívání · Audio a TTS</p>
+        <h1 class="hero-title">Audio které <span class="grad-text">tě nepřeruší ráno</span></h1>
+        <p class="hero-lead">
+          Tři reproduktory, čtyři režimy, jeden orchestrátor. TTS jde přes Google Cast
+          s tvrdým limitem 200 znaků na utterance — proto se ranní briefing rozdělí do dvou
+          fází. Sleep guard ticho v noci. Prev_playing guard, aby se po TTS nepustila
+          radiostanice z minulé rutiny do prázdné koupelny.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Reproduktory</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">200</span><span class="uc-stat-label">Char TTS limit</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">2</span><span class="uc-stat-label">Briefing fáze</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">100</span><span class="uc-stat-label">TTS priorita</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Audio které ví, kdy mlčet</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            Tři reproduktory v bytě — kuchyně, koupelna, ložnice. Všechny Google Cast,
+            všechny řízené přes <strong>sh_audio_brain_v2</strong> (dispatcher) a
+            <strong>sh_tts_orchestrator_v1</strong> (řečí). Centrální audio_request
+            proměnná — kdokoli může požádat o radio nebo TTS, brain rozhodne, který
+            speaker a v jakém pořadí.
+          </p>
+          <p>
+            <strong>Google Cast má hard limit 200 znaků</strong> na jedno utterance. Delší
+            text se useká uprostřed věty, user slyší „...možná už ti t". Proto je v sayTTS
+            defenzivní truncation a ranní briefing je rozdělený do dvou fází — první ve
+            3:15 (čas, počasí, svátek, do 150 znaků), druhý o 15 min později (BTC, PM2.5,
+            vlhkost, vtipný komentář, do 170 znaků).
+          </p>
+          <p>
+            Audio má <strong>prioritu 100</strong> v priority engine — když TTS běží, světla
+            (priorita 60) ani jiné automatizace ho nepřebijí. Po dokončení TTS se priority
+            uvolní a může se resumovat předchozí radio (jen když <code>prev_playing='yes'</code>
+            — guard po bathroom misroute bug).
+          </p>
+        </div>
+        <figure class="uc-screenshot">
+          <img src="assets/screenshots/after/1920/audio.png"
+               alt="Audio stránka v dashboardu — speakers, current mode, volume, briefing replay"
+               loading="lazy" class="zoomable" />
+          <figcaption>Audio stránka v dashboardu — 3 speakers + Nest Hub Max, aktuální mode (TTS / radio / scene), volume controls</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- DENNÍ PROVOZ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Denní provoz</p>
+          <h2 class="section-title">Jak audio reaguje přes den</h2>
+          <p class="section-lead">Většinu dne je ticho. Akce jsou rituální — ráno briefing, večer možná comfort suggest.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:15</span>
+            <h3>Briefing fáze 1</h3>
+            <p>
+              15 min před budíkem. Pozdrav, čas, datum, počasí dnes, svátek dne. Limit
+              150 znaků. Kuchyňský speaker (kde se ráno chystá káva). Po dokončení se
+              spustí 15min countdown na fázi 2.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:30</span>
+            <h3>Briefing fáze 2</h3>
+            <p>
+              BTC kurz, PM2.5 venku a uvnitř, vlhkost, vtipný komentář od Gemini.
+              Limit 170 znaků. Stejný speaker. Cíl: dokončit ranní informace dřív než
+              odejdu do auta v 03:45.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Den</span>
+            <h3>Idle, čekání</h3>
+            <p>
+              <code>sh_audio_request='idle'</code>. Žádné automatické audio přes den.
+              Speakers fungují jako TTS recipients pro alerty, jinak ticho. AI coordinator
+              monitoruje situation, zatím nic nespouští.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Večer</span>
+            <h3>Comfort suggest (možná)</h3>
+            <p>
+              AI coordinator může vyhodnotit „evening + idle scene" → comfort_suggest.
+              TTS přečte návrh: „Chceš spustit relax scénu?". Dispatch radio jen pokud
+              user explicitně přijme přes Cube nebo Voice (ne timeout fallback).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Noc</span>
+            <h3>Sleep silent</h3>
+            <p>
+              <code>sh_spim='yes'</code> → priority engine zablokne TTS. Critical alerty
+              (zaplavení, požár) jdou přes vlastní safety bypass. Komfortní hlášky čekají
+              na probuzení.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SCÉNY -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Scény</p>
+          <h2 class="section-title">Pět akcí, pět rolí</h2>
+          <p class="section-lead">Většina je triggrovaná systémem, ne user inputem.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🌅</span>
+            <h3>Ranní briefing</h3>
+            <p>
+              Dvě fáze, 15 min apart. Limit 150/170 chars. TV mute před, unmute po.
+              Speaker = kuchyně (kde se chystá káva). Gemini generuje, sayTTS truncuje
+              na 200 max.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">💡</span>
+            <h3>Comfort suggest</h3>
+            <p>
+              AI coordinator vyhodnotí level 4 situation večer → suggest. Bez user
+              accept (cube/voice) NE auto-execute — to byl bathroom misroute bug.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🚿</span>
+            <h3>Bathroom radio</h3>
+            <p>
+              Motion v koupelně + TOD ráno → spustí radio (Italia Classic Hits, Sanremo
+              feed). Stop při motion_off + 30s timeout. Resume guard kontroluje
+              <code>prev_playing='yes'</code>.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🛌</span>
+            <h3>Sleep silent</h3>
+            <p>
+              Sleep state → priority deny pro TTS. Critical alerts (gas, water leak)
+              mají safety bypass. Briefing 03:15 jede normálně (sleep state už unset).
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">⏯</span>
+            <h3>Resume after TTS</h3>
+            <p>
+              Když před TTS hrálo radio (prev_playing='yes', prev_mode='radio_*'),
+              po dokončení TTS se obnoví. Bez prev_playing guardu by se resumovalo
+              i když nic nehrálo.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware</p>
+          <h2 class="section-title">Co reálně mluví a hraje</h2>
+          <p class="section-lead">Tři Google Cast koncové body + Homey jako orchestrátor.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🔊</div>
+            <h3>Speaker kuchyně</h3>
+            <p class="hw-tag">Google Cast · Wi-Fi · TTS + radio</p>
+            <p>
+              Hlavní speaker pro ranní briefing. Kuchyně je centrem rituálu — káva,
+              chystání, rozhodnutí dne. TTS recipient pro většinu hlášek. Radio backup
+              pro bathroom když koupelnový padne.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🚿</div>
+            <h3>Speaker koupelna</h3>
+            <p class="hw-tag">Google Cast · Wi-Fi · ranní radio</p>
+            <p>
+              Italian Classic Hits ráno při sprchování. Motion-trigger, motion_off + 30s
+              stop. Po bathroom misroute bug 25.4. doplněn prev_playing guard, aby se
+              radio nezapnulo z prázdna.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🛌</div>
+            <h3>Speaker ložnice</h3>
+            <p class="hw-tag">Google Cast · Wi-Fi · evening</p>
+            <p>
+              Lehčí použití — večerní hudba před spaním, alerty když user v ložnici.
+              Sleep guard chrání před nočními TTS. Speaker variable
+              <code>sh_tts_speaker='ložnice'</code> historicky, real cast jde do kuchyně.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">📺</div>
+            <h3>Nest Hub Max ložnice</h3>
+            <p class="hw-tag">Google Cast · Wi-Fi · vizuál + audio</p>
+            <p>
+              Sekundární výstup pro vizuální alerty — Nest Hub Max v ložnici. TV mute
+              pipeline před TTS / unmute po (přes Android TV remote capabilities).
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🎙</div>
+            <h3>Voice intent <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">Local LLM · Whisper · HA voice</p>
+            <p>
+              Hlasové ovládání lokálně — Whisper STT + lokální LLM nebo HA Voice. Aktuálně
+              user_intent přes Cubo + buttons. Voice je další iterace, závisí na LLM
+              host (RPi5 nebo NAS).
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Orchestrator, dispatcher, priority engine, prev_playing guard.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>200 char Cast limit + briefing split</summary>
+            <p>
+              Google Cast SDK má hard limit 200 znaků na utterance. Překročí → cast stream
+              padá nebo truncates uprostřed věty. <strong>NENÍ to bug, je to safety net</strong>
+              v <code>sh_gemini_brain_v1::sayTTS()</code>:
+            </p>
+            <pre><code>if (cleaned.length > 200) {
+  cleaned = cleaned.substring(0, 200);
+  logMsg('GOOGLE CAST: message truncated to 200 chars');
+}</code></pre>
+            <p>
+              Briefing split do dvou fází:
+            </p>
+            <ul>
+              <li><strong>briefing</strong> (3:15) — pozdrav, čas, datum, počasí, svátek (max 150 chars)</li>
+              <li><strong>briefing2</strong> (+15 min) — BTC, PM2.5, vlhkost, vtipný komentář (max 170 chars)</li>
+            </ul>
+            <p>Orchestrace přes flow „SH – Morning – Briefing 2" s 15 min delay. Pending var: <code>sh_morning_briefing2_pending_ts</code>.</p>
+          </details>
+
+          <details>
+            <summary>Audio brain + TTS orchestrator</summary>
+            <ul>
+              <li>
+                <strong>sh_tts_orchestrator_v1</strong> — vystaví TTS request, počká na completion,
+                emituje <code>tts_completed</code> event. Drží <code>sh_priority_active='tts'</code>
+                po dobu řeči.
+              </li>
+              <li>
+                <strong>sh_audio_brain_v2</strong> — dispatcher pro non-TTS audio (radio, music,
+                ambient). Čte <code>sh_audio_request</code>, rozhoduje speaker dle aktivní zóny
+                a TOD. Emituje <code>audio_dispatch</code> event.
+              </li>
+              <li>
+                <strong>sh_tts_resume_exec_v1</strong> — po TTS dokončení rozhodne, jestli
+                resumovat předchozí audio. Guarduje na <code>prev_playing='yes'</code>
+                (po bathroom misroute fix v1.8).
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Priority engine (TTS=100, light=60)</summary>
+            <p>
+              Centrální arbitr. Každý request má prioritu, vyhraje vyšší. Když TTS aktivní
+              (priority 100), light request (60) odložen. Tabulka:
+            </p>
+            <ul>
+              <li><strong>100</strong> — TTS (briefing, alerts, voice response)</li>
+              <li><strong>80</strong> — Critical alerts (water leak, gas, fire)</li>
+              <li><strong>60</strong> — Light request</li>
+              <li><strong>50</strong> — Audio comfort (radio, music)</li>
+              <li><strong>30</strong> — Background ambient</li>
+            </ul>
+            <p>
+              Stuck recovery: když <code>active='tts'</code> &gt; 1 min bez forward progress,
+              brain guardian resetuje na <code>none/idle</code>.
+            </p>
+          </details>
+
+          <details>
+            <summary>Prev_playing guard (post bathroom misroute)</summary>
+            <p>
+              Bug 25.4. noc: po comfort_suggest TTS, ~46 s později bathroom radio sám
+              spustil. Root cause: <code>sh_tts_resume_exec_v1</code> fallback
+              <code>if (target === 'idle' && currentMode === 'radio_bathroom')</code>
+              resumoval bez ověření, že před TTS skutečně něco hrálo.
+            </p>
+            <p>
+              <code>sh_audio_current_mode</code> bylo zaseklé na <code>radio_bathroom</code>
+              z ranní rutiny. Resume podmínka byla splněná i když speaker už dávno mlčel.
+            </p>
+            <p>
+              <strong>Fix v1.8</strong>: přidán guard
+              <code>if (sh_audio_prev_playing !== 'yes') return skip</code>. Resume jen když
+              před TTS reálně hrálo radio.
+            </p>
+          </details>
+
+          <details>
+            <summary>TV mute / unmute pipeline</summary>
+            <p>
+              Před každým TTS:
+            </p>
+            <ol>
+              <li>Read TV state (Android TV remote, IP 192.168.1.245)</li>
+              <li>Pokud volume &gt; 0 → setCapability volume_mute = true, ulož original volume</li>
+              <li>Spustí TTS</li>
+              <li>Po <code>tts_completed</code>: setCap volume_mute = false, restore volume</li>
+            </ol>
+            <p>
+              Bez tohoto by TTS hlas konkuroval s TV soundu — ranní zprávy + briefing nebylo slyšet.
+              Capability <code>volume_mute</code> je toggle, není potřeba čekat na driver ack.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti v kontextu webu</h2>
+        </header>
+        <div class="related-grid">
+          <a href="vyzvy.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🐛</span>
+            <h3>Výzvy</h3>
+            <p>Audio brain bathroom misroute (4 hodiny diagnostiky), 200 char Cast crash, briefing useknutí.</p>
+          </a>
+          <a href="ai-brain.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🧠</span>
+            <h3>AI Brain</h3>
+            <p>AI coordinator generuje comfort_suggest situation, validator hlídá audio dispatch.</p>
+          </a>
+          <a href="svetla.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">💡</span>
+            <h3>Světla a osvětlení</h3>
+            <p>Stejný priority engine — TTS přebije light request. Stuck priority bug.</p>
+          </a>
+          <a href="architektura.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🏛</span>
+            <h3>Architektura</h3>
+            <p>Orchestrator + dispatcher pattern, request-first pipeline.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

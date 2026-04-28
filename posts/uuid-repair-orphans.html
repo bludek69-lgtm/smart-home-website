@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="UUID change po re-pair — silent fail v 3 flow trigger kartách. Door/Window Sensor Jidelna1 incident 26.4. a bulk swap fix." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>UUID re-pair orphans — silent fail po výměně baterky | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">26. dubna 2026 · Senzory · 6 min čtení</p>
+        <h1>UUID re-pair orphans — silent fail po výměně baterky</h1>
+
+        <p>
+          Otevřu okno v jídelně, čistička vzduchu pokračuje v běhu. Měla by se vypnout —
+          flow trigger na <code>alarm_contact</code> open už rok funguje bez problémů.
+          Ale dnes ne. Žádný error v UI, žádný alert, prostě silent fail.
+        </p>
+
+        <p>
+          Po výměně baterky v Door/Window Sensor Jidelna1 před týdnem získal Homey
+          zařízení nové UUID. Tři flows referencující původní UUID osiřely. Tohle
+          je příběh diagnostiky a bulk fix.
+        </p>
+
+        <h2>Symptom</h2>
+
+        <p>
+          Door/Window Sensor Jidelna1 funguje normálně z perspektivy capability —
+          v Homey UI vidím <code>alarm_contact</code> hodnotu, real-time se mění
+          při otevření/zavření. Tile na dashboardu reaguje. Senzor není mrtvý,
+          komunikuje, posílá data.
+        </p>
+
+        <p>
+          Ale flowy které měly reagovat na change events — <strong>nereagují</strong>.
+          Žádný flow run log, žádný error. Trigger karta v UI vypadá normálně,
+          žádné červené upozornění. Senzor existuje, flow existuje, jen mezi nimi
+          chybí spojení.
+        </p>
+
+        <h2>Postižené flows</h2>
+
+        <ol>
+          <li>
+            <strong>SH – Cistic – Window Open</strong> — vypne čističku při otevřeném okně
+            (zbytečné filtrovat venkovní vzduch)
+          </li>
+          <li>
+            <strong>SH – Heating – Window Open</strong> — sníží target koupelny + jídelny
+            o 2 °C při otevřeném okně (heat loss compensation)
+          </li>
+          <li>
+            <strong>SH – Lights – Privacy Bypass</strong> — při otevřeném okně dočasně
+            uvolní privacy guard (předpokládá user activity)
+          </li>
+        </ol>
+
+        <h2>Diagnose</h2>
+
+        <p>
+          Zkusil jsem několik checků:
+        </p>
+
+        <pre><code># Senzor existuje?
+GET /api/manager/devices/device/&lt;jidelna1_uuid_in_flow&gt;
+→ 404 Not Found
+
+# Senzor v device list?
+GET /api/manager/devices/device
+→ vidím "Door/Window Sensor Jidelna1" ale s JINÝM UUID
+
+# Compare:
+flow_uuid: 5c3a8e21-b4f2-4a91-9d1c-7e8f6a2b3c4d
+real_uuid: 9f4c2e88-3a7d-4f5b-b2e6-1c8a9d5e7f3b</code></pre>
+
+        <p>
+          Old UUID (v flow trigger karty) vs. real UUID (current device) se liší.
+          Po výměně baterky 19.4. (memory snapshot) Homey vygeneroval nové UUID.
+          Old UUID v 3 flows zůstal jako orphan reference — zařízení které „neexistuje"
+          (404), takže trigger nikdy nefiruje.
+        </p>
+
+        <h2>Proč to není error</h2>
+
+        <p>
+          Homey flow trigger systém má graceful degradation pro chybějící devices —
+          místo erroru jen <strong>nikdy nefiruje</strong>. To dává smysl pro robustnost
+          (jeden offline senzor by neměl shodit celý flow systém), ale znamená to
+          silent fail.
+        </p>
+
+        <p>
+          Žádná UI indikace „tento flow odkazuje na neexistující device". Žádný alert.
+          Žádný flow run log entry. Bug je viditelný jen tehdy, kdy očekáváš, že
+          se něco stane, a nestane se nic.
+        </p>
+
+        <h2>Fix — bulk swap</h2>
+
+        <p>
+          Manuální fix per flow přes UI by znamenal otevřít každý flow, najít
+          trigger card, přemapovat na nový device. Tři flows = tři minuty manuálně.
+          Pro budoucí incidenty (a budoucí výměny baterek) chce automatizaci.
+        </p>
+
+        <pre><code># 1. Najdi všechny flows referencující old UUID
+flows = GET /api/manager/flow/advancedflow
+broken = [f for f in flows if old_uuid in str(f.cards)]
+
+# 2. Per broken flow: PUT s nahrazeným UUID
+for flow in broken:
+  for card in flow.cards:
+    if card.deviceId == old_uuid:
+      card.deviceId = new_uuid
+  PUT /api/manager/flow/advancedflow/&lt;flow_id&gt; flow</code></pre>
+
+        <p>
+          Bulk swap proběhl, 3 flows fixly. Test: otevřu okno, čistička se vypne.
+          Funkce obnovena.
+        </p>
+
+        <h2>Backlog — preventive scanner</h2>
+
+        <p>
+          Tohle je očekávaný incident — výměna baterky se opakuje každý rok+, a
+          každý re-pair vygeneruje nové UUID. Reactive fix per incident není
+          škálovatelný.
+        </p>
+
+        <p>
+          Backlog: <code>tools/find_orphan_device_refs.py</code> — preventive scanner
+          který běží před každým commitem (případně daily cron). Iteruje flows,
+          porovnává device IDs s current device list, hlásí orphan refs.
+        </p>
+
+        <pre><code># tools/find_orphan_device_refs.py (návrh)
+from homey_api import get_devices, get_flows
+
+def main():
+  devices = {d.id for d in get_devices()}
+  flows = get_flows()
+  for flow in flows:
+    for card in flow.cards:
+      if card.deviceId and card.deviceId not in devices:
+        print(f'ORPHAN: flow={flow.name} card={card.id} '
+              f'orphan_id={card.deviceId}')</code></pre>
+
+        <h2>Co se naučilo</h2>
+
+        <blockquote>
+          Silent fail je nejhorší kategorie bugu. Vidíš výsledek (čistička neběží),
+          netušíš příčinu (žádný error). Diagnose vyžaduje state inspection napříč
+          systémem, ne čtení logů.
+        </blockquote>
+
+        <p>
+          Lessons:
+        </p>
+
+        <ul>
+          <li><strong>Re-pair = nový UUID</strong>. Po každé výměně baterky / re-installu
+          očekávat orphan flow trigger refs. Není to bug Homey, je to design choice
+          (UUID stability vs. clean slate).</li>
+          <li><strong>Test po každé výměně baterky</strong>. Jednoduchý smoke test —
+          otevři okno, čistička se vypne? Ne? Diagnose.</li>
+          <li><strong>Preventive scanners &gt; reactive fixes</strong>. Lepší minutu denně
+          ověřovat invariant než hodinu fixovat incident.</li>
+          <li><strong>Brain Guardian extension</strong>. Tahle invariant patří do guardian
+          — periodicky kontroloval, žádné orphan device IDs ve flows. V plánu.</li>
+        </ul>
+
+        <p>
+          UUID stability ve smart home světě je problém který bude eskalovat s
+          každým novým zařízením. Aqara P2 (Matter/Thread) náhrada pro SNZB-04
+          přidává další permutaci, kde re-pair po Thread network change generuje
+          nové ID.
+        </p>
+
+        <p>
+          Generální princip: <strong>nikdy nereferencovat device přímo přes UUID
+          v user-facing kódu</strong>. Místo toho přes name lookup (resolve at
+          runtime) nebo device map abstraction (one place to update). Aktuální
+          architektura tohle dělá pro skripty (<code>sh_device_map_v1</code>),
+          ale ne pro flow trigger karty — limitace Homey UI.
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

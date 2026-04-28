@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Rolety | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger is-active">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html" aria-current="page"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="rolety" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📦 Zařízení · Rolety</p>
+        <h1 class="hero-title">Rolety s <span class="grad-text">dvojí rolí</span></h1>
+        <p class="hero-lead">
+          IKEA Fyrtur 1 v hlavní místnosti — fyzické zastínění + privacy signál pro light
+          router. Pozice je continuous 0–1 (0 = úplně dolů, 1 = úplně nahoru), threshold
+          0,2 = privacy boundary. Bezpečnostní interlock auto-zavírá při light request,
+          který by jinak prozradil interiér.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">1</span><span class="uc-stat-label">Zóna s roletou</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">0,2</span><span class="uc-stat-label">Privacy threshold</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">0,15</span><span class="uc-stat-label">Auto-close target</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">2</span><span class="uc-stat-label">Role v systému</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Roleta jako sensor + actuator</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            Roleta není jen blackout. <strong>Roleta je vstup pro security/privacy
+            decisioning</strong>. Byt je v přízemí — když je roleta nahoře, z ulice je vidět
+            přímo do obyváku. Otevřená světla v té situaci = privacy fail. Light router
+            čte pozici a blokuje.
+          </p>
+          <p>
+            <strong>Pozice je kontinuální</strong> 0,0–1,0 přes capability
+            <code>windowcoverings_set</code> (Homey unification). 0 = úplně dolů, 1 = úplně
+            nahoru. Threshold 0,2 = privacy boundary. Pod 0,2 = „closed" pro privacy
+            účely, nad 0,2 = „open".
+          </p>
+          <p>
+            <strong>Bezpečnostní interlock</strong>: pokud user vystaví light request a roleta
+            je nad 0,2, light_router NEpustí akci přímo. Místo toho:
+            (1) auto-zavře roletu na 0,15, (2) počká na driver ack, (3) pak setCap light.
+            Tj. roleta řídí, kdy můžou jít světla. v1.13 měla invertovanou comparison →
+            user-zavřená roleta blokovala lights → fix v1.14.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DENNÍ PROVOZ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Denní provoz</p>
+          <h2 class="section-title">Jak roleta reaguje</h2>
+          <p class="section-lead">Většinu dne pasivní. Akce je triggrovaná time + light request.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">Ráno</span>
+            <h3>Auto open</h3>
+            <p>
+              Schedule slot 06:30 (v týdnu) → roleta auto-open na 1,0. Cíl: dům sluneční,
+              user vstane do světla. Sleep state už unset (briefing 3:15 už proběhl).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Den</span>
+            <h3>Idle / manual</h3>
+            <p>
+              Roleta nahoře, žádné automatické akce. User může manual rotace (dashboard
+              tile) — <code>setCap windowcoverings_set</code> na konkrétní hodnotu. Plus
+              čte se pozice pro privacy guard.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Večer</span>
+            <h3>Privacy interlock</h3>
+            <p>
+              Tma venku + presence + roleta &gt; 0,2 + light request → safety interlock.
+              Auto-close roleta na 0,15. Po dosažení pozice (driver ack) uvolní light_router
+              a setCap. User vidí krátký delay (~5 s) než roleta dojede dolů.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Noc</span>
+            <h3>Closed</h3>
+            <p>
+              Schedule slot 22:00 → roleta auto-close na 0,1 (úplně). Sleep state aktivní,
+              všechny lights blokované. Roleta drží pozici celou noc.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware v provozu</p>
+          <h2 class="section-title">Konkrétní rolety</h2>
+          <p class="section-lead">Aktuálně jen jedna — v hlavní místnosti. Plánováno více.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🪟</div>
+            <h3>Roleta Fyrtur 1</h3>
+            <p class="hw-tag">IKEA · Zigbee · windowcoverings_set 0–1</p>
+            <p>
+              IKEA Fyrtur (battery-powered roller blind). Hlavní okno open space (jídelna).
+              Capability <code>windowcoverings_set</code> kontinuální 0–1. Battery cca 1 rok
+              při typickém využití (2× denně auto). Cena ~3 000 Kč.
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🪟</div>
+            <h3>Ložnice roleta <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">IKEA Fyrtur / Aqara · ložnicový blackout</p>
+            <p>
+              Plánovaná druhá roleta v ložnici. Funkční role: blackout pro lepší spánek,
+              auto-open ráno před wake. Aqara P2 alternativa pro Matter/Thread (lepší
+              budoucí standard).
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🪟</div>
+            <h3>Pracovna roleta <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">Anti-glare · monitor protection</p>
+            <p>
+              Pracovna východní okno, ranní oslnění monitoru. Plán: auto-close 50 % v okně
+              po východu slunce, full open při sunset. Závisí na lux senzoru v pracovně
+              (zatím není).
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🪟</div>
+            <h3>Koupelna roleta <span class="hw-badge">Možná</span></h3>
+            <p class="hw-tag">Privacy + steam</p>
+            <p>
+              Volitelné — koupelna je v přízemí, ale lehké okno se zatemněním. Privacy
+              při sprchování ráno když venku tma. Otázka jestli má smysl, momentální
+              workflow funguje.
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🌬</div>
+            <h3>Smart valance / curtain <span class="hw-badge">Daleký plán</span></h3>
+            <p class="hw-tag">Aqara curtain motor · stop replacement</p>
+            <p>
+              Tradiční záclonová tyč s motorem (Aqara) místo roller blind. Estetičtější
+              ale dražší (~5 000 Kč/m). Daleký plán pro nový byt nebo jako upgrade.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Privacy comparison, safety interlock, position semantics.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Privacy comparison (proč invertovaná byla bug)</summary>
+            <p>
+              v1.13 měl light router code:
+            </p>
+            <pre><code>// BEFORE (wrong)
+const blindOpen = roletaPos &lt; 0.2;
+if (blindOpen && wantsLight) → block;</code></pre>
+            <p>
+              Logika byla: „pokud roleta dole (&lt; 0,2) = open prostor venku → block lights."
+              Ale to je obráceně — roleta na 0,1 znamená dolů (zataženo), ne otevřeno.
+              Důsledek: user-zavřená roleta = blokovala lights. Přesný opak požadovaného.
+            </p>
+            <pre><code>// AFTER (right) v1.14
+const blindOpen = roletaPos &gt; 0.2;
+if (blindOpen && wantsLight) → block;</code></pre>
+            <p>
+              Položka 0,2 = privacy threshold. Nad = open (vidět dovnitř). Pod = closed
+              (privacy zachována). Memory: <code>reference_open_space_lighting_pipeline.md</code>.
+            </p>
+          </details>
+
+          <details>
+            <summary>Safety interlock (auto-close pipeline)</summary>
+            <p>
+              Když user emituje light request a roleta je nad 0,2 v privacy hours
+              (TOD evening / night, lux pod prahem):
+            </p>
+            <ol>
+              <li>Light_router detekuje privacy fail</li>
+              <li>setCap <code>windowcoverings_set = 0.15</code> (config: <code>sh_cfg_blind_privacy_position</code>)</li>
+              <li>Listen na driver ack (pozice dosažena, ~3–5 s) NEBO timeout 10 s</li>
+              <li>Po ack: setCap light onoff (původní request)</li>
+              <li>Pokud timeout: log warning + default deny (radši tma než breach)</li>
+            </ol>
+            <p>
+              Pipeline atomicky — jeden flow rozhodne celý sequence. Žádný race condition
+              („roleta dolů + light → během toho user otevře roletu manuálně" — by se to
+              v 5 s okně mělo dovnitř, ale pokud ano, příští cyklus to dořeší).
+            </p>
+          </details>
+
+          <details>
+            <summary>Position semantics (windowcoverings_set vs. _state)</summary>
+            <p>
+              Homey má dvě capabilities:
+            </p>
+            <ul>
+              <li>
+                <strong><code>windowcoverings_set</code></strong>: float 0,0–1,0 — target
+                position. Set čte device na drive direction. 0 = bottom (closed),
+                1 = top (open).
+              </li>
+              <li>
+                <strong><code>windowcoverings_state</code></strong>: enum 'idle' / 'up' / 'down'
+                — současný stav motoru. Read-only z driver. Užitečné pro „čekej až
+                dojede".
+              </li>
+            </ul>
+            <p>
+              IKEA Fyrtur convention: 0 = full down (tělo lana navinuté), 1 = full up
+              (lano vysunuté). Aqara curtain motor naopak často 0 = open, 1 = closed —
+              ověřit per device.
+            </p>
+          </details>
+
+          <details>
+            <summary>Schedule format (auto-open / auto-close)</summary>
+            <p>
+              Schedule per zóna podobně jako heating:
+            </p>
+            <pre><code>{
+  "version": 1, "enabled": true,
+  "schedule": {
+    "weekday": [
+      {"time": "06:30", "position": 1.0, "comment": "morning open"},
+      {"time": "22:00", "position": 0.1, "comment": "night close"}
+    ],
+    "weekend": [
+      {"time": "08:00", "position": 1.0},
+      {"time": "23:00", "position": 0.1}
+    ]
+  }
+}</code></pre>
+            <p>
+              Cron <code>sh_blind_scheduler_v1</code> (every 5 min) najde aktuální slot
+              a aplikuje. Manual override z dashboardu má prioritu (config:
+              <code>sh_cfg_blind_manual_override_until_ts</code>).
+            </p>
+          </details>
+
+          <details>
+            <summary>Battery management (Fyrtur ~1 rok)</summary>
+            <p>
+              IKEA Fyrtur má integrovaný Li-Ion akumulátor, USB-C nabíjení. Capability
+              <code>measure_battery</code>:
+            </p>
+            <ul>
+              <li>&gt; 50 % — green</li>
+              <li>20–50 % — yellow, log warning</li>
+              <li>10–20 % — red, push alert (až bude implementováno)</li>
+              <li>&lt; 10 % — kritický, schedule nabíjení do týdne</li>
+            </ul>
+            <p>
+              Real-life: při 2 cyklech denně (open ráno + close večer) battery drží ~1 rok.
+              Nabíjení trvá ~4 h, lze přes noc bez vyndání. USB-C kabel zůstává během
+              nabíjení.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti</h2>
+        </header>
+        <div class="related-grid">
+          <a href="svetla.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">💡</span>
+            <h3>Světla a osvětlení</h3>
+            <p>Privacy guard + safety interlock — roleta řídí, kdy můžou jít světla.</p>
+          </a>
+          <a href="bezpecnost-kamery.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🛡</span>
+            <h3>Bezpečnost a kamery</h3>
+            <p>Roleta jako bezpečnostní marker — closed = privacy, byt v přízemí.</p>
+          </a>
+          <a href="atmosfera.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🌗</span>
+            <h3>Atmosféra a scény</h3>
+            <p>Schedule auto-open ráno, auto-close noc — TOD-driven.</p>
+          </a>
+          <a href="vyzvy.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🐛</span>
+            <h3>Výzvy</h3>
+            <p>Invertovaná privacy comparison v1.13 → fix v1.14, hodiny diagnostiky.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Noční koupelna ve 3 ráno | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger is-active">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html" aria-current="page"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="nocni-koupelna" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📖 Příběh · Případová studie</p>
+        <h1 class="hero-title">Noční koupelna <span class="grad-text">ve 3 ráno</span></h1>
+        <p class="hero-lead">
+          Vstaneš v noci na záchod. Žádný klasický motion-on-trigger by zde fungoval —
+          plné světlo by tě probudilo, briefing by ti zazpíval do tichého bytu, robot
+          vysavač by se rozeběhl. Místo toho subtilní cesta: dim 0,2, žádný TTS, žádné
+          subsystémy probuzené. Pak zpátky do postele, sleep state intact, pokračuješ
+          v REM cyklu.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">12 s</span><span class="uc-stat-label">Total interakce</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">0,2</span><span class="uc-stat-label">Dim level (z 1.0)</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">0</span><span class="uc-stat-label">TTS / audio</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">5</span><span class="uc-stat-label">Subsystémů co spí dál</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Kontext</p>
+          <h2 class="section-title">Úterý 02:47, sleep state aktivní</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            <strong>Stav</strong>: <code>sh_spim='yes'</code> od 22:35. Topení v night slotu
+            (jídelna 18, ložnice 17, koupelna 19, toaleta 16). Všechny lights off. Audio
+            silent. Robot vysavač blokován. Brain Guardian zvýšená motion tolerance.
+            Roleta dolů na 0,1.
+          </p>
+          <p>
+            <strong>Trigger</strong>: vstaneš na záchod. Motion v ložnici (Aqara FP2 detekuje),
+            pak motion v koupelně (PIR Z-wave). 3 minuty interakce, pak motion v ložnici
+            zpátky. Žádný hard wake-up — sleep brain detekuje rozdíl mezi „probuzení"
+            a „toaletní cesta".
+          </p>
+          <p>
+            <strong>Co by se NEMĚLO stát</strong>: plné světlo (probudilo by zbytek noci),
+            briefing TTS (skript by neměl trigger ale mohl by), heating mode change
+            (zbytečné rušení schedule), robot vysavač spustit (akustický šok), comfort
+            suggest (pochopitelně ne v noci).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Timeline</p>
+          <h2 class="section-title">12 sekund subtilní reakce</h2>
+          <p class="section-lead">Krátké, tiché, žádný hard restart subsystémů.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:47:18</span>
+            <h3>Motion v ložnici (FP2)</h3>
+            <p>
+              Aqara FP2 detekuje pohyb v ložnici. <code>alarm_motion=true</code> event.
+              Sleep state aktivní → priority engine deny pro většinu akcí, ale flow trigger
+              <code>sh_motion_router_v1</code> stále běží (logging + minimal logic).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:47:20</span>
+            <h3>Sleep brain heuristic</h3>
+            <p>
+              Sleep brain check: motion v ložnici + sleep state = active + TOD = night
+              window (22:00–05:00). Heuristics: krátká motion ≤ 3 min = bathroom trip,
+              ne wake-up. <code>sh_sleep_state</code> stays active. NEvolá ensure*WakeMode().
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:47:24</span>
+            <h3>Motion v předsíni</h3>
+            <p>
+              PIR předsíň → way-finding light auto-on, dim 0,2 (night profile, ne default
+              0,8). Lux check overridden — way-finding má vlastní rules. 60 s timer pro off.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:47:28</span>
+            <h3>Motion v koupelně</h3>
+            <p>
+              Bathroom router: sleep state aktivní + TOD night → dim profile 0,2 (warm
+              low color temperature 2700 K). NE radio. NE plný light. Stropní Fibaro dimmer
+              setCap dim 0,2.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:48–02:50</span>
+            <h3>3 minuty činnost</h3>
+            <p>
+              Bathroom motion continuous, dim drží 0,2. Žádné akce kromě kontinuity.
+              Předsíň timeout expiroval (60 s) → off (predsíň nemá motion). Brain Guardian
+              cron 02:50 — state consistent (sleep + bathroom_active = ok).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:50:10</span>
+            <h3>Bathroom motion off</h3>
+            <p>
+              30 s grace period začíná (motion může mihnout). Po 30 s bathroom router stop:
+              dim 0,2 → fade out 5 s → 0. Žádný hard cut, jemný ramp aby ti oči nešly do
+              šoku.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:50:55</span>
+            <h3>Předsíň motion znovu</h3>
+            <p>
+              Cesta zpátky → way-finding light znovu dim 0,2. Stejný 60 s timer. FP2 v ložnici
+              přeberá detekci.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:51:05</span>
+            <h3>FP2 ložnice presence</h3>
+            <p>
+              Vrátil ses do postele. FP2 detect přítomnost, sleep brain stále drží
+              <code>sh_spim='yes'</code> (motion period byla &lt; 5 min, classify jako bathroom
+              trip). Žádné akce — sleep gate nedotčená.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:51:55</span>
+            <h3>Předsíň timeout</h3>
+            <p>
+              Předsíň motion 60 s back ago → way-finding off. Zpátky úplná tma. Heating
+              schedule pokračuje v night slotu, kotel běží svojí standardní rutinou.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:52+</span>
+            <h3>REM cyklus pokračuje</h3>
+            <p>
+              Sleep state nikdy neunset. Žádný subsystém nebyl plně rerun. Briefing
+              ve 3:15 se odehraje normálně dle schedule. User si možná ráno ani nevzpomene,
+              že v noci vstal — to je cíl.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ROZDÍL -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Rozdíl</p>
+          <h2 class="section-title">Co by udělal špatně postavený systém</h2>
+          <p class="section-lead">Subtilita = kvalitní user experience. Naivní logika = miserable noc.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">💡</span>
+            <h3>Plné světlo</h3>
+            <p>
+              Naivní motion-trigger by spustil koupelnu na dim 1,0 (full bright). 600 lux
+              do očí v 03:00 = REM disruption, hodina spánku zničená. Místo toho 0,2 =
+              ~50 lux warm. Vidíš co děláš, oči nejdou do šoku.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🔊</span>
+            <h3>Audio briefing</h3>
+            <p>
+              Pokud by sleep brain interpretoval motion jako wake-up → briefing TTS by
+              spustil. Hlas v tichém bytě v 03:00 = adrenalin spike. Místo toho sleep
+              guard drží audio silent celou noc.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🔥</span>
+            <h3>Heating boost</h3>
+            <p>
+              Naivní system by mohl interpretovat motion jako příchod do koupelny ráno →
+              boost preset (23 °C 60 min). V noci zbytečné, kotel by jel hodinu navíc.
+              Místo toho schedule night slot pokračuje.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🤖</span>
+            <h3>Robot vysavač</h3>
+            <p>
+              Naivní auto-cleaning trigger by mohl spustit robot na motion v 03:00.
+              Akustický útok. Místo toho robot blokován po celou sleep window
+              (<code>sh_robot_blocked='yes'</code> dokud sleep gate aktivní).
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🚪</span>
+            <h3>Door-open detection</h3>
+            <p>
+              Otevíráš dveře koupelny → door_contact event. Naivně by mohl interpretovat
+              jako „někdo vstoupil/odchází" → away/home preset. Brain Guardian bypass
+              tohohle: door_contact + sleep_state = active → ignore preset cascade.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Sleep brain heuristic (bathroom trip vs. wake-up)</summary>
+            <p>
+              Sleep brain rozhoduje, jestli motion v sleep window je „wake" nebo „bathroom":
+            </p>
+            <ul>
+              <li><strong>Wake-up signs</strong>: motion duration &gt; 5 min, multiple zones,
+              alarm time approaching (&lt; 30 min), explicit unblock signal (Cube tap,
+              button press)</li>
+              <li><strong>Bathroom trip signs</strong>: motion 1–4 min, single round-trip
+              path (loznice → predsin → koupelna → predsin → loznice), žádný alarm time
+              proximity, žádný explicit unblock</li>
+              <li><strong>Edge case</strong>: motion 4–5 min = uncertain, drží sleep state ale
+              loguje warning</li>
+            </ul>
+            <p>
+              Klasifikace je rule-based, ne ML. ML by potřeboval labeled data (user feedback
+              „bylo to bathroom trip / probuzení") který nemáme. Rules ladí jednou za pár
+              měsíců dle observed patterns.
+            </p>
+          </details>
+
+          <details>
+            <summary>Bathroom router night profile</summary>
+            <pre><code>// sh_bathroom_router_v1 (excerpt)
+function getBathroomProfile() {
+  if (sh_spim === 'yes') return 'night';      // dim 0.2 warm, 30s grace
+  if (TOD === 'morning') return 'bright';     // dim 1.0, 5min timer
+  if (TOD === 'evening') return 'normal';     // dim 0.7, 5min timer
+  return 'normal';
+}
+const profile = getBathroomProfile();
+const target = PROFILES[profile];
+await stropniDimmer.setCapabilityValue('dim', target.dim);
+if (profile === 'night') {
+  await fadeOut(5000);  // smooth ramp on motion-off
+}</code></pre>
+            <p>
+              Profile night má dim 0,2 + warm color temperature (kdyby bylo light_temperature
+              capability). Aktuálně jen dim. Plán: přidat <code>light_temperature</code>
+              setCap pokud koupelnová stropní podporuje (Fibaro FGD-212 podporuje, není
+              osazená warm-tunable žárovkou).
+            </p>
+          </details>
+
+          <details>
+            <summary>Way-finding light (independent path)</summary>
+            <p>
+              Předsíň lights mají vlastní pravidla, separátně od ostatních zón:
+            </p>
+            <ul>
+              <li>Bypass sleep guard (sleep_state ignored — způsob jak najít cestu)</li>
+              <li>Bypass privacy guard (předsíň nemá outside view)</li>
+              <li>Vlastní night profile (dim 0,2 warm, 60s timer)</li>
+              <li>Door_contact open trigger plus motion trigger</li>
+            </ul>
+            <p>
+              Bez way-finding by user musel buď nahmatat vypínač u dveří (klasická řešení),
+              nebo používat mobilní svítilnu. Smart home tady přidává hodnotu, kterou by
+              jiná řešení neměla.
+            </p>
+          </details>
+
+          <details>
+            <summary>Audio bypass for night (kromě critical alerts)</summary>
+            <p>
+              Night audio gate má 4 kategorie:
+            </p>
+            <ul>
+              <li><strong>Suppressed</strong>: TTS, briefing, comfort suggest, radio. Default sleep state.</li>
+              <li><strong>Whisper bypass</strong> (plánováno): kritické info (delay alarm 1h?, weather alert)
+              přečtené tiše do ložnice. Volume 0,2, max 100 chars. Aktuálně neimpl.</li>
+              <li><strong>Critical bypass</strong>: anti-freeze, water leak, gas, smoke. Plný volume,
+              kuchyňský speaker (centrální).</li>
+              <li><strong>Emergency siren</strong> (plánováno): smoke/gas → siréna na všech speakers,
+              max volume. Alert mode.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Brain Guardian motion tolerance v noci</summary>
+            <p>
+              Brain Guardian má anomaly detection na sleep_state inconsistency:
+            </p>
+            <pre><code>// daytime tolerance: motion_count > 3 in 5min while spim=yes = wake suspect
+// nighttime (sleep window 22:00-05:00) tolerance: > 8 in 5min = wake suspect
+const tolerance = isInSleepWindow() ? 8 : 3;
+if (motionCount5min > tolerance && sh_spim === 'yes') {
+  logEvent({event: 'sleep_anomaly_motion_count', count: motionCount5min});
+  // does NOT auto-unset sh_spim — just logs warning
+}</code></pre>
+            <p>
+              Bathroom trip má typicky 4–6 motion events v 5 min okně (vstoupení, používání,
+              odchod). Pod tolerance, žádný alert. Když je motion mnohem víc (8+) a žádný
+              cube/button trigger, něco neobvyklého se děje.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Subsystémy v této studii</h2>
+        </header>
+        <div class="related-grid">
+          <a href="atmosfera.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🌗</span>
+            <h3>Atmosféra a scény</h3>
+            <p>Sleep brain heuristic, sleep state gate, time-of-day buckets.</p>
+          </a>
+          <a href="svitidla.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">💡</span>
+            <h3>Svítidla</h3>
+            <p>Bathroom dim profiles, way-finding light independent path, koupelnová stropní Fibaro.</p>
+          </a>
+          <a href="rano-rutina.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🌅</span>
+            <h3>Ráno v 3:15</h3>
+            <p>Kontrast — opravdové probuzení vs. bathroom trip. Sleep brain rozdílná classification.</p>
+          </a>
+          <a href="bezpecnost-kamery.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🛡</span>
+            <h3>Bezpečnost a kamery</h3>
+            <p>Brain Guardian motion tolerance v noci, sleep_anomaly invariant.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

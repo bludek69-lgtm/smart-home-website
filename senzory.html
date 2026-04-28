@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Senzory | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger is-active">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html" aria-current="page"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="senzory" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📦 Zařízení · Senzory</p>
+        <h1 class="hero-title">Senzory — <span class="grad-text">co dům vidí</span></h1>
+        <p class="hero-lead">
+          Přehled detekce — kde a jak dům snímá realitu. mmWave radar pro klidného člověka,
+          klasický PIR pro pohyb, kontaktní senzory na oknech, lux pro denní světlo.
+          Každý typ má jiný use-case, různé limity a vlastní spotřebu baterie.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">4</span><span class="uc-stat-label">Typy senzorů</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Bezdrátové protokoly</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">11</span><span class="uc-stat-label">Funkčních zón pokrytých</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">~6 m</span><span class="uc-stat-label">Dosah FP2 mmWave</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Detekční vrstvy + datová cesta</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            Senzory jsou <strong>vstupní vrstva</strong> celého systému. Bez nich systém neví,
+            jestli někdo je v místnosti, jestli je tma, jestli je okno otevřené. Každý
+            senzor má capability v Homey (např. <code>alarm_motion</code>,
+            <code>alarm_presence</code>, <code>alarm_contact</code>), který flow trigger
+            přečte a pošle event do skriptů.
+          </p>
+          <p>
+            <strong>Architekturně</strong> senzory <strong>nikdy nezasahují</strong> přímo do akce.
+            Místo toho zapisují stav do request proměnných (např.
+            <code>sh_light_request='on'</code>) a request-first pipeline rozhoduje, jestli
+            akce proběhne. To umožňuje sleep guard, privacy guard, priority engine —
+            a hlavně testovatelnost.
+          </p>
+          <p>
+            Většina senzorů je <strong>bateriová</strong>. Životnost typicky 1–2 roky.
+            Brain Guardian sleduje <code>lastUpdated</code> timestamp — když senzor
+            neaktualizoval 24+ h, alert do EventLog (battery suspect). Re-pair po výměně
+            baterky vygeneruje <strong>nové UUID</strong> — flow trigger karty s old UUID
+            silent fail, fix vyžaduje bulk swap.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TYPOLOGIE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Typy senzorů</p>
+          <h2 class="section-title">Čtyři kategorie, čtyři role</h2>
+          <p class="section-lead">Každá detekuje jinou věc. Společně dávají úplný obraz.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">Presence</span>
+            <h3>mmWave radar (FP2)</h3>
+            <p>
+              Vidí klidného člověka — sedící, dýchající, micro-pohyby. Plus pohyb. Capability
+              <code>alarm_presence</code>. Cena ~1 500 Kč. Limit: zóna detekce není 100 %
+              přesná, občas mihne na False, proto triple-sensor guard.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Motion</span>
+            <h3>PIR (Fibaro Z-wave)</h3>
+            <p>
+              Klasický passive-infrared. Detekuje teplotní změnu (= pohyb). Necítí klidného
+              člověka. Capability <code>alarm_motion</code>. Levný (~600 Kč), spolehlivý,
+              dlouho na baterce. Ideální pro kuchyň, koupelnu.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Contact</span>
+            <h3>Door/Window kontakt</h3>
+            <p>
+              Magnetický kontakt na okně/dveřích. Capability <code>alarm_contact</code>.
+              Jednoduchý, nejlevnější (~350 Kč), bez false positives. SNZB-04 má známý
+              firmware bug (deep-sleep failure) — náhrada Aqara P2.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Environmental</span>
+            <h3>Lux + temperature</h3>
+            <p>
+              Lux senzor pro denní světlo (řídí lighting), interní teplotní čidla v každé
+              TRV pro topení. Capability <code>measure_luminance</code>,
+              <code>measure_temperature</code>. Continuous, ne event-based.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware v provozu</p>
+          <h2 class="section-title">Co reálně vidíme</h2>
+          <p class="section-lead">Konkrétní kusy, které právě běží v bytě.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">📡</div>
+            <h3>Aqara FP2 (SNZB-06P)</h3>
+            <p class="hw-tag">mmWave · presence · Zigbee · open space</p>
+            <p>
+              Vlajková loď. Detekuje sedícího člověka, dýchání, micro-pohyby. Zóna „open space"
+              (jídelna + kuchyně). Vyžaduje 230 V napájení (ne baterie). Sensitivity 5 levels,
+              user nastavil mid.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">👁</div>
+            <h3>Sensore kuchyně Z-wave (Fibaro)</h3>
+            <p class="hw-tag">PIR · motion · Z-wave · battery</p>
+            <p>
+              Klasický PIR. Trigger pro „vstanu ráno" detection (motion + sleep_state=active
+              = waking). Kuchyňská světla, occupancy bonus pro topení. Battery ~12 měsíců.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🚪</div>
+            <h3>Door/Window Sensor Jídelna1</h3>
+            <p class="hw-tag">Aqara · contact · Zigbee · battery</p>
+            <p>
+              Kontakt na okně jídelny. Trigger pro čističku vzduchu (vypnout při otevřeném).
+              Reálný incident 26.4. — re-pair vygeneroval nové UUID, 3 staré flows osiřely.
+              Diagnose: GET device → 404, fix bulk swap.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">☀</div>
+            <h3>Light Sensor kuchyně1 + Xiaomi</h3>
+            <p class="hw-tag">Lux · Zigbee · ambient</p>
+            <p>
+              Dva lux senzory v open space — primární (kuchyně) + Xiaomi (jídelna). Hodnoty
+              <code>sh_lux_jidelna</code>, <code>sh_lux_kuchyne_xiaomi</code>. Threshold 120 / 400
+              pro on/off s hysterezí.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🌡</div>
+            <h3>4× Fibaro FGT-001 (TRV)</h3>
+            <p class="hw-tag">Termo hlavice · Z-wave · battery</p>
+            <p>
+              Dvojí role — regulátor topného toku + interní teplotní čidlo. Capability
+              <code>measure_temperature</code> v každé místnosti (jídelna, ložnice, koupelna,
+              toaleta). Zdroj <code>current_temp</code> pro heating demand.
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">💧</div>
+            <h3>Water leak <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">Aqara · alarm_water · Zigbee · battery</p>
+            <p>
+              Pod dřezem v kuchyni a koupelně. Trigger pro safety bypass — uzavře hlavní
+              přívod (přes plánovaný Aqara water valve), alert do speaker ložnice. Cena
+              ~400 Kč/kus.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Zigbee vs. Z-wave, battery management, UUID stability.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Zigbee vs. Z-wave (proč obojí)</summary>
+            <p>
+              <strong>Zigbee 3.0</strong> (2,4 GHz) — Aqara FP2, door/window, lux. Levnější
+              senzory, mesh ve vlastním prostoru, Aqara hub-free integrace přes Homey Pro 2026.
+              Slabší dosah, sdílené pásmo s Wi-Fi.
+            </p>
+            <p>
+              <strong>Z-wave</strong> (868 MHz EU) — Fibaro PIR, FGS-214 (kotel), 4× FGT-001 TRV.
+              Dražší, ale dedikované pásmo, dobrý dosah skrz zdi, napájené devices fungují
+              jako repeater pro mesh.
+            </p>
+            <p>
+              Pro batterové motion senzory by byl Zigbee taky OK, ale Fibaro PIR má lepší
+              firmware reliability než cheap Aqara variantu (test: 6 měsíců, 0 false positives).
+            </p>
+          </details>
+
+          <details>
+            <summary>Triple-sensor guard pro presence_off</summary>
+            <p>
+              FP2 občas falešně mihne na <code>alarm_presence=false</code> (cooldown / sensitivity).
+              15 min flow delay → presence_off event → router by chtěl vypnout světla.
+              V té chvíli user už dávno zpátky.
+            </p>
+            <pre><code>if (presence_event === 'off') {
+  if (motion.alarm_motion === true) → keep on (motion_active)
+  if (presence.alarm_presence === true) → keep on (presence_recovered)
+  if (max(open_presence_ts, open_motion_ts) > now - 5min) → keep on (recent)
+}</code></pre>
+            <p>
+              Implementováno v <code>sh_open_space_router_v1 v1.18</code>. Bez tohoto guard
+              by light flikrovalo každých 15 min při klidném sezení.
+            </p>
+          </details>
+
+          <details>
+            <summary>Battery management (lastUpdated tracking)</summary>
+            <p>
+              Brain Guardian cron 15 min iteruje senzory s capability <code>measure_battery</code>
+              a <code>lastUpdated</code> timestamp:
+            </p>
+            <ul>
+              <li><strong>battery &lt; 20 %</strong> → battery_low alert, log do EventLog</li>
+              <li><strong>battery &lt; 10 %</strong> → battery_critical, push (až bude implementováno)</li>
+              <li><strong>lastUpdated &gt; 24 h</strong> → senzor stale, possible dead battery</li>
+              <li><strong>lastUpdated &gt; 72 h</strong> → senzor unreachable, suggest re-pair</li>
+            </ul>
+            <p>
+              SNZB-04 (door/window) má známý <strong>deep-sleep firmware bug</strong> — padá
+              do unreachable i při plné baterce. Náhrada Aqara P2 (Matter/Thread) v plánu.
+            </p>
+          </details>
+
+          <details>
+            <summary>UUID stability (re-pair = nové UUID)</summary>
+            <p>
+              Po výměně baterky / re-installu device Homey vygeneruje <strong>nové UUID</strong>.
+              Old UUID v device_map / flow trigger kartách = orphan reference, žádný error,
+              prostě silent fail.
+            </p>
+            <p>
+              Reálný incident 26.4. — Door/Window Sensor Jidelna1 přepárovaný, 3 flows broken,
+              čistička se nevypínala při otevření okna. Diagnose:
+              <code>GET /api/manager/devices/device/&lt;old&gt;</code> → 404. Fix: bulk swap PUT.
+            </p>
+            <p>
+              Backlog: <code>tools/find_orphan_device_refs.py</code> preventive scanner —
+              před každým commitem zkontroluje, jestli všechny device_map references jsou live.
+            </p>
+          </details>
+
+          <details>
+            <summary>Lux thresholdy + hystereze</summary>
+            <p>
+              Open space lux řízení používá dva thresholdy + hysterezi pro stabilitu:
+            </p>
+            <ul>
+              <li><code>sh_cfg_lux_open_space_on</code> = 120 — pod tím se zapnou (pokud presence)</li>
+              <li><code>sh_cfg_lux_open_space_off</code> = 400 — nad tím se vypnou (denní světlo dost)</li>
+              <li><strong>Mezi 120 a 400</strong>: udržuje aktuální stav (žádné on→off→on flikr)</li>
+            </ul>
+            <p>
+              Lux senzor čte z <code>sh_lux_jidelna</code> nebo <code>sh_lux_kuchyne_xiaomi</code>
+              (max z obou, pessimistický odhad — nejvíc tmy v zóně).
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti</h2>
+        </header>
+        <div class="related-grid">
+          <a href="svetla.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">💡</span>
+            <h3>Světla a osvětlení</h3>
+            <p>Use-case strana — jak senzory řídí lighting přes pipeline.</p>
+          </a>
+          <a href="bezpecnost-kamery.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🛡</span>
+            <h3>Bezpečnost a kamery</h3>
+            <p>Senzory jako bezpečnostní marker, away/home stavová logika.</p>
+          </a>
+          <a href="hardware.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">📦</span>
+            <h3>Hardware overview</h3>
+            <p>Celkový přehled hardware, ne jen senzory — kotel, switche, repro.</p>
+          </a>
+          <a href="vyzvy.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🐛</span>
+            <h3>Výzvy</h3>
+            <p>SNZB-04 firmware bug, UUID re-pair incident, triple-sensor guard.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

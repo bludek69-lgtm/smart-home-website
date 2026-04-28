@@ -27,7 +27,7 @@ PILLARS = [
         'label': 'Prožívání',
         'title': 'Prožívání — co systém umožňuje',
         'lead': 'Use-case pohled na celý systém — co dům dělá pro ty, kdo v něm žijí. Funkce, dashboardy a AI vrstva v jednom.',
-        'sub': ['topeni-klima', 'funkce', 'dashboard', 'ai-brain'],
+        'sub': ['topeni-klima', 'svetla', 'audio', 'bezpecnost-kamery', 'atmosfera', 'energie', 'funkce', 'dashboard', 'ai-brain'],
     },
     {
         'id': 'zarizeni',
@@ -35,7 +35,7 @@ PILLARS = [
         'label': 'Zařízení',
         'title': 'Zařízení',
         'lead': 'Hardware co řídí dům — Homey Pro 2026, 77 zařízení, infrastruktura okolo.',
-        'sub': ['hardware', 'infra'],
+        'sub': ['senzory', 'ovladace', 'svitidla', 'repro', 'rolety', 'zasuvky', 'hardware', 'infra'],
         'is_existing': True,  # zarizeni.html already exists, don't overwrite content
     },
     {
@@ -44,7 +44,7 @@ PILLARS = [
         'label': 'Příběh',
         'title': 'Příběh projektu',
         'lead': 'Cesta k současnému stavu — historie, architektonické přechody a problémy které vznikaly a řešily se cestou.',
-        'sub': ['historie', 'architektura', 'vyzvy'],
+        'sub': ['historie', 'architektura', 'vyzvy', 'rano-rutina', 'navrat-domu', 'nocni-koupelna'],
     },
     {
         'id': 'blog',
@@ -69,6 +69,20 @@ PILLARS = [
 # Sub-page metadata (existing pages that became sub-pages under pillars).
 SUBPAGES = {
     'topeni-klima': ('Topení a klima', 'Topení a klima',        'Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.'),
+    'svetla':       ('Světla',         'Světla a osvětlení',    'Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.'),
+    'audio':        ('Audio a TTS',    'Audio a TTS',           'TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.'),
+    'bezpecnost-kamery': ('Bezpečnost a kamery', 'Bezpečnost a kamery', 'Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.'),
+    'atmosfera':    ('Atmosféra',      'Atmosféra a scény',     'Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.'),
+    'energie':      ('Energie',        'Energie a spotřeba',    'Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.'),
+    'senzory':      ('Senzory',        'Senzory',               'mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.'),
+    'ovladace':     ('Tlačítka a ovladače', 'Tlačítka a ovladače', 'Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.'),
+    'svitidla':     ('Svítidla',       'Svítidla',              'Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.'),
+    'repro':        ('Reproduktory',   'Reproduktory',          'Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.'),
+    'rolety':       ('Rolety',         'Rolety',                'IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.'),
+    'zasuvky':      ('Zásuvky a měření', 'Zásuvky a měření',    '11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.'),
+    'rano-rutina':  ('Ráno v 3:15',    'Ráno v 3:15',           'Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.'),
+    'navrat-domu':  ('Návrat domů',    'Když přijdu domů',      'Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.'),
+    'nocni-koupelna': ('Noční koupelna', 'Noční koupelna ve 3 ráno', 'Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.'),
     'historie':     ('Historie',       'Historie projektu',     'Jak systém vznikal — od první žárovky k AI Brain Guardian.'),
     'hardware':     ('Hardware',       'Hardware',              'Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.'),
     'funkce':       ('Funkce',         'Funkce',                'Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.'),

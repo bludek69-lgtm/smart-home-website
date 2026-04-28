@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Světla a osvětlení | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger is-active">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html" aria-current="page"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="svetla" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🏠 Prožívání · Světla a osvětlení</p>
+        <h1 class="hero-title">Světla která <span class="grad-text">vědí, kdo je v místnosti</span></h1>
+        <p class="hero-lead">
+          Dva senzory na open space — mmWave radar pro klidného člověka, klasický PIR
+          pro pohyb. Buď jeden, nebo druhý. Nikdy ne oba false. Nad senzory běží 4-vrstvá
+          pipeline, která nakonec přepne kapacitu reálné žárovky — s privacy guardem,
+          sleep guardem a triple-sensor anti-flicker logikou.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">11</span><span class="uc-stat-label">Zón se světly</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">2</span><span class="uc-stat-label">Senzory open space</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">4</span><span class="uc-stat-label">Vrstvy pipeline</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">0,2</span><span class="uc-stat-label">Privacy threshold rolety</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Světla která respektují kontext</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            V open space (jídelna + kuchyně) jsou dva senzory: <strong>Aqara FP2</strong>
+            (mmWave radar — vidí i sedícího člověka, micro-pohyby, dýchání) a klasický
+            <strong>Z-wave PIR Fibaro</strong> (jen pohyb). Pravidlo je jednoduché —
+            light zůstává zapnutý, dokud kterýkoli ze senzorů hlásí přítomnost. Vypne až
+            když oba říkají „nic tu není".
+          </p>
+          <p>
+            Nad senzory ale není rovnou setCapability. Mezi tím je <strong>4-vrstvá pipeline</strong>:
+            request → priority engine (TTS má prioritu 100, světla 60 — TTS přebije) →
+            light router → fyzický zápis. Když priority engine řekne „ne", světla počkají
+            až řeč dohraje.
+          </p>
+          <p>
+            A nad pipeline ještě dvě pravidla: <strong>privacy guard</strong> (byt je v přízemí,
+            když je roleta nad 20 % = z venku vidět dovnitř → otevřená světla open space
+            zakázána) a <strong>sleep guard</strong> (když spím, žádné světlo se zapnout
+            nesmí — ani na motion).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DENNÍ PROVOZ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Denní provoz</p>
+          <h2 class="section-title">Jak světla reagují přes den</h2>
+          <p class="section-lead">Lux senzor rozhoduje, presence senzor potvrzuje, privacy a sleep mají právo veta.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">Ráno</span>
+            <h3>Vstanu, nepřeruším spánek</h3>
+            <p>
+              Motion sensor v kuchyni zachytí pohyb. Sleep state je už unset (sleep brain
+              detekoval probuzení). Lux pod prahem → kuchyňská světla zapnutá v dim modu,
+              open space čeká na FP2 confirm.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Den</span>
+            <h3>Lux řídí, ne motion</h3>
+            <p>
+              Při lux nad 400 (denní světlo dostatečné) zůstávají světla zhasnuté i když
+              někdo prošel kolem. Při lux pod 120 a presence true se zapnou. Hystereze
+              zabraňuje blikání kolem prahu.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Večer</span>
+            <h3>Privacy guard aktivuje</h3>
+            <p>
+              Když je venku tma a roleta je nad 20 % — Sektorka, Stůl jídelna a LED pásek
+              se zapnout NESMÍ. Bezpečnostní interlock auto-zavře roletu na 0,15 a
+              uvolní světla.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Noc</span>
+            <h3>Sleep guard zamkne vše</h3>
+            <p>
+              Sleep state = active → priority engine vrátí false na light request. Žádný
+              motion, žádné FP2 vibration nezapne světlo. Pohyb v koupelně má vlastní
+              jemnou cestu (bathroom router).
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SCÉNY -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Scény</p>
+          <h2 class="section-title">Pět situací, pět chování</h2>
+          <p class="section-lead">Žádné explicitní tlačítko — světla rozhoduje senzor + kontext.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🚪</span>
+            <h3>Vstup do bytu</h3>
+            <p>
+              FP2 detekuje presence → light_request='on' → priority engine allow →
+              router → setCap. Při lux pod 120 dim na 40 %, jinak full.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🪟</span>
+            <h3>Privacy guard</h3>
+            <p>
+              Roleta nad 20 % a is night → safety interlock blokne light request.
+              Pokud user explicitně chce → auto-zavře roletu na 0,15 a uvolní light.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">☀</span>
+            <h3>Lux auto</h3>
+            <p>
+              Lux > 400 → světla zůstávají zhasnutá i v presence. Lux < 120 → zapnou se.
+              Mezi tím hystereze (config: <code>sh_cfg_lux_open_space_on/off</code>).
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🛌</span>
+            <h3>Sleep silent</h3>
+            <p>
+              <code>sh_spim='yes'</code> → priority engine deny pro light request.
+              Pohyb se loguje, ale fyzická akce neproběhne. Bathroom má vlastní pravidla.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🧹</span>
+            <h3>Stuck recovery</h3>
+            <p>
+              Když <code>sh_priority_active='tts'</code> přes minutu → brain guardian
+              detekuje a resetuje na 'none'. Světla začnou opět reagovat.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware</p>
+          <h2 class="section-title">Co reálně svítí a co rozhoduje</h2>
+          <p class="section-lead">Dva senzory + tři skupiny světel + jedna roleta která hraje roli v privacy logice.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">📡</div>
+            <h3>Aqara FP2 (SNZB-06P)</h3>
+            <p class="hw-tag">mmWave radar · presence · Zigbee</p>
+            <p>
+              Vidí i sedícího člověka, micro-pohyby a dýchání. Zóna „open space"
+              (jídelna + kuchyně). Capability <code>alarm_presence</code>. Falešně může
+              minutu mihnout na False — proto triple-sensor guard při presence_off.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">👁</div>
+            <h3>Fibaro Motion Sensor</h3>
+            <p class="hw-tag">PIR · motion · Z-wave</p>
+            <p>
+              Klasický PIR. Detekuje pohyb (změna IR), ne klidného člověka. Capability
+              <code>alarm_motion</code>. Funguje jako guard pro presence_off — když je
+              motion stále true, presence_off se ignoruje.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">💡</div>
+            <h3>Sektorka1</h3>
+            <p class="hw-tag">Open space stropní · WiFi (Tuya)</p>
+            <p>
+              Hlavní stropní svítidlo open space. Ovládaná přes
+              <code>setCapabilityValue('onoff', ...)</code>. V privacy módu (roleta nahoře)
+              zakázaná — z venku přímo viditelná do bytu.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🪞</div>
+            <h3>Stůl Jídelna 1 + LED pásek</h3>
+            <p class="hw-tag">Stolní + ambient · WiFi</p>
+            <p>
+              Stolní lampa nad jídelním stolem + LED pásek za TV. Stejný privacy guard
+              jako Sektorka. Při lux pod prahem se zapínají s presence, jinak zhasnuté.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🪟</div>
+            <h3>Roleta Fyrtur 1</h3>
+            <p class="hw-tag">IKEA · Zigbee · windowcoverings_set</p>
+            <p>
+              Hraje dvojí roli — fyzické zastínění a binární privacy signal pro light
+              router. Pozice nad 20 % = „open" pro privacy účely. Při safety interlock
+              auto-zavírá na 0,15.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Pipeline, dual-sensor logika, triple-sensor guard, privacy thresholdy.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>4-vrstvá pipeline (request → priority → router → setCap)</summary>
+            <ol>
+              <li>
+                <strong>Request</strong>: senzor flow nastaví <code>sh_light_request='on'/'off'</code>.
+                Tady končí senzorová cesta — žádné setCap zatím.
+              </li>
+              <li>
+                <strong>Priority engine</strong> (<code>sh_priority_engine_v1</code>): rozhodne, jestli
+                light může vyhrát. Když TTS běží, vrátí <code>false</code> a flow pipeline skončí.
+              </li>
+              <li>
+                <strong>Router</strong> (<code>sh_light_router_v1</code>): aplikuje privacy guard,
+                sleep guard, lux check. Vrací konkrétní device + capability + value.
+              </li>
+              <li>
+                <strong>setCap</strong>: fyzický zápis přes Homey API (
+                <code>setCapabilityValue('onoff', ...)</code>) na konkrétní device z device map.
+              </li>
+            </ol>
+            <p>
+              Před 25.4. byl bug — pipeline končila u priority_engine, router se nevolal.
+              Fix: existující flow „SH – Priority – Light" rozšířen o 2. action chained
+              na <code>outputSuccess</code>. Žádný nový flow (REUSE FIRST).
+            </p>
+          </details>
+
+          <details>
+            <summary>Dual-sensor logika (FP2 + Z-wave)</summary>
+            <p>
+              <strong>Pravidlo</strong>: lights ON pokud <code>FP2.presence === true OR motion.motion === true</code>.
+              OFF jen když <code>FP2.presence === false AND motion.motion === false</code>.
+            </p>
+            <ul>
+              <li><strong>FP2 ON</strong> → flow „SH – OpenSpace – Presence ON" → router</li>
+              <li><strong>FP2 OFF</strong> → flow „SH – OpenSpace – Presence OFF" s 15 min delay → router</li>
+              <li><strong>Z-wave motion</strong> → flow „SH – Kitchen AI – Motion ON/OFF" (jen kuchyňská světla, NE open space)</li>
+            </ul>
+            <p>
+              Z-wave NEPOSÍLÁ event přímo do open space routeru. Čte se jako guard ze
+              skriptu při presence_off.
+            </p>
+          </details>
+
+          <details>
+            <summary>Triple-sensor guard pro presence_off (v1.18)</summary>
+            <p>
+              FP2 občas „mihne" na False (cooldown / sensitivity). 15 min delay → presence_off.
+              V té chvíli user už dávno zpátky. Lights neměly zhasnout. Fix:
+            </p>
+            <pre><code>if (normalized === 'off') {
+  if (motion.alarm_motion === true) → keep on (off_ignored_motion_active)
+  if (presence.alarm_presence === true) → keep on (off_ignored_presence_active)
+  if (max(open_presence_ts, open_motion_ts) > now - 5min) → keep on (off_ignored_recent_5min)
+}</code></pre>
+          </details>
+
+          <details>
+            <summary>Privacy guard (roleta &gt; 20 % = open)</summary>
+            <p>
+              Byt je v přízemí. Když je roleta nad <code>sh_cfg_blind_safety_threshold</code>
+              (default 0,2 / 20 %), přímý pohled z ulice do obýváku. Otevřená světla
+              (Sektorka, Stůl, LED pásek) jsou v té situaci zakázána.
+            </p>
+            <p>
+              Bezpečnostní interlock při light request s privacy fail:
+            </p>
+            <ol>
+              <li>Auto-zavře roletu na <code>sh_cfg_blind_privacy_position</code> (0,15)</li>
+              <li>Po dobu zavírání blokne light</li>
+              <li>Po dosažení pozice uvolní light a setCap normálně</li>
+            </ol>
+            <p>
+              v1.13 měla invertovanou comparison (<code>&lt;</code> místo <code>&gt;</code>) — user-zavřená
+              roleta byla považována za „open" a blokovala lights. Fixed v1.14.
+            </p>
+          </details>
+
+          <details>
+            <summary>Stuck priority bug (TTS gate)</summary>
+            <p>
+              Když TTS pipeline nedokončí (network glitch, speaker disconnect, …),
+              <code>sh_priority_active='tts'</code> zůstane zaseklý. Light request
+              priority 60 &lt; TTS 100 → priority_engine vrátí false → light_router se
+              nikdy nevolá → tma i při presence.
+            </p>
+            <ul>
+              <li><strong>Detection</strong>: <code>active='tts' AND result='allow' AND age &gt; 1 min</code> = stuck</li>
+              <li><strong>Recovery</strong>: brain guardian resetuje na <code>none/idle</code></li>
+              <li><strong>Long-term fix</strong>: TTS skript musí volat priority reset při dokončení</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti v kontextu webu</h2>
+        </header>
+        <div class="related-grid">
+          <a href="vyzvy.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🐛</span>
+            <h3>Výzvy</h3>
+            <p>4 bugy v open space routeru — invertovaná privacy, missing pipeline flow, ghost events, triple-sensor guard.</p>
+          </a>
+          <a href="ai-brain.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🧠</span>
+            <h3>AI Brain</h3>
+            <p>Brain guardian detekuje stuck priority a resetuje. Validator hlídá, jestli pipeline reálně tekla.</p>
+          </a>
+          <a href="architektura.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🏛</span>
+            <h3>Architektura</h3>
+            <p>Script-first — proč je rozhodování ve scriptu a flow je jen orchestrátor.</p>
+          </a>
+          <a href="topeni-klima.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔥</span>
+            <h3>Topení a klima</h3>
+            <p>Stejný script-first pattern, jen pro topení. AI vrstvy nad baseline.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

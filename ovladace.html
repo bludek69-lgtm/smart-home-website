@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Tlačítka a ovladače | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger is-active">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html" aria-current="page"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="ovladace" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📦 Zařízení · Tlačítka a ovladače</p>
+        <h1 class="hero-title">Ovládání <span class="grad-text">bez aplikací</span></h1>
+        <p class="hero-lead">
+          User input bez nutnosti otvírat telefon. Aqara Cube T1 Pro jako primární gestural
+          ovladač — šestistranná kostka, kde každá strana = jiný režim, otáčení = volume,
+          ťuk = trigger. Plus Sleep Manual button a fyzická tlačítka jako fallback.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">6</span><span class="uc-stat-label">Stran kostky</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Gestura (rotate, tap, flip)</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">2</span><span class="uc-stat-label">Roky baterie</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Side actions live</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Fyzický ovladač jako primární UX</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            Smart home s mobilní aplikací jako jediným UX je nepoužitelný — když mám ruce
+            v testě, nebo právě vstávám, nikdo netáhá telefon. Proto fyzický ovladač jako
+            <strong>primární vstupní vrstva</strong>: Aqara Cube T1 Pro stojí na poličce,
+            jednou rukou, různá gesta = různé akce.
+          </p>
+          <p>
+            Cube má tři typy gest: <strong>flip</strong> (otočit na novou stranu —
+            <code>cube_face</code> capability hodnota 1–6), <strong>rotate</strong>
+            (točit kostkou ve stejné straně — <code>cube_rotate</code> emitting +/- delta),
+            <strong>tap</strong> (klepnout — <code>cube_tap</code> event). Každé gesto má
+            jiný handler ve flow / scriptu.
+          </p>
+          <p>
+            Plus jsou tu <strong>fyzická tlačítka</strong> jako fallback (Sleep Manual,
+            Home Reset). Single press, double press, hold = různé eventy. Použito výjimečně,
+            ale když je potřeba, funguje bez Wi-Fi i bez kostky.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DENNÍ PROVOZ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Denní provoz</p>
+          <h2 class="section-title">Jak ovladače fungují přes den</h2>
+          <p class="section-lead">Většinu dne se nedotknu — kontext rozhodne za mě. Ovladač je pro výjimky.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">Ráno</span>
+            <h3>Cube ve „TV mode" straně</h3>
+            <p>
+              Po probuzení natočím kostku na stranu 3 = TV channel control. Rotate = channel
+              up/down (<code>key_channel_up</code> / <code>key_channel_down</code>). Single
+              tap = TV mute toggle. Bug v1.10 měl špatné capability ID (channel_up bez prefixu),
+              fix v1.11.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Den</span>
+            <h3>Cube na straně 2 = audio volume</h3>
+            <p>
+              Strana 2 = volume control aktivní speakeru. Rotate vlevo/vpravo posílá
+              <code>cube_rotate</code> event s delta ±. Skript přepočte na nové volume,
+              setCap na speaker zóny dle aktivního TOD.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Večer</span>
+            <h3>Tap při comfort suggest</h3>
+            <p>
+              AI coordinator vyhodnotí evening_idle → TTS suggest. User answer = tap na cube
+              = accept (<code>sh_user_intent_request='accept'</code>). Bez tap je suggest
+              ignorovaný (po bathroom misroute fix).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Spánek</span>
+            <h3>Sleep manual button</h3>
+            <p>
+              Hard fyzické tlačítko vedle postele. Single press → <code>sh_spim='yes'</code>
+              + sleep_brain cleanup. Double press → emergency lights ON (kdyby něco). Hold
+              5 s → reset všech sleep state vars.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SCÉNY -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Scény</p>
+          <h2 class="section-title">Pět konkrétních interakcí</h2>
+          <p class="section-lead">Každá strana kostky = jiná role. Některé live, jiné v plánu.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">1️⃣</span>
+            <h3>Strana 1 — IDLE</h3>
+            <p>
+              Default. Žádné gesto neaktivní. Stojí na poličce, kdykoli můžu otočit na něco
+              jiného. <code>cube_face=1</code> + <code>tap</code> = nic.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">2️⃣</span>
+            <h3>Strana 2 — VOLUME</h3>
+            <p>
+              Audio volume control aktivního speakeru. Rotate ± delta → setCap volume_set.
+              Tap = mute toggle. Cílový speaker dle TOD: ráno kuchyně, večer ložnice.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">3️⃣</span>
+            <h3>Strana 3 — TV CHANNELS</h3>
+            <p>
+              TV remote shortcut. Rotate = channel up/down (<code>key_channel_up</code>),
+              tap = mute, hold = power toggle. Bug fix v1.11 (3 týdny starý) — channel
+              capability prefix.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">4️⃣</span>
+            <h3>Strana 4 — LIGHT SCENE</h3>
+            <p>
+              Cyklicky přepíná light scenes — bright / dim / mood / off. Tap = next scene.
+              Rotate = brightness fine-tune aktivní scene. Plánováno, zatím v testu.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">✋</span>
+            <h3>Tap během suggest</h3>
+            <p>
+              AI coordinator → comfort_suggest → TTS přečte návrh. User tap během 30 s okna
+              = accept → <code>sh_user_intent='accept'</code> → scéna provede. Bez tap
+              ignorováno.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware v provozu</p>
+          <h2 class="section-title">Co se dotýkám</h2>
+          <p class="section-lead">Jeden primární gestural + 1–2 fyzická fallback tlačítka.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🎲</div>
+            <h3>Aqara Cube T1 Pro</h3>
+            <p class="hw-tag">Gestural · Zigbee · battery (2 roky)</p>
+            <p>
+              Šestistranná kostka. Capability <code>cube_face</code> (1–6),
+              <code>cube_rotate</code> (delta), <code>cube_tap</code> (event). Magnetické
+              držení strany, akcelerometr pro rotaci. Cena ~700 Kč. Akcent ovladač.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🔘</div>
+            <h3>Sleep Manual button</h3>
+            <p class="hw-tag">Aqara · Zigbee · battery</p>
+            <p>
+              Fyzické tlačítko vedle postele. Single / double / hold events. Trigger pro
+              sh_spim toggle, emergency lights, reset state. Backup pro případ že kostka
+              není v dosahu.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">📱</div>
+            <h3>Mobile Homey app</h3>
+            <p class="hw-tag">iOS / Android · over Wi-Fi/internet</p>
+            <p>
+              Sekundární UX pro dálku, debugging, schedule editor. Není primární — most
+              denních akcí jde přes cube nebo geofence. Mobilní app zachytí push alerty.
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🎛</div>
+            <h3>Aqara H1 wall switch <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">Wall · Zigbee · 2-tlačítkové</p>
+            <p>
+              Místo klasického vypínače u dveří — 2 tlačítka, single/double/hold per
+              tlačítko = 6 různých eventů. Plán pro „odchozí scéna" (single = vše off,
+              double = away preset, hold = panic mode).
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🎙</div>
+            <h3>Voice command <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">Local LLM · Whisper STT · HA Voice</p>
+            <p>
+              Hlasové ovládání lokálně — Whisper STT + lokální LLM. „Snižte topení v ložnici"
+              → parse intent → set var. Závisí na LLM host (RPi5, NAS). Iterace po Cube +
+              tlačítka.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Cube event model, side dispatch, capability remapping.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Cube event model (face vs. rotate vs. tap)</summary>
+            <p>
+              Aqara Cube emituje 3 různé eventy přes Homey capabilities:
+            </p>
+            <ul>
+              <li>
+                <strong><code>cube_face</code></strong>: hodnota 1–6, mění se na flip akci.
+                Je to <strong>state</strong>, ne event — drží aktuální stranu, dokud user
+                neflipne.
+              </li>
+              <li>
+                <strong><code>cube_rotate</code></strong>: event s <code>delta</code> v stupních.
+                Pozitivní = clockwise, negativní = counter-clockwise. Sample přes ~10°
+                inkrement, takže točení = sequence eventů.
+              </li>
+              <li>
+                <strong><code>cube_tap</code></strong>: jednorázový event. Single tap. Double tap
+                není native, simulujeme přes 2× tap v 500 ms okně.
+              </li>
+            </ul>
+            <p>
+              Side dispatch je v <code>sh_cube_dispatcher_v1</code> — switch (cube_face) on
+              event type, route do specific handlers (volume, channel, light scene).
+            </p>
+          </details>
+
+          <details>
+            <summary>TV channel capability bug (3 týdny diagnostika)</summary>
+            <p>
+              Bug 2026-04-20 resolved: cube strana 3 = TV channels, ale rotate nedělalo nic.
+              Hypotéz několik:
+            </p>
+            <ul>
+              <li>Cube nemá rotate event v té straně? (false — eventy v EventLog byly)</li>
+              <li>TV neresponduje? (false — manuální setCap fungoval)</li>
+              <li>Capability remapping? (true — root cause)</li>
+            </ul>
+            <p>
+              Cube_dispatcher měl <code>setCapabilityValue('channel_up')</code>, ale Android TV
+              driver capability je <code>key_channel_up</code> (s prefixem). Žádný error, jen
+              silent ignore. Fix v1.11: <code>channel_up</code> → <code>key_channel_up</code>.
+            </p>
+            <p>
+              Memory: <code>todo_cube_tv_channels.md</code> — solved record.
+            </p>
+          </details>
+
+          <details>
+            <summary>User intent capture window</summary>
+            <p>
+              Comfort suggest pipeline:
+            </p>
+            <ol>
+              <li>AI coordinator: situation = comfort_suggest, level 4</li>
+              <li>TTS přečte návrh: „Chceš spustit relax scénu?"</li>
+              <li>30 s capture window pro user_intent_request</li>
+              <li>Pokud cube_tap ARRIVES během okna → <code>sh_user_intent_request='accept'</code></li>
+              <li>Pokud nic → window expiruje, <code>sh_user_intent_request='timeout_idle'</code></li>
+              <li>Down stream akce (scéna) běží jen při <code>'accept'</code></li>
+            </ol>
+            <p>
+              Bez tohoto bypass okna by AI coordinator sám aktivoval scény → bug 25.4.
+              (bathroom radio misroute). Fix v1.8 přidal eksplicitní accept guard.
+            </p>
+          </details>
+
+          <details>
+            <summary>Battery management (cube + button)</summary>
+            <p>
+              Aqara Cube má dvě CR2032 batterky, životnost ~24 měsíců při typické denní
+              aktivitě (5–10 gest/den). Sleep manual button má AAA, ~12 měsíců.
+            </p>
+            <p>
+              Brain Guardian sleduje <code>measure_battery</code>:
+            </p>
+            <ul>
+              <li>&lt; 30 % — log warning</li>
+              <li>&lt; 15 % — push alert (až bude implementováno)</li>
+              <li>&lt; 5 % — kritický, výměna nutná</li>
+            </ul>
+            <p>
+              Po výměně baterky <strong>nové UUID</strong> (silent fail flow trigger). Nutný
+              re-pair check — diagnose <code>GET /api/manager/devices/device/&lt;old&gt;</code> → 404.
+            </p>
+          </details>
+
+          <details>
+            <summary>Fallback chain (cube → button → mobile → manual override)</summary>
+            <p>
+              Fault tolerance design — když primární ovladač nefunguje, jdou se nižší vrstvy:
+            </p>
+            <ol>
+              <li><strong>Cube</strong> — primární (gestural, žádný app)</li>
+              <li><strong>Sleep manual button</strong> — pro sleep state (vedle postele)</li>
+              <li><strong>Mobile Homey app</strong> — full UI, debugging, schedule editor</li>
+              <li><strong>Dashboard kiosek</strong> — RPi WaveShare 1024×600, touch</li>
+              <li><strong>REST API přímo</strong> — last resort (PUT /capability/setCapabilityValue)</li>
+              <li><strong>Fyzické vypínače u žárovek</strong> — když nic z výše nefunguje</li>
+            </ol>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti</h2>
+        </header>
+        <div class="related-grid">
+          <a href="audio.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔊</span>
+            <h3>Audio a TTS</h3>
+            <p>Cube tap = comfort suggest accept, volume rotate.</p>
+          </a>
+          <a href="atmosfera.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🌗</span>
+            <h3>Atmosféra a scény</h3>
+            <p>User intent capture window, comfort suggest acceptance flow.</p>
+          </a>
+          <a href="vyzvy.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🐛</span>
+            <h3>Výzvy</h3>
+            <p>TV channel capability bug — 3 týdny silent fail diagnostika.</p>
+          </a>
+          <a href="dashboard.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">📊</span>
+            <h3>Dashboard</h3>
+            <p>Fallback fyzické UX přes RPi kiosek + 32" monitor + notebook.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

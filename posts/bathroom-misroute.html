@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Audio brain bathroom misroute — 4 hodiny diagnostiky. Bug 25.4., kdy se po comfort_suggest TTS sám spustil bathroom radio i bez user accept. Root cause + fix v1.8." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Bathroom misroute — 4 hodiny diagnostiky | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">25. dubna 2026 · Audio · 8 min čtení</p>
+        <h1>Bathroom misroute — 4 hodiny diagnostiky a fix v1.8</h1>
+
+        <p>
+          Včera večer ve 20:45 systém sám spustil radio do koupelny, kde nikdo nebyl.
+          Žádný explicit příkaz, žádná scéna, žádný cube tap. Jen 46 sekund po tom,
+          co AI coordinator nabídl „relax scénu", začalo z prázdné koupelny hrát
+          Italian Classic Hits Sanremo.
+        </p>
+
+        <p>
+          Bug se zaregistroval jako medium severity (one-shot, dá se zastavit ručně),
+          ale klíčové bylo, že se to mohlo opakovat při každém comfort_suggest. Tady
+          je 4 hodiny diagnostiky shrnutých do 8 minut čtení.
+        </p>
+
+        <h2>Reprodukce</h2>
+
+        <ol>
+          <li>AI coordinator vyhodnotí situation = <code>comfort_suggest</code> (level 4, evening + idle scene)</li>
+          <li>TTS přečte: <em>"Luďku, je večer a nic neběží. Chceš spustit relax scénu?"</em></li>
+          <li>User <strong>neodpoví</strong> — ani cube, ani button, ani voice</li>
+          <li>~46 s po TTS completed: <code>sh_audio_brain_v2 audio_dispatch</code> event</li>
+          <li>Speaker koupelna začne hrát radio (i když user není v koupelně)</li>
+        </ol>
+
+        <h2>State při bugu</h2>
+
+        <pre><code>sh_audio_current_mode = 'radio_bathroom'
+sh_audio_active_speaker = 'Speaker koupelna'
+sh_audio_playing = 'yes'
+sh_audio_request = 'idle'           ← nikdo nepožádal o radio
+sh_audio_final_request = 'idle'     ← ditto
+sh_scene_active = 'idle'            ← scéna se neaktivovala
+sh_user_intent = 'idle'             ← user neodpověděl
+sh_user_intent_request = 'idle'     ← ditto
+sh_ai_coord_last_action = 'comfort_suggest'  ← byla jen NABÍDKA
+sh_audio_prev_mode = 'idle'         ← žádné prev radio (nebylo co resumovat)
+sh_audio_prev_speaker = ''          ← ditto
+sh_tts_resume_pending = 'idle'      ← resume nečeká
+sh_tts_resume_target = 'idle'       ← ditto</code></pre>
+
+        <p>
+          Klíčový červený alarm: <code>sh_audio_current_mode='radio_bathroom'</code>
+          ale <code>sh_audio_prev_mode='idle'</code>. Mode se zaseknul z ranní rutiny,
+          nikdo ho neresetoval, a po TTS completion fallback logika ho použila jako
+          „kam se vrátit".
+        </p>
+
+        <h2>Hypotézy které neplatily</h2>
+
+        <p><strong>H1 — audio_brain auto-execute na comfort_suggest.</strong>
+        Hypotéza: brain možná auto-aktivuje "comfort scene" 30–60 s po suggestion bez
+        čekání na user response. Ověřeno čtením <code>sh_audio_brain_v2</code> —
+        žádný takový handler tam není. Falsified.</p>
+
+        <p><strong>H3 — sh_audio_active_speaker zaseklý z morning.</strong>
+        Hypotéza: z ranní rutiny zůstal <code>active_speaker='Speaker koupelna'</code>,
+        audio_brain dispatch routes podle něj. Částečně true (active_speaker BYL zaseklý),
+        ale dispatch nebyl problém — problém byl ve fallback logice resume_exec.</p>
+
+        <p><strong>H4 — flow listener na ai_coord_last_action.</strong>
+        Hypotéza: někde flow má trigger „<code>sh_ai_coord_last_action</code> changed +
+        condition <code>comfort_suggest</code> → action play radio". Grep across všech
+        flows nenašel žádný takový. Falsified.</p>
+
+        <h2>Root cause (H2 winner)</h2>
+
+        <p>
+          <code>sh_tts_resume_exec_v1</code> (id <code>009149d9-0e49-4881-b41d-502b52ca652c</code>),
+          který se volá automaticky po každém TTS completion, měl fallback handler:
+        </p>
+
+        <pre><code>// BEFORE v1.8
+if (target === 'idle' && currentMode === 'radio_bathroom') {
+  // Resume bathroom radio
+  await dispatchAudio({mode: 'radio_bathroom', speaker: 'Speaker koupelna'});
+}</code></pre>
+
+        <p>
+          Logika byla: „pokud TTS skončil, žádný explicit resume target nebyl, a current
+          mode říká bathroom radio, vrať se k bathroom radio". Záměr: po krátké TTS
+          notifikaci během sprchy resumovat radio, který hrál.
+        </p>
+
+        <p>
+          <strong>Co fallback nekontroloval</strong>: jestli to bathroom radio reálně
+          hrálo PŘED TTS. <code>sh_audio_current_mode</code> se zaseknulo na
+          <code>'radio_bathroom'</code> z ranní rutiny v 03:35 a nikdo ho neresetoval.
+          V 20:45 ten stav stále platil, i když speaker dávno mlčel.
+        </p>
+
+        <h2>Fix v1.8 — prev_playing guard</h2>
+
+        <pre><code>// AFTER v1.8
+if (target === 'idle' && currentMode === 'radio_bathroom') {
+  if (sh_audio_prev_playing !== 'yes') {
+    logEvent({event: 'tts_resume_skip_no_prev_playing'});
+    return;
+  }
+  // Resume bathroom radio
+  await dispatchAudio({mode: 'radio_bathroom', speaker: 'Speaker koupelna'});
+}</code></pre>
+
+        <p>
+          Podmínka navíc: <code>sh_audio_prev_playing === 'yes'</code>. Tato proměnná
+          se nastavuje na <code>'yes'</code> jen když TTS orchestrator detekuje aktivní
+          audio playback PŘED svým spuštěním. Pokud nic nehrálo (jen TTS), prev_playing
+          zůstává <code>'no'</code> a resume se neprovede.
+        </p>
+
+        <h2>Test (25.4. noc)</h2>
+
+        <p>
+          Po deploy v1.8 jsem manuálně reprodukoval podmínky bugu:
+        </p>
+
+        <ul>
+          <li>Reset všech audio state vars do clean</li>
+          <li>Setup: <code>sh_audio_current_mode='radio_bathroom'</code>,
+              <code>sh_audio_prev_playing='no'</code> (klíčový rozdíl)</li>
+          <li>Trigger TTS přes <code>sh_tts_orchestrator_v1</code></li>
+          <li>Wait 60 s</li>
+          <li>Check: <code>sh_audio_request</code> stále 'idle', žádný dispatch event</li>
+        </ul>
+
+        <p>
+          Test passed. Resume_exec correctly skipped, no radio fired. Log entry
+          <code>tts_resume_skip_no_prev_playing</code> zaznamenán.
+        </p>
+
+        <h2>Long-term watch</h2>
+
+        <p>
+          Fix v1.8 řeší symptom, ne příčinu zaseklého <code>sh_audio_current_mode</code>.
+          Pokud znovu uvidíme stuck mode, bude potřeba přidat reset do bathroom radio
+          stop logic — když speaker stop, set mode='idle'. Aktuálně mode drží svou
+          poslední hodnotu, což je v zásadě dirty state.
+        </p>
+
+        <p>
+          Backlog item: <code>tools/audit_audio_state_consistency.py</code> — periodický
+          check, jestli <code>current_mode</code> odpovídá reálnému speaker_playing
+          stavu. Brain Guardian extension.
+        </p>
+
+        <h2>Co se naučilo</h2>
+
+        <blockquote>
+          Fallback logika musí explicitně ověřit, že podmínka, na kterou fallback reaguje,
+          je <em>aktuální</em>, ne jen <em>recent</em>. State proměnné se umí zaseknout
+          v ghost hodnotách, které vypadají platně, ale neodpovídají reálnému světu.
+        </blockquote>
+
+        <p>
+          Tohle není první ghost state bug. Stuck <code>sh_priority_active='tts'</code>
+          incident byl podobný — proměnná držela hodnotu z incomplete pipeline a
+          blokovala následující operations. Brain Guardian validator vrstva (V1 LIVE
+          od 26.4.) je odpovědí na celou tuhle kategorii bugů — periodický cross-check
+          state vs. reality.
+        </p>
+
+        <p>
+          4 hodiny diagnostiky → 4 řádky kódu. Typický poměr u state-driven bugů.
+          Hypothesis ladder (H1 → H2 → H3 → H4) je nezbytný — bez systematické
+          eliminace bych skončil u quick fix který by jen maskoval symptom.
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cold-start bug v sh_heating_demand_v1 — kotel zaseklý forever v hold_off_180s_left po čerstvé instalaci. Root cause + fix v1.2." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Cold-start anti-cycling bug — kotel zaseklý forever | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">21. dubna 2026 · Topení · 7 min čtení</p>
+        <h1>Cold-start anti-cycling bug — kotel zaseklý forever</h1>
+
+        <p>
+          Heating Fáze A šla live ráno 21.4. Kotel se sepnul, odběhl 5 min, vypnul.
+          Pak nikdy nesepnul znovu. EventLog hlásil každé 2 minuty
+          <code>hold_off_180s_left</code>, kde <code>180</code> bylo počítáno
+          z time-since-last-on a se neposouvalo dolů.
+        </p>
+
+        <p>
+          Anti-cycling guard byl pojištěný proti rychlému spínání kotle (ochrana stykače).
+          V podstatě fungoval, ale měl edge case na cold start — kde
+          <code>min_offtime_s</code> nikdy neexpiroval. Tady je 4 hodiny diagnostiky.
+        </p>
+
+        <h2>Symptom</h2>
+
+        <p>
+          Kotel sepnul jednou, ohřál koupelnu na cílovou teplotu (cca 5 min), pak vypnul
+          dle hystereze. Tady end-of-story — od té chvíle už nikdy nesepnul, i když
+          teplota klesla daleko pod cílovou.
+        </p>
+
+        <p>
+          EventLog z demand cronu každé 2 min:
+        </p>
+
+        <pre><code>06:14:00 demand=on  jidelna=21.0/21.0  koupelna=22.1/22.0  → boiler_request=on
+06:16:00 demand=on  ...                                  → boiler_request=on
+06:21:00 demand=off jidelna=21.0/21.0  koupelna=22.0/22.0 → boiler_request=off
+06:23:00 demand=on  jidelna=20.4/21.0                    → hold_off_180s_left=180
+06:25:00 demand=on  jidelna=20.3/21.0                    → hold_off_180s_left=180
+06:27:00 demand=on  jidelna=20.2/21.0                    → hold_off_180s_left=180
+... (forever)</code></pre>
+
+        <p>
+          <code>hold_off_180s_left</code> count down nepokračoval. Kotel forever held off,
+          jídelna pomalu klesala 21 → 20 → 19 → 18 °C. Bez intervence by klesla na anti-freeze
+          7 °C (kde by safety bypass donutil kotel sepnout).
+        </p>
+
+        <h2>Anti-cycling guard logika</h2>
+
+        <p>
+          <code>sh_heating_demand_v1 v1.1</code> měl tento check:
+        </p>
+
+        <pre><code>// v1.1
+const sinceTs = parseInt(await getVar('sh_heating_boiler_since_ts'), 10);
+const elapsed = Math.floor((Date.now() - sinceTs) / 1000);
+const minOfftimeS = parseInt(await getVar('sh_cfg_heating_min_offtime_s'), 10);
+
+if (boilerState === 'off' && elapsed &lt; minOfftimeS) {
+  return {
+    request: 'off',
+    reason: `hold_off_${minOfftimeS - elapsed}s_left`
+  };
+}</code></pre>
+
+        <p>
+          Logika byla: pokud je kotel off a od posledního off uplynulo méně než
+          <code>min_offtime_s</code> (default 180 s = 3 min), drž ho off pro
+          ochranu stykače.
+        </p>
+
+        <h2>Edge case — cold start</h2>
+
+        <p>
+          <code>sh_heating_boiler_since_ts</code> byl při čerstvé instalaci skriptu
+          <strong>nezapsaný / undefined</strong>. <code>parseInt(undefined)</code> = NaN.
+          <code>Date.now() - NaN</code> = NaN. <code>Math.floor(NaN / 1000)</code> = NaN.
+        </p>
+
+        <p>
+          A teď klíčový moment: <code>NaN &lt; 180</code> v JavaScriptu vyhodnotí
+          <strong>false</strong>. Takže během prvních 5 min běhu (kdy kotel poprvé sepnul)
+          byl else branch a všechno fungovalo.
+        </p>
+
+        <p>
+          Ale po prvním off transition (kotel vypne dle hystereze) se zapsal
+          <code>since_ts = 0</code> nějakou shadow logikou (debug log dal najevo —
+          jeden execution path nesetoval since_ts při off transition correctly,
+          a default value byl 0 z initialization).
+        </p>
+
+        <pre><code>// since_ts = 0
+elapsed = Math.floor((1697123456000 - 0) / 1000)
+       = 1697123456
+// 1697123456 &lt; 180 ? FALSE!
+// Wait, that's not the bug...</code></pre>
+
+        <p>
+          Hmm. <code>1697123456 &lt; 180</code> je false, takže by guard NESPÍCHL.
+          Skript by měl pokračovat normálně.
+        </p>
+
+        <h2>Skutečný root cause</h2>
+
+        <p>
+          Po dalším debug logu jsem zjistil, že problém nebyl <code>elapsed &lt; minOfftimeS</code>,
+          ale jiný kus kódu níže:
+        </p>
+
+        <pre><code>// Safety cutoff
+if (sinceTs > 0) {
+  // Validation runtime checks
+  ...
+}
+
+// Anti-cycling check (the actual guard)
+if (boilerState === 'off') {
+  const safeElapsed = sinceTs > 0 ? elapsed : 0;
+  if (safeElapsed &lt; minOfftimeS) {
+    return {request: 'off', reason: `hold_off_${minOfftimeS - safeElapsed}s_left`};
+  }
+}</code></pre>
+
+        <p>
+          Tady je defensive coding — kdyby <code>sinceTs</code> bylo 0 nebo negative
+          (chyba v init), použít safeElapsed=0 → fall through to guard.
+          <code>0 &lt; 180</code> = true → guard spíchne → return hold_off.
+        </p>
+
+        <p>
+          Logika měla být: „pokud sinceTs neplatí, nech kotel sepnout (skip guard)".
+          Místo toho: „pokud sinceTs neplatí, treat as right-now (most conservative)
+          → guard always blocks".
+        </p>
+
+        <h2>Fix v1.2</h2>
+
+        <pre><code>// v1.2 — explicit cold-start escape
+if (boilerState === 'off') {
+  const safeElapsed = sinceTs > 0
+    ? elapsed
+    : Number.MAX_SAFE_INTEGER;  // ← cold start: bypass guard
+  if (safeElapsed &lt; minOfftimeS) {
+    return {request: 'off', reason: `hold_off_${minOfftimeS - safeElapsed}s_left`};
+  }
+}</code></pre>
+
+        <p>
+          Klíčová změna: <code>sinceTs &gt; 0 ? elapsed : Number.MAX_SAFE_INTEGER</code>.
+          Cold start = pretend infinite time elapsed → guard never blocks.
+        </p>
+
+        <p>
+          Plus opraveno všude jinde v kódu (3 více míst), kde <code>sinceTs &gt; 0</code>
+          check byl použit jako gate s nesprávnou default behavior.
+        </p>
+
+        <h2>Test</h2>
+
+        <p>
+          Reset všech heating state vars (simulace cold start), spustil demand cron
+          ručně:
+        </p>
+
+        <pre><code>06:30:00 (cold start) demand=on jidelna=18.0/21.0 → boiler_request=on
+06:30:00 since_ts=&lt;set&gt;
+06:32:00 demand=on  jidelna=18.5/21.0 → boiler_request=on (still cold)
+...
+06:45:00 demand=off jidelna=21.0/21.0 → boiler_request=off (target reached)
+06:45:00 since_ts=&lt;updated to off transition&gt;
+06:47:00 demand=on  jidelna=20.4/21.0 → hold_off_60s_left (legitimately cooling down)
+06:48:00 demand=on  jidelna=20.3/21.0 → boiler_request=on (180s elapsed)</code></pre>
+
+        <p>
+          Test passed. Cold start nepoznán jako anti-cycling violation, normal cycling
+          po prvním off chová se normálně.
+        </p>
+
+        <h2>Co se naučilo</h2>
+
+        <blockquote>
+          <strong>„Default safe" často není default safe.</strong> Defensive coding
+          který předpokládá worst-case může přidat své vlastní bug class — guard
+          který „raději zablokuje než propustí" může vést k systémové paralýze.
+        </blockquote>
+
+        <p>
+          Lessons z tohoto bugu:
+        </p>
+
+        <ul>
+          <li><strong>Edge case 0 / undefined / NaN</strong>. Vždy explicitní handling, ne
+          implicit fallthrough přes JS coercion. <code>NaN &lt; 180</code> = false je
+          gotcha, na které jsem narazil.</li>
+          <li><strong>Cold start = bezpečnostní bypass</strong>. Při cold startu mají guards
+          z definice „nedostatek dat" — defaultní chování by mělo být „let through
+          on first run", ne „block all".</li>
+          <li><strong>Safety cap orthogonality</strong>. Jiný safety guard (max_runtime_s
+          4h forced off) by tady ne pomohl — kotel byl off, ne on. Layered safeguards
+          potřebují krýt všechny paths, ne jen on-path.</li>
+          <li><strong>EventLog je můj nejlepší přítel</strong>. Bez detailních logů by
+          tento bug byl invisible — Homey UI ukazuje kotel off, vše vypadá OK.
+          Insight přišel z EventLog grep <code>hold_off_*</code>.</li>
+        </ul>
+
+        <p>
+          Bug byl třídeným u kategorií „state machine cold start" — který se v softwaru
+          objevuje typicky jednou za projekt a pak nikdy. Tady ale dům, který se odehraje
+          každé ráno znovu, má constant cold-start exposure (po každém power outage,
+          po každém deploy, po každém Homey restart).
+        </p>
+
+        <p>
+          Defense in depth: <code>sh_brain_guardian_v1</code> (V1 LIVE od 26.4.) má
+          invariant „pokud kotel forever held off + zóna pomalu klesá → alert".
+          Tahle metavrstva by stejný bug zachytila během 15 min, i kdyby fix v1.2
+          neexistoval.
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

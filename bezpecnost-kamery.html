@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Bezpečnost a kamery | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger is-active">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html" aria-current="page"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="bezpecnost-kamery" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🏠 Prožívání · Bezpečnost a kamery</p>
+        <h1 class="hero-title">Bezpečnost která <span class="grad-text">není paranoidní</span></h1>
+        <p class="hero-lead">
+          Senzory na oknech a dveřích, multi-zone motion detection, away/home stavová logika
+          a meta-vrstva Brain Guardian, která hlídá, jestli se dům chová jak má. Cíl není
+          alarm na každý vrabec za oknem — cíl je vědět, když něco není v pořádku, a sám
+          to napravit, kde to jde.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Detekční vrstvy</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">2</span><span class="uc-stat-label">Stavy (home/away)</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">5</span><span class="uc-stat-label">Brain guardian skripty</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">15 min</span><span class="uc-stat-label">Anomaly check cron</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Tři vrstvy detekce + meta-vrstva</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            <strong>Vrstva 1 — fyzické senzory</strong>: door/window kontakty na klíčových oknech,
+            PIR motion v kuchyni, mmWave presence ve open space, motion v koupelně. Každý senzor
+            má capability v Homey a vlastní flow trigger. Nic exotického, jen klasická detekce.
+          </p>
+          <p>
+            <strong>Vrstva 2 — stavová logika</strong>: away/home preset přepíná chování celého domu.
+            Geofence detekuje výjezd, presence skripty potvrdí, a všechny zóny se přepnou — topení
+            na 16 °C, světla blokovaná, případně čistička reaguje na otevřené okno.
+          </p>
+          <p>
+            <strong>Vrstva 3 — Brain Guardian</strong>: meta-supervisor 5-skriptový modul, který sleduje,
+            jestli stav domu odpovídá očekávání. Hlídá stuck priority gates, kotel běžící přes 4 h,
+            dlouhodobě neaktualizované senzory, ghost state proměnné.
+          </p>
+        </div>
+        <figure class="uc-screenshot">
+          <img src="assets/screenshots/after/1920/camera.png"
+               alt="Camera stránka v dashboardu — placeholder pro budoucí venkovní kameru"
+               loading="lazy" class="zoomable" />
+          <figcaption>Camera stránka v dashboardu — placeholder pro budoucí venkovní kameru, Frigate / HA integrace plánovaná</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- DENNÍ PROVOZ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Denní provoz</p>
+          <h2 class="section-title">Jak bezpečnost reaguje na situace</h2>
+          <p class="section-lead">Většinu času pasivní. Reaguje teprve, když se stav zásadně změní.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">Doma</span>
+            <h3>Idle stav</h3>
+            <p>
+              Senzory loggují aktivitu, motion → světla, presence → audio kontext. Žádné push
+              notifikace, žádné alerty. Brain Guardian běží jednou za 15 min, kontroluje konzistenci.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Odjezd</span>
+            <h3>Away preset</h3>
+            <p>
+              Geofence detekuje výjezd → preset = away → topení 16 °C, světla blokovaná,
+              případně robot vysavač spustí. Stav <code>sh_rezim_doma='pryc'</code> gate
+              všech zóny — light_router odmítne, audio brain ztichne.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Návrat</span>
+            <h3>Home preset</h3>
+            <p>
+              Geofence + první motion v bytě → preset = home → topení boost na schedule slot,
+              světla uvolněná, multi-signal confirm (geofence + motion v 5 min) potvrdí návrat.
+              Single-signal je ignorován (ochrana proti false trigger).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Anomálie</span>
+            <h3>Brain Guardian alert</h3>
+            <p>
+              Když cron detekuje stuck state (priority='tts' déle než 1 min), kotel běžící
+              4+ h, senzor neaktualizovaný 24+ h, ghost var, vystaví alert do EventLog.
+              Critical alerty (anti-freeze, water leak) jdou přes safety bypass.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SCÉNY -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Scény</p>
+          <h2 class="section-title">Pět situací, pět odpovědí</h2>
+          <p class="section-lead">Většinou se spouští bez user akce — z kontextu.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🪟</span>
+            <h3>Otevřené okno</h3>
+            <p>
+              Door/window contact na okně otevře → flow vypne čističku vzduchu (zbytečné
+              filtrovat venkovní). Po zavření obnoví. Reálný incident 26.4. — UUID change
+              po re-pairu, 3 flows broken, čistička se nezapínala.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🚗</span>
+            <h3>Odjezd</h3>
+            <p>
+              Geofence GPS opustí home zónu → multi-signal confirm s 5 min delay (eliminuje
+              false trigger u sousedů) → preset = away → cascade do všech subsystémů.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🏠</span>
+            <h3>Návrat</h3>
+            <p>
+              Geofence vstoupí + první motion v 5 min → preset = home. Topení dorovná
+              k aktuálnímu schedule slotu, audio uvolněn pro briefing/comfort.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🛡</span>
+            <h3>Anomaly detect</h3>
+            <p>
+              Brain Guardian cron 15 min → kontroluje 12 invariantů. Pokud něco off,
+              vystaví <code>brain_guardian_status</code> proměnnou + EventLog alert.
+              Push notifikace zatím manuální.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🚨</span>
+            <h3>Critical bypass</h3>
+            <p>
+              Anti-freeze (zóna pod 7 °C), water leak, gas detection → ignoruje sleep guard,
+              priority engine, všechny ostatní pravidla. Topení sepne, alert do speakeru
+              v ložnici.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware</p>
+          <h2 class="section-title">Co reálně sleduje</h2>
+          <p class="section-lead">Kontaktní senzory + motion + presence + soft layer Brain Guardian.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🚪</div>
+            <h3>Door/Window Sensor Jídelna1</h3>
+            <p class="hw-tag">Aqara · Zigbee · contact</p>
+            <p>
+              Kontakt na okně jídelny. Detekuje otevření / zavření. Trigger pro čističku
+              (vypnout). Reálný incident 26.4. — re-pair vygeneroval nové UUID, 3 staré
+              flows osiřely. Diagnose: <code>GET /devices/device/&lt;old&gt;</code> → 404.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">📡</div>
+            <h3>Aqara FP2 (mmWave)</h3>
+            <p class="hw-tag">Presence · Zigbee · open space</p>
+            <p>
+              Vidí klidného člověka. Pro security marker doplňuje motion sensors —
+              někdo sedí v kuchyni i bez pohybu, FP2 to vidí. Bez něj by se po 2 min
+              presence_off vypálilo.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">👁</div>
+            <h3>Fibaro PIR motion</h3>
+            <p class="hw-tag">Z-wave · motion · kuchyně</p>
+            <p>
+              Klasický PIR. Trigger pro „vstanu ráno" detection (motion + sleep_state=active
+              = waking). Vyšší fidelitu hraje při light routingu, ne přímo bezpečnostní.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🧠</div>
+            <h3>Brain Guardian (5 skriptů)</h3>
+            <p class="hw-tag">Soft layer · cron 15 min · LIVE od 26.4.</p>
+            <p>
+              Top-level supervisor — sh_expected_state_engine, sh_state_validator,
+              sh_brain_guardian, sh_release_guard, sh_anomaly_collector. Status zatím
+              <code>OK</code> score 92. Detekoval reálný bug 26.4. (priority_active='tts' ghost).
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">📷</div>
+            <h3>IP kamera <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">RTSP · ONVIF · venku</p>
+            <p>
+              Venkovní kamera s nahráváním na NAS. Aktuálně systém pracuje bez kamer
+              (privacy preference). Až bude — integrace přes Frigate / HA, motion zone
+              jako bezpečnostní událost.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Multi-signal confirm, Brain Guardian invarianty, UUID stability lessons.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Multi-signal confirm (proč single-signal nestačí)</summary>
+            <p>
+              Geofence GPS na mobilu má rozptyl 30–50 m. Když projíždím kolem domu nebo
+              jsem u sousedů, GPS může spadnout do home zóny i když nejsem doma. Single-signal
+              by trigger preset=home → topení boost → zbytečná spotřeba.
+            </p>
+            <p>
+              <strong>Multi-signal confirm</strong>: geofence_in_home + první motion v bytě
+              v 5 min okně → home preset. Bez motion confirm zůstane preset=away. Symetricky
+              pro odjezd: geofence_out + 0 motion v 10 min → away preset (= jsem reálně pryč).
+            </p>
+          </details>
+
+          <details>
+            <summary>Brain Guardian — 12 invariantů</summary>
+            <p>
+              Cron <code>sh_brain_guardian_v1</code> každých 15 min kontroluje konzistenci stavu:
+            </p>
+            <ul>
+              <li><strong>Stuck priority</strong>: <code>active='tts' AND age &gt; 60 s</code> → reset</li>
+              <li><strong>Kotel runaway</strong>: <code>boiler_state='on' AND runtime &gt; 14400 s</code> → forced off</li>
+              <li><strong>Senzor stale</strong>: lastUpdated &gt; 24 h → battery alert</li>
+              <li><strong>Ghost state</strong>: priority_active='tts' a žádný recent TTS event → reset</li>
+              <li><strong>Schedule sanity</strong>: target_temp &lt; min_temp_ever → reset na default</li>
+              <li><strong>Anti-freeze</strong>: jakákoli zóna &lt; 7 °C → forced on (overrides mode)</li>
+              <li><strong>Sleep consistency</strong>: <code>sh_spim='yes' AND motion_count &gt; 3</code> v 5 min → wake suspect</li>
+              <li><strong>UUID orphan</strong>: device_map ref nedostupný → log do EventLog</li>
+              <li><strong>Schedule overlap</strong>: 2+ slots se překrývající časem → first-wins + log</li>
+              <li><strong>Variable type</strong>: number var s string hodnotou → reset na default</li>
+              <li><strong>Future timestamp</strong>: until_ts &gt; now + 7 d → expire (dirty data)</li>
+              <li><strong>Cron drift</strong>: scheduler last_run &gt; 600 s → flow not firing alert</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>UUID change po re-pair (silent fail)</summary>
+            <p>
+              Po výměně baterky / re-installu device Homey vygeneruje <strong>nové UUID</strong>.
+              Stará UUID v device_map a flow trigger kartách = orphan reference, žádný error,
+              prostě silent fail. Reálný incident 26.4. — Door/Window Sensor Jidelna1 přepárovaný,
+              3 flows broken, čistička se nevypínala při otevření okna.
+            </p>
+            <p>
+              <strong>Diagnose</strong>: <code>GET /api/manager/devices/device/&lt;old_id&gt;</code> → 404.
+              <br/><strong>Fix</strong>: bulk OLD→NEW swap přes PUT každého affected flow.
+              <br/><strong>Prevence (backlog)</strong>: <code>tools/find_orphan_device_refs.py</code>
+              preventive scanner, který běží před každým commitem.
+            </p>
+          </details>
+
+          <details>
+            <summary>Sleep state guards (sh_spim)</summary>
+            <p>
+              Centrální sleep state proměnná <code>sh_spim</code> ('yes' / 'no'). Když 'yes':
+            </p>
+            <ul>
+              <li>Priority engine deny pro light request → tma</li>
+              <li>Audio brain deny pro TTS (kromě critical alerts)</li>
+              <li>Heating night slot už byl aplikován scheduleru → nižší teploty</li>
+              <li>Robot vysavač blokován</li>
+              <li>Brain Guardian zvýšená tolerance pro motion (anti-false-positive)</li>
+            </ul>
+            <p>
+              Set body: Sleep Manual button (Cubo), Vstal Kuchyně motion, Phone geofence.
+              Nikdy <strong>nesmazat</strong> set_asleep / set_awake actions ve flows
+              jako „duplikát" — sync s native Homey presence (Mobile UI, HomeKit, Google Home).
+            </p>
+          </details>
+
+          <details>
+            <summary>Critical alert bypass (safety)</summary>
+            <p>
+              Některé situace musí proletět sleep guard, priority engine, vše. Implementováno
+              přes <code>sh_safety_bypass='yes'</code> short-circuit:
+            </p>
+            <ul>
+              <li><strong>Anti-freeze</strong>: jakákoli zóna &lt; 7 °C → topení forced on, alert</li>
+              <li><strong>Water leak</strong> (plánováno): Aqara water sensor → uzavře přívod, alert</li>
+              <li><strong>Gas leak</strong> (plánováno): kombinovaný senzor → vypne kotel, alert</li>
+              <li><strong>Smoke</strong> (plánováno): smoke sensor → vypne všechny silové spotřebiče</li>
+            </ul>
+            <p>Bypass je read-only flag — žádný skript ho neresetuje, jen safety event log handler.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti v kontextu webu</h2>
+        </header>
+        <div class="related-grid">
+          <a href="ai-brain.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🧠</span>
+            <h3>AI Brain</h3>
+            <p>Brain Guardian detail — 5 skriptů, 12 invariantů, validator architecture.</p>
+          </a>
+          <a href="vyzvy.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🐛</span>
+            <h3>Výzvy</h3>
+            <p>UUID re-pair incident 26.4. — silent fail orphan refs a 3 broken flows.</p>
+          </a>
+          <a href="atmosfera.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🌗</span>
+            <h3>Atmosféra a scény</h3>
+            <p>Sleep state co všechno gateuje — bezpečnost, světla, audio.</p>
+          </a>
+          <a href="topeni-klima.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔥</span>
+            <h3>Topení a klima</h3>
+            <p>Anti-freeze critical bypass — safety override všech ostatních pravidel.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

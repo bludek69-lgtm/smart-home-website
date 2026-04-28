@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Svítidla | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger is-active">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html" aria-current="page"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="svitidla" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📦 Zařízení · Svítidla</p>
+        <h1 class="hero-title">Svítidla — <span class="grad-text">tři protokoly, jedna pipeline</span></h1>
+        <p class="hero-lead">
+          Stropní, stolní, ambient LED, koupelnová, předsíň. Smícháno z různých dob a značek
+          — Wi-Fi (Tuya), Zigbee (IKEA, Aqara), Z-wave (Fibaro). Společné jen přes Homey
+          jako orchestrátora a 4-vrstvou pipeline (request → priority → router → setCap).
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">11</span><span class="uc-stat-label">Zón se světlem</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Bezdrátové protokoly</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">2</span><span class="uc-stat-label">Capability typy (onoff, dim)</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">4</span><span class="uc-stat-label">Funkční role</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Svítidla jako akční vrstva</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            Svítidla jsou <strong>výstupní vrstva</strong> systému. Senzory, skripty, AI vrstvy
+            udělají všechnu práci, ale finální akce je vždy stejná — capability
+            <code>setCapabilityValue('onoff', true/false)</code> nebo
+            <code>setCapabilityValue('dim', 0.0–1.0)</code> na konkrétním device. Tím končí
+            celá pipeline.
+          </p>
+          <p>
+            <strong>Heterogenní hardware</strong>. Sektorka1 je Wi-Fi (Tuya integrace přes Homey),
+            LED pásek za TV je Zigbee, koupelnová stropní je Z-wave dimmer (Fibaro), stolní
+            lampa Stůl Jídelna 1 je Wi-Fi. Z perspektivy skriptu je to jedno — capability
+            API je sjednocené.
+          </p>
+          <p>
+            <strong>4 funkční role</strong>:
+            <strong>main</strong> (Sektorka — primární osvětlení),
+            <strong>accent</strong> (Stůl, LED pásek — atmosféra),
+            <strong>task</strong> (koupelnová stropní — funkční prostor),
+            <strong>way-finding</strong> (předsíň, přenosné — orientace).
+            Každá role má jiná pravidla zapnutí.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROLE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Funkční role</p>
+          <h2 class="section-title">Čtyři role, čtyři pravidla</h2>
+          <p class="section-lead">Stejný hardware, jiný kontext — jiná logika zapnutí.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">Main</span>
+            <h3>Sektorka1 — primární</h3>
+            <p>
+              Hlavní stropní svítidlo open space (jídelna + kuchyně). Boolean on/off,
+              full output. Privacy guard: roleta &gt; 20 % blokuje. Sleep guard: noc tma.
+              Wi-Fi (Tuya), capability <code>onoff</code>.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Accent</span>
+            <h3>Stůl Jídelna + LED pásek</h3>
+            <p>
+              Atmosféra. Stolní lampa nad jídelním stolem + LED pásek za TV. Stejný privacy
+              guard jako Sektorka. Při lux pod prahem se zapínají s presence, jinak zhasnuté.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Task</span>
+            <h3>Koupelnová stropní</h3>
+            <p>
+              Funkční prostor. Z-wave dimmer (Fibaro), capability <code>dim</code> 0–1.
+              Ráno full bright (briefing window), v noci dim 0,2. Bathroom router má
+              vlastní dim profile (jemnější probuzení).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Way-finding</span>
+            <h3>Předsíň</h3>
+            <p>
+              Orientační. Auto-zapnutí při motion + lux pod prahem. 60 s timer, pak off.
+              Nezávislé na privacy / sleep guard — způsob jak najít cestu z postele do
+              kuchyně bez probuzení celého bytu.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware v provozu</p>
+          <h2 class="section-title">Konkrétní svítidla</h2>
+          <p class="section-lead">Smíchané značky a protokoly z různých dob přidávání do systému.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">💡</div>
+            <h3>Sektorka1</h3>
+            <p class="hw-tag">Open space stropní · Wi-Fi (Tuya) · onoff</p>
+            <p>
+              Hlavní stropní open space. Tuya cloud integrace přes Homey. Boolean on/off
+              capability. V privacy módu (roleta nahoře) zakázaná — z venku přímo viditelná.
+              Zóna „Spolecne".
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🪞</div>
+            <h3>Stůl Jídelna 1</h3>
+            <p class="hw-tag">Stolní · Wi-Fi (Tuya) · onoff</p>
+            <p>
+              Stolní lampa nad jídelním stolem. Stejný privacy / sleep guard jako Sektorka.
+              Při lux pod prahem se zapne s presence. Zóna „Jidelna".
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🌈</div>
+            <h3>LED pásek za TV</h3>
+            <p class="hw-tag">Ambient · Zigbee · onoff + light_hue</p>
+            <p>
+              Zigbee LED strip s capability <code>onoff</code> + <code>dim</code> +
+              <code>light_hue</code>. Aktuálně používán v boolean módu, color tuning v plánu
+              (mood lighting per scene).
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🚿</div>
+            <h3>Koupelnová stropní</h3>
+            <p class="hw-tag">Z-wave dimmer (Fibaro) · dim 0–1</p>
+            <p>
+              Fibaro dimmer 2 (FGD-212) jako wall switch + dim. Capability
+              <code>dim</code> kontinuální 0–1. Bathroom router má 3 profile: bright (1.0),
+              normal (0.6), night (0.2).
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🚪</div>
+            <h3>Předsíň</h3>
+            <p class="hw-tag">Wi-Fi · onoff · way-finding role</p>
+            <p>
+              Strop u vchodových dveří. Auto-zapnutí při motion + lux pod prahem, 60 s timer
+              off. Nezávislé na sleep guard — orientační role v noci pro cestu na záchod.
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">🪟</div>
+            <h3>Pracovna desk lamp <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">Wi-Fi · onoff + dim + temperature</p>
+            <p>
+              Plánovaná lampa nad pracovním stolem v pracovně. Capability
+              <code>light_temperature</code> (warm/cold) → adjust podle TOD (warm večer,
+              cold pro práci).
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Capability API, protokol comparison, dim curve, scene management.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Wi-Fi vs. Zigbee vs. Z-wave (proč všechno)</summary>
+            <p>
+              Historicky se přidávaly podle dostupnosti — Sektorka byla Tuya (Wi-Fi z e-shopu),
+              LED pásek Zigbee (sledování trendu), koupelnová Z-wave (Fibaro ekosystém).
+              Funkčně rozdíl minimální, capability API sjednoceno přes Homey.
+            </p>
+            <ul>
+              <li>
+                <strong>Wi-Fi (Tuya)</strong>: levné, široký výběr, ale závislé na cloud (občas
+                ~1 s latence). Sektorka, Stůl, předsíň.
+              </li>
+              <li>
+                <strong>Zigbee</strong>: lokální, mesh, malý overhead. LED pásek za TV. Bezbateriové
+                Zigbee světla = bridge.
+              </li>
+              <li>
+                <strong>Z-wave</strong>: lokální, dedikované pásmo, dobré skrz zdi, ale dražší.
+                Koupelnová Fibaro dimmer (zachoval vypínač na zdi pro fallback).
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Capability API (onoff vs. dim)</summary>
+            <p>
+              Homey unifikuje light capabilities:
+            </p>
+            <ul>
+              <li><code>onoff</code>: boolean, jen on/off. Wi-Fi Tuya, většina cheap světel.</li>
+              <li><code>dim</code>: float 0.0–1.0. Z-wave Fibaro, Zigbee s dim podporou.</li>
+              <li><code>light_hue</code>: 0.0–1.0 ~= 0–360°. RGB / RGBW pásek.</li>
+              <li><code>light_saturation</code>: 0.0–1.0. Sytost barvy.</li>
+              <li><code>light_temperature</code>: 0.0–1.0 ~= 2700K–6500K. Warm vs. cool white.</li>
+              <li><code>light_mode</code>: enum 'color' / 'temperature'.</li>
+            </ul>
+            <p>
+              Light router čte capability list per device a vybírá nejlepší match. Boolean
+              jen onoff, color požadavek jde přes hue/saturation pokud capability existuje.
+            </p>
+          </details>
+
+          <details>
+            <summary>Dim curve (linear vs. perceptual)</summary>
+            <p>
+              Lineární 0.5 = 50 % power, ale lidské oko vnímá logaritmicky — 50 % power
+              vypadá jako ~75 % brightness. Pro „dim 50 %" které vypadá jako poloviční
+              jas, mapping perceptual:
+            </p>
+            <pre><code>dimPower = Math.pow(dimPerceptual, 2.2);
+// dimPerceptual=0.5 → dimPower=0.22
+// dimPerceptual=0.7 → dimPower=0.46</code></pre>
+            <p>
+              Aktuálně light router používá lineární mapping (jednoduchost). Perceptual
+              mapping v plánu pokud user pocítí potřebu (dimming feel je dost).
+            </p>
+          </details>
+
+          <details>
+            <summary>Sleep guard pro koupelnu (jemný profil)</summary>
+            <p>
+              Bathroom má vlastní dim profil pro nočníspánek-bez-probuzení:
+            </p>
+            <ul>
+              <li><strong>Day</strong>: dim 1.0 (full bright), 5 min timer off</li>
+              <li><strong>Evening</strong>: dim 0.7, 5 min timer</li>
+              <li><strong>Night (sh_spim='yes')</strong>: dim 0.2 (warm low), 3 min timer</li>
+              <li><strong>Pre-wake (3:00–3:15)</strong>: postupný ramp 0.2 → 0.6 v 1 min</li>
+            </ul>
+            <p>
+              Bathroom router neuznává globální sleep_guard deny — místo toho má jemnou
+              cestu která v noci světlí, ale tlumeně. User vidí, ale neprobudí se úplně.
+            </p>
+          </details>
+
+          <details>
+            <summary>Scene management (kdyby existovaly)</summary>
+            <p>
+              Scéna by byla preset capabilities pro skupinu světel — např. „Movie" =
+              Sektorka off, Stůl 0.3 dim warm, LED pásek warm orange, koupelna off.
+              Aktuálně NEIMPLEMENTOVÁNO — kontext (TOD + presence + sleep) rozhoduje
+              individuálně, ne jako scéna.
+            </p>
+            <p>
+              Plán pro <strong>Phase D</strong> (Atmosféra rozšíření): scéna jako preset
+              v EventLog (history-based learning), AI coordinator může suggest („vidíš tu hudbu
+              + večer + TV on → Movie scene?").
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti</h2>
+        </header>
+        <div class="related-grid">
+          <a href="svetla.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">💡</span>
+            <h3>Světla a osvětlení</h3>
+            <p>Use-case stránka — pipeline, privacy guard, sleep guard, lux thresholdy.</p>
+          </a>
+          <a href="senzory.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">📡</span>
+            <h3>Senzory</h3>
+            <p>FP2, PIR, lux — vstup pro lighting decisions.</p>
+          </a>
+          <a href="rolety.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🪟</span>
+            <h3>Rolety</h3>
+            <p>Roleta jako privacy signal — sdružený s lighting decisions.</p>
+          </a>
+          <a href="atmosfera.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🌗</span>
+            <h3>Atmosféra a scény</h3>
+            <p>Time-of-day buckets, scene management plánovaný v Phase D.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

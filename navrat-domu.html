@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Když přijdu domů | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger is-active">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html" aria-current="page"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="navrat-domu" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📖 Příběh · Případová studie</p>
+        <h1 class="hero-title">Když přijdu <span class="grad-text">domů</span></h1>
+        <p class="hero-lead">
+          Multi-signal arrival pipeline — od momentu, kdy auto vjede do okruhu 100 m okolo
+          domu, do okamžiku, kdy je dům plně přepnutý do home modu. 30 sekund, 4 signály,
+          5 subsystémů, žádný explicitní příkaz. Druhá strana mince oproti ranní rutině —
+          ne plánovaný rituál, ale reakce na user appearance.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">30 s</span><span class="uc-stat-label">Total sync time</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">4</span><span class="uc-stat-label">Signály v multi-confirm</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">100 m</span><span class="uc-stat-label">Geofence radius</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">5 min</span><span class="uc-stat-label">Motion confirm window</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Kontext</p>
+          <h2 class="section-title">Pondělí 14:30, návrat z práce</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            <strong>Stav před</strong>: <code>sh_rezim_doma='pryc'</code> od 04:10 ráno (po ranní
+            rutině). Topení preset away — všechny zóny 16 °C cíl. Lights blokované přes
+            priority engine. Audio idle. Robot vysavač spustil v 14:00 plánované cleaning,
+            momentálně dokončuje (~70 % progress).
+          </p>
+          <p>
+            <strong>User</strong>: cesta z Liberce, 14:25 dorazí na ulici, parkuje, jde k bytu,
+            otevírá dveře. Žádný telefon v ruce, žádné „home" tlačítko, žádný NFC tag.
+            Jen jednoduše přišel. Systém sám rozhodne, kdy a co přepnout.
+          </p>
+          <p>
+            Cíl pipeline: <strong>vědět, že je to skutečně user vrácení domů</strong>, ne
+            falešný geofence trigger (sousedi, doručovatel, projíždění kolem). Proto
+            multi-signal — geofence + door + motion v 5 min okně. Single-signal příliš často
+            false positive.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Timeline</p>
+          <h2 class="section-title">30 sekund od vjezdu po sync</h2>
+          <p class="section-lead">Každý milník zaznamenán v EventLog s timestamp.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:24:00</span>
+            <h3>Geofence outside</h3>
+            <p>
+              Auto na ulici, GPS poloha 200 m od domu. Mobile Homey app reportuje
+              <code>geofence='outside'</code>. <code>sh_rezim_doma='pryc'</code> stále aktivní,
+              všechno tiché. Robot vysavač pokračuje v cleaning.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:24:30</span>
+            <h3>Geofence approaching</h3>
+            <p>
+              GPS posun do 100 m okruhu kolem domu (radius config:
+              <code>sh_cfg_geofence_radius_m</code>). Mobile app fire <code>geofence_enter</code>
+              event. Homey flow trigger → <code>sh_arrival_pending='yes'</code>, čeká na další
+              signály. Multi-signal counter = 1/3.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:24:30</span>
+            <h3>Robot vysavač graceful stop</h3>
+            <p>
+              Geofence enter event spustí flow „SH – Robot – Pause on arrival" — robot
+              dostane pause command, vrací se do dock. User nepříde do dveří se startujícím
+              vysavačem. Cleaning bude auto-resume večer (po sleep block expiraci).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:24:55</span>
+            <h3>Door contact open</h3>
+            <p>
+              Door/window contact na vchodových dveřích → <code>alarm_contact='open'</code>.
+              Flow „SH – Door – Front" → <code>sh_arrival_pending</code> stále active, counter = 2/3.
+              Way-finding light v předsíni auto-on (motion + door open + lux pod prahem) na 60 s.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:25:02</span>
+            <h3>Motion v předsíni</h3>
+            <p>
+              PIR motion v předsíni → <code>alarm_motion=true</code>. Multi-signal counter = 3/3
+              (geofence + door + motion v 5 min okně). Confirm threshold splněn — toto je
+              skutečné user arrival, ne false positive.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:25:02</span>
+            <h3>Home preset cascade</h3>
+            <p>
+              <code>sh_rezim_doma='doma'</code> set. Cascade do subsystémů:
+              <code>sh_heating_preset='home'</code>,
+              <code>sh_audio_request='idle'</code> (bez auto-radio, ale unblock TTS),
+              <code>sh_priority_active='none'</code> (light router uvolněný).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:25:05</span>
+            <h3>Heating reactive</h3>
+            <p>
+              Scheduler cron next tick (do 5 min) přepočte targets dle aktuálního schedule
+              slotu (afternoon comfort): jídelna 21 °C, ložnice 19 °C, koupelna 22 °C,
+              toaleta 18 °C. Demand cron spočítá delta z aktuálních (16+ °C protože away)
+              → boiler_request='on'. Kotel rozjede na ~20 min comeback.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:25:08</span>
+            <h3>FP2 presence confirm</h3>
+            <p>
+              Po pohybu z předsíně do kuchyně se aktivuje FP2 v open space. Lux check (zima,
+              ale denní světlo OK ~250 lux) — nad „off" threshold (400) ne, ale nad „on"
+              threshold (120) ano. Hraniční zóna, hystereze drží lights vypnuté.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:25:25</span>
+            <h3>Optional: Comfort suggest</h3>
+            <p>
+              AI coordinator vyhodnotí situation = <code>arrival_idle</code> (přišel domů,
+              žádná immediate task). Možnost level 4 suggest: „Ahoj, dnes byl studený den,
+              chceš spustit relax scénu?". TTS čeká 30 s na cube tap accept.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:25:30</span>
+            <h3>Sync hotov</h3>
+            <p>
+              Všechny subsystémy v home modu. Brain Guardian next cron 14:30 ověří
+              consistency. Energy tracking re-započne (kotel runtime today += 0 počítáno,
+              kotel teď zase běží — runtime se inkrementuje od příštího demand cronu).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">14:55:00</span>
+            <h3>Topení dosáhl comfort</h3>
+            <p>
+              Po 30 min topení (jídelna 16 → 21 °C, delta 5 °C, 9 kW kotel) zóna v rámci
+              hystereze. Kotel vypne. Runtime today += ~0,5 h × 9 kW = 4,5 kWh za odpolední
+              comeback (zima venku zhoršuje accuracy estimate).
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- VARIANTY -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co když</p>
+          <h2 class="section-title">Varianty scénáře</h2>
+          <p class="section-lead">Co se stane v edge cases — a co se reálně stalo.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">📦</span>
+            <h3>Doručovatel</h3>
+            <p>
+              Geofence enter = 1/3, motion v předsíni = 2/3 (klepá), DOOR_OPEN ne (otevře jen
+              když po 30 s ticho). Multi-signal nesplní → arrival_pending expirace v 5 min →
+              away zůstává. Funguje.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🚗</span>
+            <h3>Projíždění kolem</h3>
+            <p>
+              Geofence enter = 1/3, ale GPS opustí okruh za 1–2 min. Geofence_exit event před
+              motion confirm → counter reset, arrival_pending cleared. Žádný false positive.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🏠</span>
+            <h3>Návrat z procházky</h3>
+            <p>
+              Bez auta, jen pěšky. Geofence funguje stejně (mobile GPS), door + motion stejně.
+              Pipeline neutrální vůči dopravnímu prostředku — záleží jen na finálním
+              příchodu domů.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">📵</span>
+            <h3>Telefon v autě (vybitý)</h3>
+            <p>
+              Žádný geofence signál. Door + motion = 2/3, geofence = 0. Multi-signal nesplní —
+              ale arrival_pending counter má tolerantní pravidlo: 2/3 + door open = arrival
+              high confidence (alternate path).
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🌧</span>
+            <h3>Návrat za bouřky</h3>
+            <p>
+              GPS noise může způsobit blikání geofence_enter / exit. Pipeline má debounce
+              5 s na geofence transitions. Vícenásobné re-entries během 1 min se počítají
+              jako 1 event.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Multi-signal counter (proč 3 signály, ne 1)</summary>
+            <p>
+              Single-signal arrival je nepoužitelný protože:
+            </p>
+            <ul>
+              <li>Geofence GPS má rozptyl 30–50 m → kolemjdoucí, sousedi, projíždění kolem = false trigger</li>
+              <li>Door open jen = doručovatel, kontrola plynaře, návštěva</li>
+              <li>Motion jen = robot vysavač, kočka u sousedů (vibrace přes zeď)</li>
+            </ul>
+            <p>
+              Kombinací 3 z 3 signálů během 5 min okna získáme high confidence. Tolerance
+              pravidla:
+            </p>
+            <ul>
+              <li>3/3 → high confidence, immediate cascade</li>
+              <li>2/3 + door open → medium confidence, cascade po 30 s additional confirm</li>
+              <li>2/3 bez door → low confidence, pending pokračuje</li>
+              <li>1/3 → ignored, cleared po 5 min expiraci</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Cascade order (proč heating první, robot druhý)</summary>
+            <p>
+              Po home preset confirm subsystémy přepínají v deterministic pořadí:
+            </p>
+            <ol>
+              <li><strong>Heating</strong> (priority highest) — má největší inertia, ~30 min na comeback z away</li>
+              <li><strong>Audio gate</strong> — uvolnění TTS pro arrival comfort suggest</li>
+              <li><strong>Light gate</strong> — uvolnění lighting (closed-by-sleep = false)</li>
+              <li><strong>Robot</strong> — pause + return to dock</li>
+              <li><strong>Brain Guardian</strong> — re-evaluate state coherence</li>
+            </ol>
+            <p>
+              Heating první protože nejpomalejší. Když user dorazí, dům je studený (away
+              16 °C), comfort 21 °C trvá ~30 min. Robot druhý protože méně časově citlivý.
+            </p>
+          </details>
+
+          <details>
+            <summary>Robot vysavač graceful stop</summary>
+            <p>
+              Bez tohoto by robot pokračoval v cleaning během user arrival → kolize, hlučno,
+              nepříjemné. Implementace:
+            </p>
+            <pre><code>// flow "SH – Robot – Pause on arrival"
+trigger: geofence_enter event
+action 1: setCap robot.vacuum_cleaner_state = 'docked'
+action 2: log event 'robot_paused_on_arrival'
+action 3: schedule resume @ next_evening_after_sleep_off</code></pre>
+            <p>
+              Pause neznamená cancel — cleaning se obnoví večer po sleep gate release.
+              State pamatuje progress, pokračuje od přerušeného místa.
+            </p>
+          </details>
+
+          <details>
+            <summary>Heating comeback bez over-shoot</summary>
+            <p>
+              30 min studený dům → 21 °C target = 9 kW non-stop ~30 min. Bez safety:
+            </p>
+            <ul>
+              <li>
+                Naivní ohřev: kotel 100 % do dosažení target → over-shoot → swing
+                21 → 23 → 21 → 19 cyklus 2 h
+              </li>
+              <li>
+                S hysterezí: target 21 °C, hyst_warm 0,1, hyst_cold 0,5. Kotel vypne na
+                21,1 °C, znovu zapne až 20,5 °C. Po prvním cyklu stabilizace.
+              </li>
+              <li>
+                Plus safety cap: max runtime 4 h v kuse → forced off (kdyby runtime estimate
+                bug → defense in depth).
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Reálné EventLog samples</summary>
+            <p>
+              Log z poslední pondělní arrival (před 1 týdnem):
+            </p>
+            <pre><code>14:24:32 sh_geofence_router_v1 geofence_enter radius=85m
+14:24:34 _flow_ robot_paused_on_arrival vacuum_state=docked
+14:24:58 sh_door_router_v1 door_open contact=front
+14:25:03 sh_motion_router_v1 motion_on zone=predsin
+14:25:03 sh_arrival_pipeline_v1 arrival_confirmed signals=3/3
+14:25:04 sh_presence_router_v1 mode_change away→home
+14:25:05 sh_heating_scheduler_v1 preset_change away→home
+14:25:08 sh_open_space_router_v1 presence_on lux_check=hold
+14:25:30 sh_brain_guardian_v1 state_consistent score=92</code></pre>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Subsystémy v této studii</h2>
+        </header>
+        <div class="related-grid">
+          <a href="bezpecnost-kamery.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🛡</span>
+            <h3>Bezpečnost a kamery</h3>
+            <p>Multi-signal confirm pattern, away/home stavová logika, false positive prevention.</p>
+          </a>
+          <a href="topeni-klima.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔥</span>
+            <h3>Topení a klima</h3>
+            <p>Comeback z away preset, hystereze, safety cap, schedule slots.</p>
+          </a>
+          <a href="atmosfera.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🌗</span>
+            <h3>Atmosféra a scény</h3>
+            <p>AI coordinator levels, comfort suggest pipeline, time-of-day buckets.</p>
+          </a>
+          <a href="rano-rutina.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🌅</span>
+            <h3>Ráno v 3:15</h3>
+            <p>První případová studie — opačná stránka rituálu, planned departure.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

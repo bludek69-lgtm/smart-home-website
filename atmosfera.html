@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Atmosféra a scény | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger is-active">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html" aria-current="page"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="atmosfera" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🏠 Prožívání · Atmosféra a scény</p>
+        <h1 class="hero-title">Dům který <span class="grad-text">cítí část dne</span></h1>
+        <p class="hero-lead">
+          Tři stavy, čtyři fáze dne, jeden centrální sleep guard. Ráno tě probudí pomalu,
+          přes den nechá pracovat, večer nabídne klid, v noci ztichne. Bez explicitních
+          „scén" v Homey UI — všechno běží přes time-of-day a state-aware logiku ve
+          skriptech.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">4</span><span class="uc-stat-label">Fáze dne</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Brain skripty</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">1</span><span class="uc-stat-label">Sleep gate</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">5</span><span class="uc-stat-label">Subsystém pod ním</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Nálada se nedá nastavit, jen poznat</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            Místo „scén" v Homey UI — kde uživatel klikne na „Filmový režim" a něco se stane —
+            je tady <strong>state-aware vrstva</strong>. Systém sám pozná, jestli je ráno před
+            budíkem, jestli zrovna spím, jestli jsem v relax módu po práci, jestli je pozdě
+            večer. Z toho se odvodí všechno ostatní: světla, topení, audio, notifikace.
+          </p>
+          <p>
+            Centrální proměnná je <code>sh_spim</code> ('yes' / 'no'). Když je 'yes', všech
+            5 subsystémů (světla, audio, topení, robot, alerty) automaticky tlumí nebo úplně
+            zhasíná. Set/unset body jsou tři: Sleep Manual button (Aqara Cube), Vstal Kuchyně
+            motion (probuzení), phone geofence.
+          </p>
+          <p>
+            Nad sleep state běží <strong>tři brain skripty</strong>: morning_brain (ranní rituál),
+            sleep_brain (večerní shutdown), AI coordinator (situation classifier — ráno briefing,
+            večer comfort suggest). Žádný z nich není „scéna" — jsou to handlers reagující na
+            time + state + presence.
+          </p>
+        </div>
+        <figure class="uc-screenshot">
+          <img src="assets/screenshots/after/1920/home.png"
+               alt="Home page v dashboardu — celkový přehled stavu domu"
+               loading="lazy" class="zoomable" />
+          <figcaption>Home page v dashboardu — celkový přehled stavu domu, sidebar s pillars, status pills v topbaru</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- DENNÍ PROVOZ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Denní provoz</p>
+          <h2 class="section-title">Čtyři fáze dne</h2>
+          <p class="section-lead">Kontext se mění plynule. Hraniční momenty mají vlastní handler.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:45</span>
+            <h3>Pre-wake (před budíkem)</h3>
+            <p>
+              Heating layer 1 startuje 30 min před alarm — koupelna +2 °C, toaleta +1 °C.
+              Sleep state ještě 'yes', světla zatím tma. Systém se připravuje, ale nevyrušuje.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:15</span>
+            <h3>Wake & briefing</h3>
+            <p>
+              Alarm time → morning_brain: ensureHeatingMorningMode (preset=home), TV mute,
+              briefing fáze 1 do kuchyně. Sleep state se odepne při motion v kuchyni.
+              03:30 briefing fáze 2.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Den</span>
+            <h3>Active</h3>
+            <p>
+              Light routing dle lux + presence, audio idle, topení dle schedule + AI vrstvy.
+              Žádné automatické scény — každý subsystém řeší svůj kontext samostatně. AI coordinator
+              monitoruje, ale většinu času ticho.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Večer</span>
+            <h3>Comfort phase</h3>
+            <p>
+              AI coordinator může vyhodnotit „evening + idle scene" → comfort_suggest. TTS přečte
+              návrh, neauto-execute (po bathroom misroute fix). Privacy guard zapnut — roleta
+              nahoře = open space lights blokovaná.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">22:00+</span>
+            <h3>Sleep prep</h3>
+            <p>
+              Heating night slot převzal už ze schedule (22 h). Sleep_brain při sleep confirm:
+              preset boost→home reset, audio mute, robot blokován. <code>sh_spim='yes'</code>
+              gate pro celou noc.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SCÉNY -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Scény</p>
+          <h2 class="section-title">Pět rituálů dne</h2>
+          <p class="section-lead">Spouští se z time + state + presence. Manual override jen výjimečně.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🌅</span>
+            <h3>Morning</h3>
+            <p>
+              Alarm → morning_brain → topení preset=home + boost koupelna 23 °C 60 min,
+              TV mute, briefing fáze 1+2. Cíl: uvedení do dne pomalu, žádný šok.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">☀</span>
+            <h3>Day</h3>
+            <p>
+              Default state — žádná scéna, jen reaktivní subsystémy. Lux řídí světla, schedule
+              řídí topení, audio idle. Brain Guardian běží jednou za 15 min.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🌗</span>
+            <h3>Evening</h3>
+            <p>
+              AI coordinator detect „evening + idle" → comfort_suggest TTS. Privacy guard
+              aktivní (roleta &gt; 20 % blokuje open lights). Možný relax scene při user
+              accept (Cube / voice).
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🛌</span>
+            <h3>Sleep</h3>
+            <p>
+              Sleep button (Cube) nebo manual flow → <code>sh_spim='yes'</code> → sleep_brain
+              cleanup (boost reset, audio mute, robot block). Schedule night slot už drží
+              nižší teploty.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🌙</span>
+            <h3>Night</h3>
+            <p>
+              Sleep state active. Motion v koupelně má vlastní jemnou cestu (bathroom router
+              dim mode). Critical alerts (anti-freeze, gas, water) přebijí přes safety bypass.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware</p>
+          <h2 class="section-title">Co rozhoduje o atmosféře</h2>
+          <p class="section-lead">Není to hardware ve standardním smyslu — je to kompozice senzorů + skriptů.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🎲</div>
+            <h3>Aqara Cube T1 Pro</h3>
+            <p class="hw-tag">User intent · gestural · Zigbee</p>
+            <p>
+              Šestistranná kostka. Každá strana = jiný režim. Otáčení = volume change.
+              Ťuk = trigger. Hlavní user input pro „accept comfort suggest" / „sleep manual"
+              / atd. Vyřešený TV channel bug v1.11 (channel_up → key_channel_up).
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">📡</div>
+            <h3>Aqara FP2</h3>
+            <p class="hw-tag">Presence · sleep wake detection</p>
+            <p>
+              Detekuje klidného člověka. Pro atmosféra logiku jako sleep_wake marker —
+              kdy se v ložnici začne hýbat (probuzení) vs. klid (spánek). Plus open space
+              presence pro evening comfort detection.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🧠</div>
+            <h3>Morning + Sleep brain</h3>
+            <p class="hw-tag">Skripty · sh_morning_brain_v1 · sh_sleep_brain_v2</p>
+            <p>
+              Dva orchestrátory — ranní rituál a večerní cleanup. Každý drží 5+ subsystémů
+              v synchronu. Morning: heating + audio + TV. Sleep: heating reset + audio mute
+              + robot block + sleep state set.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">📱</div>
+            <h3>Phone geofence</h3>
+            <p class="hw-tag">Mobile app · GPS · radius 100 m</p>
+            <p>
+              Detekce home/away. Multi-signal confirm s motion v 5 min okně.
+              Trigger pro preset přepínač + sleep state suggest (když sám doma a 22+ h).
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">⚙</div>
+            <h3>AI Coordinator</h3>
+            <p class="hw-tag">sh_ai_coordinator_v1 · cron 5 min</p>
+            <p>
+              Klasifikuje aktuální situation (idle, busy, evening_idle, morning_prep,
+              comfort_suggest). Vstup pro AI brain a comfort_suggest TTS. Levels 0–5,
+              úroveň 4 = TTS suggest.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Sleep state architektura, brain handlers, AI coordinator levels.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Sleep state (sh_spim) — centrální gate</summary>
+            <p>
+              Jediná proměnná, která gateuje 5 subsystémů. <code>sh_spim='yes'</code>:
+            </p>
+            <ul>
+              <li><strong>Light</strong>: priority engine deny → tma</li>
+              <li><strong>Audio</strong>: TTS deny (kromě critical), radio blocked</li>
+              <li><strong>Heating</strong>: night slot už aktivní ze schedule (informativní)</li>
+              <li><strong>Robot</strong>: nelze spustit, queued requests čekají</li>
+              <li><strong>Brain Guardian</strong>: zvýšená tolerance pro motion (anti-false-positive)</li>
+            </ul>
+            <p>
+              Set body: Sleep Manual (Cubo button), Vstal Kuchyně (motion at unusual hour
+              implies waking), Phone geofence (alone home + late hour). Sync s native
+              Homey presence API <code>set_asleep</code> / <code>set_awake</code> —
+              <strong>nikdy nesmazat</strong> jako duplicate.
+            </p>
+          </details>
+
+          <details>
+            <summary>Morning brain (ensure*Mode functions)</summary>
+            <p>
+              <code>sh_morning_brain_v1 v3.5+</code> má 4 ensure functions, každou volá flow
+              při alarm / motion / fallback:
+            </p>
+            <ul>
+              <li><code>ensureHeatingMorningMode()</code> — preset=home, koupelna boost 23 °C 60 min</li>
+              <li><code>ensureAudioMorningMode()</code> — TV mute, briefing trigger via sh_gemini_mode</li>
+              <li><code>ensureLightsMorningMode()</code> — kuchyně dim, open space dle FP2</li>
+              <li><code>ensureSleepStateUnset()</code> — sh_spim='no' (gate uvolněna)</li>
+            </ul>
+            <p>
+              Každá function je idempotent — můžou se zavolat víckrát během rituálu, výsledek
+              stejný. Žádný state mutation kromě desired-state writeback.
+            </p>
+          </details>
+
+          <details>
+            <summary>Sleep brain (večerní cleanup)</summary>
+            <p>
+              <code>sh_sleep_brain_v2 v3.1+</code> spouštěn při Sleep button / late-evening
+              auto-detect:
+            </p>
+            <ul>
+              <li><code>ensureHeatingSleepMode()</code> — boost preset reset (boost→home), schedule night slot převezme</li>
+              <li><code>ensureAudioSleepMode()</code> — vše stop, prev_playing flag clear</li>
+              <li><code>ensureLightsSleepMode()</code> — fade out 5 s, pak off</li>
+              <li><code>ensureRobotSleepMode()</code> — block + cancel queued cleaning</li>
+              <li><code>ensureSleepStateSet()</code> — sh_spim='yes' (gate aktivace)</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>AI coordinator levels (situation classifier)</summary>
+            <p>
+              <code>sh_ai_coordinator_v1</code> cron 5 min vyhodnotí 6 situations:
+            </p>
+            <ul>
+              <li><strong>Level 0 — idle</strong>: nic se neděje, žádná akce</li>
+              <li><strong>Level 1 — passive_observe</strong>: motion ale žádný intent change</li>
+              <li><strong>Level 2 — context_log</strong>: hraniční moment (sunrise / sunset / alarm)</li>
+              <li><strong>Level 3 — passive_notify</strong>: log do EventLog, žádný TTS</li>
+              <li><strong>Level 4 — comfort_suggest</strong>: TTS suggest (evening + idle scene)</li>
+              <li><strong>Level 5 — proactive_action</strong>: auto-execute (jen po user accept)</li>
+            </ul>
+            <p>
+              Bug 25.4. — level 4 sám spustil bathroom radio bez user accept. Fix:
+              prev_playing guard v <code>sh_tts_resume_exec_v1 v1.8</code>.
+            </p>
+          </details>
+
+          <details>
+            <summary>Time-of-day buckets (4 fáze)</summary>
+            <p>
+              Žádná explicitní „scéna" — jen TOD bucket, který subsystémy čtou:
+            </p>
+            <ul>
+              <li><strong>night</strong> (22:00–05:00): sleep gate likely aktivní, low temps, no audio</li>
+              <li><strong>morning</strong> (05:00–10:00): briefing window, koupelna boost, audio aktivní</li>
+              <li><strong>day</strong> (10:00–18:00): default reactive, lux řídí lights, idle audio</li>
+              <li><strong>evening</strong> (18:00–22:00): privacy guard active, comfort suggest possible</li>
+            </ul>
+            <p>
+              Granty kontextu nejsou hard-coded v skriptech — čtou se z konfigurace
+              <code>sh_cfg_tod_*_start</code>. Sezónní úpravy (zimní/letní čas) jdou
+              přes config update, ne kód.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti v kontextu webu</h2>
+        </header>
+        <div class="related-grid">
+          <a href="ai-brain.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🧠</span>
+            <h3>AI Brain</h3>
+            <p>AI coordinator detail, levels 0–5, validator vrstva, self-healing.</p>
+          </a>
+          <a href="audio.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔊</span>
+            <h3>Audio a TTS</h3>
+            <p>Comfort suggest TTS pipeline, prev_playing guard, briefing split.</p>
+          </a>
+          <a href="svetla.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">💡</span>
+            <h3>Světla a osvětlení</h3>
+            <p>Privacy guard večer, sleep guard noc, lux-driven day.</p>
+          </a>
+          <a href="topeni-klima.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔥</span>
+            <h3>Topení a klima</h3>
+            <p>Pre-wake boost, sleep night slot, schedule + AI vrstvy.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

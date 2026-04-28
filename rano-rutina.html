@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Ráno v 3:15 | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger is-active">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html" aria-current="page"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="rano-rutina" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📖 Příběh · Případová studie</p>
+        <h1 class="hero-title">Ráno v <span class="grad-text">3:15</span></h1>
+        <p class="hero-lead">
+          Minute-by-minute timeline pondělního rána, jak ho dům odehraje sám. Začíná
+          v 02:45 pre-wake boostem topení v koupelně, končí v 04:10 odchodem do auta.
+          Žádný klasický budík, žádné mobilní app dotyky, žádné scény spuštěné ručně.
+          Jen subsystémy, které samy vědí, co a kdy.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">85 min</span><span class="uc-stat-label">Total délka rituálu</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">5</span><span class="uc-stat-label">Subsystémů zapojených</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">2</span><span class="uc-stat-label">TTS fáze briefingu</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">0</span><span class="uc-stat-label">Manuálních akcí</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Kontext</p>
+          <h2 class="section-title">Pondělí, leden, -3 °C venku</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            <strong>Datum</strong>: pondělí v lednu 2026. <strong>Venku</strong>: -3 °C, vlhkost
+            85 %, mírný východní vítr. <strong>V domě</strong>: night slot schedule
+            (jídelna 18 °C, ložnice 17 °C, koupelna 19 °C), sleep state aktivní od 22:30,
+            roleta dole na 0,1.
+          </p>
+          <p>
+            <strong>User cíl</strong>: vstát ve 3:15 (pracovní den), do auta ve 4:00, na šichtu
+            v Liberci v 4:30. Žádný čas na boj s technikou, žádná tolerance pro „dnes
+            ráno mi to nefungovalo". Tohle byl tester celý vývoje smart home —
+            jednoduše musí pracovat.
+          </p>
+          <p>
+            Následující timeline je <strong>reálné chování systému</strong> jak ho EventLog
+            zaznamenává — ne plán, ne ideál, reálná data z poslední pracovní pondělí
+            tohoto roku.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE — Hlavní obsah -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Timeline</p>
+          <h2 class="section-title">85 minut autonomního provozu</h2>
+          <p class="section-lead">Každá rolka v EventLog odpovídá jednomu řádku tady.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:45:00</span>
+            <h3>Heating layer 1 zapne pre-wake boost</h3>
+            <p>
+              Scheduler cron: <code>preWakeBoost</code> AI vrstva detekuje alarm time = 03:15
+              (PO–PÁ), 30 min do něho. Zóna koupelna target_temp z 19 → 21 °C
+              (+2 °C delta). Toaleta 18 → 19 °C (+1 °C, okno 5–15 min, ještě se nestartuje).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:47:30</span>
+            <h3>Demand cron sepne kotel</h3>
+            <p>
+              Koupelna current 19,2 °C, target 21 °C, delta = 1,8 °C &gt; hyst_cold (0,5).
+              <code>boiler_request='on'</code>, executor setCap FGS-214. Stykač cvakne,
+              kotel rozjede stage 6 kW. Ostatní zóny zatím v rámci hystereze.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:00:00</span>
+            <h3>Toaleta layer 1 startuje</h3>
+            <p>
+              Druhý preWakeBoost slot: toaleta z 18 → 19 °C, okno 15 min do alarm time.
+              Demand cron příští tick (03:01:00) ohodnotí, zatím není demand (delta &lt; 0,5).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:14:55</span>
+            <h3>Alarm fires (-5 s buffer)</h3>
+            <p>
+              Mobilní alarm time 03:15, Homey flow „SH – Alarm – Pre-fire" trigger 5 s před.
+              <code>sh_alarm_pending='yes'</code>, <code>sh_morning_brain</code> připravuje:
+              ensureHeatingMorningMode (preset boost koupelna na 23 °C 60 min),
+              ensureAudioMorningMode (TV mute prep).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:15:00</span>
+            <h3>Briefing fáze 1 startuje</h3>
+            <p>
+              Gemini brain generuje text: pozdrav, čas, datum, počasí, svátek. Defenzivní
+              truncation na 150 znaků (Cast limit 200). TV mute (Android TV remote setCap
+              volume_mute=true). Speaker kuchyně začne TTS.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:15:08</span>
+            <h3>Briefing 1 končí, sleep_state unset</h3>
+            <p>
+              TTS dokončen, <code>tts_completed</code> event. TV unmute (volume restore).
+              <code>sh_spim='no'</code> (sleep gate uvolněna). Schedule příští fázi briefing 2
+              v 03:30 (delay 15 min přes pending var).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:16:30</span>
+            <h3>Vstal kuchyně motion</h3>
+            <p>
+              PIR Fibaro v kuchyni detekuje pohyb. Motion-on event → flow → light_router
+              s priority engine check. Sleep guard už unset, lux pod prahem (tma) → kuchyně
+              dim 0,4 (ranní jemný profil). FP2 v open space čeká na confirm.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:17:00</span>
+            <h3>FP2 presence confirm</h3>
+            <p>
+              FP2 detekuje sedící/stojícího člověka v open space → <code>alarm_presence=true</code>.
+              Open space router: lux check, privacy guard (roleta dole, OK), sleep guard
+              unset → Sektorka dim 0,5, Stůl Jídelna 0,3 warm.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:18:20</span>
+            <h3>Káva trigger (možná)</h3>
+            <p>
+              Plug measure_power kávovaru z 0 → 800 W → flow logger zaznamená spotřebič on.
+              Zatím žádná akce, jen passive monitoring. (V plánu: trigger pro sound suggest
+              „Pondělní hudba?".)
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:30:00</span>
+            <h3>Briefing fáze 2</h3>
+            <p>
+              Pending timestamp expirace → flow „SH – Morning – Briefing 2". Gemini generuje
+              part 2: BTC kurz, PM2.5 (-1 / 8 µg/m³), vlhkost 45 %, vtipný komentář.
+              Truncation 170 chars. Speaker kuchyně, TV znovu mute → TTS → unmute.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:35:00</span>
+            <h3>Bathroom motion start</h3>
+            <p>
+              Motion v koupelně → bathroom router (vlastní pipeline). Lux pod prahem +
+              TOD ráno → koupelnová stropní dim 0,8 (bright morning). Sanremo radio
+              spustí na koupelnovém speakeru (Italian Classic Hits).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:35:05</span>
+            <h3>Heating boost koupelna 23 °C</h3>
+            <p>
+              ensureHeatingMorningMode aplikoval boost preset → koupelna target = 23 °C
+              (config: <code>sh_cfg_heating_morning_bath_boost_temp</code>). Demand cron
+              příští tick 03:36 boiler_request='on' (kotel běží od 02:47, jen target jiný).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:50:00</span>
+            <h3>Sprcha končí, motion off</h3>
+            <p>
+              Motion sensor v koupelně 30 s bez pohybu → motion-off event. Bathroom router
+              čeká dalších 30 s grace period, pak Sanremo radio stop. Stropní dim ramp
+              z 0,8 → 0 v 5 s. Heating boost stále aktivní (60 min countdown ze 03:14).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">03:55:00</span>
+            <h3>Snídaně, kuchyně full</h3>
+            <p>
+              Motion v kuchyni continuous, lux stále pod prahem → kuchyně dim ramp 0,4 → 0,8
+              (jasnější profil pro snídani). FP2 stále presence → open space lights drží.
+              Heating: jídelna current 18,5, target 21 (schedule comfort od 5:00 už jede).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">04:08:00</span>
+            <h3>Vstoupení do předsíně</h3>
+            <p>
+              Motion v předsíni → way-finding light auto-on (60 s timer). Otevření vchodových
+              dveří → door_contact event. <code>sh_departure_pending='yes'</code> flag,
+              čeká na geofence exit confirm.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">04:09:30</span>
+            <h3>Vystoupení, geofence exit</h3>
+            <p>
+              Phone GPS opustil home zónu (radius 100 m). Multi-signal confirm — geofence_exit
+              + door_contact open + 0 motion v 5 min okně. Pravděpodobnost odchod = vysoká.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">04:10:00</span>
+            <h3>Away preset cascade</h3>
+            <p>
+              Multi-signal confirm splněn → <code>sh_rezim_doma='pryc'</code>. Cascade:
+              všechny zóny topení → preset away (16 °C target). Audio brain → idle silent.
+              Light router → blokované všechny non-essential. Robot vysavač → unblocked
+              (může spustit denní cleaning).
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">04:10:15</span>
+            <h3>Předsíň timeout off</h3>
+            <p>
+              Motion v předsíni naposled v 04:09, 60 s timer expiroval → way-finding light off.
+              Dům je tichý, dark, kotel běží na low (16 °C target velký delta z aktuálních
+              19 °C → off do hystereze).
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- POSTMORTEM -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Postmortem</p>
+          <h2 class="section-title">Co fungovalo, co se mohlo pokazit</h2>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Co fungovalo bez zaváhání</summary>
+            <ul>
+              <li><strong>Pre-wake boost timing</strong> — 30 min předstih byl dostatek, koupelna v 03:15 = 21 °C</li>
+              <li><strong>Briefing split</strong> — 200 char limit držel, ani jedna fáze nebyla truncated mid-věty</li>
+              <li><strong>TV mute pipeline</strong> — synchronizace s TTS bez race condition</li>
+              <li><strong>Light routing</strong> — sleep guard unset včas, dim profil ranní šetrný</li>
+              <li><strong>Multi-signal departure</strong> — bez false positive (sousedi za zdí v 4:00 = neodhlásilo)</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Co se mohlo (a v minulosti se i pokazilo)</summary>
+            <ul>
+              <li>
+                <strong>Stuck priority='tts'</strong> — kdyby TTS pipeline nevyhodila tts_completed event,
+                light router by zůstal blokovaný. Brain Guardian by detekoval po 1 min. Reálně se
+                stalo 22.4. — fix v guardian v1.1.
+              </li>
+              <li>
+                <strong>SNZB-04 deep-sleep</strong> — kdyby door/window contact spadl do unreachable,
+                departure pipeline by ztratil door_contact signál. Multi-signal by neconfirmoval, away
+                preset by nepřišel. Stalo se 23.4. — náhrada Aqara P2 plánovaná.
+              </li>
+              <li>
+                <strong>Cold-start bug</strong> — kdyby anti-cycling guard nedovolil topení sepnout
+                (sinceTs=0 → forever cooldown), pre-wake boost by neodehrál. Reálně se stalo
+                21.4. — fix demand v1.2.
+              </li>
+              <li>
+                <strong>UUID re-pair orphan</strong> — kdyby po výměně baterky senzor dostal nové UUID
+                a flow trigger karty zůstaly na old, silent fail. Reálně se stalo 26.4. (Door/Window
+                Sensor Jidelna1) — bulk swap fix.
+              </li>
+              <li>
+                <strong>Ghost var sh_audio_current_mode='radio_bathroom'</strong> — po incompletním
+                stop by audio_brain mohl spustit bathroom radio i bez user. Reálně se stalo 25.4. —
+                prev_playing guard fix v1.8.
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Co tady ještě není (Phase E plán)</summary>
+            <ul>
+              <li><strong>Voice intent</strong> — místo cube možnost říct „dej mi briefing 2 hned"</li>
+              <li><strong>Ambient morning music</strong> — místo TTS-only briefing přidat lehkou hudbu na pozadí</li>
+              <li><strong>Proactive smart suggest</strong> — „dnes je -10 °C venku, vezmi si bundu"</li>
+              <li><strong>Coffee level monitoring</strong> — plug power curve detekuje, kdy káva dohotovuje</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Subsystémy v této studii</h2>
+        </header>
+        <div class="related-grid">
+          <a href="topeni-klima.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔥</span>
+            <h3>Topení a klima</h3>
+            <p>Pre-wake boost layer 1, schedule slots, anti-cycling, kotel runtime.</p>
+          </a>
+          <a href="audio.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🔊</span>
+            <h3>Audio a TTS</h3>
+            <p>Briefing fáze 1+2, 200 char limit, TV mute pipeline, Sanremo radio.</p>
+          </a>
+          <a href="svetla.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">💡</span>
+            <h3>Světla a osvětlení</h3>
+            <p>Sleep guard release, kuchyně dim ramp, FP2 presence confirm pipeline.</p>
+          </a>
+          <a href="navrat-domu.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🚗</span>
+            <h3>Když přijdu domů</h3>
+            <p>Druhá případová studie — multi-signal arrival, opačná stránka tohoto rituálu.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
