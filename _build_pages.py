@@ -1,71 +1,151 @@
-"""Split index.html sections into individual subpages.
+"""Idempotent page builder — Phase A: 4-pillar mega-menu architecture.
 
-Reads current index.html, extracts each <section id="X"> block, and writes
-a standalone page <X>.html with shared header/footer.
+Reads each existing per-page HTML, extracts its <main> content, and re-wraps
+with the current shared template (header with mega-menu + footer).
 
-After running, index.html is replaced with a homepage that has hero +
-summary cards linking to the subpages.
+Also generates 2 new hub pages (prozivani.html, pribeh.html) and rebuilds
+index.html with hero + 4 pillar cards.
 
 Run from website root:
   py -3.14 _build_pages.py
+
+Idempotency: re-running keeps existing content intact. Source of truth for
+each subpage is its own HTML file's <main> block.
 """
 from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parent
-INDEX = ROOT / 'index.html'
 
-# Page metadata: id → (filename, nav label, page title, hero subtitle)
-PAGES = [
-    ('historie',     'Historie',      'Historie projektu',          'Jak systém vznikal — od první žárovky k AI Brain Guardian.'),
-    ('hardware',     'Hardware',      'Hardware',                    'Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.'),
-    ('funkce',       'Funkce',        'Funkce',                      'Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.'),
-    ('infra',        'Infrastruktura','Infrastruktura',              'Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.'),
-    ('dashboard',    'Dashboard',     'Dashboard',                   'Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.'),
-    ('zarizeni',     'Zařízení',      'Zařízení',                    'Co všechno systém řídí — světla, topení, audio, senzory, kamery, rolety, AI.'),
-    ('architektura', 'Architektura',  'Architektura',                'Script-first princip a 12 pravidel co drží systém pohromadě.'),
-    ('vyzvy',        'Výzvy',         'Výzvy',                       'Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.'),
-    ('ai-brain',     'AI Brain',      'AI Brain Guardian',           'Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.'),
-    ('blog',         'Blog',          'Blog a novinky',              'Pravidelné poznámky o tom, co se v systému změnilo, co se rozbilo a jak se to fixovalo.'),
-    ('kontakt',      'Kontakt',       'O projektu',                  'Kdo, proč, stack.'),
+# ─── PILLAR / NAV ARCHITECTURE ─────────────────────────────────
+# Top-level nav items.  Each pillar can have subpages (mega-menu).
+# Sub-pages keep their own .html files; pillar pages are hubs.
+PILLARS = [
+    {
+        'id': 'prozivani',
+        'icon': '🏠',
+        'label': 'Prožívání',
+        'title': 'Prožívání — co systém umožňuje',
+        'lead': 'Use-case pohled na celý systém — co dům dělá pro ty, kdo v něm žijí. Funkce, dashboardy a AI vrstva v jednom.',
+        'sub': ['funkce', 'dashboard', 'ai-brain'],
+    },
+    {
+        'id': 'zarizeni',
+        'icon': '📦',
+        'label': 'Zařízení',
+        'title': 'Zařízení',
+        'lead': 'Hardware co řídí dům — Homey Pro 2026, 77 zařízení, infrastruktura okolo.',
+        'sub': ['hardware', 'infra'],
+        'is_existing': True,  # zarizeni.html already exists, don't overwrite content
+    },
+    {
+        'id': 'pribeh',
+        'icon': '📖',
+        'label': 'Příběh',
+        'title': 'Příběh projektu',
+        'lead': 'Cesta k současnému stavu — historie, architektonické přechody a problémy které vznikaly a řešily se cestou.',
+        'sub': ['historie', 'architektura', 'vyzvy'],
+    },
+    {
+        'id': 'blog',
+        'icon': '📝',
+        'label': 'Blog',
+        'title': 'Blog a novinky',
+        'lead': 'Pravidelné poznámky o tom, co se v systému změnilo, co se rozbilo a jak se to fixovalo.',
+        'sub': [],
+        'is_existing': True,
+    },
+    {
+        'id': 'kontakt',
+        'icon': '✉',
+        'label': 'Kontakt',
+        'title': 'O projektu',
+        'lead': 'Kdo, proč, stack.',
+        'sub': [],
+        'is_existing': True,
+    },
 ]
 
-# Read source
-src = INDEX.read_text(encoding='utf-8')
+# Sub-page metadata (existing pages that became sub-pages under pillars).
+SUBPAGES = {
+    'historie':     ('Historie',       'Historie projektu',     'Jak systém vznikal — od první žárovky k AI Brain Guardian.'),
+    'hardware':     ('Hardware',       'Hardware',              'Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.'),
+    'funkce':       ('Funkce',         'Funkce',                'Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.'),
+    'infra':        ('Infrastruktura', 'Infrastruktura',        'Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.'),
+    'dashboard':    ('Dashboard',      'Dashboard',             'Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.'),
+    'architektura': ('Architektura',   'Architektura',          'Script-first princip a 12 pravidel co drží systém pohromadě.'),
+    'vyzvy':        ('Výzvy',          'Výzvy',                 'Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.'),
+    'ai-brain':     ('AI Brain',       'AI Brain Guardian',     'Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.'),
+}
 
-def extract_section(html: str, sec_id: str) -> str:
-    """Extract <section id="sec_id" ...>...</section> from html."""
-    # Find opening tag
-    m = re.search(rf'<section id="{re.escape(sec_id)}"[^>]*>', html)
+# Reverse map: subpage id → parent pillar id (for is-active highlighting).
+SUB_TO_PILLAR = {sub: p['id'] for p in PILLARS for sub in p['sub']}
+
+
+# ─── HELPERS ──────────────────────────────────────────────────
+def extract_main(html: str) -> str:
+    """Extract everything between <main id="main"> and </main>."""
+    m = re.search(r'<main id="main">\s*(.*?)\s*</main>', html, re.DOTALL)
     if not m:
-        raise ValueError(f'section id="{sec_id}" not found')
-    start = m.start()
-    # Walk forward to find matching closing </section>
-    depth = 0
-    i = start
-    while i < len(html):
-        if html[i:i+9] == '<section ' or html[i:i+9] == '<section>':
-            depth += 1
-            i += 9
-        elif html[i:i+10] == '</section>':
-            depth -= 1
-            i += 10
-            if depth == 0:
-                return html[start:i]
-        else:
-            i += 1
-    raise ValueError(f'unbalanced section for id="{sec_id}"')
+        raise ValueError('no <main id="main">…</main> block found')
+    return m.group(1)
+
 
 def build_nav(active_id: str | None) -> str:
-    """Build <ul> navigation pointing to subpages."""
-    items = ['<li><a href="index.html"' + (' class="is-active"' if active_id is None else '') + '>Home</a></li>']
-    for sid, label, _t, _l in PAGES:
-        cls = ' class="is-active"' if sid == active_id else ''
-        items.append(f'<li><a href="{sid}.html"{cls}>{label}</a></li>')
+    """Build mega-menu navigation.
+
+    active_id is either a pillar id or a sub-page id.  When it's a sub-page,
+    the parent pillar gets highlighted.
+    """
+    # Resolve sub-page → its pillar for highlight purposes
+    active_pillar = SUB_TO_PILLAR.get(active_id, active_id)
+
+    items = []
+    home_cls = ' class="is-active"' if active_id == 'home' else ''
+    items.append(f'<li><a href="index.html"{home_cls}>Domů</a></li>')
+
+    for p in PILLARS:
+        is_active = (p['id'] == active_pillar) or (p['id'] == active_id)
+        li_cls = 'has-mega' if p['sub'] else ''
+        a_cls_parts = []
+        if p['sub']:
+            a_cls_parts.append('mega-trigger')
+        if is_active:
+            a_cls_parts.append('is-active')
+        a_cls = f' class="{" ".join(a_cls_parts)}"' if a_cls_parts else ''
+
+        if p['sub']:
+            sub_links = []
+            for sub_id in p['sub']:
+                label, _t, lead = SUBPAGES[sub_id]
+                cur = ' aria-current="page"' if sub_id == active_id else ''
+                sub_links.append(
+                    f'<a href="{sub_id}.html"{cur}>'
+                    f'<strong>{label}</strong>'
+                    f'<span>{lead}</span>'
+                    f'</a>'
+                )
+            mega = (
+                f'<div class="mega-panel" role="menu">'
+                f'<div class="mega-grid">{"".join(sub_links)}</div>'
+                f'</div>'
+            )
+            items.append(
+                f'<li class="{li_cls}">'
+                f'<a href="{p["id"]}.html"{a_cls}>{p["icon"]} {p["label"]}</a>'
+                f'{mega}'
+                f'</li>'
+            )
+        else:
+            items.append(
+                f'<li><a href="{p["id"]}.html"{a_cls}>{p["icon"]} {p["label"]}</a></li>'
+            )
+
     return '\n          '.join(items)
 
-def page_template(sec_id: str, title: str, lead: str, content: str) -> str:
-    nav = build_nav(sec_id)
+
+def page_template(active_id: str | None, page_title: str, lead: str, content: str) -> str:
+    nav = build_nav(active_id)
     return f'''<!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -73,7 +153,7 @@ def page_template(sec_id: str, title: str, lead: str, content: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="{lead}" />
   <meta name="theme-color" content="#0a0e14" />
-  <title>{title} | SMART HOME</title>
+  <title>{page_title} | SMART HOME</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
@@ -123,58 +203,154 @@ def page_template(sec_id: str, title: str, lead: str, content: str) -> str:
 </html>
 '''
 
-# Generate each subpage
-for sec_id, label, page_title, lead in PAGES:
-    try:
-        content = extract_section(src, sec_id)
-    except ValueError as e:
-        print(f'⚠ {sec_id}: {e}')
-        continue
-    out = page_template(sec_id, page_title, lead, '    ' + content)
-    target = ROOT / f'{sec_id}.html'
-    target.write_text(out, encoding='utf-8')
-    print(f'✓ {target.name} ({len(out)} bytes)')
 
-# Build new homepage (index.html)
-hero = extract_section(src, 'home')
-
-# Page summary cards
-cards_html = '\n'.join([
-    f'''      <a href="{sid}.html" class="home-card">
+def hub_content(pillar: dict) -> str:
+    """Build content for a NEW hub page (prozivani, pribeh)."""
+    sub_cards = []
+    for sub_id in pillar['sub']:
+        label, _t, lead = SUBPAGES[sub_id]
+        sub_cards.append(
+            f'''      <a href="{sub_id}.html" class="home-card">
         <h3>{label}</h3>
         <p>{lead}</p>
         <span class="home-card-cta">Otevřít stránku →</span>
-      </a>'''
-    for sid, label, _t, lead in PAGES
-])
+      </a>''')
+    cards_html = '\n'.join(sub_cards)
 
-new_index = page_template(
-    None,
-    'SMART HOME — projekt Luďka Budínského',
-    'Domácnost řízená script-first architekturou nad Homey Pro 2026. Garsonka v přízemí, 77 zařízení, 110 skriptů, vlastní AI Brain Guardian.',
-    f'''    {hero}
+    return f'''    <section id="{pillar['id']}" class="section section-hero hub-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>{pillar['icon']} Pilíř · {pillar['label']}</p>
+        <h1 class="hero-title">{pillar['title']}</h1>
+        <p class="hero-lead">{pillar['lead']}</p>
+      </div>
+    </section>
 
-    <section class="section section-alt" id="navigace">
+    <section class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Navigace</p>
-          <h2 class="section-title">Co tě zajímá?</h2>
-          <p class="section-lead">Web je rozdělený do tematických stránek. Vyber, kam chceš.</p>
+          <p class="section-eyebrow">Obsah pilíře</p>
+          <h2 class="section-title">Co tady najdeš</h2>
+          <p class="section-lead">Pilíř {pillar['label']} sdružuje tematické stránky níže.</p>
         </header>
         <div class="home-grid">
 {cards_html}
         </div>
       </div>
     </section>'''
-).replace('class="is-active"', '')  # home doesn't highlight any nav item
 
-# Special: index nav should highlight Home
-new_index = new_index.replace(
-    '<li><a href="index.html">Home</a></li>',
-    '<li><a href="index.html" class="is-active">Home</a></li>'
-)
 
-(ROOT / 'index.html').write_text(new_index, encoding='utf-8')
-print(f'✓ index.html rewritten ({len(new_index)} bytes)')
-print()
-print('Build complete. Next: append home-card CSS to style.css')
+# ─── BUILD ────────────────────────────────────────────────────
+def build():
+    written = []
+
+    # 1) Re-template each existing sub-page (preserve <main> content).
+    for sub_id, (_label, page_title, lead) in SUBPAGES.items():
+        path = ROOT / f'{sub_id}.html'
+        if not path.exists():
+            print(f'⚠ skipping {sub_id}.html — file missing')
+            continue
+        try:
+            existing = path.read_text(encoding='utf-8')
+            content = extract_main(existing)
+        except ValueError as e:
+            print(f'⚠ {sub_id}: {e}')
+            continue
+        out = page_template(sub_id, page_title, lead, content)
+        path.write_text(out, encoding='utf-8')
+        written.append(path.name)
+
+    # 2) Re-template existing pillar/standalone pages (zarizeni, blog, kontakt).
+    for p in PILLARS:
+        if not p.get('is_existing'):
+            continue
+        path = ROOT / f'{p["id"]}.html'
+        if not path.exists():
+            print(f'⚠ skipping {p["id"]}.html — file missing')
+            continue
+        existing = path.read_text(encoding='utf-8')
+        content = extract_main(existing)
+        out = page_template(p['id'], p['title'], p['lead'], content)
+        path.write_text(out, encoding='utf-8')
+        written.append(path.name)
+
+    # 3) Build NEW hub pages (prozivani, pribeh).
+    for p in PILLARS:
+        if p.get('is_existing'):
+            continue
+        if p['id'] in ('blog', 'kontakt'):
+            continue  # standalones, already handled above
+        path = ROOT / f'{p["id"]}.html'
+        content = hub_content(p)
+        out = page_template(p['id'], p['title'], p['lead'], content)
+        path.write_text(out, encoding='utf-8')
+        written.append(path.name + ' (NEW hub)')
+
+    # 4) Rebuild index.html — preserve hero from existing index, replace cards.
+    index_path = ROOT / 'index.html'
+    existing_index = index_path.read_text(encoding='utf-8')
+    main_block = extract_main(existing_index)
+
+    # Extract hero section (everything from `<section id="home"` to its </section>)
+    hero_match = re.search(
+        r'<section id="home"[^>]*>.*?</section>\s*(?=<section|\Z)',
+        main_block, re.DOTALL,
+    )
+    if hero_match:
+        hero = hero_match.group(0).rstrip()
+    else:
+        # fallback minimal hero
+        hero = '''<section id="home" class="section section-hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1 class="hero-title">Smart home jako <span class="grad-text">živý organismus</span></h1>
+        </div>
+      </div>
+    </section>'''
+
+    # Build pillar cards (4 pillars, no Kontakt — that stays nav-only).
+    home_cards_html_parts = []
+    for p in PILLARS:
+        if p['id'] == 'kontakt':
+            continue
+        home_cards_html_parts.append(
+            f'''      <a href="{p['id']}.html" class="home-card home-card-pillar">
+        <span class="home-card-icon" aria-hidden="true">{p['icon']}</span>
+        <h3>{p['label']}</h3>
+        <p>{p['lead']}</p>
+        <span class="home-card-cta">Otevřít pilíř →</span>
+      </a>''')
+    home_cards_html = '\n'.join(home_cards_html_parts)
+
+    new_index_content = f'''    {hero}
+
+    <section class="section section-alt" id="navigace">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Navigace</p>
+          <h2 class="section-title">Co tě zajímá?</h2>
+          <p class="section-lead">Web je rozdělený do čtyř pilířů. Vyber, kam chceš.</p>
+        </header>
+        <div class="home-grid home-grid-pillars">
+{home_cards_html}
+        </div>
+        <p class="home-foot">Hledáš kontakt? <a href="kontakt.html">O projektu →</a></p>
+      </div>
+    </section>'''
+
+    out = page_template(
+        'home',
+        'SMART HOME — projekt Luďka Budínského',
+        'Domácnost řízená script-first architekturou nad Homey Pro 2026. Garsonka v přízemí, 77 zařízení, 110 skriptů, vlastní AI Brain Guardian.',
+        new_index_content,
+    )
+    index_path.write_text(out, encoding='utf-8')
+    written.append('index.html')
+
+    # Report (ASCII-safe for Windows cp1250 console)
+    for n in written:
+        print(f'[OK] {n}')
+    print(f'\nBuild complete: {len(written)} files written.')
+
+
+if __name__ == '__main__':
+    build()

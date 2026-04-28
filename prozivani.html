@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Kdo, proč, stack." />
+  <meta name="description" content="Use-case pohled na celý systém — co dům dělá pro ty, kdo v něm žijí. Funkce, dashboardy a AI vrstva v jednom." />
   <meta name="theme-color" content="#0a0e14" />
-  <title>O projektu | SMART HOME</title>
+  <title>Prožívání — co systém umožňuje | SMART HOME</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
@@ -27,56 +27,48 @@
         </button>
         <ul id="nav-list" class="nav-list">
           <li><a href="index.html">Domů</a></li>
-          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger is-active">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
           <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
           <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a></div></div></li>
           <li><a href="blog.html">📝 Blog</a></li>
-          <li><a href="kontakt.html" class="is-active">✉ Kontakt</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main id="main">
-<section id="kontakt" class="section section-contact">
+    <section id="prozivani" class="section section-hero hub-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🏠 Pilíř · Prožívání</p>
+        <h1 class="hero-title">Prožívání — co systém umožňuje</h1>
+        <p class="hero-lead">Use-case pohled na celý systém — co dům dělá pro ty, kdo v něm žijí. Funkce, dashboardy a AI vrstva v jednom.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">09 — O projektu</p>
-          <h2 class="section-title">Kdo a proč</h2>
+          <p class="section-eyebrow">Obsah pilíře</p>
+          <h2 class="section-title">Co tady najdeš</h2>
+          <p class="section-lead">Pilíř Prožívání sdružuje tematické stránky níže.</p>
         </header>
-
-        <div class="contact-grid">
-          <div class="contact-card">
-            <h3>Autor</h3>
-            <p>
-              <strong>Luděk Budínský</strong>, Semily.<br />
-              Architekt a programátor systému ve spolupráci s Claude Code
-              (Anthropic) jako asistovaný coding agent.
-            </p>
-          </div>
-
-          <div class="contact-card">
-            <h3>Účel webu</h3>
-            <p>
-              Veřejná prezentace projektu — historie, architektura, novinky.
-              Web <strong>není ovládací panel</strong>. Žádná zařízení odsud
-              nelze ovládat, žádné API tokeny ani lokální adresy nejsou
-              zveřejněné.
-            </p>
-          </div>
-
-          <div class="contact-card">
-            <h3>Stack</h3>
-            <ul class="stack-list">
-              <li>Homey Pro 2026</li>
-              <li>HomeyScript (JavaScript runtime)</li>
-              <li>Google Sheets jako event log</li>
-              <li>Home Assistant OS (mirror + observer)</li>
-              <li>Gemini API (denní diagnostika)</li>
-              <li>HTML/CSS/JS dashboardy</li>
-              <li>GitHub jako single source of truth</li>
-            </ul>
-          </div>
+        <div class="home-grid">
+      <a href="funkce.html" class="home-card">
+        <h3>Funkce</h3>
+        <p>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</p>
+        <span class="home-card-cta">Otevřít stránku →</span>
+      </a>
+      <a href="dashboard.html" class="home-card">
+        <h3>Dashboard</h3>
+        <p>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</p>
+        <span class="home-card-cta">Otevřít stránku →</span>
+      </a>
+      <a href="ai-brain.html" class="home-card">
+        <h3>AI Brain</h3>
+        <p>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</p>
+        <span class="home-card-cta">Otevřít stránku →</span>
+      </a>
         </div>
       </div>
     </section>

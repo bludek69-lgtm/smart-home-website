@@ -1721,3 +1721,155 @@ img.zoomable:hover { opacity: 0.85; }
   font-family: 'JetBrains Mono', monospace;
   color: var(--accent);
 }
+
+/* ──────────────────────────────────────────────────────────
+   PHASE A — Mega-menu navigation (4 pillars + standalones)
+   ────────────────────────────────────────────────────────── */
+.has-mega { position: relative; }
+.has-mega > .mega-trigger { display: inline-flex; align-items: center; gap: 4px; }
+.has-mega > .mega-trigger::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  opacity: 0.55;
+  transition: transform 0.2s ease;
+}
+.has-mega:hover > .mega-trigger::after,
+.has-mega:focus-within > .mega-trigger::after {
+  transform: rotate(225deg) translateY(0);
+  opacity: 0.9;
+}
+
+.mega-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 520px;
+  max-width: 640px;
+  padding: 14px;
+  background: rgba(13, 18, 26, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  z-index: 60;
+}
+.has-mega::before {
+  /* invisible bridge so cursor can travel from trigger to panel */
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  height: 14px;
+}
+.has-mega:hover > .mega-panel,
+.has-mega:focus-within > .mega-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.mega-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+.mega-grid a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: transparent;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.mega-grid a:hover {
+  background: var(--surface-2);
+  transform: translateY(-1px);
+}
+.mega-grid a[aria-current="page"] {
+  background: rgba(0, 229, 255, 0.08);
+}
+.mega-grid strong {
+  display: block;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.mega-grid span {
+  display: block;
+  color: var(--text-soft);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* ─── HUB pillar hero (prozivani, pribeh) ─── */
+.hub-hero { padding-top: 60px; padding-bottom: 40px; }
+.hub-hero .hero-title { font-size: clamp(32px, 5vw, 52px); margin-top: 12px; }
+.hub-hero .hero-lead { max-width: 720px; margin-top: 16px; }
+
+/* ─── Pillar cards on homepage (bigger, iconified) ─── */
+.home-grid-pillars {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.home-card-pillar {
+  position: relative;
+  padding: 28px 24px 24px;
+}
+.home-card-icon {
+  display: inline-block;
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 4px 12px rgba(0, 229, 255, 0.25));
+}
+.home-card-pillar h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.home-foot {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+.home-foot a {
+  color: var(--accent);
+  font-weight: 500;
+}
+.home-foot a:hover { text-decoration: underline; }
+
+/* ─── Mobile: mega expands inline (no dropdown) ─── */
+@media (max-width: 880px) {
+  .has-mega::before { display: none; }
+  .mega-panel {
+    position: static;
+    transform: none;
+    min-width: 0;
+    max-width: none;
+    margin: 4px 0 8px 12px;
+    padding: 4px 0 4px 12px;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    border-left: 2px solid var(--border);
+    border-radius: 0;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .mega-grid { grid-template-columns: 1fr; gap: 2px; }
+  .mega-grid a { padding: 8px 10px; }
+  .has-mega > .mega-trigger::after { display: none; }
+}
