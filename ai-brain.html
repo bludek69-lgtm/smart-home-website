@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>AI Brain Guardian | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="historie.html">Historie</a></li>
+          <li><a href="hardware.html">Hardware</a></li>
+          <li><a href="funkce.html">Funkce</a></li>
+          <li><a href="infra.html">Infrastruktura</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="zarizeni.html">Zařízení</a></li>
+          <li><a href="architektura.html">Architektura</a></li>
+          <li><a href="vyzvy.html">Výzvy</a></li>
+          <li><a href="ai-brain.html" class="is-active">AI Brain</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="ai-brain" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">08 — AI Brain</p>
+          <h2 class="section-title">Guardian vrstva nad systémem</h2>
+          <p class="section-lead">
+            Smart home, který se sám kontroluje. Detekuje ghost values, ověřuje
+            očekávaný stav, blokuje rozbité nasazení, denně analyzuje logy přes Gemini.
+          </p>
+        </header>
+
+        <div class="module-grid">
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_brain_guardian_v1</code>
+            </div>
+            <h3>Brain Guardian</h3>
+            <p>
+              Top-level supervisor. Agreguje výstupy validátoru a expected state
+              engine, vypočítává <strong>health score</strong> (aktuálně 92/100).
+              Při kritickém poklesu vyhlásí alarm.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_expected_state_engine_v1</code>
+            </div>
+            <h3>Expected State Engine</h3>
+            <p>
+              Pro každý čas + režim spočítá co <em>by mělo</em> být zapnuté
+              / vypnuté. Slouží jako reference proti reálnému stavu —
+              základ pro detekci anomálií.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_state_validator_v1</code>
+            </div>
+            <h3>State Validator</h3>
+            <p>
+              Porovnává očekávaný a reálný stav. Detekuje ghost values
+              (proměnné, které lžou) a stuck flagy. První produkční detekce:
+              <code>priority_active=tts</code> ghost po 00:40.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_release_guard_v1</code>
+            </div>
+            <h3>Release Guard</h3>
+            <p>
+              Před nasazením nové verze skriptu spustí canary checks
+              (3 testovací volání). Pokud Brain Guardian score klesne,
+              release se zablokuje a starý skript zůstává.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_self_healing_v4</code>
+            </div>
+            <h3>Self-Healing Engine</h3>
+            <p>
+              4 detektory každých 10 minut: orphan requests, stuck events,
+              audio deadlocks, offline kritická zařízení. Auto-reset bez mé
+              intervence.
+            </p>
+          </article>
+
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_gemini_diagnostic_v1</code>
+            </div>
+            <h3>Gemini Diagnostika</h3>
+            <p>
+              Každý den v 11:40. Načte logy ze Sheets, pošle Gemini Flash
+              s diagnostickým promptem, výsledek (priority + fix suggestion)
+              uloží do dashboardu na AI stránce.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

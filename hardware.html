@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Homey Pro 2026, bezdrátové protokoly, klíčová zařízení." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Hardware | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="historie.html">Historie</a></li>
+          <li><a href="hardware.html" class="is-active">Hardware</a></li>
+          <li><a href="funkce.html">Funkce</a></li>
+          <li><a href="infra.html">Infrastruktura</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="zarizeni.html">Zařízení</a></li>
+          <li><a href="architektura.html">Architektura</a></li>
+          <li><a href="vyzvy.html">Výzvy</a></li>
+          <li><a href="ai-brain.html">AI Brain</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="hardware" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">02 — Hardware</p>
+          <h2 class="section-title">Co tu fyzicky stojí</h2>
+          <p class="section-lead">
+            Hub, sensorová síť přes 4 protokoly, 73 zařízení v 12 zónách.
+            Postupně vrstvené hardware vrstvy, každá s vlastní rolí.
+          </p>
+        </header>
+
+        <div class="hw-evolution">
+          <article class="hw-evo-card hw-evo-old">
+            <div class="hw-evo-head">
+              <span class="hw-evo-badge">Legacy · 2016—2019</span>
+              <h3>Homey Pro (Early 2019)</h3>
+            </div>
+            <ul class="hw-evo-specs">
+              <li>Single-core procesor, omezený výkon</li>
+              <li>Z-Wave + Zigbee + 433 MHz + Wi-Fi + IR</li>
+              <li>Flow-based runtime, omezená HomeyScript podpora</li>
+              <li>Výrobcem podporováno do EOL</li>
+            </ul>
+            <p class="hw-evo-issue">
+              <strong>Proč přestal stačit:</strong> S rostoucím počtem flows a
+              prvními HomeyScripty hub začal mít problémy s výkonem. Paralelní
+              skripty padaly na SIGABRT, runtime nestíhal real-time eventy,
+              větší automatizace blokovaly UI. Pro jakýkoli script-first přístup
+              prostě nebyl dimenzovaný.
+            </p>
+            <p class="hw-evo-link">
+              <a href="https://homey.app/en-us/wiki/homey-pro-2016-2019-changelog/" target="_blank" rel="noopener">
+                Oficiální changelog (2016—2019) →
+              </a>
+            </p>
+          </article>
+
+          <div class="hw-evo-arrow" aria-hidden="true">→</div>
+
+          <article class="hw-evo-card hw-evo-new">
+            <div class="hw-evo-head">
+              <span class="hw-evo-badge hw-evo-badge-current">Live · současný</span>
+              <h3>Homey Pro 2026</h3>
+            </div>
+            <figure class="hw-evo-photo">
+              <img src="assets/photos/homey-pro.png" alt="Homey Pro Early 2023 — oficiální produktová fotografie" loading="lazy" class="zoomable" />
+              <figcaption>© Athom B.V. — oficiální press image</figcaption>
+            </figure>
+            <h4 class="hw-evo-spec-title">Hardware specs</h4>
+            <ul class="hw-evo-specs">
+              <li><strong>CPU</strong>: 1,5 GHz Quad-core ARMv8</li>
+              <li><strong>RAM</strong>: 4 GB LPDDR4</li>
+              <li><strong>Storage</strong>: 8 GB eMMC Flash</li>
+              <li><strong>Updates garantovány do června 2031</strong></li>
+            </ul>
+            <h4 class="hw-evo-spec-title">Bezdrátové protokoly</h4>
+            <ul class="hw-evo-specs">
+              <li><strong>Wi-Fi</strong> 2.4 GHz + 5 GHz</li>
+              <li><strong>Bluetooth</strong> Low Energy 5.0</li>
+              <li><strong>Matter</strong> v1.3 (controller)</li>
+              <li><strong>Thread</strong> (Border Router capability)</li>
+              <li><strong>Zigbee</strong> 3.0 (coordinator)</li>
+              <li><strong>Z-Wave</strong> 700 Series</li>
+              <li><strong>433 MHz</strong> (legacy senzory)</li>
+              <li><strong>Infrared</strong> (TV remote learning)</li>
+              <li>Volitelný <strong>Ethernet adapter</strong> (USB-C)</li>
+            </ul>
+            <h4 class="hw-evo-spec-title">Co umí</h4>
+            <ul class="hw-evo-specs">
+              <li><strong>Local-first processing</strong> — cloud jen jako backup, automatizace běží lokálně</li>
+              <li><strong>Advanced Flow</strong> automation (zdarma, bez subscription)</li>
+              <li><strong>HomeyScript</strong> runtime — full JavaScript pro custom skripty</li>
+              <li><strong>REST API</strong> s Bearer tokenem pro externí integrace</li>
+              <li><strong>Satellite Mode</strong> — extends range přes Homey Bridge</li>
+              <li><strong>Experimental features</strong>: SSH access, virtual devices, power user tools</li>
+            </ul>
+            <p class="hw-evo-issue">
+              <strong>Co to umožnilo:</strong> 110+ skriptů paralelně bez SIGABRT,
+              centralizovaná logika v JavaScriptu, request-first pipeline,
+              daily Gemini analýza logů, real-time dashboardy přes REST API.
+              Bez tohoto skoku by současný systém nebyl možný.
+            </p>
+            <p class="hw-evo-link">
+              <a href="https://homey.app/en-us/homey-pro/" target="_blank" rel="noopener">
+                Oficiální specs Homey Pro →
+              </a>
+            </p>
+          </article>
+        </div>
+
+        <h3 class="hw-section-title">Bezdrátové protokoly</h3>
+        <div class="protocol-grid">
+          <article class="protocol-card">
+            <span class="protocol-icon">🔵</span>
+            <h4>Zigbee</h4>
+            <p>
+              Páteř senzorové sítě. Sonoff SNZB-06P (mmWave presence),
+              SNZB-03/04 motion + door/window, Aqara P1, IKEA Fyrtur roleta,
+              Aqara Cube T1 Pro (6-stranný kontroler).
+            </p>
+          </article>
+          <article class="protocol-card">
+            <span class="protocol-icon">🟣</span>
+            <h4>Z-Wave</h4>
+            <p>
+              Fibaro FGMS multisenzor (pohyb + lux + teplota) v kuchyni,
+              FGS-214 relay pro topný okruh. Pomalejší ale stabilnější
+              pro klíčové instalace.
+            </p>
+          </article>
+          <article class="protocol-card">
+            <span class="protocol-icon">📶</span>
+            <h4>Wi-Fi</h4>
+            <p>
+              Xiaomi (Giuseppe robot vysavač, čistička vzduchu, senzory),
+              Shelly Plug S (trouba/mikrovlnka/lednice — power monitoring),
+              Nanoleaf Matter žárovky kuchyně.
+            </p>
+          </article>
+          <article class="protocol-card">
+            <span class="protocol-icon">🔊</span>
+            <h4>Google Cast</h4>
+            <p>
+              Tři reproduktory: Nest Mini Kuchyn (primární výstup),
+              Nest Hub Max Ložnice 2, Nest Mini Koupelna. Plus TTS pipeline
+              s rate limiting na 200 char.
+            </p>
+          </article>
+        </div>
+
+        <h3 class="hw-section-title">Klíčová zařízení</h3>
+        <div class="hw-key-list">
+          <div class="hw-key-item">
+            <strong>Roleta Fyrtur1</strong> (jídelna) — privacy interlock pro open space.
+          </div>
+          <div class="hw-key-item">
+            <strong>Giuseppe</strong> (Xiaomi robot vysavač) — autonomní úklid s Homey scheduling.
+          </div>
+          <div class="hw-key-item">
+            <strong>Air Purifier 4 Lite</strong> — PM2.5 monitoring + auto mode + alerts.
+          </div>
+          <div class="hw-key-item">
+            <strong>Android TV ložnice</strong> — plná integrace přes <code>com.android.tv:remote</code> (31+ capabilities, native remote).
+          </div>
+          <div class="hw-key-item">
+            <strong>Aqara Cube T1 Pro</strong> — 6-stranný controller pro audio scény, světla, TV remote.
+          </div>
+          <div class="hw-key-item">
+            <strong>Raspberry Pi (WaveShare 10.1")</strong> — kiosk dashboard 1024×600 + dashboard proxy server na <code>localhost:8080</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

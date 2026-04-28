@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Infrastruktura | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="historie.html">Historie</a></li>
+          <li><a href="hardware.html">Hardware</a></li>
+          <li><a href="funkce.html">Funkce</a></li>
+          <li><a href="infra.html" class="is-active">Infrastruktura</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="zarizeni.html">Zařízení</a></li>
+          <li><a href="architektura.html">Architektura</a></li>
+          <li><a href="vyzvy.html">Výzvy</a></li>
+          <li><a href="ai-brain.html">AI Brain</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="infra" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">04 — Infrastruktura</p>
+          <h2 class="section-title">Co drží systém pohromadě</h2>
+          <p class="section-lead">
+            Homey Pro je hlavní hub, ale není sám. Raspberry Pi, Home Assistant,
+            GitHub repo a GitHub Actions tvoří backup + observability vrstvu,
+            která dělá systém spolehlivý mimo lokální síť.
+          </p>
+        </header>
+
+        <div class="infra-grid">
+          <article class="infra-card">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">🖥️</span>
+              <h3>Raspberry Pi (kiosek + proxy)</h3>
+            </div>
+            <p>
+              <strong>Raspberry Pi 4</strong> s WaveShare 10.1" HDMI LCD
+              (1024 × 600). Běží 24/7 v předsíni jako vždy zapnutý touch
+              kiosek dashboardu. Chromium v full-screen kiosk módu, autostart
+              přes systemd.
+            </p>
+            <p>
+              Druhá role: <strong>dashboard proxy</strong>. Python skript
+              <code>dashboard_server.py</code> na <code>localhost:8080</code>
+              překlápí požadavky z dashboardu na Homey REST API.
+              Tím dashboard funguje i když cloud Homey nedostupný — stačí lokální síť.
+            </p>
+            <p>
+              Třetí role: <strong>další služby</strong>. Tailscale (přístup z práce
+              přes VPN), Apps Script proxy, případně další skripty.
+            </p>
+          </article>
+
+          <article class="infra-card">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">🏠</span>
+              <h3>Home Assistant (mirror + observer)</h3>
+            </div>
+            <p>
+              Druhý Raspberry Pi s <strong>Home Assistant OS</strong>. Hlavní role
+              není primární řízení (to dělá Homey) — HA je <strong>read-only
+              observer + backup target</strong>.
+            </p>
+            <p>
+              Konkrétně:
+            </p>
+            <ul class="infra-list">
+              <li>HA Energy Dashboard agreguje data ze Shelly plugů (lednice, trouba, mikrovlnka).</li>
+              <li>Long-term storage telemetrie — Homey má krátkou paměť, HA drží roky.</li>
+              <li>Samostatný backup target pro git repa (cron auto-pull každou hodinu).</li>
+              <li>Failover: kdyby Homey padl, HA zná aktuální stav.</li>
+            </ul>
+            <p>
+              Komunikace: HA přistupuje k Homey přes REST API (Bearer token),
+              Homey k HA přes webhook + REST sensor. Žádné dvojí ovládání —
+              jen sdílená observability.
+            </p>
+          </article>
+
+          <article class="infra-card">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">📦</span>
+              <h3>GitHub repos (single source of truth)</h3>
+            </div>
+            <p>
+              Veškerý kód, dokumentace, snapshoty a konfigurace v
+              <strong>privátních GitHub repech</strong>. Tři aktivní:
+            </p>
+            <ul class="infra-list">
+              <li><code>smart-home-homey</code> — všechny <code>sh_*</code> skripty, audity, deployment plány, denní snapshoty exportu z Homey REST API.</li>
+              <li><code>smart-home-dashboards</code> — HTML/CSS/JS dashboardy ve všech rozlišeních + Python phase patchery.</li>
+              <li><code>lk-finance</code> — privátní finance (encrypted-at-rest přes transcrypt + AES-256-CBC + PBKDF2). Stejný pattern, jiná data.</li>
+            </ul>
+            <p>
+              <strong>Daily backup pipeline</strong>: HAOS skript
+              <code>backup_homey.sh</code> se spustí každý den v 02:00,
+              zavolá Homey REST API, vyexportuje devices/variables/flows/scripts,
+              commitne do <code>backup_homey/</code> a pushne na GitHub.
+              SSH deploy key, žádný uložený token v repo.
+            </p>
+          </article>
+
+          <article class="infra-card">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">⚙️</span>
+              <h3>GitHub Actions (automatizované úkony)</h3>
+            </div>
+            <p>
+              Část úkolů běží <strong>v cloudu na GitHub Actions</strong>,
+              ne na Homey. Konkrétně:
+            </p>
+            <ul class="infra-list">
+              <li><code>daily_backup.yml</code> — denní snapshot Homey state, cron na GitHub straně (failover pokud HAOS padne).</li>
+              <li><code>weekly_audit.yml</code> — týdenní statická analýza skriptů: hledá hardcoded names, missing guards, deprecated patterns. Vytvoří issue.</li>
+              <li><code>memory_watchdog.yml</code> — sleduje memory soubory, pokud někde duplicita / stale info → alert.</li>
+              <li><code>cleanup_phase4_delete.yml</code> — naplánovaný auto-delete cleanup wave skriptů. Pre-checks: Brain Guardian score, EventLog exceptions. Pokud red flag → action selže, žádný delete.</li>
+            </ul>
+            <p>
+              Výhoda: <strong>akce běží mimo dům</strong>. I kdyby Homey padl,
+              GitHub Actions stále hlídají repo a provádějí naplánované úkony.
+              Tokens jsou v GitHub Secrets, ne v kódu.
+            </p>
+          </article>
+
+          <article class="infra-card infra-card-finance">
+            <div class="infra-head">
+              <span class="infra-icon" aria-hidden="true">🔐</span>
+              <h3>Finance (paralelní privátní stack)</h3>
+            </div>
+            <p>
+              Stejný pattern jako smart home, ale pro <strong>osobní finance</strong>:
+              privátní GitHub repo + HAOS mirror. Klíčový rozdíl —
+              <strong>encryption-at-rest</strong>.
+            </p>
+            <p>
+              Soubory typu <code>*.pdf, *.xlsx, *.csv, *.docx, *.zip</code>
+              jsou před commitem šifrované přes
+              <strong>transcrypt + AES-256-CBC + PBKDF2 (100k iter)</strong>.
+              GitHub vidí jen <code>U2FsdGVk...</code> bloby, žádný plaintext.
+              Master heslo lokálně, mimo repo, offline backup na USB +
+              papír v sejfu.
+            </p>
+            <p>
+              Z webu sem nic nepatří — finance jsou striktně privátní.
+              Ale architektura je sdílená: stejný auto-backup pattern,
+              stejné principy, jen vyšší ochrana dat.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

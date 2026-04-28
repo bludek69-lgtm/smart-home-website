@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Výzvy | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="historie.html">Historie</a></li>
+          <li><a href="hardware.html">Hardware</a></li>
+          <li><a href="funkce.html">Funkce</a></li>
+          <li><a href="infra.html">Infrastruktura</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="zarizeni.html">Zařízení</a></li>
+          <li><a href="architektura.html">Architektura</a></li>
+          <li><a href="vyzvy.html" class="is-active">Výzvy</a></li>
+          <li><a href="ai-brain.html">AI Brain</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="vyzvy" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">07 — Výzvy</p>
+          <h2 class="section-title">S čím systém musí bojovat</h2>
+          <p class="section-lead">
+            Smart home v reálném světě není „set and forget". Tady je seznam reálných
+            problémů, které jsem řešil — a které řešit musíš taky, jakmile překročíš
+            úroveň „pár chytrých žárovek".
+          </p>
+        </header>
+
+        <div class="challenge-grid">
+          <article class="challenge-card challenge-hw">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🔋</span>
+              <h3>Zigbee battery devices &amp; deep sleep</h3>
+            </div>
+            <p>
+              Zigbee senzory na baterce (door/window, motion) chodí spát kvůli
+              úspoře energie. Když je probudíš a hned dotáz, často odpoví až
+              po několika sekundách — nebo neodpoví vůbec. Některé starší kusy
+              padají do <strong>deep sleep, ze kterého se hub jejich přítomnost
+              ztrácí</strong> (zařízení vypadá offline i s plnou baterkou).
+            </p>
+            <p>
+              <strong>Konkrétní incident</strong>: Door/Window Sensor SNZB-04
+              v jídelně. Známý firmware bug — periodicky padá do unreachable
+              stavu i 2 metry od hubu, plná baterka. Způsobil 23. dubna
+              20-minutové zpoždění reakce na příchod (čistička se nevypnula
+              při otevření okna). Řešení: <strong>náhrada za Aqara P2</strong>
+              (Matter/Thread, stabilnější firmware). V mezičase — multi-signal
+              fallback (motion v kuchyni jako backup signál).
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-hw">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🆔</span>
+              <h3>Re-pair = nové UUID = silent fail</h3>
+            </div>
+            <p>
+              Když vyměníš baterku nebo re-installuješ Zigbee zařízení, Homey
+              vygeneruje <strong>nové UUID</strong>. Flow karty + skripty +
+              device map referencující OLD UUID <strong>silently fail</strong>
+              — žádný error v UI, automatizace prostě nereaguje.
+            </p>
+            <p>
+              <strong>Reálný case 26.4.</strong>: Door/Window Sensor Jidelna1
+              re-pair → 3 flows broken, čistička se nevypínala při otevření okna.
+              Diagnóza: <code>GET /devices/device/&lt;old_id&gt;</code> → 404.
+              Fix: bulk OLD→NEW swap přes PUT každého affected flow.
+              Preventivní scanner <code>find_orphan_device_refs.py</code>
+              v backlogu.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-runtime">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">💥</span>
+              <h3>SIGABRT — Homey zabije skript bez vysvětlení</h3>
+            </div>
+            <p>
+              Homey runtime zabije procesy při detekci problémů (nekonečná smyčka,
+              příliš mnoho paralelních skriptů, memory leak). <strong>Nikdy
+              nepíše proč</strong> — skript prostě zmizí z exec logu. Debugging
+              SIGABRT je čistá detektivka: izolace, binární search, test.
+            </p>
+            <p>
+              Klasická past: <code>setValue()</code> volá <code>logEvent()</code>,
+              <code>logEvent()</code> volá <code>setValue()</code> pro zápis do
+              <code>sh_log_payload</code> → <strong>nekonečná rekurze → SIGABRT</strong>.
+              Pravidlo: <code>setValue()</code> smí volat jen <code>getVar +
+              updateVariable + log</code>. Nikdy <code>logEvent()</code>.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-runtime">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">⏱</span>
+              <h3>setTimeout neexistuje (a crashne)</h3>
+            </div>
+            <p>
+              Přirozený JS reflex pro async delay je <code>setTimeout</code>.
+              V HomeyScript runtime <strong>není dostupné</strong> a volání
+              vede k záhadnému crashi bez error message — skript jednoduše
+              přestane existovat.
+            </p>
+            <p>
+              Řešení: vlastní <code>wait()</code> funkce v kombinaci s
+              <code>Promise.race()</code> pro timeouty HTTP volání.
+              Tohle jsem musel opravit v desítkách skriptů — bylo to systematické,
+              ne ojedinělé.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-runtime">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🗑</span>
+              <h3>Smazání skriptu = nové UUID = broken flows</h3>
+            </div>
+            <p>
+              V Homey <strong>nikdy nesmím smazat HomeyScript</strong>.
+              Smazání vygeneruje nové UUID, což přetrhne všechny Flow karty
+              odkazující na skript. Jediná bezpečná editace je
+              <strong>in-place</strong>: otevři skript, Ctrl+A, paste, Save.
+            </p>
+            <p>
+              Tohle pravidlo způsobilo jeden velký výpadek než jsem to pochopil.
+              Cleanup wave skriptů (20× DELETE_CANDIDATE) má proto vlastní
+              workflow s 48h soak monitoring + canary testing před skutečným
+              delete přes GitHub Actions.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-runtime">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🔇</span>
+              <h3>Audio pipeline race conditions</h3>
+            </div>
+            <p>
+              Audio bylo nejtvrdší technický oříšek. Mnoho pohyblivých částí —
+              priority engine, audio brain, speaker router, TTS orchestrátor,
+              Cast Flow, resume logika. Každý díl měl race conditions, každá
+              kombinace stavů přidávala edge case.
+            </p>
+            <p>
+              <strong>Příklad</strong>: briefing v 3:20 ráno. Pipeline:
+              Gemini API (15s timeout) → TTS text → priority 55 &gt; rádio 50 →
+              audio brain přeruší rádio → Cast TTS → resume rádio. Každý krok
+              mohl selhat. Crashy: <code>setTimeout</code>, Google Cast 200 char
+              limit, priority conflict, resume race condition. Watchdog
+              <code>sh_audio_pipeline_watchdog_v1</code> hlídá stuck stav každou
+              minutu.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-data">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">👻</span>
+              <h3>Ghost values — proměnné, které lžou</h3>
+            </div>
+            <p>
+              <code>sh_audio_request</code> zůstal na hodnotě
+              <code>tts_kitchen_alert</code> přes noc. Ráno se rádio nespustilo,
+              protože audio brain viděl nevyřízený request — proměnná
+              <strong>tvrdila stav, který už neplatil</strong>.
+            </p>
+            <p>
+              Řešení vyústilo v <code>sh_state_validator_v1</code>, který
+              porovnává očekávaný a reálný stav. První produkční detekce:
+              <code>priority_active=tts</code> ghost, který blokoval
+              audio pipeline od 00:40 do rána. Bez validátoru by se to
+              opakovalo donekonečna.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-data">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🌀</span>
+              <h3>Args[] z Flow nejsou spolehlivé</h3>
+            </div>
+            <p>
+              Homey Flow umí předat argument skriptu přes
+              „<em>con l'argomento</em>". Jenže <code>args[]</code> je nespolehlivý —
+              hodnota někdy chybí, race condition mezi triggerem a skriptem.
+            </p>
+            <p>
+              Dnes všechny módy jdou přes dedikované Homey Logic proměnné
+              (<code>sh_kitchen_mode</code>, <code>sh_energy_mode</code>),
+              ne přes args. Flow vždy: <em>set variable → run script</em>.
+              Skript čte z proměnné, ne z argumentu.
+            </p>
+          </article>
+
+          <article class="challenge-card challenge-data">
+            <div class="challenge-head">
+              <span class="challenge-icon" aria-hidden="true">🚫</span>
+              <h3>Některé API jsou prostě nedostupné</h3>
+            </div>
+            <p>
+              <code>Homey.notifications.createNotification</code> existuje
+              v dokumentaci, vypadá funkčně, ale v HomeyScript kontextu
+              <strong>není dostupné</strong>. Výsledek: <code>is not a function</code>.
+              19 tichých chyb za jediný den v logu, než jsem to našel.
+            </p>
+            <p>
+              Stejný pattern: <code>castRadio</code> (jen flow-only), některé
+              <code>Homey.scripts</code> volání. Pravidlo: API se musí
+              <strong>empiricky ověřit</strong> v sandboxu, ne věřit dokumentaci.
+              Tichá selhání jsou nejhorší kategorie.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

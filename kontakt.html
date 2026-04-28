@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kdo, proč, stack." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>O projektu | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="historie.html">Historie</a></li>
+          <li><a href="hardware.html">Hardware</a></li>
+          <li><a href="funkce.html">Funkce</a></li>
+          <li><a href="infra.html">Infrastruktura</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="zarizeni.html">Zařízení</a></li>
+          <li><a href="architektura.html">Architektura</a></li>
+          <li><a href="vyzvy.html">Výzvy</a></li>
+          <li><a href="ai-brain.html">AI Brain</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="kontakt.html" class="is-active">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="kontakt" class="section section-contact">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">09 — O projektu</p>
+          <h2 class="section-title">Kdo a proč</h2>
+        </header>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Autor</h3>
+            <p>
+              <strong>Luděk Budínský</strong>, Semily.<br />
+              Architekt a programátor systému ve spolupráci s Claude Code
+              (Anthropic) jako asistovaný coding agent.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>Účel webu</h3>
+            <p>
+              Veřejná prezentace projektu — historie, architektura, novinky.
+              Web <strong>není ovládací panel</strong>. Žádná zařízení odsud
+              nelze ovládat, žádné API tokeny ani lokální adresy nejsou
+              zveřejněné.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>Stack</h3>
+            <ul class="stack-list">
+              <li>Homey Pro 2026</li>
+              <li>HomeyScript (JavaScript runtime)</li>
+              <li>Google Sheets jako event log</li>
+              <li>Home Assistant OS (mirror + observer)</li>
+              <li>Gemini API (denní diagnostika)</li>
+              <li>HTML/CSS/JS dashboardy</li>
+              <li>GitHub jako single source of truth</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

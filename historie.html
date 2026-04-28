@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Jak systém vznikal — od první žárovky k AI Brain Guardian." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Historie projektu | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="historie.html" class="is-active">Historie</a></li>
+          <li><a href="hardware.html">Hardware</a></li>
+          <li><a href="funkce.html">Funkce</a></li>
+          <li><a href="infra.html">Infrastruktura</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="zarizeni.html">Zařízení</a></li>
+          <li><a href="architektura.html">Architektura</a></li>
+          <li><a href="vyzvy.html">Výzvy</a></li>
+          <li><a href="ai-brain.html">AI Brain</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="historie" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">01 — Historie</p>
+          <h2 class="section-title">Jak systém vznikal</h2>
+          <p class="section-lead">
+            Od první žárovky a flow „když přijdeš domů, rozsvítit" k autonomnímu
+            systému, který se sám diagnostikuje a opravuje. Roky postupných
+            přechodů — vždy z konkrétního pain pointu, nikdy ne z teorie.
+          </p>
+        </header>
+
+        <ol class="timeline">
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Začátek · Garsonka v Semilech</p>
+              <h3>Proč vůbec smart home</h3>
+              <p>
+                Byt v přízemí přinesl specifický problém: <strong>efekt akvária</strong>.
+                Když svítí v jídelně a roleta je nahoře, kolemjdoucí vidí dovnitř.
+                První motivace pro automatizaci nebylo „cool gadgets", ale
+                jednoduchá ochrana soukromí — privacy interlock mezi roletou a
+                světly se stal jedním z nejdřívějších a nejdůležitějších pravidel.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Homey Pro 2019 (původní generace)</p>
+              <h3>První Homey</h3>
+              <p>
+                Klasické flow-based řízení. Pohyb → světlo → časovač. Funkční,
+                ale s rostoucím počtem zařízení se logika začala duplikovat
+                a kolidovat. Vrchol byl, když HW přestal stíhat — desítky paralelních
+                Flow karet a první HomeyScripty rozbíjely runtime.
+                Vznikla potřeba většího výkonu a otevřenější platformy.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Přechod · Homey Pro 2026</p>
+              <h3>Nová generace HW</h3>
+              <p>
+                Quad-core ARM @ 1,5 GHz se 4 GB RAM. Po migraci jsem konečně
+                mohl spouštět <strong>110+ skriptů paralelně</strong> bez SIGABRT
+                krachů. Otevřela se cesta k centralizované logice v JavaScriptu
+                místo lepení flows. Jeden investiční krok, který odemkl všechnu
+                další architekturu.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Refaktor · Script-first</p>
+              <h3>Pravidlo „logika do skriptu, ne do flow"</h3>
+              <p>
+                Veškerá rozhodovací logika přesunuta do <code>sh_*</code> skriptů.
+                Flow zůstávají jako tenké triggery (set variable + run script),
+                nic víc. Vznikly routery (open space lighting, roleta, audio,
+                vacuum) a request-first pipeline. Debugování se stalo řádově
+                jednodušším — jedno místo, jeden soubor, jasná cesta.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Multi-signal · REUSE FIRST</p>
+              <h3>Architektonická pravidla</h3>
+              <p>
+                Žádná akce z jednoho senzoru — vždy 2+ signály. Žádný hardcoded
+                device name — vše přes Device Map. Žádný nový skript pokud
+                lze rozšířit existující. Pravidla nejsou akademická — každé vzniklo
+                z konkrétního incidentu (ranní rutina spuštěná ve 3 ráno kočkou,
+                přejmenování senzoru přetrhající 20 skriptů, …).
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Dashboardy · multi-resolution</p>
+              <h3>UI pro 3 obrazovky</h3>
+              <p>
+                Greenfield redesign s premium dark layoutem. Tři varianty
+                (1920×1080 notebook, 2880×1800 master monitor, 1024×600 RPi
+                kiosek WaveShare 10.1") sdílející stejnou architekturu.
+                Cyklus V3.7 → V7 dokončen za dva týdny šesti iteracemi.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-date">Live · AI Brain Guardian</p>
+              <h3>Supervisor vrstva</h3>
+              <p>
+                Skripty <code>sh_state_validator</code>,
+                <code>sh_brain_guardian</code>, <code>sh_release_guard</code>,
+                <code>sh_self_healing</code> a <code>sh_gemini_diagnostic</code>
+                tvoří meta-vrstvu, která kontroluje očekávaný stav, detekuje
+                ghost values, blokuje nasazení rozbitých změn a denně analyzuje
+                logy přes Gemini.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

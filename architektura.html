@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Script-first princip a 12 pravidel co drží systém pohromadě." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Architektura | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="historie.html">Historie</a></li>
+          <li><a href="hardware.html">Hardware</a></li>
+          <li><a href="funkce.html">Funkce</a></li>
+          <li><a href="infra.html">Infrastruktura</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="zarizeni.html">Zařízení</a></li>
+          <li><a href="architektura.html" class="is-active">Architektura</a></li>
+          <li><a href="vyzvy.html">Výzvy</a></li>
+          <li><a href="ai-brain.html">AI Brain</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="architektura" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">06 — Architektura</p>
+          <h2 class="section-title">Script-first princip</h2>
+          <p class="section-lead">
+            Veškerá logika v jednom místě. Flow je trigger, skript je mozek, router je
+            switchboard, device je výstup.
+          </p>
+        </header>
+
+        <div class="arch-flow" role="img" aria-label="Tok dat: Flow přes Script, Request, Router, Device">
+          <div class="arch-node">
+            <div class="arch-node-icon">⚡</div>
+            <div class="arch-node-name">Flow</div>
+            <div class="arch-node-desc">Trigger (čas, sensor, button)</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-node">
+            <div class="arch-node-icon">📜</div>
+            <div class="arch-node-name">Script</div>
+            <div class="arch-node-desc">Logika + multi-signal eval</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-node">
+            <div class="arch-node-icon">📨</div>
+            <div class="arch-node-name">Request</div>
+            <div class="arch-node-desc">Strukturovaný požadavek</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-node">
+            <div class="arch-node-icon">🔀</div>
+            <div class="arch-node-name">Router</div>
+            <div class="arch-node-desc">Priority + adresace</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true"></div>
+          <div class="arch-node">
+            <div class="arch-node-icon">📦</div>
+            <div class="arch-node-name">Device</div>
+            <div class="arch-node-desc">Reálná akce (light, TRV, speaker)</div>
+          </div>
+        </div>
+
+        <h3 class="arch-rules-title">12 pravidel která jsem si zavedl</h3>
+        <p class="arch-rules-lead">
+          Každé pravidlo vzniklo z konkrétního incidentu, ne z teorie. Tady jsou všechna
+          která dnes drží systém pohromadě.
+        </p>
+
+        <div class="arch-principles">
+          <article class="principle">
+            <span class="principle-tag">REUSE FIRST</span>
+            <p>
+              Před vytvořením nové entity (skript, flow, proměnná) zkontroluj
+              zda podobná již neexistuje. Refaktor &gt; nový kód.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">SCRIPT-FIRST</span>
+            <p>
+              Flow = trigger + set variable + run script. Žádná logika v Flow kartách.
+              Logika ve skriptech je verzovatelná, debugovatelná, testovatelná.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">DEVICE MAP</span>
+            <p>
+              Žádný hardcoded device name. Vše přes <code>sh_device_map_v1</code>.
+              Přejmenování zařízení = jedna změna, ne 20 broken skriptů.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">MULTI-SIGNAL</span>
+            <p>
+              Žádné kritické rozhodnutí z jediného senzoru. Vždy 2+ nezávislé
+              signály (FP2 + Z-Wave motion, button + geofence).
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">SLEEP RESPECT</span>
+            <p>
+              Žádné TTS, hlasité akce ani světla při <code>sh_spim=yes</code>.
+              Výjimky: morning briefing, kritické alarmy.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">PRIVACY INTERLOCK</span>
+            <p>
+              Roleta otevřená → open space světla blokována. Garsonka v přízemí,
+              kolemjdoucí vidí dovnitř. Efekt akvária.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">IDLE RESET</span>
+            <p>
+              Každý dočasný request musí být po dokončení akce resetován na
+              <code>idle</code>. Bez resetu = stuck pipeline + ráno bez rádia.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">WINDOW GUARDS</span>
+            <p>
+              Triggery mají časová okna — ranní rutina 3:00–10:00, noční 22:00–6:00.
+              Mimo okno skript odmítne pokračovat.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">NO THROW</span>
+            <p>
+              Nikdy <code>throw new Error()</code>. Vždy <code>log + return false</code>.
+              Throw crashne před cleanup, zanechá proměnné v nekonzistentním stavu.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">VARIABLE CACHE</span>
+            <p>
+              Každý skript cacheuje proměnné (<code>_varCache + _loadVars()</code>).
+              Bez cache = SIGABRT na 200+ proměnných.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">IDEMPOTENCE</span>
+            <p>
+              <code>setCapabilityValue</code> jen pokud se hodnota fakticky mění.
+              Slepý set = kaskáda Flow triggerů a zbytečné zatížení.
+            </p>
+          </article>
+          <article class="principle">
+            <span class="principle-tag">NO REGRESSION</span>
+            <p>
+              Před úpravou existujícího skriptu: přečíst celý, ověřit volající,
+              minimální change. „Už to fungovalo" = nesahat přes silnou potřebu.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
