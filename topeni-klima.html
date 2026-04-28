@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Topení a klima | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger is-active">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html" aria-current="page"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="topeni-klima" class="section section-hero uc-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🏠 Prožívání · Topení a klima</p>
+        <h1 class="hero-title">Topení které <span class="grad-text">předvídá a šetří</span></h1>
+        <p class="hero-lead">
+          Elektrický kotel 9 kW, čtyři zóny s vlastním týdenním rozvrhem, tři režimy
+          a tři AI vrstvy. Místo termostatu na zdi rozhoduje skript každé dvě minuty —
+          podle toho, jestli zrovna spím, kolik je venku stupňů, a jestli za půl hodiny
+          zazvoní budík.
+        </p>
+        <div class="uc-stats">
+          <div class="uc-stat"><span class="uc-stat-num">4</span><span class="uc-stat-label">Topné zóny</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">9 kW</span><span class="uc-stat-label">Příkon kotle</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Režimy</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">41</span><span class="uc-stat-label">Proměnných</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to dělá</p>
+          <h2 class="section-title">Topení které není jen termostat</h2>
+        </header>
+        <div class="uc-prose">
+          <p>
+            V každé místnosti je vlastní termoradiátorová hlavice — jídelna, ložnice,
+            koupelna, toaleta — a každá má svůj <strong>týdenní rozvrh</strong>. Jiné teploty
+            ráno, jiné přes den, jiné v noci. Kotel se ale nezapíná podle časovače: zapíná se,
+            když některá ze zón klesne pod požadovanou teplotu o víc než půl stupně, a vypíná
+            když přesáhne cíl o desetinu.
+          </p>
+          <p>
+            Nad rozvrhem fungují <strong>tři AI vrstvy</strong>. Pre-wake boost rozehřeje
+            koupelnu pět až třicet minut před budíkem. Weather adjust přidá stupeň navíc, když
+            venku spadne pod -5 °C. Occupancy bonus přihodí půl stupně tam, kde právě někdo je.
+            Vše s globálním stropem ±3 °C, aby se AI nezbláznila a netopila do přesvědčení.
+          </p>
+          <p>
+            A tři režimy: <strong>AUTO</strong> (rozvrh + AI), <strong>RUČNÍ</strong> (jen rozvrh,
+            žádné chytrosti) a <strong>VYPNUTO</strong> (anti-freeze 7 °C). Přepínání jedním
+            tlačítkem na dashboardu.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DENNÍ PROVOZ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Denní provoz</p>
+          <h2 class="section-title">Jak to vypadá v běžný den</h2>
+          <p class="section-lead">Čtyři fáze, čtyři chování — všechno autonomní, žádný termostat na zdi.</p>
+        </header>
+        <ol class="uc-timeline">
+          <li class="uc-stage">
+            <span class="uc-stage-time">02:45</span>
+            <h3>Ranní pre-boost</h3>
+            <p>
+              Třicet minut před budíkem (3:15 v týdnu, 5:15 o víkendu) zvedne koupelna
+              o +2 °C. Toaleta o +1 °C v okně 5–15 min před. Cíl: ráno vstoupit do teplé
+              místnosti, ne do studené.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">05:00</span>
+            <h3>Den běží</h3>
+            <p>
+              Schedule slot „comfort" — jídelna 21 °C, ložnice 19 °C, koupelna 22 °C,
+              toaleta 18 °C. Kotel sepne každou chvíli na 5–15 min podle ztráty tepla
+              v místnosti. Hystereze drží swing v 0,6 °C pásmu.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">22:00</span>
+            <h3>Noční tlumení</h3>
+            <p>
+              Schedule přepne na night slot — jídelna 18 °C, ložnice 17 °C (chladnější
+              pro spánek), koupelna 19 °C, toaleta 16 °C. Sleep manager mezitím zruší
+              případný boost preset, který by mohl běžet z dřívějška.
+            </p>
+          </li>
+          <li class="uc-stage">
+            <span class="uc-stage-time">Trvale</span>
+            <h3>Zimní kompenzace</h3>
+            <p>
+              Když venku spadne pod -5 °C, weather layer přidá +1 °C ke všem zónám.
+              Když je nad 15 °C, naopak ubere -0,5 °C. Reaguje na předpověď z OWM,
+              ne až ex post podle vnitřního čidla.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SCÉNY -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Scény</p>
+          <h2 class="section-title">Pět akcí, pět tlačítek</h2>
+          <p class="section-lead">Některé spustí presence detection nebo budík, jiné jdou ručně z dashboardu.</p>
+        </header>
+        <div class="scene-grid">
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🚪</span>
+            <h3>Odjíždím</h3>
+            <p>
+              Geofence detekuje výjezd → preset = away → všechny zóny shodí na 16 °C.
+              Návrat domů automaticky vrátí home preset z aktuálního schedule slotu.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🔥</span>
+            <h3>Boost 30 min</h3>
+            <p>
+              Tlačítko „mám zimu" — okamžitě +2 °C na 30 min v aktuální zóně.
+              Po expiraci se sám vrátí k schedule slotu, žádné ruční vypínání.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">🛌</span>
+            <h3>Jdu spát</h3>
+            <p>
+              Sleep brain pošle signál → preset boost se zruší (kdyby zrovna běžel),
+              schedule night slot převezme řízení. Žádné explicitní „shoď topení".
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">⏰</span>
+            <h3>Pre-wake</h3>
+            <p>
+              Závisí na alarm time z mobilu. Koupelna se předehřívá v okně 5–30 min
+              před, toaleta 5–15 min. O víkendu posun na 5:15 podle dayOfWeek.
+            </p>
+          </article>
+          <article class="scene-card">
+            <span class="scene-icon" aria-hidden="true">⛔</span>
+            <h3>Vypnu vše</h3>
+            <p>
+              Mode = off, anti-freeze 7 °C. Kotel zapne jen když by reálně hrozilo
+              zamrznutí trubek. Pro dovolenou nebo dlouhý odjezd v zimě.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARDWARE -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Hardware</p>
+          <h2 class="section-title">Co reálně topí</h2>
+          <p class="section-lead">Jeden kotel, jedno relé, jeden stykač, čtyři termo hlavice. Plus jeden plánovaný měřák.</p>
+        </header>
+        <div class="hw-grid">
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🏭</div>
+            <h3>Protherm RAY 9 KE</h3>
+            <p class="hw-tag">Elektrický kotel · 9 kW · 3-fázový</p>
+            <p>
+              Hlavní zdroj tepla. Modulovaný výkon 3 / 6 / 9 kW dle požadavku.
+              V zimě běží v 4hodinových oknech denně cca 30–60 min/h, v přechodu
+              jen 5–15 min/h. Stará škola, ale spolehlivá.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">⚡</div>
+            <h3>Fibaro FGS-214</h3>
+            <p class="hw-tag">Z-Wave Single Switch · 8 A relé</p>
+            <p>
+              Spíná cívku stykače (~5 W zátěž), ne kotel přímo. Čisté oddělení
+              řídicího signálu od silových fází. Bezpečnější než pouštět 9 kW
+              přes spotřební relé. Jediný kus, co Homey přímo ovládá.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🔌</div>
+            <h3>ABB ESB 24-40</h3>
+            <p class="hw-tag">Stykač · 24 A / 3~400 V · 230 V cívka</p>
+            <p>
+              Tichý stykač co skutečně spíná silové fáze kotle. Kdyby přestala
+              relé fungovat, žádný teplotní problém — jen zvuk cvaknutí navíc.
+              Klasická průmyslová elektroinstalace, ne spotřební elektronika.
+            </p>
+          </article>
+          <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🌡</div>
+            <h3>4× Fibaro FGT-001</h3>
+            <p class="hw-tag">Termoradiátorové hlavice · Z-Wave</p>
+            <p>
+              Per-zóna regulace toku do radiátoru. Vlastní teplotní senzor,
+              vlastní schedule. Když je „toaleta 18 °C" splněno, hlavice ventil
+              přivře, i kdyby kotel ještě jel. Bateriově napájené, výměna ~ročně.
+            </p>
+          </article>
+          <article class="hw-card hw-future">
+            <div class="hw-icon" aria-hidden="true">📊</div>
+            <h3>Shelly 3EM <span class="hw-badge">Plánováno</span></h3>
+            <p class="hw-tag">3-fázový měřák · CT clamp · Wi-Fi</p>
+            <p>
+              Reálný odečet kWh ze tří fází kotle. Aktuálně počítáme runtime ×
+              příkon (přesnost ~95 % protože kotel vnitřně moduluje 3/6/9 kW),
+              s 3EM dostaneme přesnou spotřebu kotle bez odhadu.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH DETAIL (expandable) -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pro tech-savvy</p>
+          <h2 class="section-title">Co se děje pod kapotou</h2>
+          <p class="section-lead">Skripty, hystereze, AI vrstvy a safety guards — pro ty, co chtějí detail.</p>
+        </header>
+        <div class="uc-tech">
+          <details>
+            <summary>Tři skripty co řídí topení</summary>
+            <ul>
+              <li>
+                <strong>sh_heating_scheduler_v1</strong> (cron 5 min) — čte JSON schedule per
+                zónu, najde aktuální slot dle weekday + hour:min, aplikuje preset
+                (home / away / boost / override) a tři AI vrstvy. Píše
+                <code>sh_heating_zone_&lt;z&gt;_target_temp</code>.
+              </li>
+              <li>
+                <strong>sh_heating_demand_v1</strong> (cron 2 min) — porovná current vs. target
+                každé zóny, rozhoduje on/off s anti-cycling guards. Zapisuje
+                <code>sh_heating_boiler_request</code> a inkrementuje
+                <code>runtime_today_s</code> pro kWh estimate.
+              </li>
+              <li>
+                <strong>sh_heating_boiler_executor_v1</strong> (trigger:
+                <code>boiler_request</code> changed) — setCapability na FGS-214. Pokud device
+                nedostupný, padne do simulation mode (jen logging, žádné fyzické sepnutí).
+              </li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>State-aware hystereze (proč kotel netluče každé 2 min)</summary>
+            <p>
+              Naivní termostat: zapni když curr &lt; target, vypni když curr &gt; target.
+              Důsledek: cyklus zap/vyp každé dvě minuty. Místo toho:
+            </p>
+            <ul>
+              <li><strong>Když je kotel OFF</strong>: zapne až když curr &lt; target − <code>hyst_cold</code> (default 0,5 °C)</li>
+              <li><strong>Když je kotel ON</strong>: vypne až když curr ≥ target + <code>hyst_warm</code> (default 0,1 °C)</li>
+              <li><strong>Výsledný swing</strong>: pro target 22 °C reálně 21,5–22,1 °C (0,6 °C pásmo)</li>
+              <li><strong>Anti-cycling guards</strong>: min runtime 5 min, min off-time 3 min</li>
+              <li><strong>Safety cap</strong>: max runtime 4 h v kuse → forced off + alert</li>
+              <li><strong>Anti-freeze emergency</strong>: jakákoli zóna &lt; 7 °C → forced on, override všech ostatních pravidel</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>AI vrstvy (preWakeBoost, weatherAdjust, occupancyBonus)</summary>
+            <p>
+              Tři opt-in vrstvy nad baseline schedule. Každá vrátí delta v °C, sčítají se
+              s globálním cap ±3 °C. Vstup pro vrstvy je cached <code>ctx</code> (počasí,
+              presence, alarm time, sleep state).
+            </p>
+            <ul>
+              <li>
+                <strong>Layer 1 preWakeBoost</strong>: koupelna +2 °C v okně 5–30 min před
+                budíkem, toaleta +1 °C v okně 5–15 min. Alarm time z cfg
+                (<code>sh_cfg_heating_wake_weekday_min</code> = 195 = 03:15,
+                <code>_weekend_min</code> = 315 = 05:15).
+              </li>
+              <li>
+                <strong>Layer 2 weatherAdjust</strong>: outdoor &lt; -5 °C → +1 °C, outdoor &gt;
+                15 °C → -0,5 °C. Čte z global ctx (Open Weather Map, refresh každých
+                15 min).
+              </li>
+              <li>
+                <strong>Layer 3 occupancyBonus</strong>: aktivní zóna (motion age &lt; 600 s)
+                → +0,5 °C. Mapa: jidelna ↔ open_space, loznice ↔ bedroom, koupelna ↔
+                bathroom, toaleta ↔ toilet.
+              </li>
+            </ul>
+            <p>Master switch <code>sh_cfg_heating_ai_enabled = 'yes'</code> (default no, backward compat).</p>
+          </details>
+
+          <details>
+            <summary>kWh estimate (runtime × příkon)</summary>
+            <p>
+              Demand cron každé 2 minuty inkrementuje
+              <code>sh_heating_runtime_today_s</code> += 120 s když boiler_state = on.
+              Půlnoční reset kopíruje runtime do <code>runtime_yesterday_s</code> a nuluje
+              today counter.
+            </p>
+            <p>
+              <code>kwh_today = (runtime_today_s / 3600) × kotel_kw</code>. Přesnost ~95 %,
+              protože kotel interně moduluje stage 3 / 6 / 9 kW podle teploty vody. Real
+              measurement čeká na Shelly 3EM (CT clamp na 3 fáze v rozvaděči).
+            </p>
+          </details>
+
+          <details>
+            <summary>41 proměnných ve čtyřech skupinách</summary>
+            <ul>
+              <li>
+                <strong>Master (7)</strong>: <code>mode</code>, <code>preset</code>,
+                <code>boiler_state</code>, <code>boiler_request</code>,
+                <code>boiler_since_ts</code>, <code>demand_count</code>,
+                <code>last_scheduler_ts</code>
+              </li>
+              <li>
+                <strong>Runtime (3)</strong>: <code>runtime_today_s</code>,
+                <code>runtime_total_s</code>, <code>runtime_reset_date</code>
+              </li>
+              <li>
+                <strong>Config (12)</strong>: hystereze (cold / warm), anti-cycling
+                (min runtime / off-time), safety cap (max runtime), AI toggles, defaults
+                pro away preset, …
+              </li>
+              <li>
+                <strong>Per zóna × 4 (24)</strong>: <code>enabled</code>,
+                <code>current_temp</code>, <code>target_temp</code>,
+                <code>manual_override_temp</code>, <code>manual_override_until_ts</code>,
+                <code>schedule</code> (JSON)
+              </li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUVISEJÍCÍ -->
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Související</p>
+          <h2 class="section-title">Souvislosti v kontextu webu</h2>
+        </header>
+        <div class="related-grid">
+          <a href="architektura.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🏛</span>
+            <h3>Architektura</h3>
+            <p>Script-first princip — proč topení řídí HomeyScript a ne flow.</p>
+          </a>
+          <a href="vyzvy.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🐛</span>
+            <h3>Výzvy</h3>
+            <p>Cold-start bug v anti-cycling guard, hodiny diagnostiky.</p>
+          </a>
+          <a href="hardware.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">📦</span>
+            <h3>Hardware</h3>
+            <p>Detail FGS-214, FGT-001 a Z-Wave protokolu obecně.</p>
+          </a>
+          <a href="ai-brain.html" class="related-card">
+            <span class="related-icon" aria-hidden="true">🧠</span>
+            <h3>AI Brain</h3>
+            <p>Jak self-healing layer hlídá, jestli topení reálně topí.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

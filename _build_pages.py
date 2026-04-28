@@ -27,7 +27,7 @@ PILLARS = [
         'label': 'Prožívání',
         'title': 'Prožívání — co systém umožňuje',
         'lead': 'Use-case pohled na celý systém — co dům dělá pro ty, kdo v něm žijí. Funkce, dashboardy a AI vrstva v jednom.',
-        'sub': ['funkce', 'dashboard', 'ai-brain'],
+        'sub': ['topeni-klima', 'funkce', 'dashboard', 'ai-brain'],
     },
     {
         'id': 'zarizeni',
@@ -68,6 +68,7 @@ PILLARS = [
 
 # Sub-page metadata (existing pages that became sub-pages under pillars).
 SUBPAGES = {
+    'topeni-klima': ('Topení a klima', 'Topení a klima',        'Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.'),
     'historie':     ('Historie',       'Historie projektu',     'Jak systém vznikal — od první žárovky k AI Brain Guardian.'),
     'hardware':     ('Hardware',       'Hardware',              'Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.'),
     'funkce':       ('Funkce',         'Funkce',                'Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.'),
