@@ -2230,3 +2230,292 @@ img.zoomable:hover { opacity: 0.85; }
   text-align: center;
   font-style: italic;
 }
+
+/* ─── V7.0 TEAM SECTION (2026-04-29) — role cards + pipeline diagram ─── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 32px 0;
+}
+.team-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.team-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--card-accent, var(--accent));
+  opacity: .85;
+}
+.team-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-accent, var(--accent));
+  box-shadow: 0 12px 32px rgba(0,0,0,.4);
+}
+.team-card-avatar {
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 16px;
+  display: block;
+}
+.team-card-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--card-accent, var(--accent));
+  margin: 0 0 6px;
+}
+.team-card h3 {
+  font-size: 22px;
+  margin: 0 0 14px;
+  font-weight: 700;
+}
+.team-card-desc {
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 16px;
+}
+.team-card-roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.team-card-roles li {
+  font-size: 13px;
+  color: var(--text);
+  padding-left: 18px;
+  position: relative;
+}
+.team-card-roles li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--card-accent, var(--accent));
+  opacity: .8;
+}
+
+/* Per-card accent colours */
+.team-card.tc-architect { --card-accent: #fbbf24; }
+.team-card.tc-chatgpt   { --card-accent: #10a37f; }
+.team-card.tc-claude    { --card-accent: #d97706; }
+.team-card.tc-gemini    { --card-accent: #4285f4; }
+.team-card.tc-cody      { --card-accent: #a78bfa; }
+
+/* Hero badge for "Human + AI Co-Built System" */
+.team-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(34,211,238,.12), rgba(167,139,250,.12));
+  border: 1px solid var(--accent);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin: 14px 0;
+}
+.team-badge::before { content: '🤝'; font-size: 16px; }
+
+/* Pipeline diagram */
+.pipeline {
+  display: grid;
+  gap: 0;
+  margin: 32px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 24px;
+}
+.pipeline-node {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 20px;
+  align-items: center;
+  padding: 14px 16px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--node-accent, var(--accent));
+  border-radius: 8px;
+  position: relative;
+  margin-bottom: 28px;
+}
+.pipeline-node:last-child { margin-bottom: 0; }
+.pipeline-node:not(:last-child)::after {
+  content: '↓';
+  position: absolute;
+  bottom: -26px;
+  left: 30px;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: var(--node-accent, var(--accent));
+  opacity: .7;
+  font-family: 'JetBrains Mono', monospace;
+}
+.pipeline-icon {
+  font-size: 32px;
+  text-align: center;
+  line-height: 1;
+}
+.pipeline-content strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.pipeline-content span {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+.pipeline-node.pn-human   { --node-accent: #fbbf24; }
+.pipeline-node.pn-chatgpt { --node-accent: #10a37f; }
+.pipeline-node.pn-claude  { --node-accent: #d97706; }
+.pipeline-node.pn-homey   { --node-accent: #22d3ee; }
+.pipeline-node.pn-gemini  { --node-accent: #4285f4; }
+
+/* ─── V7.0 JOURNEY SECTION — extended timeline + lessons + features ─── */
+.journey-timeline {
+  list-style: none;
+  margin: 32px 0;
+  padding-left: 32px;
+  position: relative;
+}
+.journey-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 12px; bottom: 12px;
+  width: 3px;
+  background: linear-gradient(180deg,
+    #fbbf24 0%, #10a37f 25%, #d97706 50%, #22d3ee 75%, #4285f4 100%);
+  border-radius: 2px;
+}
+.journey-item {
+  position: relative;
+  padding: 0 0 36px 32px;
+}
+.journey-item:last-child { padding-bottom: 0; }
+.journey-item::before {
+  content: '';
+  position: absolute;
+  left: -38px; top: 12px;
+  width: 18px; height: 18px;
+  background: var(--phase-accent, var(--accent));
+  border-radius: 50%;
+  border: 4px solid var(--bg);
+  box-shadow: 0 0 14px var(--phase-accent, var(--accent));
+}
+.journey-phase {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--phase-accent, var(--accent));
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+.journey-item h3 {
+  font-size: 22px;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+.journey-item p {
+  color: var(--text-soft);
+  margin: 0;
+  line-height: 1.6;
+}
+.journey-item.j1 { --phase-accent: #fbbf24; }
+.journey-item.j2 { --phase-accent: #f59e0b; }
+.journey-item.j3 { --phase-accent: #10a37f; }
+.journey-item.j4 { --phase-accent: #06b6d4; }
+.journey-item.j5 { --phase-accent: #22d3ee; }
+.journey-item.j6 { --phase-accent: #a78bfa; }
+.journey-item.j7 { --phase-accent: #4285f4; }
+
+/* Lessons learned — accent danger box */
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
+.lesson-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid #ef4444;
+  border-radius: 8px;
+  padding: 18px 20px;
+  transition: transform .2s, border-color .2s;
+}
+.lesson-card:hover { transform: translateY(-2px); border-left-color: #f87171; }
+.lesson-card h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fca5a5;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: .5px;
+}
+.lesson-card p { margin: 0; color: var(--text-soft); font-size: 13px; line-height: 1.55; }
+
+/* Feature cards (unique system features) */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+.feature-card {
+  background: linear-gradient(135deg, var(--surface), rgba(34,211,238,.04));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.feature-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 28px rgba(34,211,238,.15);
+}
+.feature-card-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+  display: block;
+  line-height: 1;
+}
+.feature-card h4 {
+  font-size: 18px;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+.feature-card p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .pipeline-node { grid-template-columns: 50px 1fr; padding: 12px; }
+  .pipeline-icon { font-size: 26px; }
+  .journey-timeline { padding-left: 26px; }
+  .journey-item { padding-left: 24px; }
+  .journey-item::before { left: -32px; width: 14px; height: 14px; }
+}

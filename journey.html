@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Engineering journey od první žárovky po Brain Guardian. 7 fází + lessons learned + co dělá systém unikátním." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Jak vznikal SMART HOME OS | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger is-active">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="team.html"><strong>Kdo za tím stojí</strong><span>Lidský architekt + AI co-pilots. 5 rolí, jedno zařízení. Human + AI Co-Built System.</span></a><a href="journey.html" aria-current="page"><strong>Jak vznikal</strong><span>Engineering journey od první žárovky po Brain Guardian. 7 fází + lessons learned + co dělá systém unikátním.</span></a><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="journey" class="section section-hero hub-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📖 Pilíř · Příběh</p>
+        <h1 class="hero-title">Jak vznikal <span class="grad-text">SMART HOME OS</span></h1>
+        <p class="hero-lead">Žádný plán to nebyl. Žádný roadmap dokument. Začalo to <strong>jednou žárovkou ovládanou aplikací</strong> a postupně narostlo na 116 scriptů, 203 flow a vrstvenou architekturu, kde Brain Guardian dohlíží na ostatní automatizace.</p>
+        <p class="hero-lead">Tady je příběh — fáze po fázi, krize po krizi.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Engineering journey</p>
+          <h2 class="section-title">7 fází evoluce</h2>
+          <p class="section-lead">Žádná fáze nebyla naplánovaná. Každá vznikla jako reakce na limit té předchozí.</p>
+        </header>
+
+        <ol class="journey-timeline" role="list">
+          <li class="journey-item j1">
+            <p class="journey-phase">Fáze 1 · ~2023</p>
+            <h3>Začátek — první automatizace v UI</h3>
+            <p>Ruční přidávání zařízení v Homey UI. Klasické Flow přes drag & drop. „Když motion → zapni světlo." Žádná architektura, žádné stavy. Funguje pár minut, pak se to přestává škálovat — víc Flow než si pamatuju, žádný dohled.</p>
+          </li>
+
+          <li class="journey-item j2">
+            <p class="journey-phase">Fáze 2 · script-first přechod</p>
+            <h3>Logika do skriptů — ne do Flow</h3>
+            <p>Klíčové rozhodnutí: <strong>logika patří do HomeyScript skriptu, ne do Flow karet</strong>. Flow se stávají jen triggery — script je „mozek". Vznikla první generace <code>sh_*</code> skriptů: <code>sh_morning_brain</code>, <code>sh_light_router</code>, <code>sh_audio_brain</code>. Najednou je to verzovatelné, čitelné, debugovatelné.</p>
+          </li>
+
+          <li class="journey-item j3">
+            <p class="journey-phase">Fáze 3 · request architektura</p>
+            <h3>Routery a request piping</h3>
+            <p>Dům začal být složitější — víc zón, víc senzorů, víc světel. Klíčový insight: <strong>oddělit „co se má stát" od „jak se to udělá"</strong>. Vznikly request proměnné (<code>sh_light_request</code>, <code>sh_audio_request</code>) a routery které je interpretují. Ranní rutina už nepíše do žárovky přímo — pošle request, router rozhodne na základě phase + sleep + presence + lux.</p>
+          </li>
+
+          <li class="journey-item j4">
+            <p class="journey-phase">Fáze 4 · self-healing + diagnostika</p>
+            <h3>Když systém pozná, že má problém</h3>
+            <p>Sběr eventů do Google Sheets přes Apps Script WebApp. Vznikly diagnostické skripty: <code>sh_diag_analyzer</code>, <code>sh_self_healing_v4</code>, <code>sh_audio_pipeline_watchdog</code>. Watchdog detekuje stuck states, self-healing je resetuje. Memory_watchdog na GitHub Actions restartuje HomeyScript app při ≥125 MB. <strong>Systém přestal vyžadovat asistenci uživatele pro běžné poruchy.</strong></p>
+          </li>
+
+          <li class="journey-item j5">
+            <p class="journey-phase">Fáze 5 · Dashboard V7</p>
+            <h3>UI vrstva — jeden systém, tři obrazovky</h3>
+            <p>Sidebar nav, multi-zone tiles, V5 KPI cards, status chips, drag/drop layout editor. Tři varianty: 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor. Jeden HTML soubor + responzivní CSS layer. <strong>Edit mode</strong> umožňuje uživateli přesunout dlaždice + uložit layout do localStorage.</p>
+          </li>
+
+          <li class="journey-item j6">
+            <p class="journey-phase">Fáze 6 · AI integrace</p>
+            <h3>Gemini jako runtime AI vrstva</h3>
+            <p>Briefing (TTS přes Cast), comfort suggest, anomaly detection. Gemini čte event log, navrhuje akce, generuje ranní hlášení. <strong>Od reactive automatizace k proactive asistenci.</strong> AI nezasahuje do řízení — je to advisor + observer vrstva.</p>
+          </li>
+
+          <li class="journey-item j7">
+            <p class="journey-phase">Fáze 7 · Brain Guardian</p>
+            <h3>Supervisor nad celým systémem</h3>
+            <p>Top-level supervisor — <code>sh_expected_state_engine</code> definuje co by mělo být, <code>sh_state_validator</code> srovnává s realitou, <code>sh_brain_guardian</code> orchestruje, <code>sh_release_guard</code> hlídá deployments. <strong>Score 92/100, validator 100, drift detection live.</strong> Detekoval reálné bugy — Bug E priority engine ghost, Ložnice TRV missing, ranní rutina motion vs alarm asymetrie.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Lessons learned</p>
+          <h2 class="section-title">Co mě systém naučil</h2>
+          <p class="section-lead">Každá z těchto věcí měla původně jednoduché řešení v hlavě. Pak se ukázalo, že to tak nefunguje.</p>
+        </header>
+
+        <div class="lessons-grid">
+          <div class="lesson-card">
+            <h4>👻 Ghost values</h4>
+            <p>Proměnná zůstane stuck v non-idle stavu, protože jeden krok pipeline crashnul. <code>sh_priority_active='tts'</code> 14 dní blokoval lights/audio. Fix: timestamp + auto-reset stale > 60s.</p>
+          </div>
+          <div class="lesson-card">
+            <h4>⚡ Audio race conditions</h4>
+            <p>TTS request přijde dřív než předchozí stop dokončí. <code>sh_audio_current_mode</code> overwritten v nesprávném pořadí. Fix: pipeline watchdog co sleduje ne-mode, ale request flow.</p>
+          </div>
+          <div class="lesson-card">
+            <h4>🔁 Conflict prevention</h4>
+            <p>Dva flow se hádají o stejnou žárovku. Bez priority engine se to projeví jako blikání. Fix: priority hierarchy (tts=100, light=60, audio=40) + arbitration.</p>
+          </div>
+          <div class="lesson-card">
+            <h4>🪝 Silent fail orphan refs</h4>
+            <p>Po re-pair zařízení dostane nové UUID. Flow trigger karty referencující staré ID = silent fail, žádný error v UI. Fix: bulk find_orphan_device_refs scanner po každém pairu.</p>
+          </div>
+          <div class="lesson-card">
+            <h4>🧠 Proč vznikl Brain Guardian</h4>
+            <p>Watchdog řeší jen jeden konkrétní failure mode. Self-healing je reactive. Brain Guardian = vrstva která ví, jak má systém vypadat, a srovnává ho s tím, co skutečně dělá. Detekuje drift dřív než uživatel.</p>
+          </div>
+          <div class="lesson-card">
+            <h4>🎯 REUSE FIRST</h4>
+            <p>Tendence vytvářet nové entity místo úpravy stávajících. Vede ke chaosu duplicit. Pravidlo: každá nová věc projde testem „existuje něco podobného?" — 9× z 10 ano, refaktoruj.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co dělá systém unikátní</p>
+          <h2 class="section-title">4 charakteristiky, které drží pohromadě</h2>
+          <p class="section-lead">Není to checklist „smart home" produktu. Je to způsob, jak systém myslí.</p>
+        </header>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">📜</span>
+            <h4>Script-first automation</h4>
+            <p>Logika v HomeyScript skriptech, Flow jako pouhé triggery. Verzovatelné, debugovatelné, refaktorovatelné. Žádný drag-and-drop chaos.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🔁</span>
+            <h4>Self-Healing logic</h4>
+            <p>Stuck states detekované watchdogy, automatické resety, app restart při memory leak. Systém běží, i když se něco rozbije.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🩺</span>
+            <h4>AI-assisted diagnostics</h4>
+            <p>Gemini čte event log a navrhuje, co by mohlo být špatně. Brain Guardian validuje expected vs actual. Anomaly detection bez ML modelu — jen pravidla a state machine.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🌱</span>
+            <h4>Living Operating System</h4>
+            <p>Dům není dokončený produkt — je to průběžně se vyvíjející systém. Každý týden komit, každý měsíc nová verze nějakého subsystému. Není to instalace, je to kultivace.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co bude dál</p>
+          <h2 class="section-title">Roadmap</h2>
+        </header>
+        <ul class="timeline" style="max-width: 760px; margin: 0 auto;">
+          <li class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-date">Phase 8 · Q2 2026</p>
+            <div class="timeline-content">
+              <h3>Hardware expansion</h3>
+              <p>Aqara FP1E presence v ložnici, Aqara P2 jídelna door (replace SNZB-04), Shelly Plug S Gen3 pro kávovar, wake button H1 u postele. <strong>Hardware na cestě.</strong></p>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-date">Phase 9 · Q3 2026</p>
+            <div class="timeline-content">
+              <h3>Per-zone heating + occupancy v topení</h3>
+              <p>Fibaro FGT-001 do ložnice, Sonoff SNZB-02P do pracovny. Heating AI vrstvy už běží — chybí jen vstupní data ze 4. zóny.</p>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-date">Phase 10 · 2026/2027</p>
+            <div class="timeline-content">
+              <h3>Brain Guardian V2 + predictive maintenance</h3>
+              <p>Pravidla → ML modely (anomaly detection na event sequences). Predikce poruch zařízení dřív, než se stanou. Long-term battery tracking, runtime stats, lifetime estimates.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

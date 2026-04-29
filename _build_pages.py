@@ -44,7 +44,7 @@ PILLARS = [
         'label': 'Příběh',
         'title': 'Příběh projektu',
         'lead': 'Cesta k současnému stavu — historie, architektonické přechody a problémy které vznikaly a řešily se cestou.',
-        'sub': ['historie', 'architektura', 'vyzvy', 'rano-rutina', 'navrat-domu', 'nocni-koupelna'],
+        'sub': ['team', 'journey', 'historie', 'architektura', 'vyzvy', 'rano-rutina', 'navrat-domu', 'nocni-koupelna'],
     },
     {
         'id': 'blog',
@@ -83,6 +83,8 @@ SUBPAGES = {
     'rano-rutina':  ('Ráno v 3:15',    'Ráno v 3:15',           'Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.'),
     'navrat-domu':  ('Návrat domů',    'Když přijdu domů',      'Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.'),
     'nocni-koupelna': ('Noční koupelna', 'Noční koupelna ve 3 ráno', 'Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.'),
+    'team':         ('Kdo za tím stojí', 'Kdo stojí za SMART HOME OS', 'Lidský architekt + AI co-pilots. 5 rolí, jedno zařízení. Human + AI Co-Built System.'),
+    'journey':      ('Jak vznikal',    'Jak vznikal SMART HOME OS', 'Engineering journey od první žárovky po Brain Guardian. 7 fází + lessons learned + co dělá systém unikátním.'),
     'historie':     ('Historie',       'Historie projektu',     'Jak systém vznikal — od první žárovky k AI Brain Guardian.'),
     'hardware':     ('Hardware',       'Hardware',              'Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.'),
     'funkce':       ('Funkce',         'Funkce',                'Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.'),

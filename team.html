@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Lidský architekt + AI co-pilots. 5 rolí, jedno zařízení. Human + AI Co-Built System." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Kdo stojí za SMART HOME OS | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger is-active">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="team.html" aria-current="page"><strong>Kdo za tím stojí</strong><span>Lidský architekt + AI co-pilots. 5 rolí, jedno zařízení. Human + AI Co-Built System.</span></a><a href="journey.html"><strong>Jak vznikal</strong><span>Engineering journey od první žárovky po Brain Guardian. 7 fází + lessons learned + co dělá systém unikátním.</span></a><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="team" class="section section-hero hub-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📖 Pilíř · Příběh</p>
+        <h1 class="hero-title">Kdo stojí za <span class="grad-text">SMART HOME OS</span></h1>
+        <p class="hero-lead">Není to projekt jednoho člověka. Není to ani projekt jediné AI. Je to <strong>kolaborace mezi člověkem a několika AI vrstvami</strong> — každá hraje jasně ohraničenou roli a každá přidává něco, co by sama nezvládla.</p>
+        <span class="team-badge">Human + AI Co-Built System</span>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Role v projektu</p>
+          <h2 class="section-title">5 vrstev co řídí systém</h2>
+          <p class="section-lead">Architektura prvního principu. Každá vrstva má jasnou specializaci, žádné překryvy, jasný handoff mezi sousedními vrstvami.</p>
+        </header>
+
+        <div class="team-grid">
+          <article class="team-card tc-architect">
+            <span class="team-card-avatar" aria-hidden="true">👨‍💻</span>
+            <p class="team-card-role">Hlavní architekt · Reality testing</p>
+            <h3>Luděk Budínský</h3>
+            <p class="team-card-desc">Návrh logiky domu, prioritizace toho, co dům má dělat. Reálný provozní testing každý den — žije v systému, který staví. Filozofie a UX rozhodnutí.</p>
+            <ul class="team-card-roles">
+              <li>Návrh logiky a stavů</li>
+              <li>Use-case specifikace</li>
+              <li>Provozní reality testing</li>
+              <li>Prioritizace automatizací</li>
+              <li>Acceptance + iterace</li>
+            </ul>
+          </article>
+
+          <article class="team-card tc-chatgpt">
+            <span class="team-card-avatar" aria-hidden="true">🧠</span>
+            <p class="team-card-role">Architectural Co-Pilot</p>
+            <h3>ChatGPT</h3>
+            <p class="team-card-desc">Vrstva která přemýšlí o systému z výšky. Audity, návrh architektury, „co bychom měli postavit dál". Brain Guardian koncepty a roadmap dokumentace.</p>
+            <ul class="team-card-roles">
+              <li>Systémové audity</li>
+              <li>Architektonické návrhy</li>
+              <li>Optimalizační nápady</li>
+              <li>Brain Guardian koncepty</li>
+              <li>Roadmap + dokumentace</li>
+            </ul>
+          </article>
+
+          <article class="team-card tc-claude">
+            <span class="team-card-avatar" aria-hidden="true">⚙️</span>
+            <p class="team-card-role">Engineering Layer</p>
+            <h3>Claude Code</h3>
+            <p class="team-card-desc">Implementace kódu — script-first refaktoring, dashboard development, deploy přes Homey API, atomic patches s rollback. Vrstva která dělá, co architekt navrhne.</p>
+            <ul class="team-card-roles">
+              <li>HomeyScript implementace</li>
+              <li>Dashboard development (V7)</li>
+              <li>API deploy + rollback</li>
+              <li>Refaktoring + LIB migrace</li>
+              <li>Engineering execution</li>
+            </ul>
+          </article>
+
+          <article class="team-card tc-gemini">
+            <span class="team-card-avatar" aria-hidden="true">✨</span>
+            <p class="team-card-role">Embedded AI Layer</p>
+            <h3>Gemini</h3>
+            <p class="team-card-desc">Diagnostika a runtime briefing — vrstva která žije v systému 24/7 a sleduje provoz. Embedded AI co dělá ranní hlášení, navrhuje akce, kontroluje stav.</p>
+            <ul class="team-card-roles">
+              <li>Provozní diagnostika</li>
+              <li>Ranní briefing (TTS)</li>
+              <li>Embedded AI vrstva</li>
+              <li>Anomaly detection asistence</li>
+              <li>24/7 dohled</li>
+            </ul>
+          </article>
+
+          <article class="team-card tc-cody">
+            <span class="team-card-avatar" aria-hidden="true">🛠</span>
+            <p class="team-card-role">Coding Tooling Support</p>
+            <h3>Cody</h3>
+            <p class="team-card-desc">Podpůrný coding workflow, code review asistence, drobné refaktoring úkoly. Vrstva která zrychluje práci na detailech.</p>
+            <ul class="team-card-roles">
+              <li>Code workflow support</li>
+              <li>Refactoring helpers</li>
+              <li>Pair-programming asistence</li>
+              <li>Code review pomocná vrstva</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Architektura kolaborace</p>
+          <h2 class="section-title">Pipeline myšlenky → kódu → systému</h2>
+          <p class="section-lead">Každá role má jasný handoff k té vedlejší. Idea putuje shora dolů, runtime feedback putuje zpět nahoru.</p>
+        </header>
+
+        <div class="pipeline" role="list" aria-label="Kolaborační pipeline">
+          <div class="pipeline-node pn-human" role="listitem">
+            <div class="pipeline-icon" aria-hidden="true">👨‍💻</div>
+            <div class="pipeline-content">
+              <strong>Luděk · Architect</strong>
+              <span>Definuje use-case, prioritu, acceptance criteria. Reálná zkušenost se systémem.</span>
+            </div>
+          </div>
+          <div class="pipeline-node pn-chatgpt" role="listitem">
+            <div class="pipeline-icon" aria-hidden="true">🧠</div>
+            <div class="pipeline-content">
+              <strong>ChatGPT · Architectural Co-Pilot</strong>
+              <span>Audit současného stavu, návrh architektury, identifikace co lze udělat lépe.</span>
+            </div>
+          </div>
+          <div class="pipeline-node pn-claude" role="listitem">
+            <div class="pipeline-icon" aria-hidden="true">⚙️</div>
+            <div class="pipeline-content">
+              <strong>Claude Code + Cody · Engineering</strong>
+              <span>Píší kód, deployují přes API, testují, dokumentují. Konkrétní implementace návrhu.</span>
+            </div>
+          </div>
+          <div class="pipeline-node pn-homey" role="listitem">
+            <div class="pipeline-icon" aria-hidden="true">🏠</div>
+            <div class="pipeline-content">
+              <strong>Homey Pro 2026 · Runtime</strong>
+              <span>74 zařízení, 116 skriptů, 203 flow. Fyzická realita — světla, topení, audio, senzory.</span>
+            </div>
+          </div>
+          <div class="pipeline-node pn-gemini" role="listitem">
+            <div class="pipeline-icon" aria-hidden="true">✨</div>
+            <div class="pipeline-content">
+              <strong>Gemini · Embedded AI Layer</strong>
+              <span>Pozoruje provoz, diagnostikuje, briefuje. Vrstva mezi systémem a uživatelem.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Princip</p>
+          <h2 class="section-title">Proč to funguje</h2>
+        </header>
+        <p style="max-width: 760px; margin: 0 auto; text-align: center; color: var(--text-soft); font-size: 17px; line-height: 1.7;">
+          Žádná z těch AI by sama systém nepostavila. ChatGPT umí plánovat, ale nezdeployuje skript. Claude Code umí implementovat, ale potřebuje jasné zadání. Gemini umí diagnostikovat, ale nedokáže navrhnout architekturu. <strong>Lidský architekt drží pohromadě intent, prioritu, kontext. AI vrstvy mu zrychlují každý krok 10×.</strong>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
