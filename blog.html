@@ -38,14 +38,147 @@
   </header>
 
   <main id="main">
-<section id="blog" class="section">
+<section id="blog" class="section section-hero hub-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📝 Build Log · Release Notes</p>
+        <h1 class="hero-title">Engineering <span class="grad-text">build log</span></h1>
+        <p class="hero-lead">Není to blog v běžném smyslu. Je to <strong>release notes engineera</strong>, který staví dům jako product. Každá entry odkazuje na konkrétní deploy, fix nebo roadmap milník.</p>
+      </div>
+    </section>
+
+    <!-- BUILD LOG entries (recent → older) -->
+    <section class="section section-alt">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">📝 Blog</p>
-          <h2 class="section-title">Novinky a changelogy</h2>
-          <p class="section-lead">
-            Pravidelné poznámky o tom, co se v systému změnilo, co se rozbilo a jak se to fixovalo.
-          </p>
+          <p class="section-eyebrow">Recent releases</p>
+          <h2 class="section-title">Posledních 30 dní</h2>
+          <p class="section-lead">Kombinace feature ship, bugfix, deploy a roadmap entries. Tagged barevně podle typu.</p>
+        </header>
+
+        <div class="buildlog-list" role="list">
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Dashboard V7.5 layout editor</h3>
+            <p>Drag-and-drop tile reorder + native CSS resize via corner handle + per-page localStorage persistence. <code>Ctrl+E</code> toggles edit mode. 3 floating buttons (🎨 Edit / 💾 Save / ↻ Reset). MutationObserver chrání proti bounce-back při render cycles.</p>
+            <ul>
+              <li>Stable tile identity (id or hash of textContent)</li>
+              <li>Multi-parent aware (handles tiles spread across grid containers)</li>
+              <li>Auto-save on drop (no need to click Save for reordering)</li>
+            </ul>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Bug E — priority engine ghost auto-cleanup</h3>
+            <p><code>sh_priority_active='tts'</code> stuck po crashi HomeyScript app během 10s delay v reset flow. Fix: timestamp na claim + stale check &gt; 60s + nový cron <code>SH – Priority – Stale Cleaner</code>. Validator score 94 → 100, Brain Guardian 92 → 97.</p>
+          </article>
+
+          <article class="buildlog-entry bl-deploy" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">DEPLOY</span>
+            </div>
+            <h3>Brain Guardian deployment</h3>
+            <p>5 scripts + 1 flow + 12 vars deployed. Top-level supervisor: <code>sh_state_validator</code> (drift detection), <code>sh_brain_guardian</code> (orchestrator), <code>sh_release_guard</code> (deploy gate). První live finding: detekoval <code>priority_active=tts</code> ghost (Bug E nahoře).</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Audio race condition fix — bathroom misroute</h3>
+            <p>Po comfort_suggest TTS se sám spustil bathroom radio i bez user accept. Root cause v <code>sh_tts_resume_exec_v1</code> fallback bez <code>prev_playing</code> guardu. Fix v1.8 přidal explicit guard. Stuck <code>sh_audio_current_mode='radio_bathroom'</code> reseten.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Dashboard V7 polish — V7.1 → V7.5.1</h3>
+            <p>8 micro-sprintů: Zones bottom strip, AI grid 2-col, Ložnice tile dedupe, status chips wired, Settings collapse, Burza 2→6 coins, Heating right rail rebuild, AI 4 system cards, layout editor.</p>
+          </article>
+
+          <article class="buildlog-entry bl-perf" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">PERF</span>
+            </div>
+            <h3>Memory leak partial mitigation</h3>
+            <p>3 cron flows zpomalené 1 → 2 min (Dashboard Refresh, Wake Scorer, Audio Pipeline WD). Saves <strong>2 160 runs/den</strong>. Manual app restart 143 → 99 MB. Watchdog drží &lt;125 MB threshold.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Vacuum Giuseppe rename revert</h3>
+            <p>Device name byl omylem změněn na <code>'ano'</code> (UUID stable). 4 sw consumers silently fail. Revert via API PUT name='Giuseppe'. Reset ghost vars. Live test: router can find device, state stays <code>idle</code>.</p>
+          </article>
+
+          <article class="buildlog-entry bl-deploy" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">DEPLOY</span>
+            </div>
+            <h3>Morning routine pipeline rebuild</h3>
+            <p>Nový request type <code>morning_open_space_gentle</code>. ON Sektorka1 + Stul Jidelna1 (warm dim 0.4) + OFF Led pasek postel (sleep nightlight deactivace). Motion branch teď symetrická s alarm/fallback. Live test 7/7 PASS.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-26</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>UUID re-pair orphans — silent fail</h3>
+            <p>Door/Window Sensor Jidelna1 dostal nové UUID po výměně baterky. Tři flows osiřely, čistička se nevypínala při otevření okna. Diagnose + bulk swap fix. Memory entry pro budoucnost.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-21</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Cold-start anti-cycling bug — heating</h3>
+            <p>Kotel sepnul jednou, vypnul, pak nikdy víc. Anti-cycling guard držel <code>hold_off_180s_left</code> forever kvůli NaN propagation. Defensive coding gone wrong, fix v1.2.</p>
+          </article>
+
+          <article class="buildlog-entry bl-roadmap" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">ROADMAP</span>
+            </div>
+            <h3>Release Governance V2 — plánovaná etapa</h3>
+            <p>Canary deploys (1 zóna na 24h před plošným nasazením), auto-rollback při score &lt; 80, sanity checks před PUT (přečíst flow tree, validate DAG, simulate edge cases), drift gates (Brain Guardian musí dovolit). Backlog Q3 2026.</p>
+          </article>
+
+          <article class="buildlog-entry bl-roadmap" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-04-29</span>
+              <span class="buildlog-tag">ROADMAP</span>
+            </div>
+            <h3>Predictive Heating · ML model</h3>
+            <p>Plán pro 2026/2027: anomaly detection na event sequences, predikce occupancy, integrace electricity tariff (NT/VT) do scheduler decision. Aktuálně rule-based scheduler s 3 AI vrstvami (preWake / weather / occupancy bonus).</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Original post archive (long-form articles) -->
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Long-form posts</p>
+          <h2 class="section-title">Hlubší články</h2>
+          <p class="section-lead">Vybrané build log entries rozepsané do plnohodnotného článku — případové studie, hypothesis ladders, root cause analysis.</p>
         </header>
 
         <div class="post-grid">
@@ -156,7 +289,7 @@
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
     <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
-    <img class="lightbox-img" src="" alt="" />
+    <img loading="lazy" decoding="async" class="lightbox-img" src="" alt="" />
     <p class="lightbox-cap"></p>
   </div>
 

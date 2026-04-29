@@ -60,22 +60,22 @@
             k samodiagnostickému systému.
           </p>
           <div class="hero-cta">
-            <a href="architektura.html" class="btn btn-primary">Jak to funguje</a>
-            <a href="vyzvy.html" class="btn btn-ghost">S čím jsem bojoval</a>
+            <a href="dashboard.html" class="btn btn-primary">Explore Dashboard →</a>
+            <a href="ai-brain.html" class="btn btn-ghost">Brain Guardian</a>
           </div>
         </div>
 
         <aside class="hero-stats" aria-label="Klíčová čísla">
           <div class="stat">
-            <span class="stat-num" data-count="110">110</span>
+            <span class="stat-num" data-count="116">116</span>
             <span class="stat-label">HomeyScriptů</span>
           </div>
           <div class="stat">
-            <span class="stat-num" data-count="201">201</span>
+            <span class="stat-num" data-count="203">203</span>
             <span class="stat-label">Flows</span>
           </div>
           <div class="stat">
-            <span class="stat-num" data-count="77">77</span>
+            <span class="stat-num" data-count="74">74</span>
             <span class="stat-label">Zařízení</span>
           </div>
           <div class="stat">
@@ -85,6 +85,81 @@
         </aside>
       </div>
       <div class="hero-glow" aria-hidden="true"></div>
+    </section>
+
+    <!-- HERO SHOWCASE: dashboard + 3 thumbnails -->
+    <section class="hero-showcase" id="showcase" aria-labelledby="showcase-title">
+      <div class="container">
+        <header class="showcase-header">
+          <p class="showcase-eyebrow">Live system · Dashboard V7</p>
+          <h2 class="showcase-title" id="showcase-title">Co dům reálně dělá</h2>
+        </header>
+        <a href="dashboard.html" class="showcase-main" aria-label="Otevřít stránku Dashboard">
+          <img src="assets/screenshots/dashboard-1920x1080.png" alt="Dashboard V7 — hlavní obrazovka 1920×1080" loading="eager" />
+        </a>
+        <div class="showcase-thumbs">
+          <a href="ai-brain.html" class="showcase-thumb" aria-label="AI Brain Guardian detail">
+            <img src="assets/screenshots/after/1920/ai.png" alt="AI Brain Guardian — health gauge + decision feed" loading="lazy" />
+            <span class="showcase-thumb-label">🧠 AI Brain</span>
+          </a>
+          <a href="dashboard.html" class="showcase-thumb" aria-label="Dashboard přehled">
+            <img src="assets/screenshots/after/1920/home.png" alt="Dashboard přehled — scenes, zones, camera, V5 KPI cards" loading="lazy" />
+            <span class="showcase-thumb-label">📊 Dashboard</span>
+          </a>
+          <a href="bezpecnost-kamery.html" class="showcase-thumb" aria-label="Kamera live view">
+            <img src="assets/screenshots/after/1920/camera.png" alt="Kamera — live view, motion timeline, IR controls" loading="lazy" />
+            <span class="showcase-thumb-label">📷 Kamera</span>
+          </a>
+        </div>
+        <div class="showcase-cta">
+          <a href="dashboard.html" class="btn btn-primary">Explore Dashboard →</a>
+          <a href="ai-brain.html" class="btn btn-ghost">Brain Guardian</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE METRICS PANEL -->
+    <section class="metrics-section section-alt" id="metrics" aria-labelledby="metrics-title">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Live snapshot</p>
+          <h2 class="section-title" id="metrics-title">System health · current export</h2>
+          <p class="section-lead">Read-only tabule co dům právě má. Hodnoty z posledního exportu Homey API + Brain Guardian validátoru.</p>
+        </header>
+        <div class="metrics-grid">
+          <div class="metric-card m-health">
+            <p class="metric-label">System Health Score</p>
+            <p class="metric-value">92<span class="metric-suffix">/100</span></p>
+            <p class="metric-meta">Brain Guardian · status OK · validator 100</p>
+          </div>
+          <div class="metric-card m-flows">
+            <p class="metric-label">Active Flows</p>
+            <p class="metric-value">203</p>
+            <p class="metric-meta">Advanced Flow + 1 Stale Cleaner cron</p>
+          </div>
+          <div class="metric-card m-scripts">
+            <p class="metric-label">HomeyScripts</p>
+            <p class="metric-value">116</p>
+            <p class="metric-meta">~80 % migrated to LIB pattern</p>
+          </div>
+          <div class="metric-card m-devices">
+            <p class="metric-label">Devices Online</p>
+            <p class="metric-value">74<span class="metric-suffix">/74</span></p>
+            <p class="metric-meta">11 zón · 100 % availability</p>
+          </div>
+          <div class="metric-card m-vars">
+            <p class="metric-label">Variables (sh_*)</p>
+            <p class="metric-value">507</p>
+            <p class="metric-meta">9 cfg + state + cache + audit</p>
+          </div>
+          <div class="metric-card m-anom">
+            <p class="metric-label">Last anomaly</p>
+            <p class="metric-value" style="font-size:24px;">Bug E ghost</p>
+            <p class="metric-meta">29.4. detected → fixed (Stale Cleaner cron)</p>
+          </div>
+        </div>
+        <p class="metric-snapshot-note">Current snapshot as of latest system export · 2026-04-29</p>
+      </div>
     </section>
 
     <section class="section section-alt" id="navigace">
@@ -123,12 +198,151 @@
         <p class="home-foot">Hledáš kontakt? <a href="kontakt.html">O projektu →</a></p>
       </div>
     </section>
+
+    <!-- WHAT MAKES THIS DIFFERENT -->
+    <section class="section" id="different" aria-labelledby="different-title">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">What Makes This Different</p>
+          <h2 class="section-title" id="different-title">Není to běžný smart home tutorial</h2>
+          <p class="section-lead">Čtyři charakteristiky, kterými se SMART HOME OS odlišuje od typické smart home instalace.</p>
+        </header>
+        <div class="differentiator-grid">
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">📜</span>
+            <h4>Script-First Architecture</h4>
+            <p>Logika v HomeyScript skriptech, Flow karty jen jako triggery. 116 verzovatelných skriptů místo drag-and-drop chaosu.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🔁</span>
+            <h4>Self-Healing Logic</h4>
+            <p>Watchdogy detekují stuck states, auto-restart při memory leak, Stale Cleaner cron resetuje ghost values po 60 s. Systém se opraví sám.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🩺</span>
+            <h4>AI Diagnostics</h4>
+            <p>Gemini čte event log a navrhuje akce. Brain Guardian validuje expected vs actual state. Anomaly detection bez ML — pravidla a state machine.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🌱</span>
+            <h4>Living Operating System</h4>
+            <p>Dům není dokončený produkt. Každý týden commit, každý měsíc nová verze subsystému. Není to instalace, je to průběžná kultivace.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="section section-alt" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Roadmap</p>
+          <h2 class="section-title" id="roadmap-title">Kde teď jsem · co dál</h2>
+          <p class="section-lead">5 milníků definujících další 12 měsíců. Hotové vlevo, otevřené vpravo.</p>
+        </header>
+        <ul class="roadmap-list">
+          <li class="roadmap-item rm-done">
+            <span class="roadmap-icon" aria-hidden="true">✓</span>
+            <div class="roadmap-content">
+              <p class="roadmap-title">Dashboard V7</p>
+              <p class="roadmap-desc">Sidebar nav · multi-zone tiles · drag/drop layout editor · 3 varianty</p>
+            </div>
+            <span class="roadmap-status">Done</span>
+          </li>
+          <li class="roadmap-item rm-done">
+            <span class="roadmap-icon" aria-hidden="true">✓</span>
+            <div class="roadmap-content">
+              <p class="roadmap-title">AI Integration (Gemini)</p>
+              <p class="roadmap-desc">Briefing TTS · diagnostika · embedded AI vrstva · runtime advisor</p>
+            </div>
+            <span class="roadmap-status">Done</span>
+          </li>
+          <li class="roadmap-item rm-done">
+            <span class="roadmap-icon" aria-hidden="true">✓</span>
+            <div class="roadmap-content">
+              <p class="roadmap-title">Brain Guardian Tier 1</p>
+              <p class="roadmap-desc">Expected state engine · validator · supervisor · Stale Cleaner cron</p>
+            </div>
+            <span class="roadmap-status">Done</span>
+          </li>
+          <li class="roadmap-item rm-progress">
+            <span class="roadmap-icon" aria-hidden="true">◔</span>
+            <div class="roadmap-content">
+              <p class="roadmap-title">Hardware Phase 1 expansion</p>
+              <p class="roadmap-desc">FP1E ložnice presence · Aqara P2 jídelna · Shelly Plug Kaffe · wake button</p>
+            </div>
+            <span class="roadmap-status">Q2 2026</span>
+          </li>
+          <li class="roadmap-item rm-todo">
+            <span class="roadmap-icon" aria-hidden="true">◻</span>
+            <div class="roadmap-content">
+              <p class="roadmap-title">Release Governance V2</p>
+              <p class="roadmap-desc">Canary deploys · auto-rollback · sanity checks před PUT · drift gates</p>
+            </div>
+            <span class="roadmap-status">Backlog</span>
+          </li>
+          <li class="roadmap-item rm-todo">
+            <span class="roadmap-icon" aria-hidden="true">◻</span>
+            <div class="roadmap-content">
+              <p class="roadmap-title">Predictive Heating · ML</p>
+              <p class="roadmap-desc">Topení dle predikce occupancy + počasí + electricity tariff. Anomaly detection na event sequences.</p>
+            </div>
+            <span class="roadmap-status">2026/2027</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE VISUAL -->
+    <section class="section" id="architecture" aria-labelledby="arch-title">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Signature pipeline</p>
+          <h2 class="section-title" id="arch-title">Flow → Script → Request → Router → Device</h2>
+          <p class="section-lead">Každý event v domě jde touto pipeline. Žádné přímé volání ze senzoru do žárovky. Vrstvy lze nezávisle nahradit, debugovat, refaktorovat.</p>
+        </header>
+        <div class="arch-visual">
+          <div class="arch-row" role="list" aria-label="Architektura pipeline">
+            <div class="arch-node an-flow" role="listitem">
+              <div class="arch-node-icon" aria-hidden="true">⚡</div>
+              <div class="arch-node-name">Flow</div>
+              <div class="arch-node-desc">Event trigger<br>(motion, time, var change)</div>
+            </div>
+            <div class="arch-arrow" aria-hidden="true">→</div>
+            <div class="arch-node an-script" role="listitem">
+              <div class="arch-node-icon" aria-hidden="true">📜</div>
+              <div class="arch-node-name">Script</div>
+              <div class="arch-node-desc">Decision logic<br>(sh_*_brain, *_engine)</div>
+            </div>
+            <div class="arch-arrow" aria-hidden="true">→</div>
+            <div class="arch-node an-request" role="listitem">
+              <div class="arch-node-icon" aria-hidden="true">📨</div>
+              <div class="arch-node-name">Request</div>
+              <div class="arch-node-desc">Variable signal<br>(sh_*_request)</div>
+            </div>
+            <div class="arch-arrow" aria-hidden="true">→</div>
+            <div class="arch-node an-router" role="listitem">
+              <div class="arch-node-icon" aria-hidden="true">🔀</div>
+              <div class="arch-node-name">Router</div>
+              <div class="arch-node-desc">Arbitration + dispatch<br>(priority engine)</div>
+            </div>
+            <div class="arch-arrow" aria-hidden="true">→</div>
+            <div class="arch-node an-device" role="listitem">
+              <div class="arch-node-icon" aria-hidden="true">💡</div>
+              <div class="arch-node-name">Device</div>
+              <div class="arch-node-desc">Physical action<br>(setCapability)</div>
+            </div>
+          </div>
+          <p class="arch-caption">5-vrstvý pipeline · 116 skriptů · 203 flow · 74 zařízení · &lt;100 ms typical latency</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
     <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
-    <img class="lightbox-img" src="" alt="" />
+    <img loading="lazy" decoding="async" class="lightbox-img" src="" alt="" />
     <p class="lightbox-cap"></p>
   </div>
 
