@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Klikací půdorys s 7 zónami a 74 zařízeními. Read-only showcase — žádné API tokeny, žádné ovládání, jen mapa toho, co dům má." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Digital Twin domu | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger is-active">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="digital-twin.html" aria-current="page"><strong>Digital Twin</strong><span>Klikací půdorys s 7 zónami a 74 zařízeními. Read-only showcase — žádné API tokeny, žádné ovládání, jen mapa toho, co dům má.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="team.html"><strong>Kdo za tím stojí</strong><span>Lidský architekt + AI co-pilots. 5 rolí, jedno zařízení. Human + AI Co-Built System.</span></a><a href="journey.html"><strong>Jak vznikal</strong><span>Engineering journey od první žárovky po Brain Guardian. 7 fází + lessons learned + co dělá systém unikátním.</span></a><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="twin" class="section section-hero hub-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🗺 Digital Twin · Floorplan</p>
+        <h1 class="hero-title">Digital <span class="grad-text">Twin domu</span></h1>
+        <p class="hero-lead">Klikací mapa garsonky v Semilech — 7 zón, 74 zařízení. Klikni do místnosti vlevo, vpravo se objeví detail: světla, senzory, audio, automations a router/script vztahy.</p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="twin-readonly-banner">
+          <strong>Read-only showcase.</strong>&nbsp;Žádné API tokeny, žádné lokální IP, žádné ovládání odsud. Statický snapshot z posledního exportu Homey API · 2026-04-30.
+        </div>
+
+        <div class="twin-layout">
+          <!-- LEFT: Floorplan SVG -->
+          <div class="twin-floorplan">
+            <header class="twin-floorplan-header">
+              <p class="twin-floorplan-title">Garsonka · 7 zón · 74 zařízení</p>
+              <span class="twin-floorplan-meta">Live snapshot</span>
+            </header>
+            <svg viewBox="0 0 800 600" role="img" aria-label="Půdorys bytu se 7 klikacími zónami" xmlns="http://www.w3.org/2000/svg">
+              <!-- OPEN SPACE (Jídelna + Kuchyně) — central, largest -->
+              <g class="twin-zone-group" data-zone="open" tabindex="0" role="button" aria-label="Open space — Jídelna a Kuchyně">
+                <rect class="twin-zone" x="220" y="20" width="420" height="280" rx="6" />
+                <text class="twin-zone-label" x="430" y="80">Open Space</text>
+                <text class="twin-zone-count" x="430" y="100">Jídelna + Kuchyně</text>
+                <text class="twin-zone-icons" x="430" y="160">💡 💡 🔊 👁 🪟 🌡</text>
+                <text class="twin-zone-count" x="430" y="200">19 zařízení</text>
+              </g>
+
+              <!-- LOŽNICE — top right -->
+              <g class="twin-zone-group" data-zone="bedroom" tabindex="0" role="button" aria-label="Ložnice">
+                <rect class="twin-zone" x="650" y="20" width="130" height="280" rx="6" />
+                <text class="twin-zone-label" x="715" y="80">Ložnice</text>
+                <text class="twin-zone-icons" x="715" y="140">💡 💡</text>
+                <text class="twin-zone-icons" x="715" y="170">🔊 📷</text>
+                <text class="twin-zone-icons" x="715" y="200">👁 🌡</text>
+                <text class="twin-zone-count" x="715" y="240">14 zařízení</text>
+              </g>
+
+              <!-- KOUPELNA — left top -->
+              <g class="twin-zone-group" data-zone="bathroom" tabindex="0" role="button" aria-label="Koupelna">
+                <rect class="twin-zone" x="20" y="20" width="190" height="120" rx="6" />
+                <text class="twin-zone-label" x="115" y="55">Koupelna</text>
+                <text class="twin-zone-icons" x="115" y="85">💡 🔊 👁</text>
+                <text class="twin-zone-icons" x="115" y="110">🌡 🪨</text>
+                <text class="twin-zone-count" x="115" y="130">7 zařízení</text>
+              </g>
+
+              <!-- WC / Toaleta — left middle -->
+              <g class="twin-zone-group" data-zone="toilet" tabindex="0" role="button" aria-label="WC / Toaleta">
+                <rect class="twin-zone" x="20" y="150" width="190" height="80" rx="6" />
+                <text class="twin-zone-label" x="115" y="180">WC</text>
+                <text class="twin-zone-icons" x="115" y="210">💡 👁 🌡</text>
+              </g>
+
+              <!-- PRÁDELNA — left below WC -->
+              <g class="twin-zone-group" data-zone="laundry" tabindex="0" role="button" aria-label="Prádelna">
+                <rect class="twin-zone" x="20" y="240" width="190" height="100" rx="6" />
+                <text class="twin-zone-label" x="115" y="275">Prádelna</text>
+                <text class="twin-zone-icons" x="115" y="305">💡 💡 ⚡ ⚡</text>
+                <text class="twin-zone-count" x="115" y="325">6 zařízení</text>
+              </g>
+
+              <!-- PRACOVNA — bottom left -->
+              <g class="twin-zone-group" data-zone="office" tabindex="0" role="button" aria-label="Pracovna">
+                <rect class="twin-zone" x="20" y="350" width="280" height="160" rx="6" />
+                <text class="twin-zone-label" x="160" y="400">Pracovna</text>
+                <text class="twin-zone-icons" x="160" y="440">💡 👁 ⚡</text>
+                <text class="twin-zone-icons" x="160" y="470">🖨</text>
+                <text class="twin-zone-count" x="160" y="495">5 zařízení</text>
+              </g>
+
+              <!-- PŘEDSÍŇ — bottom middle (entry) -->
+              <g class="twin-zone-group" data-zone="entry" tabindex="0" role="button" aria-label="Předsíň">
+                <rect class="twin-zone" x="310" y="320" width="330" height="190" rx="6" />
+                <text class="twin-zone-label" x="475" y="380">Předsíň</text>
+                <text class="twin-zone-icons" x="475" y="420">💡 📷 🪟 🔘</text>
+                <text class="twin-zone-count" x="475" y="450">4 zařízení</text>
+                <!-- Dveře -->
+                <line x1="475" y1="510" x2="475" y2="540" stroke="#fbbf24" stroke-width="3" stroke-dasharray="4,4" />
+                <text x="475" y="560" text-anchor="middle" fill="#fbbf24" font-family="JetBrains Mono" font-size="10">VSTUP</text>
+              </g>
+
+              <!-- LOŽNICE — sub-section bottom right (joining floor plan) -->
+              <g class="twin-zone-group" data-zone="bedroom" aria-hidden="true">
+                <rect class="twin-zone" x="650" y="320" width="130" height="190" rx="6" pointer-events="none" opacity="0.5" />
+              </g>
+            </svg>
+
+            <div class="twin-legend">
+              <div class="twin-legend-item"><span>💡</span><span>světla</span></div>
+              <div class="twin-legend-item"><span>👁</span><span>presence</span></div>
+              <div class="twin-legend-item"><span>🚶</span><span>motion</span></div>
+              <div class="twin-legend-item"><span>🔊</span><span>audio</span></div>
+              <div class="twin-legend-item"><span>🌡</span><span>topení</span></div>
+              <div class="twin-legend-item"><span>📷</span><span>kamera</span></div>
+              <div class="twin-legend-item"><span>🪟</span><span>roleta/okno</span></div>
+              <div class="twin-legend-item"><span>⚡</span><span>spotřebič</span></div>
+              <div class="twin-legend-item"><span>🔘</span><span>tlačítko</span></div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Detail panel -->
+          <aside class="twin-detail tz-open" id="twinDetail" aria-live="polite">
+            <p class="twin-detail-eyebrow">Vybraná zóna</p>
+            <header class="twin-detail-header">
+              <div class="twin-detail-icon" id="twinIcon" aria-hidden="true">🛋</div>
+              <h2 class="twin-detail-name" id="twinName">Open Space</h2>
+            </header>
+            <p class="twin-detail-desc" id="twinDesc">Hlavní obytný prostor — Jídelna + Kuchyně otevřené dohromady. SNZB-06P presence sensor pokrývá obě části, audio přes Google Cast (Speaker Kuchyně), Sektorka1 + Stul Jidelna1 jako primární světla, roleta Fyrtur na okně.</p>
+
+            <div class="twin-detail-section">
+              <p class="twin-detail-section-title">Zařízení v zóně</p>
+              <div class="twin-counts" id="twinCounts">
+                <!-- counts injected by JS -->
+              </div>
+              <ul class="twin-device-list" id="twinDevices">
+                <!-- devices injected by JS -->
+              </ul>
+            </div>
+
+            <div class="twin-detail-section">
+              <p class="twin-detail-section-title">Automations</p>
+              <ul class="twin-auto-list" id="twinAutomations">
+                <!-- automations injected by JS -->
+              </ul>
+            </div>
+
+            <div class="twin-detail-section">
+              <p class="twin-detail-section-title">Router / Script vztahy</p>
+              <div class="twin-tag-row" id="twinScripts">
+                <!-- script tags injected by JS -->
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  <!-- Static dataset + interaction script (lives inside <main> so builder preserves) -->
+  <script>
+    // V8.0 Digital Twin — static dataset (no API tokens, no IPs).
+    // Sourced from Homey export 2026-04-29.
+    const TWIN_ZONES = {
+      open: {
+        cssClass: 'tz-open',
+        icon: '🛋',
+        name: 'Open Space',
+        eyebrow: 'Jídelna + Kuchyně',
+        desc: 'Hlavní obytný prostor — Jídelna + Kuchyně otevřené dohromady. SNZB-06P presence sensor pokrývá obě části, audio přes Google Cast (Speaker Kuchyně), Sektorka1 + Stul Jidelna1 jako primární světla, roleta Fyrtur na okně.',
+        counts: { lights: 5, sensors: 4, audio: 1, climate: 1, door: 1, blind: 1 },
+        devices: [
+          { icon: '💡', name: 'Sektorka1', status: 'Lidl RGB strip · dim+temp+hue' },
+          { icon: '💡', name: 'Stul Jidelna1', status: 'Sonoff · onoff' },
+          { icon: '💡', name: 'Led pasek', status: 'ZBMINI · onoff' },
+          { icon: '💡', name: '1/2/3_Smart A19/A60', status: 'Wi-Fi · 3× scene-only' },
+          { icon: '👁', name: 'SNZB-06P Presence', status: '5.8GHz radar · open space' },
+          { icon: '🚶', name: 'FGMS-001 Z-wave', status: 'motion + lux + temp · kuchyň' },
+          { icon: '☀', name: 'Lux Okno Jidelna', status: 'measure_luminance' },
+          { icon: '☀', name: 'Lux Kuchyně', status: 'measure_luminance' },
+          { icon: '🔊', name: 'Kuchyn Cast', status: 'Google Cast · radio + TTS' },
+          { icon: '🌡', name: 'Fibaro TRV jídelna', status: 'target_temperature' },
+          { icon: '🪟', name: 'SNZB-04 Door', status: 'okno jídelna · → Aqara P2 plán' },
+          { icon: '🪟', name: 'Roleta Fyrtur1', status: 'IKEA · windowcoverings_set' },
+          { icon: '⚡', name: 'Trouba (Shelly)', status: 'measure_power' },
+          { icon: '⚡', name: 'Lednice (Shelly)', status: 'power monitoring' },
+          { icon: '⚡', name: 'Mikrovlnka (Shelly)', status: 'measure_power' },
+        ],
+        automations: [
+          'morning_open_space_gentle — ráno warm dim Sektorka1+Stul Jidelna1',
+          'sh_open_space_router_v1 — privacy guard, lux-driven, presence triple-check',
+          'sh_kitchen_ai_v1 — cooking detection + auto-lights',
+          'sh_jidelna_roleta_router_v2 — privacy + sleep mode',
+          'kitchen_plug_guard — overheat protection při vaření (event-driven)',
+        ],
+        scripts: ['sh_open_space_router_v1', 'sh_light_router_v1', 'sh_kitchen_ai_v1', 'sh_jidelna_roleta_router_v2'],
+      },
+      bedroom: {
+        cssClass: 'tz-bedroom',
+        icon: '🛏',
+        name: 'Ložnice',
+        eyebrow: 'Sleep · wake state',
+        desc: 'Soukromá zóna pro spánek. SNZB-03 motion (chybí presence — plánovaná FP1E v Phase 1 nákupního listu). Zarovka Loznice + 2× E14 + lampicka pro různé scény. Led pasek postel = night-light při sleep mode, ráno se vypíná.',
+        counts: { lights: 4, sensors: 3, audio: 1, climate: 2, camera: 1, plugs: 3 },
+        devices: [
+          { icon: '💡', name: 'Zarovka Loznice', status: 'Lidl RGB E27 · ranní hlavní' },
+          { icon: '💡', name: '1+2 žárovka lidl E14', status: 'scene-only' },
+          { icon: '💡', name: 'Lampicka', status: 'soft scene' },
+          { icon: '🎗', name: 'Led pasek postel', status: 'plug · sleep nightlight' },
+          { icon: '🚶', name: 'SNZB-03 motion', status: 'PIR · plánuje se FP1E presence' },
+          { icon: '☀', name: 'Lux Ložnice', status: 'Xiaomi sen_ill.mgl01' },
+          { icon: '🌡', name: 'Temp+Humidity Sensor', status: 'measure_temperature/humidity' },
+          { icon: '🔊', name: 'Nest Hub Max', status: 'Google Cast · TTS + display' },
+          { icon: '📷', name: 'indoor camera', status: 'flip/mirror/IR controls' },
+          { icon: '⚡', name: 'TV zasuvka', status: 'Shelly · power monitoring' },
+          { icon: '⚡', name: 'Zvlhčovač1', status: 'plug · power+voltage+current' },
+          { icon: '🔌', name: 'sound bar plug', status: 'onoff only' },
+          { icon: '🔌', name: 'zasuvka kamera', status: 'onoff' },
+          { icon: '🔘', name: 'Sleep button', status: 'Xiaomi wireless mini' },
+        ],
+        automations: [
+          'sh_morning_brain_v1 — alarm/motion wake branches → soft-ramp',
+          'sh_sleep_brain_v2 — sleep state machine + nightlight',
+          'sh_audio_brain_v2 — Nest Hub TTS + cast routing',
+          'TV standby auto-detect (Shelly power)',
+        ],
+        scripts: ['sh_morning_brain_v1', 'sh_sleep_brain_v2', 'sh_audio_brain_v2', 'sh_tv_standby_v1'],
+      },
+      bathroom: {
+        cssClass: 'tz-bathroom',
+        icon: '🚿',
+        name: 'Koupelna',
+        eyebrow: 'Wet zone · TTS speaker',
+        desc: 'Aqara P1 motion+lux combo, Speaker koupelna pro Sanremo radio při ranním vstupu, Fibaro TRV pro auto preset 23°C. Sleep guard při motion v noci — žádné TTS, jen jemný dim.',
+        counts: { lights: 1, sensors: 2, audio: 1, climate: 2, plugs: 0 },
+        devices: [
+          { icon: '💡', name: 'svetlo Koupelna', status: 'bulb · onoff+dim' },
+          { icon: '🚶', name: 'P1 motion+lux Aqara', status: 'PIR + measure_luminance' },
+          { icon: '🚶', name: 'pohybove cidlo koupelna', status: 'ms01 · alarm_motion' },
+          { icon: '🌡', name: 'Fibaro TRV koupelna', status: 'target_temperature' },
+          { icon: '🌡', name: 'Temp+Humidity TH01', status: 'measure_temperature/humidity' },
+          { icon: '🔊', name: 'Speaker koupelna', status: 'Google Cast · radio + TTS' },
+          { icon: '🪨', name: 'Giuseppe vacuum', status: 'Xiaomi · vacuum_state' },
+        ],
+        automations: [
+          'sh_bathroom_router_v1 — motion → light + radio (sleep guard)',
+          'morning bathroom radio — Sanremo Italia 80 při wake',
+          'night dim path — sleep mode = jemný dim, žádný TTS',
+          'sh_vacuum_router_v1 — Giuseppe orchestration',
+        ],
+        scripts: ['sh_bathroom_router_v1', 'sh_audio_brain_v2', 'sh_vacuum_router_v1'],
+      },
+      toilet: {
+        cssClass: 'tz-toilet',
+        icon: '🚽',
+        name: 'WC / Toaleta',
+        eyebrow: 'Quick zone · short dwell',
+        desc: 'Malá zóna, jen motion sensor SNZB-03. Auto-light při vstupu, auto-off po 2 min bez motion. TRV pro topení, low priority pro automatizační rozhodnutí.',
+        counts: { lights: 1, sensors: 1, climate: 1 },
+        devices: [
+          { icon: '💡', name: 'Toaleta', status: 'bulb · onoff+dim' },
+          { icon: '🚶', name: 'pohybove cidlo toaleta', status: 'SNZB-03 · alarm_motion' },
+          { icon: '🌡', name: 'Fibaro TRV toaleta', status: 'target_temperature' },
+        ],
+        automations: [
+          'sh_toilet_router_v1 — motion → light + 2-min auto-off',
+          'heating preset shared se zónou Koupelna',
+        ],
+        scripts: ['sh_toilet_router_v1'],
+      },
+      laundry: {
+        cssClass: 'tz-laundry',
+        icon: '🧺',
+        name: 'Prádelna',
+        eyebrow: 'Utility zone',
+        desc: 'Boiler (Fibaro Kotel + Boiler zasuvka measure), Pračka s power-driven done detection, Smart Motion sensor. Auto-light + done state badge na dashboardu Zone tile (idle/running/finishing/done).',
+        counts: { lights: 2, sensors: 1, plugs: 3 },
+        devices: [
+          { icon: '💡', name: 'Pradelna zarovka', status: 'bulb · main' },
+          { icon: '💡', name: 'Pradelna naradí', status: 'bulb · workshop' },
+          { icon: '🚶', name: 'Smart Motion Sensor', status: 'alarm_motion + tamper' },
+          { icon: '⚡', name: 'Fibaro Kotel (FGS-214)', status: 'boiler relay · onoff' },
+          { icon: '⚡', name: 'Boiler zasuvka', status: 'Shelly · measure_power+meter' },
+          { icon: '⚡', name: 'Zasuvka pracka', status: 'measure_power+meter (done detect)' },
+        ],
+        automations: [
+          'sh_pracka_done_detector_v1 — power falling-edge → state=done',
+          'sh_laundry_router_v1 — motion → auto-light + cycle status',
+          'heating boiler relay (Fáze B live)',
+        ],
+        scripts: ['sh_laundry_router_v1', 'sh_pracka_done_detector_v1', 'sh_heating_boiler_executor_v1'],
+      },
+      office: {
+        cssClass: 'tz-office',
+        icon: '💻',
+        name: 'Pracovna',
+        eyebrow: 'Work zone',
+        desc: 'PC setup, motion-only (presence není potřeba — uživatel většinou v pohybu). Pomodoro timer integrovaný do dashboard topbar chip + TTS hlášení do kuchyně. Plánovaný TRV + T+H sensor v Phase 2.',
+        counts: { lights: 1, sensors: 1, plugs: 2 },
+        devices: [
+          { icon: '💡', name: 'rgbw E27 pracovna', status: 'lidl RGB · scene support' },
+          { icon: '🚶', name: 'Motion Sensor pracovna', status: 'ms01 · alarm_motion' },
+          { icon: '⚡', name: 'Zasuvka pracovna', status: 'Shelly · power monitoring' },
+          { icon: '🔌', name: 'PC plug', status: 'onoff (notebook)' },
+          { icon: '🖨', name: 'HP Printer', status: 'page count + status' },
+          { icon: '🔘', name: 'Xiaomi button', status: 'Pomodoro start/stop' },
+        ],
+        automations: [
+          'sh_office_router_v1 — motion → light + Pomodoro context',
+          'Pomodoro timer 25/5 min + TTS hlášení do Kuchyně',
+          'PC plug auto-off when notebook off LAN',
+        ],
+        scripts: ['sh_office_router_v1', 'sh_button_pc_setup_v1'],
+      },
+      entry: {
+        cssClass: 'tz-entry',
+        icon: '🚪',
+        name: 'Předsíň',
+        eyebrow: 'Threshold zone',
+        desc: 'Vstupní/výstupní zóna. Kamera 1 (předsíňová), door/window sensor na vstupních dveřích, away/home button (Fibaro FGPB-101), Predsin žárovka pro arrival/departure scény.',
+        counts: { lights: 1, sensors: 1, camera: 1, button: 1 },
+        devices: [
+          { icon: '💡', name: 'Predsin', status: 'bulb · onoff+dim · arrival scene' },
+          { icon: '🪟', name: 'Door/Window Sensor předsín1', status: 'DS01 · alarm_contact' },
+          { icon: '📷', name: 'camera 1', status: 'flip/mirror/brightness/IR' },
+          { icon: '🔘', name: 'Button away/home', status: 'Fibaro FGPB-101 · scene' },
+        ],
+        automations: [
+          'sh_entry_router_v1 — door open → arrival/departure logic',
+          'sh_presence_dispatcher_v1 — away ↔ home state machine',
+          'camera enable na away mode + recording',
+          'arrival pipeline — heating boost + lights + audio resume',
+        ],
+        scripts: ['sh_entry_router_v1', 'sh_presence_dispatcher_v1', 'sh_camera_router_v1'],
+      },
+    };
+
+    function renderTwinZone(zoneId) {
+      const z = TWIN_ZONES[zoneId];
+      if (!z) return;
+      const detail = document.getElementById('twinDetail');
+
+      // Update CSS class for accent color
+      detail.className = 'twin-detail ' + z.cssClass;
+
+      // Update header
+      document.getElementById('twinIcon').textContent = z.icon;
+      document.getElementById('twinName').textContent = z.name;
+      document.querySelector('.twin-detail-eyebrow').textContent = z.eyebrow;
+      document.getElementById('twinDesc').textContent = z.desc;
+
+      // Counts
+      const countsEl = document.getElementById('twinCounts');
+      const countMap = {
+        lights:   { icon: '💡', label: 'Světla' },
+        sensors:  { icon: '👁', label: 'Senzory' },
+        audio:    { icon: '🔊', label: 'Audio' },
+        climate:  { icon: '🌡', label: 'Klima' },
+        camera:   { icon: '📷', label: 'Kamera' },
+        plugs:    { icon: '⚡', label: 'Plugy' },
+        door:     { icon: '🪟', label: 'Dveře' },
+        blind:    { icon: '🪟', label: 'Roleta' },
+        button:   { icon: '🔘', label: 'Tlačítka' },
+      };
+      countsEl.innerHTML = '';
+      Object.entries(z.counts).forEach(([key, num]) => {
+        const meta = countMap[key] || { icon: '•', label: key };
+        const div = document.createElement('div');
+        div.className = 'twin-count';
+        div.innerHTML = `
+          <div class="twin-count-icon">${meta.icon}</div>
+          <p class="twin-count-num">${num}</p>
+          <p class="twin-count-label">${meta.label}</p>`;
+        countsEl.appendChild(div);
+      });
+
+      // Devices
+      const devicesEl = document.getElementById('twinDevices');
+      devicesEl.innerHTML = '';
+      z.devices.forEach(d => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span class="twin-device-icon">${d.icon}</span>
+          <span class="twin-device-name">${d.name}</span>
+          <span class="twin-device-status">${d.status}</span>`;
+        devicesEl.appendChild(li);
+      });
+
+      // Automations
+      const autoEl = document.getElementById('twinAutomations');
+      autoEl.innerHTML = '';
+      z.automations.forEach(a => {
+        const li = document.createElement('li');
+        li.textContent = a;
+        autoEl.appendChild(li);
+      });
+
+      // Scripts
+      const scriptsEl = document.getElementById('twinScripts');
+      scriptsEl.innerHTML = '';
+      z.scripts.forEach(s => {
+        const tag = document.createElement('span');
+        tag.className = 'twin-tag';
+        tag.textContent = s;
+        scriptsEl.appendChild(tag);
+      });
+
+      // SVG: mark active zone
+      document.querySelectorAll('.twin-zone-group').forEach(g => {
+        const isActive = g.dataset.zone === zoneId;
+        g.querySelectorAll('rect.twin-zone').forEach(r => {
+          r.classList.toggle('is-active', isActive);
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Wire up SVG group clicks (each group has data-zone)
+      document.querySelectorAll('.twin-zone-group[data-zone]').forEach(g => {
+        const zoneId = g.dataset.zone;
+        if (!zoneId) return;
+        g.addEventListener('click', () => renderTwinZone(zoneId));
+        g.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            renderTwinZone(zoneId);
+          }
+        });
+      });
+      // Initial render: open space
+      renderTwinZone('open');
+    });
+  </script>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

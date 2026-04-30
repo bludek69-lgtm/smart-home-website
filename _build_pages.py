@@ -27,7 +27,7 @@ PILLARS = [
         'label': 'Prožívání',
         'title': 'Prožívání — co systém umožňuje',
         'lead': 'Use-case pohled na celý systém — co dům dělá pro ty, kdo v něm žijí. Funkce, dashboardy a AI vrstva v jednom.',
-        'sub': ['topeni-klima', 'svetla', 'audio', 'bezpecnost-kamery', 'atmosfera', 'energie', 'funkce', 'dashboard', 'ai-brain'],
+        'sub': ['topeni-klima', 'svetla', 'audio', 'bezpecnost-kamery', 'atmosfera', 'energie', 'funkce', 'dashboard', 'digital-twin', 'ai-brain'],
     },
     {
         'id': 'zarizeni',
@@ -90,6 +90,7 @@ SUBPAGES = {
     'funkce':       ('Funkce',         'Funkce',                'Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.'),
     'infra':        ('Infrastruktura', 'Infrastruktura',        'Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.'),
     'dashboard':    ('Dashboard',      'Dashboard',             'Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.'),
+    'digital-twin': ('Digital Twin',   'Digital Twin domu',     'Klikací půdorys s 7 zónami a 74 zařízeními. Read-only showcase — žádné API tokeny, žádné ovládání, jen mapa toho, co dům má.'),
     'architektura': ('Architektura',   'Architektura',          'Script-first princip a 12 pravidel co drží systém pohromadě.'),
     'vyzvy':        ('Výzvy',          'Výzvy',                 'Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.'),
     'ai-brain':     ('AI Brain',       'AI Brain Guardian',     'Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.'),
