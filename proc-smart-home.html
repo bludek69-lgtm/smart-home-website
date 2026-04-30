@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Realisticky, ne marketingově. Energie, komfort, stabilita — co dům reálně řeší a kde se nejvíc plýtvá energií. Plus role AI v rozhodování." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Proč vůbec smart home | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="digital-twin.html"><strong>Digital Twin</strong><span>Klikací půdorys s 7 zónami a 74 zařízeními. Read-only showcase — žádné API tokeny, žádné ovládání, jen mapa toho, co dům má.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger is-active">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="team.html"><strong>Kdo za tím stojí</strong><span>Lidský architekt + AI co-pilots. 5 rolí, jedno zařízení. Human + AI Co-Built System.</span></a><a href="journey.html"><strong>Jak vznikal</strong><span>Engineering journey od první žárovky po Brain Guardian. 7 fází + lessons learned + co dělá systém unikátním.</span></a><a href="proc-smart-home.html" aria-current="page"><strong>Proč smart home</strong><span>Realisticky, ne marketingově. Energie, komfort, stabilita — co dům reálně řeší a kde se nejvíc plýtvá energií. Plus role AI v rozhodování.</span></a><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section id="proc-smart-home" class="section section-hero hub-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>📖 Pilíř · Příběh</p>
+        <h1 class="hero-title">Proč vůbec <span class="grad-text">smart home</span></h1>
+        <p class="hero-lead">Smart home není o hračkách. Je to <strong>řízení energie, komfortu a stability</strong>. Tahle stránka popisuje, proč to dává smysl — z praxe, ne z reklamy. Vychází z reálné architektury SMART HOME OS, ne z marketingových slibů.</p>
+      </div>
+    </section>
+
+    <!-- 1. ÚVOD -->
+    <section class="section">
+      <div class="container" style="max-width: 820px;">
+        <header class="section-header">
+          <p class="section-eyebrow">Úvod</p>
+          <h2 class="section-title">Tři důvody, proč to dělám</h2>
+        </header>
+        <p style="font-size: 17px; line-height: 1.7; color: var(--text);">
+          Když lidé slyší <em>smart home</em>, představí si automatické závěsy a Alexu, která hraje hudbu na povel. To je ale <strong>2 % toho, o čem to skutečně je</strong>. Zbylých 98 % řeší tři reálné věci, které člověk denně neřeší — protože si jich nevšimne, dokud nejsou pryč:
+        </p>
+        <ul style="font-size: 16px; line-height: 1.7; color: var(--text-soft); margin: 18px 0; padding-left: 22px;">
+          <li><strong style="color: var(--text);">Energie</strong> — světla, která svítí zbytečně. Kotel, který topí bez ohledu na to, kdo je doma. Spotřebiče, na které jsem zapomněl.</li>
+          <li><strong style="color: var(--text);">Komfort</strong> — koupelna teplá, když do ní jdu. Rádio, které se zapne ve sprše a vypne, když odejdu. Tlumené světlo v noci, abych neoslepl při cestě na záchod.</li>
+          <li><strong style="color: var(--text);">Stabilita</strong> — systém, který přežije crash jednoho skriptu, výpadek senzoru nebo chybu uživatele a nezačne dělat blbosti.</li>
+        </ul>
+        <p style="font-size: 17px; line-height: 1.7; color: var(--text-soft);">
+          Tahle stránka se soustředí hlavně na první bod — <strong>energii</strong>. Protože je to nejviditelnější praktický přínos a dá se na něm vysvětlit i celá zbylá filozofie.
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. KDE SE NEJVÍC PLÝTVÁ -->
+    <section class="section section-alt">
+      <div class="container" style="max-width: 820px;">
+        <header class="section-header">
+          <p class="section-eyebrow">Realita bez automatizace</p>
+          <h2 class="section-title">Kde se nejvíc plýtvá energií</h2>
+          <p class="section-lead">Klasický byt. Žádná automatika. Co se děje, ani když si toho nikdo nevšimne.</p>
+        </header>
+
+        <div class="lessons-grid">
+          <div class="lesson-card">
+            <h4>💡 Světla svítí zbytečně</h4>
+            <p>Vejdeš do kuchyně, rozsvítíš, najedeš si a odejdeš. Světlo zůstane svítit, dokud si někdo nevšimne. Někdy hodiny.</p>
+          </div>
+          <div class="lesson-card">
+            <h4>🌡 Topení běží bez ohledu na přítomnost</h4>
+            <p>Termostat má fixní rozvrh — topí na 21 °C celé odpoledne, i když jsi v práci. Vrátíš se domů a stejně musíš čekat 30 min, než se to vyhřeje, protože v 16:00 se vypnulo.</p>
+          </div>
+          <div class="lesson-card">
+            <h4>🔌 Zařízení v standby</h4>
+            <p>TV, set-top box, herní konzole, monitor, nabíječky — i ve „vypnutém" stavu táhnou 5–15 W každé. 24 hodin denně. Za rok to dělá kilowatthodiny, které si nikdo nevšimne na účtu, ale jsou tam.</p>
+          </div>
+          <div class="lesson-card">
+            <h4>⏰ Špatné načasování</h4>
+            <p>Pračka se zapne, když má cenová špička. Bojler topí v poledne, kdy je sazba nejdražší. Kotel sepne v 5 ráno, i když vstávám až v 7. Drobné věci, které dohromady dělají velký rozdíl.</p>
+          </div>
+        </div>
+
+        <p style="font-size: 16px; line-height: 1.65; color: var(--text-soft); margin-top: 24px; padding: 16px 20px; background: rgba(251,191,36,.06); border-left: 3px solid #fbbf24; border-radius: 6px;">
+          Žádná z těchto věcí <em>není katastrofa</em>. Každá z nich stojí pár korun denně. Ale <strong>všechny dohromady, 365 dní v roce</strong>, jsou důvod, proč běžná domácnost má účet za energie zbytečně vyšší o desítky procent.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. JAK SHO ŠETŘÍ -->
+    <section class="section">
+      <div class="container" style="max-width: 920px;">
+        <header class="section-header">
+          <p class="section-eyebrow">Praxe</p>
+          <h2 class="section-title">Jak SMART HOME OS řeší každou z těch věcí</h2>
+          <p class="section-lead">Konkrétní pipeline. Co reálně běží, ne co je na obrázku.</p>
+        </header>
+
+        <!-- Světla -->
+        <article style="background: var(--surface); border: 1px solid var(--border); border-left: 4px solid #fbbf24; border-radius: 10px; padding: 26px 28px; margin-bottom: 18px;">
+          <h3 style="font-size: 22px; margin: 0 0 14px; display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 28px;" aria-hidden="true">💡</span>
+            Světla — automatika dle prostoru a denního světla
+          </h3>
+          <ul style="margin: 0; padding-left: 22px; line-height: 1.65; color: var(--text-soft);">
+            <li><strong style="color: var(--text);">Vypnutí při odchodu</strong> — když dveře otevřu na odchod a venku už není žádný motion, světla se po krátkém timeoutu vypnou. Není potřeba si vzpomenout.</li>
+            <li><strong style="color: var(--text);">Lux-driven aktivace</strong> — okenní lux senzor měří denní světlo. Pod prahem (typicky 50 lx) se světla zapnou. Nad prahem se nezapnou — i kdyby pohyb fungoval — protože je dost slunce.</li>
+            <li><strong style="color: var(--text);">Tlumení místo plného výkonu</strong> — večer 0,4 dim warm temperature. Ráno 0,4 gentle. Ve dne 0,85. Není tam pevné „on/off" — je tam <em>kontextová intenzita</em>.</li>
+            <li><strong style="color: var(--text);">Privacy guard při otevřených roletách</strong> — pokud je roleta nahoru a já jsem na záchodě, světla v open space zhasnou. Aby svět neviděl, kde teď jsem. Subtilní, ale reálná funkce.</li>
+          </ul>
+        </article>
+
+        <!-- Topení -->
+        <article style="background: var(--surface); border: 1px solid var(--border); border-left: 4px solid #ef4444; border-radius: 10px; padding: 26px 28px; margin-bottom: 18px;">
+          <h3 style="font-size: 22px; margin: 0 0 14px; display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 28px;" aria-hidden="true">🌡</span>
+            Topení — predikce, ne reakce
+          </h3>
+          <ul style="margin: 0; padding-left: 22px; line-height: 1.65; color: var(--text-soft);">
+            <li><strong style="color: var(--text);">Per-zone TRV</strong> — Jídelna, Koupelna, Toaleta každá má vlastní rozvrh. Žádné „centrální 21 °C celý byt".</li>
+            <li><strong style="color: var(--text);">3 režimy</strong> — auto / manual / off. Auto má 4 denní fáze (morning/day/evening/night) s jinou cílovou teplotou v každé.</li>
+            <li><strong style="color: var(--text);">Anti-cycling guard</strong> — kotel nesepne dříve než 3 min po vypnutí, ani když by demand vznikl. Životnost kotle vs. přesnost teploty.</li>
+            <li><strong style="color: var(--text);">Pre-wake boost</strong> — koupelna se vyhřeje na 23 °C 15 minut PŘED budíkem. Když vstanu, je tam tepla. Žádné čekání.</li>
+            <li><strong style="color: var(--text);">Weather adjust</strong> — pod -5 °C venku se cílová teplota zvedne o +1 °C. Nad +15 °C klesne o -0,5 °C. Reaktivně podle reálného počasí, ne jen podle dne v týdnu.</li>
+            <li><strong style="color: var(--text);">Occupancy bonus</strong> — když motion v zóně &lt; 10 min, +0,5 °C. Nikdo není doma, drží jen základ. Není to o termostat-ON, je to o <em>kalibraci podle obsazenosti</em>.</li>
+          </ul>
+        </article>
+
+        <!-- Zařízení -->
+        <article style="background: var(--surface); border: 1px solid var(--border); border-left: 4px solid #22d3ee; border-radius: 10px; padding: 26px 28px; margin-bottom: 18px;">
+          <h3 style="font-size: 22px; margin: 0 0 14px; display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 28px;" aria-hidden="true">🔌</span>
+            Zařízení — vypínání standby a hlídání spotřeby
+          </h3>
+          <ul style="margin: 0; padding-left: 22px; line-height: 1.65; color: var(--text-soft);">
+            <li><strong style="color: var(--text);">Plug-level metering</strong> — Trouba, Mikrovlnka, Lednice, TV, Pračka, Kotel měří watty real-time. Vidím, kdy co reálně táhne.</li>
+            <li><strong style="color: var(--text);">Standby cut na odchod</strong> — TV, monitor, sound bar plug se vypnou při módu „away". Žádný idle 8 W přes celý den.</li>
+            <li><strong style="color: var(--text);">Pračka done detection</strong> — měření poklesu power → state „done". Nemusím čekat ani chodit kontrolovat. Notifikace na telefon.</li>
+            <li><strong style="color: var(--text);">Overheat protection</strong> — kuchyňské spotřebiče mají guard skript. Když power &gt; threshold (např. zapnutá trouba na 220 °C bez user attention), notifikace.</li>
+            <li><strong style="color: var(--text);">PC plug auto-off</strong> — když notebook odpojí Wi-Fi (= odešel jsem do práce), zásuvka u monitoru se po 10 min vypne. Žádné zbytečné zapnutí.</li>
+          </ul>
+        </article>
+
+        <!-- Audio + ostatní -->
+        <article style="background: var(--surface); border: 1px solid var(--border); border-left: 4px solid #a78bfa; border-radius: 10px; padding: 26px 28px; margin-bottom: 8px;">
+          <h3 style="font-size: 22px; margin: 0 0 14px; display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 28px;" aria-hidden="true">🔊</span>
+            Audio a ostatní — vypnutí v okamžiku, kdy už to nedává smysl
+          </h3>
+          <ul style="margin: 0; padding-left: 22px; line-height: 1.65; color: var(--text-soft);">
+            <li><strong style="color: var(--text);">Sleep guard</strong> — když přijde sleep mode, audio se okamžitě vypne. Bez ohledu na to, co hraje.</li>
+            <li><strong style="color: var(--text);">Bathroom radio auto-stop</strong> — vypne se 5 minut po posledním motion v koupelně. Není to vzlykavé, není to po hodinách.</li>
+            <li><strong style="color: var(--text);">Vysavač Giuseppe</strong> — spouští se v okamžiku, kdy nikdo není doma. Nikdy ne v noci, nikdy ne při návštěvě.</li>
+            <li><strong style="color: var(--text);">Roleta Fyrtur</strong> — privacy v noci, denní světlo přes den. Šetří klima (chladí v létě tím, že stáhne při slunci).</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. ROLE AI -->
+    <section class="section section-alt">
+      <div class="container" style="max-width: 820px;">
+        <header class="section-header">
+          <p class="section-eyebrow">Mozek nad mozkem</p>
+          <h2 class="section-title">Role AI v systému</h2>
+          <p class="section-lead">AI tady není kvůli AI. Je tady, protože některé věci se nedají dobře řešit pevnými pravidly.</p>
+        </header>
+
+        <div class="differentiator-grid">
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">📚</span>
+            <h4>Postupné učení</h4>
+            <p>Systém si pamatuje vzorce. V kolik typicky vstávám. Kdy chodím spát. Kdy se vracím z práce. <em>Žádné training</em>, prostě se z eventů postupně buduje obraz.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🩺</span>
+            <h4>Gemini diagnostika</h4>
+            <p>Když systém něco hlásí (anomaly, drift, error), Gemini přečte kontext a navrhne, co s tím. Nedělá akci sám — je to advisor, ne agent.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🛡</span>
+            <h4>Brain Guardian</h4>
+            <p>Vrstva, která hlídá ostatní automatiky. Definuje „expected state" a srovnává s realitou. Když něco drift-uje, řekne. Detekoval reálné bugy dřív než já.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-card-icon" aria-hidden="true">🎯</span>
+            <h4>Reakce na chování</h4>
+            <p>Místo „ráno v 6:30 zapni topení" je tam „když je 15 min do alarmu A user není stále vzhůru A koupelna je pod cílovou teplotou → boost". Pravidla mají kontext.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. REÁLNÝ DOPAD -->
+    <section class="section">
+      <div class="container" style="max-width: 820px;">
+        <header class="section-header">
+          <p class="section-eyebrow">Co to reálně dělá</p>
+          <h2 class="section-title">Reálný dopad</h2>
+          <p class="section-lead">Nejsou tady přesná čísla v procentech. Měření v reálném bytě je obtížné — počasí mění spotřebu o 50 % rok od roku, ceny energií se mění, životní rytmus se mění. Místo čísel popíšu, co reálně přestalo dělat problém.</p>
+        </header>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; margin: 16px 0;">
+          <ul style="margin: 0; padding-left: 22px; line-height: 1.8; color: var(--text-soft); font-size: 16px;">
+            <li><strong style="color: var(--text);">Snížení zbytečného svícení</strong> — kuchyňské světlo už nesvítí 4 hodiny, když jsem v koupelně. Open space lampy zhasnou samy, když odcházím. Lux senzor blokuje aktivaci za bílého dne.</li>
+            <li><strong style="color: var(--text);">Efektivnější vytápění</strong> — koupelna se vyhřeje, jen když k tomu má důvod (pre-wake boost, motion, plánovaná teplá voda). Per-zone preset místo paušálu.</li>
+            <li><strong style="color: var(--text);">Eliminace „zapomenutých zařízení"</strong> — TV, monitor, sound bar plug se vypnou na „away". Pračka mě upozorní, že je hotová, místo aby zůstala 8 hodin v končící fázi.</li>
+            <li><strong style="color: var(--text);">Méně manuální intervence</strong> — méně časů, kdy musím přemýšlet, jestli jsem něco vypnul. Méně rozhodování každý den. Komfort.</li>
+            <li><strong style="color: var(--text);">Stabilní chování</strong> — automatiky, které se nepřekrývají. Žádné „2 flow se hádají o stejnou žárovku". Priority engine arbitrážuje konflikty.</li>
+          </ul>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-soft); font-style: italic; text-align: center; margin-top: 18px;">
+          Reálná čísla — pokud někdy budou — budou zveřejněna v Build Log sekci, ne tady. Tahle stránka popisuje principy, ne marketingové bullet pointy.
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. SHRNUTÍ -->
+    <section class="section section-alt">
+      <div class="container" style="max-width: 760px; text-align: center;">
+        <p class="section-eyebrow">Shrnutí</p>
+        <h2 class="section-title">Smart home = řízení energie + pohodlí + kontrola</h2>
+        <p style="font-size: 17px; line-height: 1.75; color: var(--text-soft); margin: 18px 0;">
+          Není to o gadgetech. Není to o appce. Není to o tom, abych mohl rozsvítit hlasem. Je to o tom, že <strong style="color: var(--text);">žiju v domě, který si pamatuje, kdo jsem, co dělám a co potřebuji</strong> — a <strong style="color: var(--text);">jednu z těch věcí dělá energie</strong>, druhou komfort, třetí stabilitu.
+        </p>
+        <p style="font-size: 17px; line-height: 1.75; color: var(--text-soft);">
+          Když se to udělá správně, <strong style="color: var(--text);">člověk si toho ani nevšimne</strong>. Až když to vypneš, zjistíš, kolik práce za tebe systém dělal.
+        </p>
+      </div>
+    </section>
+
+    <!-- BONUS: Co systém dělá automaticky -->
+    <section class="section">
+      <div class="container" style="max-width: 820px;">
+        <div style="background: linear-gradient(135deg, rgba(34,211,238,.08), rgba(167,139,250,.08)); border: 1px solid var(--accent); border-radius: var(--radius); padding: 32px 36px;">
+          <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent); margin: 0 0 8px;">🤖 Bonus box</p>
+          <h2 style="font-size: 24px; margin: 0 0 18px; font-weight: 700;">Co systém dělá automaticky — bez tvého vstupu</h2>
+          <ul style="margin: 0; padding-left: 22px; line-height: 1.85; color: var(--text); font-size: 16px;">
+            <li><strong>💡 Vypíná světla</strong> — při odchodu, při dostatku denního světla, při sleep mode</li>
+            <li><strong>🌡 Optimalizuje topení</strong> — pre-wake boost, occupancy adjust, weather adjust, per-zone TRV</li>
+            <li><strong>🔌 Hlídá spotřebu</strong> — standby cut na away, plug-level metering, overheat protection</li>
+            <li><strong>👁 Reaguje na přítomnost</strong> — multi-signal arrival/departure, motion+presence guards, sleep state machine</li>
+            <li><strong>🩺 Diagnostikuje sebe</strong> — Brain Guardian validátor, anomaly detection, self-healing watchdog</li>
+            <li><strong>🔇 Vypíná audio</strong> — sleep guard, bathroom radio auto-stop, away-cut</li>
+          </ul>
+          <p style="font-size: 13px; color: var(--text-soft); margin: 18px 0 0; font-style: italic;">
+            Žádný z těchto bodů není teorie. Všechny jsou implementované, deployed na Homey Pro 2026 a běží 24/7 v reálném bytě v Semilech. Detail každé pipeline najdeš v <a href="ai-brain.html" style="color: var(--accent); font-weight: 600;">AI Brain</a>, <a href="topeni-klima.html" style="color: var(--accent); font-weight: 600;">Topení</a>, <a href="svetla.html" style="color: var(--accent); font-weight: 600;">Světla</a> a dalších stránkách.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
