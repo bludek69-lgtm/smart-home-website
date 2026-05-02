@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Den, kdy dům začal sám sebe pozorovat. Tři opravy a jedna nová vrstva — popsáno bez technických zkratek." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Den, kdy dům začal sám sebe pozorovat | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">2. května 2026 · Inteligence systému · 8 min čtení</p>
+        <h1>Den, kdy dům začal sám sebe pozorovat</h1>
+
+        <p>
+          Tenhle příspěvek záměrně nepoužívá technické zkratky. Popisuje den, kdy
+          jsme v systému opravili dvě staré chyby a přidali třetí vrstvu, která
+          domu umožňuje rozumět tomu, co se právě děje, a hlídat sebe sama.
+        </p>
+
+        <p>
+          Pokud jste smart-home laik a chcete vědět, jak vypadá běžný „den
+          v životě" inteligentní domácnosti — tohle je on.
+        </p>
+
+        <h2>1. Záhada nočního svícení</h2>
+
+        <p>
+          Začalo to ráno hlášením: <em>„LED pásek a stolní lampa svítily celou
+          noc, přestože jsem zmáčkl tlačítko spánku."</em>
+        </p>
+
+        <p>
+          V domě běží malý program, který se každou půlhodinu probudí a zkusí
+          předvídat, co bude dům potřebovat. Třeba <em>„za 20 minut bude tma,
+          přihni venkovní rolety na ¾"</em>. Tenhle program měl ale jednu
+          schovanou chybu: když mu napadlo, že má <em>ztlumit světlo na noční
+          úroveň</em>, nikdy se neptal, jestli uživatel zrovna nespí.
+        </p>
+
+        <p>
+          Takže scénář vypadal takhle:
+        </p>
+
+        <ul>
+          <li>21:14 — uživatel zmáčkne spánek, světla zhasnou.</li>
+          <li>23:00 — automatický cyklus se probudí. Rozhodne: „je tma + někdo
+            doma → zapni noční dotyk světla." Lampa se rozsvítí.</li>
+          <li>00:30 — totéž. Lampa svítí dál.</li>
+          <li>Ráno — uživatel kouká, proč svítilo celou noc.</li>
+        </ul>
+
+        <p>
+          <strong>Oprava:</strong> přidali jsme do programu jednu jedinou
+          podmínku — <em>„pokud uživatel spí, nezapínej nic, vrať se k tomu
+          ráno."</em> Tři řádky kódu, ale prevence regresního selhání. Ten samý
+          princip jsme aplikovali ještě na jedno místo, kde podobné rozhodování
+          probíhalo (záchranná logika pro situace, kdy senzory hlásí pohyb
+          v tmavém pokoji).
+        </p>
+
+        <p>
+          Příští noc už se nic samo nerozsvítí. Ráno to ověříme v logu.
+        </p>
+
+        <h2>2. Ranní rutina, která se nespustila</h2>
+
+        <p>
+          Dnes ráno (sobota, budík nastavený na 5:15) uživatel vstal kolem
+          3:08 — dřív, než zazvonil budík. Procházel mezi ložnicí, koupelnou
+          a kuchyní. <strong>Žádné světlo, žádné rádio, žádný briefing.</strong>
+          Jen reaktivně se rozsvítilo to, kam uživatel přišel — a to je málo.
+          Ranní rutina měla zapnout audio v koupelně, otevřít rolety, pustit
+          briefing počasí, doplnit zprávy. Nic z toho neproběhlo.
+        </p>
+
+        <p>
+          Proč? Program odpovědný za ranní rutinu má dvě cesty, kterými ji
+          spouští:
+        </p>
+
+        <ol>
+          <li><strong>Budík</strong> — telefon zazvoní, Homey to zachytí, rutina
+            jede.</li>
+          <li><strong>Dvojí pohyb v jedné zóně do 3 minut</strong> — anti-omyl
+            ochrana, aby noční cesta na záchod nespustila rutinu jako falešný
+            poplach.</li>
+        </ol>
+
+        <p>
+          Dnes ráno selhaly obě:
+        </p>
+
+        <ul>
+          <li>Budík měl zazvonit až v 5:15, uživatel byl vzhůru o 2 hodiny dřív.</li>
+          <li>Při procházení mezi zónami senzory zachytily <em>jeden</em> pohyb
+            v ložnici, <em>jeden</em> v koupelně, <em>jeden</em> v kuchyni —
+            ale nikdy <em>dva</em> v té stejné. Anti-omyl gate proto neuvolnil
+            cestu.</li>
+        </ul>
+
+        <p>
+          Mezitím ovšem v systému existoval jiný program, který přesně tohle
+          věděl. Sleduje 4 zóny současně a vyhodnocoval, že uživatel je
+          „pravděpodobně reálně vzhůru, multi-zóna, vysoká jistota". <strong>Ranní
+          rutina ten signál ale neposlouchala.</strong>
+        </p>
+
+        <p>
+          <strong>Oprava:</strong> přidali jsme třetí cestu spuštění:
+        </p>
+
+        <blockquote>
+          <p>
+            <em>Pokud nezávislý detektor probuzení hlásí „silně ano" ve dvou
+            a více zónách a uplynulo alespoň 10 minut od prvního zaznamenaného
+            pohybu — spusť rutinu i bez budíku, i bez dvojího pohybu v jedné
+            zóně.</em>
+          </p>
+        </blockquote>
+
+        <p>
+          Těch 10 minut je úmyslná pauza. Filtruje krátké noční výlety na
+          záchod (kde uživatel projde 2 zóny, ale za 30 sekund je zpátky
+          v posteli). Reálné probuzení trvá déle — člověk se napije,
+          vyčůrá, zapne čajník, jde do koupelny. Po 10 minutách multi-zónového
+          pohybu je jistota dostatečná.
+        </p>
+
+        <h2>3. Dům, který pozoruje sám sebe</h2>
+
+        <p>
+          Tohle je největší změna dne. Do systému jsme přidali dvě nové
+          „pozorovatelské" vrstvy, které samy <strong>nic neovládají</strong> —
+          jen sledují, co se děje, a ukazují to v jednoduchém formátu.
+        </p>
+
+        <h3>3.1 Vrstva první — Co se právě děje?</h3>
+
+        <p>
+          Dosud měl systém spoustu samostatných ukazatelů: <em>spí, doma,
+          ráno, audio hraje, scéna aktivní…</em>. Žádný z nich ale neříkal
+          jednou větou, <strong>v jakém režimu se domov právě nachází</strong>.
+        </p>
+
+        <p>
+          Nová vrstva čte těchto sedm ukazatelů a každou minutu vyhodnocuje
+          jednu z těchto situací:
+        </p>
+
+        <ul>
+          <li><strong>away_confirmed</strong> — nikdo není doma</li>
+          <li><strong>sleeping</strong> — uživatel klidně spí</li>
+          <li><strong>night_movement</strong> — spí, ale momentálně někdo jde
+            (záchod, kuchyně pro vodu)</li>
+          <li><strong>alarm_wakeup</strong> — budík právě zazvonil</li>
+          <li><strong>morning_wakeup</strong> — uživatel se reálně probudil
+            a chodí mezi pokoji</li>
+          <li><strong>soft_morning_start</strong> — asi se probouzí, ale ještě
+            ne s úplnou jistotou</li>
+          <li><strong>leaving_home</strong> — vchodové dveře se otevřely,
+            někdo odchází</li>
+          <li><strong>arriving_home</strong> — někdo se právě vrátil</li>
+          <li><strong>idle_home</strong> — doma, ale klidně, nic se neděje</li>
+        </ul>
+
+        <p>
+          Každý odhad má svoje <strong>skóre jistoty od 0 do 100</strong>.
+          Pokud skóre nedosáhne 85, vrstva nikomu neříká „je ráno, dělej rutiny".
+          Jen napíše sama pro sebe „myslím že je ráno, jistota 75 ze 100" — a
+          čeká, až bude jistější.
+        </p>
+
+        <p>
+          K tomu vrstva ukládá historii posledních 20 změn. Když ráno otevřu
+          telefon, můžu se podívat: <em>„v 23:30 spal, ve 3:08 začal night_movement,
+          ve 3:14 přešel na soft_morning_start, ve 3:42 morning_wakeup."</em> Mám
+          tak časovou linku reálného dne — bez kamer, bez nahrávání, jen
+          z toho, co senzory beztak vidí.
+        </p>
+
+        <h3>3.2 Vrstva druhá — Hlídka, která kontroluje sebe</h3>
+
+        <p>
+          Druhá nová vrstva je <strong>strážce zdraví systému</strong>. Spouští
+          se každých 5 minut a kontroluje 5 věcí:
+        </p>
+
+        <ol>
+          <li><strong>Běží všechny klíčové programy?</strong> Pokud má něco
+            běžet každou minutu a poslední běh byl před 8 minutami — někde je
+            chyba.</li>
+          <li><strong>Nejsou někde uvíznuté staré hodnoty?</strong> Občas se
+            stane, že nějaký indikátor zůstane viset v zaseknutém stavu (tzv.
+            duch hodnoty). Strážce takové duchy umí najít a u
+            jednoznačně-bezpečných případů je sám smaže.</li>
+          <li><strong>Kolik chyb se objevilo v posledních 60 minutách?</strong>
+            Více než 5 = varování, více než 20 = kritické.</li>
+          <li><strong>Funguje připojení do Google Sheets?</strong> Kam systém
+            zapisuje veškerou historii.</li>
+          <li><strong>Aktualizuje se vrstva „co se právě děje"?</strong></li>
+        </ol>
+
+        <p>
+          Pokud strážce dvakrát po sobě najde kritickou chybu, pošle mi push
+          notifikaci na telefon (přes existující bridge — viz dřívější příspěvky).
+          Před první poplašnou zprávou ale musí být <strong>dvě jistoty po sobě</strong>
+          — jedna falešná detekce mě v noci nevzbudí.
+        </p>
+
+        <p>
+          Aktuální stav strážce: <code>ok</code>. Žádné problémy.
+        </p>
+
+        <h3>3.3 Vrstva třetí — Pohotovostní vypínač</h3>
+
+        <p>
+          Tohle je novinka, která by měla existovat v každém autonomním systému:
+          <strong>jediný přepínač, který okamžitě zastaví všechno automatické</strong>.
+        </p>
+
+        <p>
+          Nazýváme ho <em>kill switch</em> a je to obyčejná proměnná
+          <code>sh_kill_switch</code> se dvěma stavy: <code>no</code> (default,
+          systém pracuje normálně) nebo <code>yes</code> (pauza). Když ji
+          přepneš na <code>yes</code>, šest klíčových programů se při příštím
+          spuštění zastaví hned na úplném začátku, vrátí <code>HALTED</code>
+          a nedělají nic.
+        </p>
+
+        <p>
+          K čemu to je?
+        </p>
+
+        <ul>
+          <li>Něco se chystám měnit a nechci, aby mi systém do toho mluvil.</li>
+          <li>Někdo přijede na návštěvu a chce vyzkoušet ovládání ručně, bez
+            překvapení.</li>
+          <li>Stalo se něco neočekávaného a chci pauzovat všechno automatické,
+            než to prošetřím.</li>
+          <li>Pravidelný „dech" systému — jednou za měsíc 10 minut pauzy, abych
+            si byl jistý, že fyzické ovladače stále fungují bez software.</li>
+        </ul>
+
+        <p>
+          Žádné ovládání nikdy nesmí pokračovat, když já jako lidský operátor
+          řeknu „stop". Kill switch tu schopnost dává, na úrovni jednoho
+          přepínače v Homey aplikaci.
+        </p>
+
+        <h2>Co to znamená pro každodenní život</h2>
+
+        <p>
+          Pro uživatele se reálný život v domě moc nemění — <em>většinou</em>.
+          Změnily se ale tři věci, které ucítíš v hraničních situacích:
+        </p>
+
+        <ol>
+          <li><strong>V noci se nic samo nerozsvítí.</strong> Ten malý starý bug
+            byl protivný, je pryč.</li>
+          <li><strong>Když vstaneš dřív než budík, dům to pozná.</strong> Po
+            10 minutách multi-zónového chodu spustí ranní rutinu i bez
+            budíkového signálu.</li>
+          <li><strong>Když něco přestane fungovat, dozvíš se to.</strong> Buď
+            v zápisu (sledovatelné), nebo přímo notifikací (kritické).</li>
+        </ol>
+
+        <p>
+          A za čtvrté — ty máš v ruce nouzový vypínač. Cokoli z toho můžeš
+          jedním přepnutím proměnné vypnout. Bez restartu domu, bez vyhrnování
+          rukávů.
+        </p>
+
+        <h2>Co se ještě plánuje</h2>
+
+        <ul>
+          <li><strong>Rozšíření hlídky</strong> i na další programy
+            (vytápění, predikce, validátor stavu jsou už zapojené, dál se to
+            postupně rozšíří).</li>
+          <li><strong>Schvalovací fronta</strong> — když já jako AI navrhnu
+            změnu nastavení, zatím to musím provést rovnou. Cílem je, aby
+            návrhy chodily do fronty, ty si je v telefonu prohlédl, kliknul
+            <em>schválit</em> nebo <em>zamítnout</em>, a teprve pak by se to
+            provedlo.</li>
+          <li><strong>Dry-run režim</strong> — režim, kdy systém zapisuje co by
+            udělal, ale ve skutečnosti to neudělá. Užitečné při testování
+            nových rutin.</li>
+        </ul>
+
+        <h2>Tři krátké otázky a odpovědi</h2>
+
+        <p>
+          <strong>Co je „skóre jistoty 85 ze 100"?</strong><br />
+          Jeden senzor = nízká jistota. Více senzorů ze stejné zóny = vyšší
+          jistota. Senzory ze tří zón + uplynulá doba = ještě vyšší. Když je
+          součet ≥ 85, systém prohlásí situaci za potvrzenou. Pod 85 čeká.
+        </p>
+
+        <p>
+          <strong>Proč zrovna 10 minut čekání před spuštěním ranní rutiny bez
+          budíku?</strong><br />
+          Filtr na noční výlety. Krátká cesta na záchod trvá 1–3 minuty.
+          Reálné probuzení (vstávání, koupelna, kuchyně, čaj) trvá víc. 10 minut
+          je kompromis: dost dlouho, aby se vyfiltrovaly noční výlety, dost
+          krátko, aby ranní rutina byla užitečná.
+        </p>
+
+        <p>
+          <strong>Pošle mi systém SMS když něco selže?</strong><br />
+          Ne SMS — push notifikaci do Homey aplikace v telefonu. Funguje stejně
+          rychle a nestojí to nic.
+        </p>
+
+        <h2>Závěr</h2>
+
+        <p>
+          Inteligentní domácnost není jen o tom, že se světla rozsvítí, když
+          přijdeš. Je o tom, že dům <strong>ví, co se právě děje</strong> a má
+          jak ti to říct. A ještě důležitější — že to ví <em>z důkazů</em>, ne
+          z předpokladů, a že ty máš jako lidský operátor poslední slovo.
+        </p>
+
+        <p>
+          Pokud byl tenhle příspěvek pro tebe srozumitelnější než předchozí
+          stránky, dej vědět. Příští blogposty budou v podobném tónu —
+          technické věci, ale řečené normálně.
+        </p>
+
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

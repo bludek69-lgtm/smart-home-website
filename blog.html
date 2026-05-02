@@ -58,6 +58,51 @@
         <div class="buildlog-list" role="list">
           <article class="buildlog-entry bl-feature" role="listitem">
             <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-02</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Dům, který sám sebe pozoruje — nová vrstva vědomí</h3>
+            <p>Přibyly dvě „pozorovatelské" vrstvy. První každou minutu vyhodnocuje, v jakém režimu se domov právě nachází (klidný spánek, noční výlet na záchod, ranní probouzení, někdo odchází…) — a u každého odhadu má skóre jistoty od 0 do 100. Druhá vrstva každých 5 minut kontroluje, že všechny klíčové programy běží, a u jednoznačně-bezpečných problémů je sama opraví. Při kritickém problému pošle push notifikaci na telefon. <a href="posts/dum-pozoruje-sam-sebe.html">Číst delší vysvětlení →</a></p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-02</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Pohotovostní vypínač — jediný přepínač pro všechno automatické</h3>
+            <p>Nová proměnná <code>sh_kill_switch</code> se dvěma stavy. Když ji přepnu na <code>yes</code>, šest klíčových programů (rozhodovací mozek, noční světla, predikce, ranní rutina, hlídka, vytápění) se při příštím spuštění zastaví na začátku a nic neudělají. Cesta k jistotě, že lidský operátor má vždy poslední slovo.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-02</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Ranní rutina se nespustila — uživatel vstal před budíkem</h3>
+            <p>V sobotu ráno (budík 5:15) uživatel vstal v 3:08, procházel mezi pokoji, ale rutina nikdy neběžela. Příčina: stará logika čekala buď na budík, nebo na dvojí pohyb v jedné zóně do 3 minut. Při procházení mezi zónami senzory zachytily pohyb v každé jen jednou. Mezitím nezávislý detektor probuzení hlásil „silně ano" ve 4 zónách — ranní rutina ten signál ale neposlouchala. Oprava: třetí spouštěcí cesta — silný multi-zóna signál + 10 minutový kompromis filtruje noční výlety na záchod.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-02</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>LED pásek a stolní lampa svítily celou noc</h3>
+            <p>Příčina: program, který se každou půlhodinu probudí a předvídá co dům potřebuje, neměl podmínku „pokud uživatel spí, nezapínej nic". V 23:00 i v 00:30 napadlo „je tma + někdo doma → noční dotyk světla", a lampa se rozsvítila. Tři řádky kódu — sleep guard přidán do dvou míst (predikce + záchranná logika). Příští noc se nic samo nerozsvítí.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-02</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>SNZB-06P openspace + integrace ložnice/koupelna senzorů</h3>
+            <p>Tři radarové senzory přítomnosti (otevřený prostor, ložnice, koupelna) — radar vidí osobu i v klidu, na rozdíl od PIR pohybového. Hlavní z nich přejmenován na <code>Sensore di Presenza SNZB-06P openspace</code> kvůli jasnému rozlišení. Ložnice + koupelna teď přidány do logu zónové aktivity (před tím se logoval jen openspace). Atomický rename: zařízení + mapa + 7 skriptů + záloha před/po. Smoke test prošel.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
               <span class="buildlog-date">2026-04-29</span>
               <span class="buildlog-tag">FEATURE</span>
             </div>
@@ -182,6 +227,24 @@
         </header>
 
         <div class="post-grid">
+          <article class="post-card">
+            <a href="posts/dum-pozoruje-sam-sebe.html" class="post-card-link" aria-label="Den, kdy dům začal sám sebe pozorovat">
+              <div class="post-card-thumb">
+                <span class="post-card-badge">INTELIGENCE</span>
+              </div>
+              <div class="post-card-body">
+                <p class="post-card-meta">2. května 2026 · 8 min čtení</p>
+                <h3 class="post-card-title">Den, kdy dům začal sám sebe pozorovat</h3>
+                <p class="post-card-excerpt">
+                  Tři opravy a jedna nová vrstva — popsáno bez technických zkratek.
+                  Noční záhada se světlem, ranní rutina, která se nespustila, a vědomá
+                  vrstva, která rozumí, co se právě děje.
+                </p>
+                <span class="post-card-cta">Číst příspěvek →</span>
+              </div>
+            </a>
+          </article>
+
           <article class="post-card">
             <a href="posts/dashboard-v7.html" class="post-card-link" aria-label="Dashboard V7 – nový layout a vizuální kontrola">
               <div class="post-card-thumb">
