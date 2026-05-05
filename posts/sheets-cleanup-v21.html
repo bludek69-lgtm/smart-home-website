@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Velký úklid Google Sheets vrstvy. 28 listů → 25, fixed dashboard endpointy, sleep_window guard, score consumer. Den jednoho pondělka po rozbité ranní rutině." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Sheets cleanup + dashboard fix — den po rozbité rutině | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">5. května 2026 · Infrastructure · 10 min čtení</p>
+        <h1>Velký úklid Sheets vrstvy — 28 listů, 6 commitů, jeden den</h1>
+
+        <p>
+          V pondělí 5. května se ranní rutina vůbec nespustila. Místo toho, abych jen
+          spravil ten konkrétní bug, jsem otevřel celou Google Sheets vrstvu a podíval se,
+          co se v ní vlastně skladuje. Zjištění bylo nepříjemné: <strong>polovina listů byla
+          dead code</strong> — buď je nikdo neplnil, nebo data lítala někam jinam, než kam
+          měla.
+        </p>
+
+        <p>
+          Den skončil 8 commity, Apps Script v18 → v21, opravenými dashboard grafy
+          a 3 listy smazanými ze Sheets. Tady je co všechno se odhalilo a opravilo.
+        </p>
+
+        <h2>1. Ranní rutina: sleep_window blokoval všechno</h2>
+
+        <p>
+          Začalo to jednoduchou stížností: <em>"ranní rutina dnes vůbec nezačala"</em>.
+          Budík v 3:12, motion sensor v ložnici v 3:16:23, ale ranní brain skript
+          jen zalogoval <code>waiting_2nd_motion</code> a tiše se zasekl.
+        </p>
+
+        <p>
+          Root cause: proměnná <code>sh_sleep_window_until_ts</code> byla nastavena
+          na <code>2026-05-05T06:37:51Z</code> (= 08:37 lokálního času) — 8 hodin
+          od stisku sleep tlačítka pozdě v noci. Ranní open-space router viděl
+          <code>spim=no, sleep_window=yes</code> a všechno blokoval reason=
+          <code>sleep_window_guard</code>. Nikdy se to nesmazalo, když se uživatel
+          probudil — nikdo neměl odpovědnost ten flag vyčistit.
+        </p>
+
+        <p>
+          Druhý problém: stejné světla se v noci sama rozsvěcela <em>i přes</em>
+          aktivní sleep_window. Vyšetření: <code>sh_light_router_v1</code> kontroloval
+          jen <code>sh_spim === 'yes'</code>, NE <code>sh_sleep_window_until_ts</code>.
+          Open_space_router měl tu defense už od 3.5., ale light_router ne.
+          Když <code>sh_spim</code> flickeroval na <code>no</code> (kvůli
+          time_sync_guard reset), evening light request prošel a Sektorka1 se
+          rozsvítila ve 22:36.
+        </p>
+
+        <p><strong>Fix:</strong></p>
+        <ul>
+          <li><code>sh_wake_confirm_v1</code> — když multi-zone wake confirm potvrdí
+          probuzení (<code>sh_jsem_vstal=strong_yes</code>), centrálně vyčistit
+          window TS. Single source of truth, ne per-router.</li>
+          <li><code>sh_light_router_v1</code> v1.15 — parita s open_space router.
+          Block SLEEP_BLOCKED_REQUESTS i když sleep_window aktivní + strong_yes
+          override.</li>
+        </ul>
+
+        <h2>2. Score producer existoval, ale nikdo ho nečetl</h2>
+
+        <p>
+          Včera jsem dodal <code>sh_morning_score_v1</code> — adaptivní engine co
+          každou minutu vyhodnocuje 10 senzorů a vypočítá morning score 0-100 +
+          state machine (night_sleep, pre_wakeup, wakeup_candidate, morning_confirmed,
+          …). Cron 1×/min běžel, vars se aktualizovaly, ale… <strong>nikdo z toho
+          nečetl</strong>. Brain rozhodoval podle vlastního 180s motion debounce a score
+          ignoroval.
+        </p>
+
+        <p>
+          To je proč ranní rutina nezačala. Score by řekl <code>morning_confirmed</code>
+          ve 03:18 (po wake_confirm strong_yes), ale brain nedostal žádný signál
+          pro re-trigger. Single bedroom motion → wait_2nd_motion → 180s window →
+          žádný 2nd motion v ložnici (uživatel šel do koupelny) → debounce nikdy
+          nevypršel.
+        </p>
+
+        <p><strong>Fix:</strong></p>
+        <ul>
+          <li><code>sh_morning_brain_v1</code> — přidán <code>scoreBypass</code> paralelní
+          k existujícímu <code>wakeBypass</code>. Pokud
+          <code>sh_morning_state ∈ {morning_confirmed, wakeup_candidate}</code> a heartbeat
+          čerstvý (&lt;5 min), bypass debounce.</li>
+          <li><code>sh_morning_score_v1</code> v1.4 — alarm-aware (probe
+          <code>Homey.alarms.getAlarms()</code>, ±30 min window, +3 score), state
+          transitions logged do EventLogu, dual-log do nového sheetu Morning State
+          Timeline (16 sloupců).</li>
+        </ul>
+
+        <h2>3. Sensor registry — adaptabilita pro budoucí čidla</h2>
+
+        <p>
+          Druhý nedostatek: senzory v score skriptu byly hardcoded names. Nový
+          sensor v místnosti = edit kódu. PROMPT pro adaptivní rutinu žádal
+          registry pattern.
+        </p>
+
+        <p><strong>Implementováno:</strong></p>
+        <ul>
+          <li>Nová proměnná <code>sh_wakeup_sensor_registry</code> — JSON s 10 senzory,
+          každý má metadata: device, capability, room, type, morning_weight,
+          night_weight, use_for_wakeup, reliability, rule, is_legacy, note.</li>
+          <li>Populator skript <code>_create_morning_sensor_registry_vars_v1.js</code>
+          — idempotentní create+update.</li>
+          <li>Score iteruje registry, non-legacy entries (<code>is_legacy: false</code>)
+          automaticky přispívají +morning_weight pokud sensor recently active &lt;300s.</li>
+        </ul>
+
+        <p>
+          Workflow pro nový sensor: edit registru → přidat entry s <code>is_legacy:
+          false</code>, weight, <code>use_for_wakeup: 'yes'</code> → re-run populator.
+          Score automaticky používá od příštího cron ticku. Žádný edit kódu.
+        </p>
+
+        <h2>4. Dashboard fetchy → 404 (silent)</h2>
+
+        <p>
+          Audit dashboardů ukázal že 4 endpointy v Apps Script vůbec neexistují,
+          ale dashboard je volá:
+        </p>
+
+        <pre><code>?mode=lux_history       → fall-through na default filter
+?mode=battery_history    → totéž
+?mode=morning_timeline   → totéž
+?mode=diagnose           → jen v tooltip (ne fetch)</code></pre>
+
+        <p>
+          Apps Script nevrátil 404 — vrátil <code>{rows:[]}</code> (defaultní filter
+          response). Dashboard checkoval <code>data.points</code> nebo <code>data.events</code>
+          (které neexistovaly) a zobrazil "Bez dat (spusť context_full_v1)" hlášku.
+          Vypadalo to jako broken producer, ale ve skutečnosti broken endpoint.
+        </p>
+
+        <p><strong>Fix Apps Script v20:</strong> 3 nové endpointy:</p>
+        <ul>
+          <li><code>mode=lux_history&hours=24</code> — Lux Monitor sheet → <code>{points:
+          [{ts, lux_j, lux_k}]}</code></li>
+          <li><code>mode=battery_history&days=30</code> — Battery History → <code>{points:
+          [{ts, device, battery}]}</code></li>
+          <li><code>mode=morning_timeline&days=3</code> — MERGE Morning State Timeline +
+          Rani rutina + TTS Monitor (filtered hour 03-11 Prague) → <code>{events: [...]}</code>
+          sortováno DESC, cap 500.</li>
+        </ul>
+
+        <h2>5. Listy bez producera</h2>
+
+        <p>
+          Audit Sheets vrstvy: 28 listů celkem, ale realita:
+        </p>
+
+        <ul>
+          <li><strong>12 aktivních</strong> — denní zápis, dashboard čte (EventLog,
+          Zone Activity, TTS Monitor, FlowLog, EnergyLog, …)</li>
+          <li><strong>4 periodické</strong> — depend na události (Daily Report, Gemini
+          Briefing, EnergySummary, Ranni_Rutina_Budik)</li>
+          <li><strong>6 dead-code routing</strong> — data jdou do EventLogu místo dedikovaného
+          listu (System Health, Test Results, Audio Debug, Manual Actions, Logy,
+          Gemini Diagnostics)</li>
+          <li><strong>5 bez producera vůbec</strong> — 0 řádků, ale Apps Script má pro ně
+          handlery (AI Tasks, ExceptionLog, Config, SanityLog, DataQualityReport)</li>
+          <li><strong>1 čeká</strong> — Morning State Timeline (deploy v20)</li>
+        </ul>
+
+        <p>
+          Z 5 listů bez producera mají <strong>2 diagnostickou hodnotu</strong> (ExceptionLog,
+          SanityLog), 3 jsou zbytečné (AI Tasks, Config, DataQualityReport).
+        </p>
+
+        <h3>ExceptionLog: infrastruktura funguje, jen scripty neselhávají</h3>
+
+        <p>
+          ExceptionLog list měl 0 řádků, ale 24+ scriptů má <code>logException()</code>
+          v catch blocích. Test: POST přímo přes API → row se zapsala → infrastruktura
+          OK. Empty stav prostě reflektuje produkční stabilitu — scripty neselhávají
+          dost často aby naplnily list. Necháno bez změny, čekající na první real
+          exception.
+        </p>
+
+        <h3>SanityLog: patch validatoru pro per-item logging</h3>
+
+        <p>
+          SanityLog měl 0 řádků a 0 producerů. <code>sh_state_validator_v1</code>
+          už loguje aggregate <code>validator_issues</code> event do EventLogu, ale
+          per-item detail (drift, stuck, conflict) se nikam nepíše.
+        </p>
+
+        <p>
+          Patch v1.x: po existujícím EventLog summary log dual-loguje per-item rows
+          do SanityLog (warning_type, severity, zone, details, details_json). Bug E
+          ghost (<code>priority_active=light</code> bez request) bude zachycen při
+          příštím nečistém cycle.
+        </p>
+
+        <h3>3 listy smazány</h3>
+
+        <p>Apps Script v21 odstraňuje:</p>
+        <ul>
+          <li><strong>AI Tasks</strong> — workflow tracker, dashboard čte ale 0 rows nikdy.</li>
+          <li><strong>Config</strong> — centralized config nikdy nevyužitý.</li>
+          <li><strong>DataQualityReport</strong> — energy data quality denní snapshot,
+          neutilizovaný.</li>
+        </ul>
+
+        <p>
+          Z Apps Script smazány: <code>SHEETS</code> entries, <code>MAX_ROWS</code>,
+          <code>ensureAllSheets_</code> headerMap, headers constants, <code>mode=tasks</code>
+          + <code>mode=config</code> endpointy, <code>event_type='ai_task'</code> POST handler.
+          Z Google Sheets manual delete přes pravý klik. Z 5 dashboardů
+          AI Tasks panel <code>display:none</code> + <code>loadAITasks()</code> no-op stub.
+        </p>
+
+        <h2>6. DeviceInventory: producer nikdy neposílal</h2>
+
+        <p>
+          DeviceInventory list měl být refreshován každých 6h cron flowem
+          <code>SH – Energy – Device Inventory Cron 6h</code>. Skript <code>sh_device_
+          inventory_guard_v1</code> běžel, vars se aktualizovaly, ale list stál 5
+          dní.
+        </p>
+
+        <p>
+          Důvod: skript jen updatuje interní vars (<code>sh_device_measurement_registry_json</code>
+          atd.), ale <strong>nikdy POST do Apps Script</strong>. Apps Script má handler
+          pro <code>mode=device_inventory</code> POST od v18, ale žádný producer ho nevolal.
+        </p>
+
+        <p>
+          Fix v1.1: na konci skriptu přidán fire-and-forget POST registry → Apps
+          Script <code>handleDeviceInventory_</code> transformuje na batch rows. Po
+          deployi list přijal 82 devices snapshot.
+        </p>
+
+        <h2>7. Dead-code routing — historický nález</h2>
+
+        <p>
+          Klíčový architektonický bug: <code>logEvent()</code> lib forsuje
+          <code>sheet: 'EventLog'</code> v payloadu. Apps Script <code>routeEvent_</code>
+          checkne <code>p.sheet</code> jako PRVNÍ — když je 'EventLog', routes tam a
+          returnuje. <code>event_type</code> routing pro System Health, Manual Actions,
+          Audio Debug, Test Results, Gemini Diagnostics se NIKDY nedosáhne.
+        </p>
+
+        <p>
+          Tj. tyhle 6 listů stagnuje 3+ týdny ne proto že producery nefungují, ale
+          proto že data lítá do EventLogu místo. Data nejsou ztracena (jsou v EventLogu),
+          jen v "neoptimálním" listu.
+        </p>
+
+        <p>
+          Pragmatické rozhodnutí: <strong>nechat jako historickou rezervu</strong>.
+          Listy zachované, dashboard je nečte, smazané by byly jen kdyby dělaly nepořádek.
+          Apps Script handlery zachované — pokud bych jednou chtěl fan-out (write to
+          EventLog AND dedicated sheet), je to 3-řádkový patch per sheet.
+        </p>
+
+        <h2>Final stav</h2>
+
+        <p>
+          <strong>25 listů</strong> (z 28 v v20), <strong>3 smazané</strong>, 6 commitů,
+          deploy bez incidentu (jeden HomeyScript app crash + recovery — memory bloat
+          ~95 MB / 125 limit, normální v rámci dnešní operational latitude).
+        </p>
+
+        <p>
+          Audit: všechny očekávané listy existují, žádný kolaterál. SanityLog +
+          ExceptionLog ready. Morning State Timeline čeká na první state transition.
+          Dashboard panely Lux + Battery + Morning Timeline začaly zobrazovat reálná
+          data po deploy v21.
+        </p>
+
+        <h2>Lessons</h2>
+
+        <p>
+          <strong>1. Producer-only komponenta je červený alarm.</strong> Pokud
+          někdo vyrobí "X produkuje data, Y je zkonzumuje", a Y se nikdy nedoplní —
+          systém má dlouhodobou silent fail tendence. <code>sh_morning_score_v1</code>
+          běžel měsíc bez konzumenta a nikoho nezajímalo, dokud se ranní rutina
+          nezhroutila.
+        </p>
+
+        <p>
+          <strong>2. Default values v lib API jsou architektonický bug.</strong>
+          <code>sheet: payload.sheet || 'EventLog'</code> vypadalo jako sensible default.
+          Reálně to forsovalo <em>všechny</em> event_type events do jednoho listu a
+          mrtvé routes vznikly přes půl roku bez detekce.
+        </p>
+
+        <p>
+          <strong>3. Smaž jenom to, co máš jistotu že nikomu nechybí.</strong>
+          Z 5 listů bez producera 2 mají diagnostic hodnotu (ExceptionLog, SanityLog).
+          3 jsou zbytečné. 6 dead-code listů má archivní hodnotu — data nejsou ztracena,
+          jen v jiné lokaci. Smaz konzervativní, audit po deployi povinný.
+        </p>
+
+        <p>
+          Mimochodem, pondělní ranní rutina příští týden už proběhne s plnou pipeline:
+          alarm-aware score → state transition log → scoreBypass v brain → registry
+          auto-discovery + Bug E ghost detekce přes SanityLog. Pokud něco selže, EventLog
+          + Morning State Timeline + ExceptionLog dají detailní timeline důvodů.
+        </p>
+      </article>
+    </div>
+  </main>
+</body>
+</html>

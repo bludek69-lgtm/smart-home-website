@@ -56,6 +56,15 @@
         </header>
 
         <div class="buildlog-list" role="list">
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-05</span>
+              <span class="buildlog-tag">INFRASTRUCTURE</span>
+            </div>
+            <h3>Sheets cleanup + dashboard fix — den po rozbité rutině</h3>
+            <p>Ranní rutina v pondělí nezačala. Začalo to fixem jednoho bugu (sleep_window blokoval routing po budíku) a skončilo úklidem celé Google Sheets vrstvy. 28 listů → 25, 6 commitů, Apps Script v18 → v21. Score producer (existoval, nikdo ho nečetl) napojený na brain. Tři chybějící dashboard endpointy přidané (Lux/Battery/Morning Timeline). Sensor registry pro adaptabilní budoucí čidla. DeviceInventory producer který nikdy neposílal. Architektonický bug v <code>logEvent</code> lib (default <code>sheet:'EventLog'</code> forsoval všechny event_type events do jednoho listu) odhalený. <a href="posts/sheets-cleanup-v21.html">Číst celý postmortem →</a></p>
+          </article>
+
           <article class="buildlog-entry bl-feature" role="listitem">
             <div class="buildlog-meta">
               <span class="buildlog-date">2026-05-02</span>
