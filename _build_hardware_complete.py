@@ -50,6 +50,19 @@ protocols_used = sorted(by_protocol.keys())
 print(f'Loaded inventory: {total_devices} devices, {zones_real} physical zones, {len(protocols_used)} protocols')
 
 
+CATEGORY_ICON = {
+    'sensor': '👁',
+    'light': '💡',
+    'audio': '🔊',
+    'heating': '🌡',
+    'plug': '🔌',
+    'button': '🎛',
+    'blind': '🪟',
+    'appliance': '🤖',
+    'infrastructure': '🧠',
+}
+
+
 def card_html(it):
     photo_html = ''
     photo_path = it.get('image', '')
@@ -58,7 +71,8 @@ def card_html(it):
         if local.exists():
             photo_html = f'<img src="{photo_path}" alt="{_html.escape(it["model"])}" loading="lazy" />'
     if not photo_html:
-        photo_html = '<div class="hw-photo-ph">Foto doplnit</div>'
+        icon = CATEGORY_ICON.get(it.get('category', ''), '📦')
+        photo_html = f'<div class="hw-photo-ph"><div class="hw-photo-ph-icon">{icon}</div><div class="hw-photo-ph-text">Foto doplnit</div></div>'
 
     energy_badge = ''
     if it['energy_data'] == 'REAL':

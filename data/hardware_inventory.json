@@ -579,9 +579,9 @@
       "category": "light",
       "class": "light",
       "zone": "Jídelna ",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Matter (virtuální bridge)",
+      "model": "Matter virtual device",
+      "protocol": "Matter",
       "capabilities": [
         "button.identify",
         "onoff",
@@ -595,8 +595,8 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
-      "note": ""
+      "image": "assets/photos/matter-bulb.webp",
+      "note": "Matter virtual — 1/3 nad jídelním stolem."
     },
     {
       "name": "Smart RGBTW Bulb 2",
@@ -604,9 +604,9 @@
       "category": "light",
       "class": "light",
       "zone": "Jídelna ",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Matter (virtuální bridge)",
+      "model": "Matter virtual device",
+      "protocol": "Matter",
       "capabilities": [
         "button.identify",
         "onoff",
@@ -620,8 +620,8 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
-      "note": ""
+      "image": "assets/photos/matter-bulb.webp",
+      "note": "Matter virtual — 2/3 nad jídelním stolem."
     },
     {
       "name": "Smart RGBTW Bulb 3",
@@ -629,9 +629,9 @@
       "category": "light",
       "class": "light",
       "zone": "Jídelna ",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Matter (virtuální bridge)",
+      "model": "Matter virtual device",
+      "protocol": "Matter",
       "capabilities": [
         "button.identify",
         "onoff",
@@ -645,8 +645,8 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
-      "note": ""
+      "image": "assets/photos/matter-bulb.webp",
+      "note": "Matter virtual — 3/3 nad jídelním stolem."
     },
     {
       "name": "Kuchyne 1",
@@ -654,9 +654,9 @@
       "category": "light",
       "class": "light",
       "zone": "Kitchen",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Matter (virtuální bridge)",
+      "model": "Matter virtual device",
+      "protocol": "Matter",
       "capabilities": [
         "button.identify",
         "onoff",
@@ -669,8 +669,8 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
-      "note": ""
+      "image": "assets/photos/matter-bulb.webp",
+      "note": "Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic)."
     },
     {
       "name": "Kuchyne 2",
@@ -678,9 +678,9 @@
       "category": "light",
       "class": "light",
       "zone": "Kitchen",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Matter (virtuální bridge)",
+      "model": "Matter virtual device",
+      "protocol": "Matter",
       "capabilities": [
         "button.identify",
         "onoff",
@@ -693,8 +693,8 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
-      "note": ""
+      "image": "assets/photos/matter-bulb.webp",
+      "note": "Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic)."
     },
     {
       "name": "Kuchyne 3",
@@ -702,9 +702,9 @@
       "category": "light",
       "class": "light",
       "zone": "Kitchen",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Matter (virtuální bridge)",
+      "model": "Matter virtual device",
+      "protocol": "Matter",
       "capabilities": [
         "button.identify",
         "onoff",
@@ -717,8 +717,8 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
-      "note": ""
+      "image": "assets/photos/matter-bulb.webp",
+      "note": "Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic)."
     },
     {
       "name": "Sektorka1",
@@ -769,9 +769,9 @@
       "category": "light",
       "class": "light",
       "zone": "Ložnice",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Generic Zigbee (virtual)",
+      "model": "Zigbee virtual device",
+      "protocol": "Zigbee",
       "capabilities": [
         "onoff",
         "dim",
@@ -783,7 +783,7 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
+      "image": "assets/photos/generic-zigbee.webp",
       "note": ""
     },
     {
@@ -792,9 +792,9 @@
       "category": "light",
       "class": "light",
       "zone": "Ložnice",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Generic Zigbee (virtual)",
+      "model": "Zigbee virtual device",
+      "protocol": "Zigbee",
       "capabilities": [
         "onoff",
         "dim",
@@ -806,7 +806,7 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
+      "image": "assets/photos/generic-zigbee.webp",
       "note": ""
     },
     {
@@ -833,9 +833,9 @@
       "category": "light",
       "class": "light",
       "zone": "Ložnice",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Matter (virtuální bridge)",
+      "model": "Matter virtual device",
+      "protocol": "Matter",
       "capabilities": [
         "button.identify",
         "onoff",
@@ -849,8 +849,8 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
-      "note": "Matter virtual — primární světlo v ložnici."
+      "image": "assets/photos/matter-bulb.webp",
+      "note": "Matter virtual (Homey Matter bridge) — primární světlo v ložnici."
     },
     {
       "name": "lampicka",
@@ -858,9 +858,9 @@
       "category": "light",
       "class": "light",
       "zone": "Ložnice",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Generic Zigbee (virtual)",
+      "model": "Zigbee virtual device",
+      "protocol": "Zigbee",
       "capabilities": [
         "onoff",
         "dim",
@@ -872,7 +872,7 @@
       "automation_used": "yes",
       "energy_data": "UNKNOWN",
       "status": "active",
-      "image": "UNKNOWN",
+      "image": "assets/photos/generic-zigbee.webp",
       "note": ""
     },
     {
@@ -1175,9 +1175,9 @@
       "category": "plug",
       "class": "socket",
       "zone": "Ložnice",
-      "manufacturer": "UNKNOWN",
-      "model": "UNKNOWN",
-      "protocol": "UNKNOWN",
+      "manufacturer": "Generic Zigbee (virtual)",
+      "model": "Zigbee virtual device",
+      "protocol": "Zigbee",
       "capabilities": [
         "onoff",
         "meter_power",
@@ -1188,7 +1188,7 @@
       "automation_used": "yes",
       "energy_data": "REAL",
       "status": "active",
-      "image": "UNKNOWN",
+      "image": "assets/photos/generic-zigbee.webp",
       "note": ""
     },
     {

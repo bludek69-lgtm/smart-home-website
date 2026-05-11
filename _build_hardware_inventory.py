@@ -53,8 +53,9 @@ DRIVER_META = {
     'tech.sonoff:WB01':           {'m':'Sonoff','mod':'WB01 Wireless Button','p':'Zigbee','ph':'sonoff-wb01.webp'},
     'tech.sonoff:ZBMINI':         {'m':'Sonoff','mod':'ZBMINI Smart Switch','p':'Zigbee','ph':'sonoff-zbmini.webp'},
     'tech.sonoff:ms01':           {'m':'Sonoff','mod':'MS01 PIR Motion','p':'Zigbee','ph':'sonoff-ms01.webp'},
-    'homey:virtualdrivermatter:driver':{'m':'Matter (virtuální)','mod':'Matter virtual device','p':'Matter','ph':'matter-bulb.webp'},
-    'homey:virtualdriverzigbee:driver':{'m':'Generic Zigbee','mod':'Zigbee virtual device','p':'Zigbee','ph':'generic-zigbee.webp'},
+    # After replace('homey:app:','').replace('homey:','') the keys below drop the 'homey:' prefix
+    'virtualdrivermatter:driver':{'m':'Matter (virtuální bridge)','mod':'Matter virtual device','p':'Matter','ph':'matter-bulb.webp'},
+    'virtualdriverzigbee:driver':{'m':'Generic Zigbee (virtual)','mod':'Zigbee virtual device','p':'Zigbee','ph':'generic-zigbee.webp'},
 }
 
 CAT_FROM_CLASS = {
@@ -94,6 +95,14 @@ NOTES = {
     'Sun': 'Home Assistant device — východ/západ slunce pro fázi dne.',
     'Person': 'Home Assistant device — presence aggregator.',
     'Weather': 'Yr.no — předpověď počasí pro topení a briefing.',
+    # Matter virtual devices (Homey Matter bridge):
+    'Zarovka Loznice': 'Matter virtual (Homey Matter bridge) — primární světlo v ložnici.',
+    'Smart RGBTW Bulb 1': 'Matter virtual — 1/3 nad jídelním stolem.',
+    'Smart RGBTW Bulb 2': 'Matter virtual — 2/3 nad jídelním stolem.',
+    'Smart RGBTW Bulb 3': 'Matter virtual — 3/3 nad jídelním stolem.',
+    'Kuchyne 1': 'Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).',
+    'Kuchyne 2': 'Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).',
+    'Kuchyne 3': 'Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).',
 }
 
 
