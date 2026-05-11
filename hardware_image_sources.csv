@@ -1,0 +1,80 @@
+device_name;brand;model;image_file;image_source_url;source_type;license_status;notes
+Fibaro Radiator jidelna;Fibaro;FGT-001 Heat Controller (TRV);;;placeholder;unknown;TRV hlavice — termostatická regulace zóny.
+Toaleta;Philips;Hue Bulb;;;placeholder;unknown;
+pohybove cidlo koupelna;Sonoff;MS01 PIR Motion;;;placeholder;unknown;
+Kuchyn zasuvka Mycka;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
+Sensore di movimento SNZB-03;Sonoff;SNZB-03 Motion (PIR);;;placeholder;unknown;
+Motion Sensor pradelna;Lidl Silvercrest;Smart Motion Sensor;;;placeholder;unknown;
+snimač digestoř;Sonoff;TH01 Temperature Sensor;;;placeholder;unknown;
+Fibaro Radiator toaleta;Fibaro;FGT-001 Heat Controller (TRV);;;placeholder;unknown;TRV hlavice.
+Light Sensor Okno Jidelna1;Xiaomi;Light Sensor MGL01;;;placeholder;unknown;
+Roleta Fyrtur1;IKEA;FYRTUR Roller Blind;;;placeholder;unknown;Privacy guard — při otevřené roletě se světla v open space neaktivují.
+Temperature and Humidity Sensor ložnice;Sonoff;TH01 Temperature Sensor;;;placeholder;unknown;
+Sektorka1;Lidl Silvercrest;RGB LED Strip;;;placeholder;unknown;Hlavní open-space LED pásek (Lidl Zigbee).
+Xiaomi Interruttore Wireless Mini;Xiaomi;UNKNOWN Xiaomi model;;;placeholder;unknown;
+Fibaro Radiator koupelna;Fibaro;FGT-001 Heat Controller (TRV);;;placeholder;unknown;TRV hlavice — baterie 7 %, vyžaduje výměnu.
+Pradelna naradí;Philips;Hue Bulb;;;placeholder;unknown;
+Fibaro Kotel;Fibaro;FGS-214 Single Switch;;;placeholder;unknown;Z-Wave relé pro elektrický kotel 9 kW — řízeno přes sh_heating_*.
+Cubo T1 Pro;Xiaomi/Aqara;Cube T1 Pro;assets/photos/aqara-cube-t1-pro.png;;local;own/local;Hlavní fyzický ovladač scén — gesturální vstup.
+Light Sensor kuchyně1;Xiaomi;Light Sensor MGL01;;;placeholder;unknown;
+Predsin;Philips;Hue Bulb;;;placeholder;unknown;Předsíňové tlačítko — odchod/příchod scéna.
+zasuvka kamera;Lidl Silvercrest;Smart Plug (Zigbee);;;placeholder;unknown;
+Pradelna zarovka;Philips;Hue Bulb;;;placeholder;unknown;
+Forno ad aria calda;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
+Xiaomi;Xiaomi;UNKNOWN Xiaomi model;;;placeholder;unknown;
+Door/Window Sensor Jidelna1;Sonoff;SNZB-04 Door/Window Sensor;;;placeholder;unknown;
+Lednice;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
+HP Printer;HP;HP printer (network);;;placeholder;unknown;Síťová tiskárna — non-automated, viditelná pro Homey.
+Led pasek;Sonoff;ZBMINI Smart Switch;;;placeholder;unknown;
+Temperature and Humidity Sensor koupelna;Sonoff;TH01 Temperature Sensor;;;placeholder;unknown;
+1 žárovka lidl E14;Generic Zigbee (virtual);Zigbee virtual device;;;placeholder;unknown;
+nest max Ložnice 2;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local;own/local;Google Nest Hub Max — vizuální + audio dashboard v ložnici.
+Vypinac Varic Kuchyne;Lidl Silvercrest;Smart Plug (Zigbee);;;placeholder;unknown;
+Motion Sensor pracovna;Sonoff;MS01 PIR Motion;;;placeholder;unknown;
+Boiler zasuvka;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
+Mikrovlnka;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
+Sun;Home Assistant;HA bridge device;;;placeholder;unknown;Home Assistant device — východ/západ slunce pro fázi dne.
+Sensore di Presenza SNZB-06P openspace;Sonoff;SNZB-06P Presence (mmWave 24GHz);;;placeholder;unknown;Primární mmWave presence pro open space (kuchyně+jídelna+pracovna).
+Sensore kuchyně Z-wave;Fibaro;FGMS-001 Motion Sensor Plus;;;placeholder;unknown;Fibaro FGMS-001+ — motion + lux + teplota. Sekundární zdroj pro open space.
+zasuvka počítač;Lidl Silvercrest;Smart Plug (Zigbee);;;placeholder;unknown;
+lampicka;Generic Zigbee (virtual);Zigbee virtual device;;;placeholder;unknown;
+stul;Sonoff;WB01 Wireless Button;;;placeholder;unknown;
+Backup;Home Assistant;HA bridge device;;;placeholder;unknown;
+zarovka pracovna RGBW Bulb E27;Lidl Silvercrest;RGB Bulb E27;;;placeholder;unknown;
+pohybove cidlo toaleta;Sonoff;SNZB-03 Motion (PIR);;;placeholder;unknown;
+2 žárovka lidl E14;Generic Zigbee (virtual);Zigbee virtual device;;;placeholder;unknown;
+vypinac kuchyne1;Sonoff;WB01 Wireless Button;;;placeholder;unknown;
+Weather;Yr.no;Weather forecast feed;;;placeholder;unknown;Yr.no — předpověď počasí pro topení a briefing.
+Zasuvka pracka pradelna;Fibaro;FGWOF-011 Wall Plug Switch;;;placeholder;unknown;Fibaro FGWOF-011 — pračka, ENERGY metering.
+ventilatore;Sonoff;Basic ZBR3 (relay);;;placeholder;unknown;
+Interruttore Telecomando Senza Fili H1 Doppio;Xiaomi/Aqara;Wireless Remote Switch;;;placeholder;unknown;
+svetlo Koupelna;Philips;Hue Bulb;;;placeholder;unknown;
+Led pasek postel;Lidl Silvercrest;Smart Plug (Zigbee);;;placeholder;unknown;Nightlight pásek u postele.
+indoor;Foscam;Pan/Tilt camera;;;placeholder;unknown;
+Xiaomi Sensore di Luce ložnice;Xiaomi;Light Sensor MGL01;;;placeholder;unknown;
+Air Purifier 4 Lite (zhimi.airp.rmb1);Xiaomi;Air Purifier 4 Lite;;;placeholder;unknown;Xiaomi čistička s PM2.5 měřením.
+Zvlhčovač1;Generic Zigbee (virtual);Zigbee virtual device;;;placeholder;unknown;
+Giuseppe;Viomi;V7 Robot Vacuum;assets/photos/viomi-v7-vacuum.png;;local;own/local;Viomi V7 — robot vysavač (Wi-Fi).
+Speaker koupelna;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local;own/local;Lokální audio v koupelně.
+Button away/home;Fibaro;FGPB-101 Button;;;placeholder;unknown;Fibaro FGPB-101 — manuální override presence (1× home, 2× away).
+Televize v ložnici;Android TV;Android TV remote;;;placeholder;unknown;Android TV remote — Wi-Fi.
+Button;Fibaro;FGPB-101 Button;;;placeholder;unknown;
+camera 1;Foscam;Dome camera;;;placeholder;unknown;
+Zasuvka pracovna;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
+Sensore di light pohybu P1;Xiaomi/Aqara;Motion Sensor P1;;;placeholder;unknown;
+Kuchyn;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local;own/local;Google Nest Mini — primární TTS / briefing / alert výstup.
+Door/Window Sensor předsín1;Sonoff;DS01 Door/Window Sensor;;;placeholder;unknown;
+Zasuvka TV Loznice;Fibaro;FGS-223 Double Switch;;;placeholder;unknown;
+Zasuvka Soundbar Loznice;Fibaro;FGS-223 Double Switch;;;placeholder;unknown;
+Sensor Spim Loznice;Sonoff;SNZB-06P Presence (mmWave 24GHz);;;placeholder;unknown;
+Termometro SNZB-02P Open Space;Sonoff;SNZB-02P Temp + Humid;;;placeholder;unknown;
+Sensore Jsem v koupelne;Sonoff;SNZB-06P Presence (mmWave 24GHz);;;placeholder;unknown;
+Zasuvka Varic Kuchyne;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
+Zarovka Loznice;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual (Homey Matter bridge) — primární světlo v ložnici.
+Smart RGBTW Bulb 2;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual — 2/3 nad jídelním stolem.
+Smart RGBTW Bulb 3;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual — 3/3 nad jídelním stolem.
+Smart RGBTW Bulb 1;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual — 1/3 nad jídelním stolem.
+Zasuvka Kuchyne Kaffe;Meross;MSS315 Smart Plug;;;placeholder;unknown;Meross Matter plug — kávovar (auto-on ráno).
+Kuchyne 3;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).
+Kuchyne 1;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).
+Kuchyne 2;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).

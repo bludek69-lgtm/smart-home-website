@@ -3,3 +3,7 @@
 Thumbs.db
 *.log
 *.tmp
+
+# Hardware page refresh artifacts (kept locally, not in public repo)
+_archive/
+_qa/
