@@ -1,80 +1,80 @@
 device_name;brand;model;image_file;image_source_url;source_type;license_status;notes
-Fibaro Radiator jidelna;Fibaro;FGT-001 Heat Controller (TRV);;;placeholder;unknown;TRV hlavice — termostatická regulace zóny.
-Toaleta;Philips;Hue Bulb;;;placeholder;unknown;
-pohybove cidlo koupelna;Sonoff;MS01 PIR Motion;;;placeholder;unknown;
-Kuchyn zasuvka Mycka;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
-Sensore di movimento SNZB-03;Sonoff;SNZB-03 Motion (PIR);;;placeholder;unknown;
-Motion Sensor pradelna;Lidl Silvercrest;Smart Motion Sensor;;;placeholder;unknown;
-snimač digestoř;Sonoff;TH01 Temperature Sensor;;;placeholder;unknown;
-Fibaro Radiator toaleta;Fibaro;FGT-001 Heat Controller (TRV);;;placeholder;unknown;TRV hlavice.
-Light Sensor Okno Jidelna1;Xiaomi;Light Sensor MGL01;;;placeholder;unknown;
-Roleta Fyrtur1;IKEA;FYRTUR Roller Blind;;;placeholder;unknown;Privacy guard — při otevřené roletě se světla v open space neaktivují.
-Temperature and Humidity Sensor ložnice;Sonoff;TH01 Temperature Sensor;;;placeholder;unknown;
-Sektorka1;Lidl Silvercrest;RGB LED Strip;;;placeholder;unknown;Hlavní open-space LED pásek (Lidl Zigbee).
-Xiaomi Interruttore Wireless Mini;Xiaomi;UNKNOWN Xiaomi model;;;placeholder;unknown;
-Fibaro Radiator koupelna;Fibaro;FGT-001 Heat Controller (TRV);;;placeholder;unknown;TRV hlavice — baterie 7 %, vyžaduje výměnu.
-Pradelna naradí;Philips;Hue Bulb;;;placeholder;unknown;
-Fibaro Kotel;Fibaro;FGS-214 Single Switch;;;placeholder;unknown;Z-Wave relé pro elektrický kotel 9 kW — řízeno přes sh_heating_*.
-Cubo T1 Pro;Xiaomi/Aqara;Cube T1 Pro;assets/photos/aqara-cube-t1-pro.png;;local;own/local;Hlavní fyzický ovladač scén — gesturální vstup.
-Light Sensor kuchyně1;Xiaomi;Light Sensor MGL01;;;placeholder;unknown;
-Predsin;Philips;Hue Bulb;;;placeholder;unknown;Předsíňové tlačítko — odchod/příchod scéna.
-zasuvka kamera;Lidl Silvercrest;Smart Plug (Zigbee);;;placeholder;unknown;
-Pradelna zarovka;Philips;Hue Bulb;;;placeholder;unknown;
-Forno ad aria calda;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
-Xiaomi;Xiaomi;UNKNOWN Xiaomi model;;;placeholder;unknown;
-Door/Window Sensor Jidelna1;Sonoff;SNZB-04 Door/Window Sensor;;;placeholder;unknown;
-Lednice;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
-HP Printer;HP;HP printer (network);;;placeholder;unknown;Síťová tiskárna — non-automated, viditelná pro Homey.
-Led pasek;Sonoff;ZBMINI Smart Switch;;;placeholder;unknown;
-Temperature and Humidity Sensor koupelna;Sonoff;TH01 Temperature Sensor;;;placeholder;unknown;
-1 žárovka lidl E14;Generic Zigbee (virtual);Zigbee virtual device;;;placeholder;unknown;
-nest max Ložnice 2;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local;own/local;Google Nest Hub Max — vizuální + audio dashboard v ložnici.
-Vypinac Varic Kuchyne;Lidl Silvercrest;Smart Plug (Zigbee);;;placeholder;unknown;
-Motion Sensor pracovna;Sonoff;MS01 PIR Motion;;;placeholder;unknown;
-Boiler zasuvka;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
-Mikrovlnka;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
-Sun;Home Assistant;HA bridge device;;;placeholder;unknown;Home Assistant device — východ/západ slunce pro fázi dne.
-Sensore di Presenza SNZB-06P openspace;Sonoff;SNZB-06P Presence (mmWave 24GHz);;;placeholder;unknown;Primární mmWave presence pro open space (kuchyně+jídelna+pracovna).
-Sensore kuchyně Z-wave;Fibaro;FGMS-001 Motion Sensor Plus;;;placeholder;unknown;Fibaro FGMS-001+ — motion + lux + teplota. Sekundární zdroj pro open space.
-zasuvka počítač;Lidl Silvercrest;Smart Plug (Zigbee);;;placeholder;unknown;
-lampicka;Generic Zigbee (virtual);Zigbee virtual device;;;placeholder;unknown;
-stul;Sonoff;WB01 Wireless Button;;;placeholder;unknown;
-Backup;Home Assistant;HA bridge device;;;placeholder;unknown;
-zarovka pracovna RGBW Bulb E27;Lidl Silvercrest;RGB Bulb E27;;;placeholder;unknown;
-pohybove cidlo toaleta;Sonoff;SNZB-03 Motion (PIR);;;placeholder;unknown;
-2 žárovka lidl E14;Generic Zigbee (virtual);Zigbee virtual device;;;placeholder;unknown;
-vypinac kuchyne1;Sonoff;WB01 Wireless Button;;;placeholder;unknown;
-Weather;Yr.no;Weather forecast feed;;;placeholder;unknown;Yr.no — předpověď počasí pro topení a briefing.
-Zasuvka pracka pradelna;Fibaro;FGWOF-011 Wall Plug Switch;;;placeholder;unknown;Fibaro FGWOF-011 — pračka, ENERGY metering.
-ventilatore;Sonoff;Basic ZBR3 (relay);;;placeholder;unknown;
-Interruttore Telecomando Senza Fili H1 Doppio;Xiaomi/Aqara;Wireless Remote Switch;;;placeholder;unknown;
-svetlo Koupelna;Philips;Hue Bulb;;;placeholder;unknown;
-Led pasek postel;Lidl Silvercrest;Smart Plug (Zigbee);;;placeholder;unknown;Nightlight pásek u postele.
-indoor;Foscam;Pan/Tilt camera;;;placeholder;unknown;
-Xiaomi Sensore di Luce ložnice;Xiaomi;Light Sensor MGL01;;;placeholder;unknown;
-Air Purifier 4 Lite (zhimi.airp.rmb1);Xiaomi;Air Purifier 4 Lite;;;placeholder;unknown;Xiaomi čistička s PM2.5 měřením.
-Zvlhčovač1;Generic Zigbee (virtual);Zigbee virtual device;;;placeholder;unknown;
-Giuseppe;Viomi;V7 Robot Vacuum;assets/photos/viomi-v7-vacuum.png;;local;own/local;Viomi V7 — robot vysavač (Wi-Fi).
-Speaker koupelna;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local;own/local;Lokální audio v koupelně.
-Button away/home;Fibaro;FGPB-101 Button;;;placeholder;unknown;Fibaro FGPB-101 — manuální override presence (1× home, 2× away).
-Televize v ložnici;Android TV;Android TV remote;;;placeholder;unknown;Android TV remote — Wi-Fi.
-Button;Fibaro;FGPB-101 Button;;;placeholder;unknown;
-camera 1;Foscam;Dome camera;;;placeholder;unknown;
-Zasuvka pracovna;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
-Sensore di light pohybu P1;Xiaomi/Aqara;Motion Sensor P1;;;placeholder;unknown;
-Kuchyn;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local;own/local;Google Nest Mini — primární TTS / briefing / alert výstup.
-Door/Window Sensor předsín1;Sonoff;DS01 Door/Window Sensor;;;placeholder;unknown;
-Zasuvka TV Loznice;Fibaro;FGS-223 Double Switch;;;placeholder;unknown;
-Zasuvka Soundbar Loznice;Fibaro;FGS-223 Double Switch;;;placeholder;unknown;
-Sensor Spim Loznice;Sonoff;SNZB-06P Presence (mmWave 24GHz);;;placeholder;unknown;
-Termometro SNZB-02P Open Space;Sonoff;SNZB-02P Temp + Humid;;;placeholder;unknown;
-Sensore Jsem v koupelne;Sonoff;SNZB-06P Presence (mmWave 24GHz);;;placeholder;unknown;
+Fibaro Radiator jidelna;Fibaro;FGT-001 Heat Controller (TRV);assets/hardware/icons/fibaro-radiator-jidelna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;TRV hlavice — termostatická regulace zóny.
+Toaleta;Philips;Hue Bulb;assets/hardware/icons/toaleta.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+pohybove cidlo koupelna;Sonoff;MS01 PIR Motion;assets/hardware/icons/pohybove-cidlo-koupelna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Kuchyn zasuvka Mycka;Shelly;Shelly Plug / Pro series;assets/hardware/icons/kuchyn-zasuvka-mycka.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Sensore di movimento SNZB-03;Sonoff;SNZB-03 Motion (PIR);assets/hardware/icons/sensore-di-movimento-snzb-03.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Motion Sensor pradelna;Lidl Silvercrest;Smart Motion Sensor;assets/hardware/icons/motion-sensor-pradelna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+snimač digestoř;Sonoff;TH01 Temperature Sensor;assets/hardware/icons/snimac-digestor.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Fibaro Radiator toaleta;Fibaro;FGT-001 Heat Controller (TRV);assets/hardware/icons/fibaro-radiator-toaleta.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;TRV hlavice.
+Light Sensor Okno Jidelna1;Xiaomi;Light Sensor MGL01;assets/hardware/icons/light-sensor-okno-jidelna1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Roleta Fyrtur1;IKEA;FYRTUR Roller Blind;assets/hardware/icons/roleta-fyrtur1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Privacy guard — při otevřené roletě se světla v open space neaktivují.
+Temperature and Humidity Sensor ložnice;Sonoff;TH01 Temperature Sensor;assets/hardware/icons/temperature-and-humidity-sensor-loznice.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Sektorka1;Lidl Silvercrest;RGB LED Strip;assets/hardware/icons/sektorka1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Hlavní open-space LED pásek (Lidl Zigbee).
+Xiaomi Interruttore Wireless Mini;Xiaomi;UNKNOWN Xiaomi model;assets/hardware/icons/xiaomi-interruttore-wireless-mini.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Fibaro Radiator koupelna;Fibaro;FGT-001 Heat Controller (TRV);assets/hardware/icons/fibaro-radiator-koupelna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;TRV hlavice — baterie 7 %, vyžaduje výměnu.
+Pradelna naradí;Philips;Hue Bulb;assets/hardware/icons/pradelna-naradi.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Fibaro Kotel;Fibaro;FGS-214 Single Switch;assets/hardware/icons/fibaro-kotel.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Z-Wave relé pro elektrický kotel 9 kW — řízeno přes sh_heating_*.
+Cubo T1 Pro;Xiaomi/Aqara;Cube T1 Pro;assets/photos/aqara-cube-t1-pro.png;;local_photo;own/local;Hlavní fyzický ovladač scén — gesturální vstup.
+Light Sensor kuchyně1;Xiaomi;Light Sensor MGL01;assets/hardware/icons/light-sensor-kuchyne1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Predsin;Philips;Hue Bulb;assets/hardware/icons/predsin.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Předsíňové tlačítko — odchod/příchod scéna.
+zasuvka kamera;Lidl Silvercrest;Smart Plug (Zigbee);assets/hardware/icons/zasuvka-kamera.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Pradelna zarovka;Philips;Hue Bulb;assets/hardware/icons/pradelna-zarovka.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Forno ad aria calda;Shelly;Shelly Plug / Pro series;assets/hardware/icons/forno-ad-aria-calda.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Xiaomi;Xiaomi;UNKNOWN Xiaomi model;assets/hardware/icons/xiaomi.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Door/Window Sensor Jidelna1;Sonoff;SNZB-04 Door/Window Sensor;assets/hardware/icons/door-window-sensor-jidelna1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Lednice;Shelly;Shelly Plug / Pro series;assets/hardware/icons/lednice.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+HP Printer;HP;HP printer (network);assets/hardware/icons/hp-printer.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Síťová tiskárna — non-automated, viditelná pro Homey.
+Led pasek;Sonoff;ZBMINI Smart Switch;assets/hardware/icons/led-pasek.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Temperature and Humidity Sensor koupelna;Sonoff;TH01 Temperature Sensor;assets/hardware/icons/temperature-and-humidity-sensor-koupelna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+1 žárovka lidl E14;Generic Zigbee (virtual);Zigbee virtual device;assets/hardware/icons/1-zarovka-lidl-e14.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+nest max Ložnice 2;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local_photo;own/local;Google Nest Hub Max — vizuální + audio dashboard v ložnici.
+Vypinac Varic Kuchyne;Lidl Silvercrest;Smart Plug (Zigbee);assets/hardware/icons/vypinac-varic-kuchyne.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Motion Sensor pracovna;Sonoff;MS01 PIR Motion;assets/hardware/icons/motion-sensor-pracovna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Boiler zasuvka;Shelly;Shelly Plug / Pro series;assets/hardware/icons/boiler-zasuvka.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Mikrovlnka;Shelly;Shelly Plug / Pro series;assets/hardware/icons/mikrovlnka.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Sun;Home Assistant;HA bridge device;assets/hardware/icons/sun.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Home Assistant device — východ/západ slunce pro fázi dne.
+Sensore di Presenza SNZB-06P openspace;Sonoff;SNZB-06P Presence (mmWave 24GHz);assets/hardware/icons/sensore-di-presenza-snzb-06p-openspace.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Primární mmWave presence pro open space (kuchyně+jídelna+pracovna).
+Sensore kuchyně Z-wave;Fibaro;FGMS-001 Motion Sensor Plus;assets/hardware/icons/sensore-kuchyne-z-wave.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Fibaro FGMS-001+ — motion + lux + teplota. Sekundární zdroj pro open space.
+zasuvka počítač;Lidl Silvercrest;Smart Plug (Zigbee);assets/hardware/icons/zasuvka-pocitac.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+lampicka;Generic Zigbee (virtual);Zigbee virtual device;assets/hardware/icons/lampicka.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+stul;Sonoff;WB01 Wireless Button;assets/hardware/icons/stul.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Backup;Home Assistant;HA bridge device;assets/hardware/icons/backup.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+zarovka pracovna RGBW Bulb E27;Lidl Silvercrest;RGB Bulb E27;assets/hardware/icons/zarovka-pracovna-rgbw-bulb-e27.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+pohybove cidlo toaleta;Sonoff;SNZB-03 Motion (PIR);assets/hardware/icons/pohybove-cidlo-toaleta.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+2 žárovka lidl E14;Generic Zigbee (virtual);Zigbee virtual device;assets/hardware/icons/2-zarovka-lidl-e14.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+vypinac kuchyne1;Sonoff;WB01 Wireless Button;assets/hardware/icons/vypinac-kuchyne1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Weather;Yr.no;Weather forecast feed;assets/hardware/icons/weather.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Yr.no — předpověď počasí pro topení a briefing.
+Zasuvka pracka pradelna;Fibaro;FGWOF-011 Wall Plug Switch;assets/hardware/icons/zasuvka-pracka-pradelna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Fibaro FGWOF-011 — pračka, ENERGY metering.
+ventilatore;Sonoff;Basic ZBR3 (relay);assets/hardware/icons/ventilatore.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Interruttore Telecomando Senza Fili H1 Doppio;Xiaomi/Aqara;Wireless Remote Switch;assets/hardware/icons/interruttore-telecomando-senza-fili-h1-doppio.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+svetlo Koupelna;Philips;Hue Bulb;assets/hardware/icons/svetlo-koupelna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Led pasek postel;Lidl Silvercrest;Smart Plug (Zigbee);assets/hardware/icons/led-pasek-postel.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Nightlight pásek u postele.
+indoor;Foscam;Pan/Tilt camera;assets/hardware/icons/indoor.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Xiaomi Sensore di Luce ložnice;Xiaomi;Light Sensor MGL01;assets/hardware/icons/xiaomi-sensore-di-luce-loznice.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Air Purifier 4 Lite (zhimi.airp.rmb1);Xiaomi;Air Purifier 4 Lite;assets/hardware/icons/air-purifier-4-lite-zhimi-airp-rmb1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Xiaomi čistička s PM2.5 měřením.
+Zvlhčovač1;Generic Zigbee (virtual);Zigbee virtual device;assets/hardware/icons/zvlhcovac1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Giuseppe;Viomi;V7 Robot Vacuum;assets/photos/viomi-v7-vacuum.png;;local_photo;own/local;Viomi V7 — robot vysavač (Wi-Fi).
+Speaker koupelna;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local_photo;own/local;Lokální audio v koupelně.
+Button away/home;Fibaro;FGPB-101 Button;assets/hardware/icons/button-away-home.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Fibaro FGPB-101 — manuální override presence (1× home, 2× away).
+Televize v ložnici;Android TV;Android TV remote;assets/hardware/icons/televize-v-loznici.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Android TV remote — Wi-Fi.
+Button;Fibaro;FGPB-101 Button;assets/hardware/icons/button.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+camera 1;Foscam;Dome camera;assets/hardware/icons/camera-1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Zasuvka pracovna;Shelly;Shelly Plug / Pro series;assets/hardware/icons/zasuvka-pracovna.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Sensore di light pohybu P1;Xiaomi/Aqara;Motion Sensor P1;assets/hardware/icons/sensore-di-light-pohybu-p1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Kuchyn;Google;Nest / Cast speaker;assets/photos/nest-mini.png;;local_photo;own/local;Google Nest Mini — primární TTS / briefing / alert výstup.
+Door/Window Sensor předsín1;Sonoff;DS01 Door/Window Sensor;assets/hardware/icons/door-window-sensor-predsin1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Zasuvka TV Loznice;Fibaro;FGS-223 Double Switch;assets/hardware/icons/zasuvka-tv-loznice.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Zasuvka Soundbar Loznice;Fibaro;FGS-223 Double Switch;assets/hardware/icons/zasuvka-soundbar-loznice.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Sensor Spim Loznice;Sonoff;SNZB-06P Presence (mmWave 24GHz);assets/hardware/icons/sensor-spim-loznice.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Termometro SNZB-02P Open Space;Sonoff;SNZB-02P Temp + Humid;assets/hardware/icons/termometro-snzb-02p-open-space.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
+Sensore Jsem v koupelne;Sonoff;SNZB-06P Presence (mmWave 24GHz);assets/hardware/icons/sensore-jsem-v-koupelne.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;
 Zasuvka Varic Kuchyne;Shelly;Shelly Plug / Pro series;;;placeholder;unknown;
-Zarovka Loznice;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual (Homey Matter bridge) — primární světlo v ložnici.
-Smart RGBTW Bulb 2;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual — 2/3 nad jídelním stolem.
-Smart RGBTW Bulb 3;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual — 3/3 nad jídelním stolem.
-Smart RGBTW Bulb 1;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual — 1/3 nad jídelním stolem.
-Zasuvka Kuchyne Kaffe;Meross;MSS315 Smart Plug;;;placeholder;unknown;Meross Matter plug — kávovar (auto-on ráno).
-Kuchyne 3;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).
-Kuchyne 1;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).
-Kuchyne 2;Matter (virtuální bridge);Matter virtual device;;;placeholder;unknown;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).
+Zarovka Loznice;Matter (virtuální bridge);Matter virtual device;assets/hardware/icons/zarovka-loznice.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Matter virtual (Homey Matter bridge) — primární světlo v ložnici.
+Smart RGBTW Bulb 2;Matter (virtuální bridge);Matter virtual device;assets/hardware/icons/smart-rgbtw-bulb-2.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Matter virtual — 2/3 nad jídelním stolem.
+Smart RGBTW Bulb 3;Matter (virtuální bridge);Matter virtual device;assets/hardware/icons/smart-rgbtw-bulb-3.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Matter virtual — 3/3 nad jídelním stolem.
+Smart RGBTW Bulb 1;Matter (virtuální bridge);Matter virtual device;assets/hardware/icons/smart-rgbtw-bulb-1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Matter virtual — 1/3 nad jídelním stolem.
+Zasuvka Kuchyne Kaffe;Meross;MSS315 Smart Plug;assets/hardware/icons/zasuvka-kuchyne-kaffe.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Meross Matter plug — kávovar (auto-on ráno).
+Kuchyne 3;Matter (virtuální bridge);Matter virtual device;assets/hardware/icons/kuchyne-3.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).
+Kuchyne 1;Matter (virtuální bridge);Matter virtual device;assets/hardware/icons/kuchyne-1.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).
+Kuchyne 2;Matter (virtuální bridge);Matter virtual device;assets/hardware/icons/kuchyne-2.svg;(Homey REST /api/icon/<id> — official ecosystem icon);homey_icon;official_homey;Matter virtual A19/A60 v kuchyni — používá se pouze pro scény (vareni/work/romantic).

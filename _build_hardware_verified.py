@@ -48,6 +48,8 @@ ZONES = load(LIVE_ZONES) or {}
 ADVFLOWS = load(LIVE_ADVFLOWS) or {}
 PREV = load(PREV_INV) or {}
 PREV_BY_NAME = {it['name']: it for it in PREV.get('inventory', [])}
+# Load Homey iconObj mapping (downloaded SVGs)
+ICONS_MAP = load(ROOT / 'assets' / 'hardware' / 'icons_mapping.json') or {}
 
 # Aggregate dashboard HTML content for "used_in_dashboard" detection
 DASH_TEXT = ''
@@ -281,11 +283,30 @@ def build_device(dev_id, dev_data):
     else:
         in_dash = 'no'
 
-    # Image — reuse from prev
-    img_file = prev.get('image', '')
-    img_license = image_license_status(img_file)
-    img_local_exists = bool(img_file and (ROOT / img_file).exists())
-    img_source_url = ''  # User fills manually per safe policy
+    # Image source priority:
+    #   1) Real product photo in assets/photos/ (user-curated, license-clean)
+    #   2) Homey SVG icon (downloaded via REST, official_homey license)
+    #   3) None → emoji placeholder via CSS
+    img_file = ''
+    img_license = 'unknown'
+    img_source_url = ''
+    img_source_type = 'placeholder'
+
+    # Try real photo from prev inventory
+    prev_img = prev.get('image', '')
+    if prev_img and (ROOT / prev_img).exists():
+        img_file = prev_img
+        img_license = 'own/local'
+        img_source_type = 'local_photo'
+    else:
+        # Fallback: Homey SVG icon
+        icon_path = ICONS_MAP.get(name, '')
+        if icon_path and (ROOT / icon_path).exists():
+            img_file = icon_path
+            img_license = 'official_homey'
+            img_source_type = 'homey_icon'
+            img_source_url = f'(Homey REST /api/icon/<id> — official ecosystem icon)'
+    img_local_exists = bool(img_file)
 
     # Verification status — strict criteria
     # verified  = brand + model + protocol known AND not a Matter virtual bridge
@@ -339,9 +360,10 @@ def build_device(dev_id, dev_data):
         'matter_class': matter_class,  # extra granularity
         'role': role,
         'description': description,
-        'image_file': img_file if img_local_exists else '',
+        'image_file': img_file,
         'image_source_url': img_source_url,
-        'image_license_status': img_license if img_local_exists else 'unknown',
+        'image_license_status': img_license,
+        'image_source_type': img_source_type,
         'verification_status': verification,
         'notes': prev.get('note', ''),
         # Internal — useful for filtering
@@ -412,14 +434,13 @@ def main():
         w.writerow(['device_name', 'brand', 'model', 'image_file', 'image_source_url',
                     'source_type', 'license_status', 'notes'])
         for it in items:
-            source_type = 'local' if it['image_file'] else 'placeholder'
             w.writerow([
                 it['display_name'],
                 it['brand'],
                 it['model'],
                 it['image_file'],
                 it['image_source_url'],
-                source_type,
+                it.get('image_source_type', 'placeholder'),
                 it['image_license_status'],
                 it['notes'],
             ])

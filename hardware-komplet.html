@@ -68,6 +68,8 @@
 
 .hw-photo { aspect-ratio:16/10; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .hw-photo img { width:100%; height:100%; object-fit:contain; padding:0.5rem; }
+/* Homey-served SVG icons are black silhouettes — invert for dark theme */
+.hw-photo img[src*="hardware/icons/"] { filter: invert(0.92) hue-rotate(180deg); opacity:0.92; }
 .hw-photo-ph { color:rgba(255,255,255,0.45); font-size:0.8rem; font-style:italic; text-align:center; }
 .hw-photo-ph-icon { font-size:2.4rem; margin-bottom:0.2rem; opacity:0.7; }
 .hw-photo-ph-text { font-size:0.7rem; }
@@ -272,7 +274,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="zasuvka kuchyne kaffe zasuvka kuchyne kaffe meross mss315 smart plug wi-fi (cloud) kitchen síťová zásuvka / spínač button.identify onoff measure_current measure_voltage measure_power meter_power">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zasuvka-kuchyne-kaffe.svg" alt="Zasuvka Kuchyne Kaffe" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zasuvka Kuchyne Kaffe</h3>
     <p class="hw-meta-line"><strong>Meross</strong> · MSS315 Smart Plug</p>
@@ -301,7 +303,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 1 kuchyne 1 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-1.svg" alt="Kuchyne 1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 1</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -330,7 +332,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 2 kuchyne 2 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-2.svg" alt="Kuchyne 2" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 2</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -359,7 +361,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 3 kuchyne 3 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-3.svg" alt="Kuchyne 3" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 3</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -388,7 +390,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 1 smart rgbtw bulb 1 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-1.svg" alt="Smart RGBTW Bulb 1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 1</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -417,7 +419,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 2 smart rgbtw bulb 2 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-2.svg" alt="Smart RGBTW Bulb 2" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 2</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -446,7 +448,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 3 smart rgbtw bulb 3 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-3.svg" alt="Smart RGBTW Bulb 3" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 3</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -475,7 +477,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="zarovka loznice zarovka loznice matter (virtuální bridge) matter virtual device matter ložnice osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zarovka-loznice.svg" alt="Zarovka Loznice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zarovka Loznice</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -503,7 +505,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="fibaro radiator jidelna fibaro radiator jidelna fibaro fgt-001 heat controller (trv) z-wave jídelna termostat / trv measure_battery target_temperature measure_temperature">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🌡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/fibaro-radiator-jidelna.svg" alt="Fibaro Radiator jidelna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Fibaro Radiator jidelna</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGT-001 Heat Controller (TRV)</p>
@@ -532,7 +534,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="light sensor okno jidelna1 light sensor okno jidelna1 xiaomi light sensor mgl01 zigbee jídelna environmentální senzor measure_luminance alarm_battery measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/light-sensor-okno-jidelna1.svg" alt="Light Sensor Okno Jidelna1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Light Sensor Okno Jidelna1</h3>
     <p class="hw-meta-line"><strong>Xiaomi</strong> · Light Sensor MGL01</p>
@@ -561,7 +563,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="roleta fyrtur1 roleta fyrtur1 ikea fyrtur roller blind zigbee jídelna class=blinds windowcoverings_set alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">📦</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/roleta-fyrtur1.svg" alt="Roleta Fyrtur1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Roleta Fyrtur1</h3>
     <p class="hw-meta-line"><strong>IKEA</strong> · FYRTUR Roller Blind</p>
@@ -590,7 +592,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="door/window sensor jidelna1 door/window sensor jidelna1 sonoff snzb-04 door/window sensor zigbee jídelna environmentální senzor alarm_contact measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/door-window-sensor-jidelna1.svg" alt="Door/Window Sensor Jidelna1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Door/Window Sensor Jidelna1</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · SNZB-04 Door/Window Sensor</p>
@@ -619,7 +621,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="led pasek led pasek sonoff zbmini smart switch zigbee jídelna síťová zásuvka / spínač onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/led-pasek.svg" alt="Led pasek" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Led pasek</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · ZBMINI Smart Switch</p>
@@ -648,7 +650,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="stul stul sonoff wb01 wireless button zigbee jídelna tlačítko / scéna trigger alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🎛</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/stul.svg" alt="stul" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">stul</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · WB01 Wireless Button</p>
@@ -677,7 +679,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 2 smart rgbtw bulb 2 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-2.svg" alt="Smart RGBTW Bulb 2" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 2</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -706,7 +708,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 3 smart rgbtw bulb 3 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-3.svg" alt="Smart RGBTW Bulb 3" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 3</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -735,7 +737,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 1 smart rgbtw bulb 1 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-1.svg" alt="Smart RGBTW Bulb 1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 1</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -763,7 +765,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="kuchyn zasuvka mycka kuchyn zasuvka mycka shelly shelly plug / pro series wi-fi (cloud) kitchen síťová zásuvka / spínač onoff measure_power meter_power measure_temperature rssi devicegen1">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyn-zasuvka-mycka.svg" alt="Kuchyn zasuvka Mycka" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyn zasuvka Mycka</h3>
     <p class="hw-meta-line"><strong>Shelly</strong> · Shelly Plug / Pro series</p>
@@ -792,7 +794,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="snimač digestoř snimač digestoř sonoff th01 temperature sensor zigbee kitchen environmentální senzor measure_temperature measure_humidity measure_battery alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/snimac-digestor.svg" alt="snimač digestoř" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">snimač digestoř</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · TH01 Temperature Sensor</p>
@@ -821,7 +823,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="sektorka1 sektorka1 lidl silvercrest rgb led strip zigbee kitchen osvětlení (lighting) onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/sektorka1.svg" alt="Sektorka1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Sektorka1</h3>
     <p class="hw-meta-line"><strong>Lidl Silvercrest</strong> · RGB LED Strip</p>
@@ -850,7 +852,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="light sensor kuchyně1 light sensor kuchyně1 xiaomi light sensor mgl01 zigbee kitchen environmentální senzor measure_luminance alarm_battery measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/light-sensor-kuchyne1.svg" alt="Light Sensor kuchyně1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Light Sensor kuchyně1</h3>
     <p class="hw-meta-line"><strong>Xiaomi</strong> · Light Sensor MGL01</p>
@@ -879,7 +881,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="forno ad aria calda forno ad aria calda shelly shelly plug / pro series wi-fi (cloud) kitchen síťová zásuvka / spínač onoff measure_power meter_power measure_temperature rssi devicegen1">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/forno-ad-aria-calda.svg" alt="Forno ad aria calda" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Forno ad aria calda</h3>
     <p class="hw-meta-line"><strong>Shelly</strong> · Shelly Plug / Pro series</p>
@@ -908,7 +910,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="lednice lednice shelly shelly plug / pro series wi-fi (cloud) kitchen síťová zásuvka / spínač onoff measure_power meter_power measure_temperature rssi devicegen1">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/lednice.svg" alt="Lednice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Lednice</h3>
     <p class="hw-meta-line"><strong>Shelly</strong> · Shelly Plug / Pro series</p>
@@ -937,7 +939,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="vypinac varic kuchyne vypinac varic kuchyne lidl silvercrest smart plug (zigbee) zigbee kitchen síťová zásuvka / spínač onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/vypinac-varic-kuchyne.svg" alt="Vypinac Varic Kuchyne" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Vypinac Varic Kuchyne</h3>
     <p class="hw-meta-line"><strong>Lidl Silvercrest</strong> · Smart Plug (Zigbee)</p>
@@ -966,7 +968,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="mikrovlnka mikrovlnka shelly shelly plug / pro series wi-fi (cloud) kitchen síťová zásuvka / spínač onoff measure_power meter_power measure_temperature rssi devicegen1">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/mikrovlnka.svg" alt="Mikrovlnka" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Mikrovlnka</h3>
     <p class="hw-meta-line"><strong>Shelly</strong> · Shelly Plug / Pro series</p>
@@ -995,7 +997,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="sensore kuchyně z-wave sensore kuchyně z-wave fibaro fgms-001 motion sensor plus z-wave kitchen environmentální senzor measure_battery measure_luminance measure_temperature alarm_motion alarm_tamper">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/sensore-kuchyne-z-wave.svg" alt="Sensore kuchyně Z-wave" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Sensore kuchyně Z-wave</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGMS-001 Motion Sensor Plus</p>
@@ -1024,7 +1026,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="vypinac kuchyne1 vypinac kuchyne1 sonoff wb01 wireless button zigbee kitchen tlačítko / scéna trigger alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🎛</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/vypinac-kuchyne1.svg" alt="vypinac kuchyne1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">vypinac kuchyne1</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · WB01 Wireless Button</p>
@@ -1053,7 +1055,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="ventilatore ventilatore sonoff basic zbr3 (relay) zigbee kitchen síťová zásuvka / spínač onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/ventilatore.svg" alt="ventilatore" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">ventilatore</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · Basic ZBR3 (relay)</p>
@@ -1140,7 +1142,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="zasuvka kuchyne kaffe zasuvka kuchyne kaffe meross mss315 smart plug wi-fi (cloud) kitchen síťová zásuvka / spínač button.identify onoff measure_current measure_voltage measure_power meter_power">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zasuvka-kuchyne-kaffe.svg" alt="Zasuvka Kuchyne Kaffe" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zasuvka Kuchyne Kaffe</h3>
     <p class="hw-meta-line"><strong>Meross</strong> · MSS315 Smart Plug</p>
@@ -1169,7 +1171,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 3 kuchyne 3 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-3.svg" alt="Kuchyne 3" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 3</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -1198,7 +1200,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 1 kuchyne 1 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-1.svg" alt="Kuchyne 1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 1</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -1227,7 +1229,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 2 kuchyne 2 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-2.svg" alt="Kuchyne 2" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 2</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -1284,7 +1286,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="sensore di presenza snzb-06p openspace sensore di presenza snzb-06p openspace sonoff snzb-06p presence (mmwave 24ghz) zigbee spolecne environmentální senzor alarm_presence sonoff_illuminance">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/sensore-di-presenza-snzb-06p-openspace.svg" alt="Sensore di Presenza SNZB-06P openspace" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Sensore di Presenza SNZB-06P openspace</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · SNZB-06P Presence (mmWave 24GHz)</p>
@@ -1313,7 +1315,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="weather weather yr.no weather forecast feed cloud (web) spolecne environmentální senzor forecast_time weather_description measure_temperature measure_temperature.feels_like measure_rain.next_1_hour measure_rain.next_6_hours measure_temperature.min_next_6_hours measure_temperature.max_next_6_hours measure_pressure measure_humidity measure_cloud_area_fraction measure_fog_area_fraction measure_wind_direction measure_wind_angle measure_ultraviolet sunrise_time sunset_time measure_wind_strength1">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/weather.svg" alt="Weather" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Weather</h3>
     <p class="hw-meta-line"><strong>Yr.no</strong> · Weather forecast feed</p>
@@ -1342,7 +1344,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="interruttore telecomando senza fili h1 doppio interruttore telecomando senza fili h1 doppio xiaomi/aqara wireless remote switch zigbee spolecne tlačítko / scéna trigger measure_battery alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🎛</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/interruttore-telecomando-senza-fili-h1-doppio.svg" alt="Interruttore Telecomando Senza Fili H1 Doppio" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Interruttore Telecomando Senza Fili H1 Doppio</h3>
     <p class="hw-meta-line"><strong>Xiaomi/Aqara</strong> · Wireless Remote Switch</p>
@@ -1371,7 +1373,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="termometro snzb-02p open space termometro snzb-02p open space sonoff snzb-02p temp + humid zigbee spolecne environmentální senzor measure_temperature measure_humidity measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/termometro-snzb-02p-open-space.svg" alt="Termometro SNZB-02P Open Space" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Termometro SNZB-02P Open Space</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · SNZB-02P Temp + Humid</p>
@@ -1399,7 +1401,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="sensore di movimento snzb-03 sensore di movimento snzb-03 sonoff snzb-03 motion (pir) zigbee ložnice environmentální senzor alarm_motion measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/sensore-di-movimento-snzb-03.svg" alt="Sensore di movimento SNZB-03" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Sensore di movimento SNZB-03</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · SNZB-03 Motion (PIR)</p>
@@ -1428,7 +1430,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="temperature and humidity sensor ložnice temperature and humidity sensor ložnice sonoff th01 temperature sensor zigbee ložnice environmentální senzor measure_temperature measure_humidity measure_battery alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/temperature-and-humidity-sensor-loznice.svg" alt="Temperature and Humidity Sensor ložnice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Temperature and Humidity Sensor ložnice</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · TH01 Temperature Sensor</p>
@@ -1457,7 +1459,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="xiaomi interruttore wireless mini  xiaomi interruttore wireless mini xiaomi unknown xiaomi model zigbee ložnice tlačítko / scéna trigger measure_battery alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🎛</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/xiaomi-interruttore-wireless-mini.svg" alt="Xiaomi Interruttore Wireless Mini" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Xiaomi Interruttore Wireless Mini</h3>
     <p class="hw-meta-line"><strong>Xiaomi</strong> · UNKNOWN Xiaomi model</p>
@@ -1486,7 +1488,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="zasuvka kamera zasuvka kamera lidl silvercrest smart plug (zigbee) zigbee ložnice síťová zásuvka / spínač onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zasuvka-kamera.svg" alt="zasuvka kamera" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">zasuvka kamera</h3>
     <p class="hw-meta-line"><strong>Lidl Silvercrest</strong> · Smart Plug (Zigbee)</p>
@@ -1515,7 +1517,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="1 žárovka lidl e14 1 žárovka lidl e14 generic zigbee (virtual) zigbee virtual device zigbee ložnice síťová zásuvka / spínač onoff dim light_temperature light_saturation light_hue light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/1-zarovka-lidl-e14.svg" alt="1 žárovka lidl E14" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">1 žárovka lidl E14</h3>
     <p class="hw-meta-line"><strong>Generic Zigbee (virtual)</strong> · Zigbee virtual device</p>
@@ -1573,7 +1575,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="lampicka lampicka generic zigbee (virtual) zigbee virtual device zigbee ložnice síťová zásuvka / spínač onoff dim light_temperature light_saturation light_hue light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/lampicka.svg" alt="lampicka" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">lampicka</h3>
     <p class="hw-meta-line"><strong>Generic Zigbee (virtual)</strong> · Zigbee virtual device</p>
@@ -1602,7 +1604,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="2 žárovka lidl e14 2 žárovka lidl e14 generic zigbee (virtual) zigbee virtual device zigbee ložnice síťová zásuvka / spínač onoff dim light_temperature light_saturation light_hue light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/2-zarovka-lidl-e14.svg" alt="2 žárovka lidl E14" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">2 žárovka lidl E14</h3>
     <p class="hw-meta-line"><strong>Generic Zigbee (virtual)</strong> · Zigbee virtual device</p>
@@ -1631,7 +1633,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="led pasek postel led pasek postel lidl silvercrest smart plug (zigbee) zigbee ložnice síťová zásuvka / spínač onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/led-pasek-postel.svg" alt="Led pasek postel" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Led pasek postel</h3>
     <p class="hw-meta-line"><strong>Lidl Silvercrest</strong> · Smart Plug (Zigbee)</p>
@@ -1660,7 +1662,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="indoor indoor foscam pan/tilt camera wi-fi (cloud) ložnice speciální / složené flip mirror brightness contrast volume button.sync_time sleep">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">📦</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/indoor.svg" alt="indoor" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">indoor</h3>
     <p class="hw-meta-line"><strong>Foscam</strong> · Pan/Tilt camera</p>
@@ -1689,7 +1691,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="xiaomi sensore di luce ložnice xiaomi sensore di luce ložnice xiaomi light sensor mgl01 zigbee ložnice environmentální senzor measure_luminance alarm_battery measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/xiaomi-sensore-di-luce-loznice.svg" alt="Xiaomi Sensore di Luce ložnice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Xiaomi Sensore di Luce ložnice</h3>
     <p class="hw-meta-line"><strong>Xiaomi</strong> · Light Sensor MGL01</p>
@@ -1718,7 +1720,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="zvlhčovač1 zvlhčovač1 generic zigbee (virtual) zigbee virtual device zigbee ložnice síťová zásuvka / spínač onoff meter_power measure_power measure_voltage measure_current">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zvlhcovac1.svg" alt="Zvlhčovač1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zvlhčovač1</h3>
     <p class="hw-meta-line"><strong>Generic Zigbee (virtual)</strong> · Zigbee virtual device</p>
@@ -1747,7 +1749,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="televize v ložnici televize v ložnici android tv android tv remote wi-fi ložnice tv / streaming endpoint onoff volume_up volume_down volume_set volume_mute key_play key_pause key_stop key_rewind key_fast_forward key_cursor_up key_cursor_right key_cursor_down key_cursor_left key_back key_home key_confirm key_previous key_next key_watch_tv key_channel_up key_channel_down key_digit_0 key_digit_1 key_digit_2 key_digit_3 key_digit_4 key_digit_5 key_digit_6 key_digit_7 key_digit_8 key_digit_9 current_application speaker_playing speaker_next speaker_prev speaker_artist speaker_track speaker_album">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">📺</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/televize-v-loznici.svg" alt="Televize v ložnici" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Televize v ložnici</h3>
     <p class="hw-meta-line"><strong>Android TV</strong> · Android TV remote</p>
@@ -1776,7 +1778,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="zasuvka tv loznice zasuvka tv loznice fibaro fgs-223 double switch z-wave ložnice síťová zásuvka / spínač measure_power meter_power onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zasuvka-tv-loznice.svg" alt="Zasuvka TV Loznice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zasuvka TV Loznice</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGS-223 Double Switch</p>
@@ -1805,7 +1807,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="zasuvka soundbar loznice zasuvka soundbar loznice fibaro fgs-223 double switch z-wave ložnice síťová zásuvka / spínač measure_power meter_power onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zasuvka-soundbar-loznice.svg" alt="Zasuvka Soundbar Loznice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zasuvka Soundbar Loznice</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGS-223 Double Switch</p>
@@ -1834,7 +1836,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="sensor spim loznice sensor spim loznice sonoff snzb-06p presence (mmwave 24ghz) zigbee ložnice environmentální senzor alarm_presence sonoff_illuminance">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/sensor-spim-loznice.svg" alt="Sensor Spim Loznice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Sensor Spim Loznice</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · SNZB-06P Presence (mmWave 24GHz)</p>
@@ -1863,7 +1865,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="zarovka loznice zarovka loznice matter (virtuální bridge) matter virtual device matter ložnice osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zarovka-loznice.svg" alt="Zarovka Loznice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zarovka Loznice</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -1891,7 +1893,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="pohybove cidlo koupelna pohybove cidlo koupelna sonoff ms01 pir motion zigbee koupelna environmentální senzor alarm_motion alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/pohybove-cidlo-koupelna.svg" alt="pohybove cidlo koupelna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">pohybove cidlo koupelna</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · MS01 PIR Motion</p>
@@ -1920,7 +1922,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="fibaro radiator koupelna fibaro radiator koupelna fibaro fgt-001 heat controller (trv) z-wave koupelna termostat / trv measure_battery target_temperature measure_temperature">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🌡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/fibaro-radiator-koupelna.svg" alt="Fibaro Radiator koupelna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Fibaro Radiator koupelna</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGT-001 Heat Controller (TRV)</p>
@@ -1949,7 +1951,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="temperature and humidity sensor koupelna temperature and humidity sensor koupelna sonoff th01 temperature sensor zigbee koupelna environmentální senzor measure_temperature measure_humidity measure_battery alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/temperature-and-humidity-sensor-koupelna.svg" alt="Temperature and Humidity Sensor koupelna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Temperature and Humidity Sensor koupelna</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · TH01 Temperature Sensor</p>
@@ -1978,7 +1980,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="svetlo koupelna svetlo koupelna philips hue bulb zigbee (hue bridge) koupelna osvětlení (lighting) onoff dim button.migrate_v3">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/svetlo-koupelna.svg" alt="svetlo Koupelna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">svetlo Koupelna</h3>
     <p class="hw-meta-line"><strong>Philips</strong> · Hue Bulb</p>
@@ -2065,7 +2067,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="sensore jsem v koupelne sensore jsem v koupelne sonoff snzb-06p presence (mmwave 24ghz) zigbee koupelna environmentální senzor alarm_presence sonoff_illuminance">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/sensore-jsem-v-koupelne.svg" alt="Sensore Jsem v koupelne" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Sensore Jsem v koupelne</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · SNZB-06P Presence (mmWave 24GHz)</p>
@@ -2093,7 +2095,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="motion sensor pracovna motion sensor pracovna sonoff ms01 pir motion zigbee pracovna environmentální senzor alarm_motion alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/motion-sensor-pracovna.svg" alt="Motion Sensor pracovna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Motion Sensor pracovna</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · MS01 PIR Motion</p>
@@ -2122,7 +2124,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="zarovka pracovna rgbw bulb e27 zarovka pracovna rgbw bulb e27 lidl silvercrest rgb bulb e27 zigbee pracovna osvětlení (lighting) onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zarovka-pracovna-rgbw-bulb-e27.svg" alt="zarovka pracovna RGBW Bulb E27" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">zarovka pracovna RGBW Bulb E27</h3>
     <p class="hw-meta-line"><strong>Lidl Silvercrest</strong> · RGB Bulb E27</p>
@@ -2151,7 +2153,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="zasuvka pracovna zasuvka pracovna shelly shelly plug / pro series wi-fi (cloud) pracovna síťová zásuvka / spínač onoff measure_power meter_power measure_temperature rssi devicegen1">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zasuvka-pracovna.svg" alt="Zasuvka pracovna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zasuvka pracovna</h3>
     <p class="hw-meta-line"><strong>Shelly</strong> · Shelly Plug / Pro series</p>
@@ -2179,7 +2181,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="motion sensor pradelna motion sensor pradelna lidl silvercrest smart motion sensor zigbee prádelna environmentální senzor measure_battery alarm_motion alarm_battery alarm_tamper">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/motion-sensor-pradelna.svg" alt="Motion Sensor pradelna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Motion Sensor pradelna</h3>
     <p class="hw-meta-line"><strong>Lidl Silvercrest</strong> · Smart Motion Sensor</p>
@@ -2208,7 +2210,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="pradelna naradí pradelna naradí philips hue bulb zigbee (hue bridge) prádelna osvětlení (lighting) onoff dim button.migrate_v3">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/pradelna-naradi.svg" alt="Pradelna naradí" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Pradelna naradí</h3>
     <p class="hw-meta-line"><strong>Philips</strong> · Hue Bulb</p>
@@ -2237,7 +2239,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="fibaro kotel fibaro kotel fibaro fgs-214 single switch z-wave prádelna síťová zásuvka / spínač onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/fibaro-kotel.svg" alt="Fibaro Kotel" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Fibaro Kotel</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGS-214 Single Switch</p>
@@ -2266,7 +2268,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="pradelna zarovka pradelna zarovka philips hue bulb zigbee (hue bridge) prádelna osvětlení (lighting) onoff dim button.migrate_v3">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/pradelna-zarovka.svg" alt="Pradelna zarovka" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Pradelna zarovka</h3>
     <p class="hw-meta-line"><strong>Philips</strong> · Hue Bulb</p>
@@ -2295,7 +2297,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="boiler zasuvka boiler zasuvka shelly shelly plug / pro series wi-fi (cloud) prádelna síťová zásuvka / spínač onoff measure_power meter_power measure_temperature rssi devicegen1">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/boiler-zasuvka.svg" alt="Boiler zasuvka" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Boiler zasuvka</h3>
     <p class="hw-meta-line"><strong>Shelly</strong> · Shelly Plug / Pro series</p>
@@ -2324,7 +2326,7 @@
   data-energy="yes"
   data-verification="verified"
   data-search="zasuvka pracka pradelna zasuvka pracka pradelna fibaro fgwof-011 wall plug switch z-wave prádelna síťová zásuvka / spínač onoff measure_power meter_power">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zasuvka-pracka-pradelna.svg" alt="Zasuvka pracka pradelna" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zasuvka pracka pradelna</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGWOF-011 Wall Plug Switch</p>
@@ -2352,7 +2354,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="predsin predsin philips hue bulb zigbee (hue bridge) předsíň osvětlení (lighting) onoff dim button.migrate_v3">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/predsin.svg" alt="Predsin" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Predsin</h3>
     <p class="hw-meta-line"><strong>Philips</strong> · Hue Bulb</p>
@@ -2381,7 +2383,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="button away/home button away/home fibaro fgpb-101 button z-wave předsíň environmentální senzor measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/button-away-home.svg" alt="Button away/home" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Button away/home</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGPB-101 Button</p>
@@ -2410,7 +2412,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="camera 1 camera 1 foscam dome camera wi-fi (cloud) předsíň speciální / složené flip mirror brightness contrast volume button.sync_time sleep">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">📦</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/camera-1.svg" alt="camera 1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">camera 1</h3>
     <p class="hw-meta-line"><strong>Foscam</strong> · Dome camera</p>
@@ -2439,7 +2441,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="sensore di light pohybu p1 sensore di light pohybu p1 xiaomi/aqara motion sensor p1 zigbee předsíň environmentální senzor alarm_motion measure_luminance alarm_battery measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/sensore-di-light-pohybu-p1.svg" alt="Sensore di light pohybu P1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Sensore di light pohybu P1</h3>
     <p class="hw-meta-line"><strong>Xiaomi/Aqara</strong> · Motion Sensor P1</p>
@@ -2468,7 +2470,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="door/window sensor předsín1 door/window sensor předsín1 sonoff ds01 door/window sensor zigbee předsíň environmentální senzor alarm_contact alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/door-window-sensor-predsin1.svg" alt="Door/Window Sensor předsín1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Door/Window Sensor předsín1</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · DS01 Door/Window Sensor</p>
@@ -2496,7 +2498,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="toaleta toaleta philips hue bulb zigbee (hue bridge) toaleta osvětlení (lighting) onoff dim button.migrate_v3">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/toaleta.svg" alt="Toaleta" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Toaleta</h3>
     <p class="hw-meta-line"><strong>Philips</strong> · Hue Bulb</p>
@@ -2525,7 +2527,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="fibaro radiator toaleta fibaro radiator toaleta fibaro fgt-001 heat controller (trv) z-wave toaleta termostat / trv measure_battery target_temperature measure_temperature">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🌡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/fibaro-radiator-toaleta.svg" alt="Fibaro Radiator toaleta" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Fibaro Radiator toaleta</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGT-001 Heat Controller (TRV)</p>
@@ -2554,7 +2556,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="pohybove cidlo toaleta pohybove cidlo toaleta sonoff snzb-03 motion (pir) zigbee toaleta environmentální senzor alarm_motion measure_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/pohybove-cidlo-toaleta.svg" alt="pohybove cidlo toaleta" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">pohybove cidlo toaleta</h3>
     <p class="hw-meta-line"><strong>Sonoff</strong> · SNZB-03 Motion (PIR)</p>
@@ -2582,7 +2584,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="xiaomi  xiaomi xiaomi unknown xiaomi model zigbee pc setup tlačítko / scéna trigger measure_battery alarm_battery">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🎛</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/xiaomi.svg" alt="Xiaomi" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Xiaomi</h3>
     <p class="hw-meta-line"><strong>Xiaomi</strong> · UNKNOWN Xiaomi model</p>
@@ -2611,7 +2613,7 @@
   data-energy="partial"
   data-verification="verified"
   data-search="hp printer hp printer hp hp printer (network) wi-fi (lan) pc setup speciální / složené device_model device_firmware status_string measure_page_count measure_page_count_month alarm_status alarm_level_low measure_bk measure_c measure_m measure_y time_update">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">📦</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/hp-printer.svg" alt="HP Printer" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">HP Printer</h3>
     <p class="hw-meta-line"><strong>HP</strong> · HP printer (network)</p>
@@ -2640,7 +2642,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="zasuvka počítač zasuvka počítač lidl silvercrest smart plug (zigbee) zigbee pc setup síťová zásuvka / spínač onoff">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">🔌</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zasuvka-pocitac.svg" alt="zasuvka počítač" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">zasuvka počítač</h3>
     <p class="hw-meta-line"><strong>Lidl Silvercrest</strong> · Smart Plug (Zigbee)</p>
@@ -2668,7 +2670,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="air purifier 4 lite (zhimi.airp.rmb1) air purifier 4 lite (zhimi.airp.rmb1) xiaomi air purifier 4 lite zigbee home class=airpurifier onoff dim airpurifier_zhimi_mode onoff.ptc measure_temperature measure_pm25 measure_co2">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">📦</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/air-purifier-4-lite-zhimi-airp-rmb1.svg" alt="Air Purifier 4 Lite (zhimi.airp.rmb1)" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Air Purifier 4 Lite (zhimi.airp.rmb1)</h3>
     <p class="hw-meta-line"><strong>Xiaomi</strong> · Air Purifier 4 Lite</p>
@@ -2696,7 +2698,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="sun sun home assistant ha bridge device wi-fi (ha) nefunkcni environmentální senzor hass-string.sun_next_dawn hass-string.sun_next_dusk hass-string.sun_next_midnight hass-string.sun_next_noon hass-string.sun_next_rising hass-string.sun_next_setting">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/sun.svg" alt="Sun" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Sun</h3>
     <p class="hw-meta-line"><strong>Home Assistant</strong> · HA bridge device</p>
@@ -2725,7 +2727,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="backup backup home assistant ha bridge device wi-fi (ha) nefunkcni environmentální senzor hass-string.backup_backup_manager_state hass-string.backup_next_scheduled_automatic_backup hass-string.backup_last_successful_automatic_backup hass-string.backup_last_attempted_automatic_backup">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/backup.svg" alt="Backup" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Backup</h3>
     <p class="hw-meta-line"><strong>Home Assistant</strong> · HA bridge device</p>
@@ -2754,7 +2756,7 @@
   data-energy="no"
   data-verification="verified"
   data-search="button button fibaro fgpb-101 button z-wave nefunkcni environmentální senzor ">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">👁</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/button.svg" alt="Button" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Button</h3>
     <p class="hw-meta-line"><strong>Fibaro</strong> · FGPB-101 Button</p>
@@ -2782,7 +2784,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="zarovka loznice zarovka loznice matter (virtuální bridge) matter virtual device matter ložnice osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/zarovka-loznice.svg" alt="Zarovka Loznice" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Zarovka Loznice</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -2811,7 +2813,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 2 smart rgbtw bulb 2 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-2.svg" alt="Smart RGBTW Bulb 2" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 2</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -2840,7 +2842,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 3 smart rgbtw bulb 3 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-3.svg" alt="Smart RGBTW Bulb 3" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 3</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -2869,7 +2871,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="smart rgbtw bulb 1 smart rgbtw bulb 1 matter (virtuální bridge) matter virtual device matter jídelna osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode matter_color_loop">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/smart-rgbtw-bulb-1.svg" alt="Smart RGBTW Bulb 1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Smart RGBTW Bulb 1</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -2898,7 +2900,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 3 kuchyne 3 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-3.svg" alt="Kuchyne 3" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 3</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -2927,7 +2929,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 1 kuchyne 1 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-1.svg" alt="Kuchyne 1" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 1</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>
@@ -2956,7 +2958,7 @@
   data-energy="no"
   data-verification="partial"
   data-search="kuchyne 2 kuchyne 2 matter (virtuální bridge) matter virtual device matter kitchen osvětlení (lighting) button.identify onoff dim light_hue light_saturation light_temperature light_mode">
-  <div class="hw-photo"><div class="hw-photo-ph"><div class="hw-photo-ph-icon">💡</div><div class="hw-photo-ph-text">Foto k doplnění</div></div></div>
+  <div class="hw-photo"><img src="assets/hardware/icons/kuchyne-2.svg" alt="Kuchyne 2" loading="eager" /></div>
   <div class="hw-card-body">
     <h3 class="hw-card-title">Kuchyne 2</h3>
     <p class="hw-meta-line"><strong>Matter (virtuální bridge)</strong> · Matter virtual device</p>

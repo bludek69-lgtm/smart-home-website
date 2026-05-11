@@ -75,8 +75,8 @@ async def capture():
             print(f'  OK 02_filters → {f2.name} ({f2.stat().st_size // 1024} KB)')
             total += 1
 
-            # Scroll to first zone section
-            await page.evaluate("document.querySelector('#sec-matter')?.scrollIntoView({block:'start'})")
+            # Scroll to first zone section (safe — querySelector may return null)
+            await page.evaluate("(()=>{const e=document.querySelector('#sec-matter');if(e)e.scrollIntoView({block:'start'});})()")
             await page.wait_for_timeout(500)
             f3 = OUT / f'{label}_{w}x{h}_03_matter.png'
             await page.screenshot(path=str(f3), full_page=False)
@@ -86,7 +86,7 @@ async def capture():
             # Toggle to table mode
             await page.click('#hw-mode-table')
             await page.wait_for_timeout(700)
-            await page.evaluate("document.querySelector('#hw-view-table').scrollIntoView({block:'start'})")
+            await page.evaluate("(()=>{const e=document.querySelector('#hw-view-table');if(e)e.scrollIntoView({block:'start'});})()")
             await page.wait_for_timeout(500)
             f4 = OUT / f'{label}_{w}x{h}_04_table.png'
             await page.screenshot(path=str(f4), full_page=False)
@@ -96,7 +96,8 @@ async def capture():
             # Toggle back + UNKNOWN section
             await page.click('#hw-mode-cards')
             await page.wait_for_timeout(500)
-            await page.evaluate("document.querySelector('#sec-unknown')?.scrollIntoView({block:'start'})")
+            await page.evaluate("(()=>{const e=document.querySelector('#sec-unknown');if(e)e.scrollIntoView({block:'start'});})()")
+            await page.wait_for_timeout(1500)  # extra wait for lazy SVGs to load
             await page.wait_for_timeout(500)
             f5 = OUT / f'{label}_{w}x{h}_05_unknown.png'
             await page.screenshot(path=str(f5), full_page=False)

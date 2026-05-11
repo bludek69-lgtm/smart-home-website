@@ -94,7 +94,9 @@ def matter_badge(matter_class):
 def card_html(it):
     img = it.get('image_file', '')
     if img and (ROOT / img).exists():
-        photo = f'<img src="{_html.escape(img)}" alt="{_html.escape(it["display_name"])}" loading="lazy" />'
+        # SVG icons load eagerly (small, ~5KB), real photos lazy
+        loading = 'eager' if img.endswith('.svg') else 'lazy'
+        photo = f'<img src="{_html.escape(img)}" alt="{_html.escape(it["display_name"])}" loading="{loading}" />'
     else:
         icon = ROLE_ICON.get(it['device_class'], '📦')
         photo = (f'<div class="hw-photo-ph">'
@@ -393,6 +395,8 @@ EXTRA_CSS = '''
 
 .hw-photo { aspect-ratio:16/10; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .hw-photo img { width:100%; height:100%; object-fit:contain; padding:0.5rem; }
+/* Homey-served SVG icons are black silhouettes — invert for dark theme */
+.hw-photo img[src*="hardware/icons/"] { filter: invert(0.92) hue-rotate(180deg); opacity:0.92; }
 .hw-photo-ph { color:rgba(255,255,255,0.45); font-size:0.8rem; font-style:italic; text-align:center; }
 .hw-photo-ph-icon { font-size:2.4rem; margin-bottom:0.2rem; opacity:0.7; }
 .hw-photo-ph-text { font-size:0.7rem; }
