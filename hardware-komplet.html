@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Přehled reálně používaného hardwaru v projektu SMART HOME: Homey Pro 2026, senzory, světla, topení, audio, zásuvky, rolety, dashboard a infrastruktura." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Kompletní hardware chytré domácnosti | SMART HOME Semily</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+
+<style>
+/* ─── Hardware-komplet page (2026-05-11) ─────────────────────────── */
+.hw-page { max-width:1320px; margin:0 auto; padding:1.5rem 1.25rem 4rem; }
+.hw-hero { padding:2rem 0 1.5rem; border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:1.5rem; }
+.hw-hero h1 { font-size:clamp(1.6rem,3vw,2.4rem); margin:0 0 0.5rem; }
+.hw-hero p  { opacity:0.85; max-width:780px; }
+
+.hw-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:0.8rem; margin:1.4rem 0 0; }
+.hw-stat  { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem 0.6rem; text-align:center; }
+.hw-stat-val { font-size:1.6rem; font-weight:700; color:#7cd6ff; }
+.hw-stat-lbl { font-size:0.78rem; opacity:0.7; text-transform:uppercase; letter-spacing:0.5px; margin-top:0.25rem; }
+
+.hw-controls { display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; margin:1.5rem 0 1rem; padding:0.9rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; }
+.hw-controls select, .hw-controls input { padding:0.45rem 0.7rem; border-radius:8px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.04); color:inherit; font-size:0.9rem; min-width:130px; }
+.hw-controls input { flex:1; min-width:170px; }
+.hw-controls label { font-size:0.78rem; opacity:0.7; text-transform:uppercase; letter-spacing:0.5px; }
+.hw-count { margin-left:auto; font-size:0.85rem; opacity:0.8; }
+
+.hw-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-top:1.2rem; }
+.hw-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.15s, border-color 0.15s; }
+.hw-card:hover { transform:translateY(-2px); border-color:rgba(124,214,255,0.3); }
+.hw-photo { aspect-ratio:16/10; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.hw-photo img { width:100%; height:100%; object-fit:contain; padding:0.5rem; }
+.hw-photo-ph { color:rgba(255,255,255,0.45); font-size:0.8rem; font-style:italic; text-align:center; }
+.hw-card-body { padding:0.9rem 1rem 1rem; }
+.hw-card-title { font-size:0.98rem; margin:0 0 0.25rem; line-height:1.25; }
+.hw-model { font-size:0.78rem; opacity:0.7; margin:0 0 0.7rem; line-height:1.35; }
+.hw-badges { display:flex; flex-wrap:wrap; gap:0.3rem; }
+.hw-badge { font-size:0.7rem; padding:0.2rem 0.55rem; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); white-space:nowrap; }
+.hw-proto  { background:rgba(124,214,255,0.15); border-color:rgba(124,214,255,0.25); color:#7cd6ff; }
+.hw-cat    { background:rgba(255,200,100,0.13); border-color:rgba(255,200,100,0.2); color:#ffc864; }
+.hw-zone   { background:rgba(140,255,160,0.10); border-color:rgba(140,255,160,0.2); color:#9cf2a6; }
+.hw-energy-real     { background:rgba(255,100,100,0.15); border-color:rgba(255,100,100,0.25); color:#ff8080; }
+.hw-energy-estimate { background:rgba(180,140,255,0.13); border-color:rgba(180,140,255,0.2); color:#c8a6ff; }
+.hw-state-active { background:rgba(80,200,120,0.13); border-color:rgba(80,200,120,0.2); color:#7cdc94; }
+.hw-state-legacy { background:rgba(150,150,150,0.13); border-color:rgba(150,150,150,0.2); color:#a8a8a8; }
+
+.hw-section-h2 { margin-top:2.5rem; padding-bottom:0.4rem; border-bottom:1px solid rgba(255,255,255,0.08); font-size:1.3rem; }
+.hw-table-wrap { overflow-x:auto; margin-top:0.8rem; border-radius:12px; border:1px solid rgba(255,255,255,0.08); }
+.hw-table { width:100%; border-collapse:collapse; font-size:0.88rem; min-width:760px; }
+.hw-table th { background:rgba(124,214,255,0.1); padding:0.7rem 0.8rem; text-align:left; font-weight:600; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.hw-table td { padding:0.55rem 0.8rem; border-bottom:1px solid rgba(255,255,255,0.05); }
+.hw-table tr:hover td { background:rgba(255,255,255,0.03); }
+
+.hw-note { background:rgba(255,200,100,0.06); border-left:3px solid #ffc864; padding:0.9rem 1.1rem; border-radius:6px; margin:1.5rem 0; font-size:0.88rem; }
+.hw-note strong { color:#ffc864; }
+
+@media (max-width: 720px) {
+  .hw-controls { flex-direction:column; align-items:stretch; }
+  .hw-controls select, .hw-controls input { width:100%; }
+  .hw-count { margin-left:0; }
+}
+</style>
+
+</head>
+<body>
+<header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html" class="is-active">Domů</a></li>
+          <li class="has-mega"><a href="prozivani.html" class="mega-trigger">🏠 Prožívání</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="topeni-klima.html"><strong>Topení a klima</strong><span>Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.</span></a><a href="svetla.html"><strong>Světla</strong><span>Dual-sensor open space, lux-driven automatika, privacy guard kdy svítit nesmí, 4-vrstvá pipeline od request po fyzickou žárovku.</span></a><a href="audio.html"><strong>Audio a TTS</strong><span>TTS přes Google Cast s 200-char limitem, briefing split do fází, multi-speaker routing, sleep guard, prev_playing protection po bathroom misroute.</span></a><a href="bezpecnost-kamery.html"><strong>Bezpečnost a kamery</strong><span>Multi-zone motion + presence detection, door/window guard, away/home stavová logika, anomaly detection přes Brain Guardian.</span></a><a href="atmosfera.html"><strong>Atmosféra</strong><span>Sleep state co všechno gateuje, morning/sleep brain, comfort suggest, time-of-day scénografie. Dům co cítí část dne.</span></a><a href="energie.html"><strong>Energie</strong><span>Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření.</span></a><a href="funkce.html"><strong>Funkce</strong><span>Topení, ranní rutina, příchod/odchod, fyzická tlačítka, koupelna, světelný cyklus, robot vysavač.</span></a><a href="dashboard.html"><strong>Dashboard</strong><span>Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.</span></a><a href="digital-twin.html"><strong>Digital Twin</strong><span>Klikací půdorys s 7 zónami a 74 zařízeními. Read-only showcase — žádné API tokeny, žádné ovládání, jen mapa toho, co dům má.</span></a><a href="ai-brain.html"><strong>AI Brain</strong><span>Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.</span></a></div></div></li>
+          <li class="has-mega"><a href="zarizeni.html" class="mega-trigger">📦 Zařízení</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="senzory.html"><strong>Senzory</strong><span>mmWave presence FP2, PIR Fibaro, door/window kontakty, lux senzory. Co dům vidí a slyší.</span></a><a href="ovladace.html"><strong>Tlačítka a ovladače</strong><span>Aqara Cube T1 Pro jako primární gestural input, fyzická tlačítka jako fallback. User input bez aplikací.</span></a><a href="svitidla.html"><strong>Svítidla</strong><span>Stropní, stolní, LED pásek, koupelnová svítidla. Wi-Fi, Zigbee, Z-wave — všechno zpod jedné pipeline.</span></a><a href="repro.html"><strong>Reproduktory</strong><span>Tři Google Cast koncové body + Nest Hub Max. Speakers v kuchyni, koupelně, ložnici, vizuál v ložnici.</span></a><a href="rolety.html"><strong>Rolety</strong><span>IKEA Fyrtur, dvojí role — fyzické zastínění a privacy signal pro light router.</span></a><a href="zasuvky.html"><strong>Zásuvky a měření</strong><span>11 plug devices s power metering, FGS-223 rezerva, plánovaný Shelly 3EM pro 3-fázové měření.</span></a><a href="hardware.html"><strong>Hardware</strong><span>Homey Pro 2026, bezdrátové protokoly, klíčová zařízení.</span></a><a href="hardware-komplet.html"><strong>Kompletní hardware</strong><span>Katalog všech 79 zařízení z živého Homey exportu — filtry, fotky, role, protokol, zóna.</span></a><a href="infra.html"><strong>Infrastruktura</strong><span>Raspberry Pi, Home Assistant, GitHub repos, GitHub Actions.</span></a></div></div></li>
+          <li class="has-mega"><a href="pribeh.html" class="mega-trigger">📖 Příběh</a><div class="mega-panel" role="menu"><div class="mega-grid"><a href="team.html"><strong>Kdo za tím stojí</strong><span>Lidský architekt + AI co-pilots. 5 rolí, jedno zařízení. Human + AI Co-Built System.</span></a><a href="journey.html"><strong>Jak vznikal</strong><span>Engineering journey od první žárovky po Brain Guardian. 7 fází + lessons learned + co dělá systém unikátním.</span></a><a href="proc-smart-home.html"><strong>Proč smart home</strong><span>Realisticky, ne marketingově. Energie, komfort, stabilita — co dům reálně řeší a kde se nejvíc plýtvá energií. Plus role AI v rozhodování.</span></a><a href="historie.html"><strong>Historie</strong><span>Jak systém vznikal — od první žárovky k AI Brain Guardian.</span></a><a href="architektura.html"><strong>Architektura</strong><span>Script-first princip a 12 pravidel co drží systém pohromadě.</span></a><a href="vyzvy.html"><strong>Výzvy</strong><span>Reálné problémy které jsem řešil — Zigbee battery, SIGABRT, ghost values, audio race conditions.</span></a><a href="rano-rutina.html"><strong>Ráno v 3:15</strong><span>Případová studie — minute-by-minute timeline pondělního rána. Pre-wake boost, briefing split, bathroom radio, departure. Vše autonomní.</span></a><a href="navrat-domu.html"><strong>Návrat domů</strong><span>Případová studie — multi-signal arrival pipeline. Geofence, motion confirm, preset přepnutí, heating boost, light routing. 30 sekund od vstupu po sync.</span></a><a href="nocni-koupelna.html"><strong>Noční koupelna</strong><span>Případová studie — motion v koupelně uprostřed noci. Sleep guard, jemná dim cesta, žádný TTS, žádný plný restart subsystémů. Subtilní rozdíl, který drží spánek.</span></a></div></div></li>
+          <li><a href="blog.html">📝 Blog</a></li>
+          <li><a href="kontakt.html">✉ Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+<main class="hw-page">
+  <div class="hw-hero">
+    <h1>Kompletní hardware systému SMART HOME</h1>
+    <p>Reálný přehled zařízení, senzorů, světel, audio prvků, měření, infrastruktury a řídicí vrstvy v bytě v Semilech. Data ze živého Homey Pro 2026 exportu (snapshot 2026-05-11).</p>
+    
+  <div class="hw-stats">
+    <div class="hw-stat"><div class="hw-stat-val">79</div><div class="hw-stat-lbl">zařízení</div></div>
+    <div class="hw-stat"><div class="hw-stat-val">10</div><div class="hw-stat-lbl">zón</div></div>
+    <div class="hw-stat"><div class="hw-stat-val">9</div><div class="hw-stat-lbl">protokolů</div></div>
+    <div class="hw-stat"><div class="hw-stat-val">26</div><div class="hw-stat-lbl">senzorů</div></div>
+    <div class="hw-stat"><div class="hw-stat-val">19</div><div class="hw-stat-lbl">světel</div></div>
+    <div class="hw-stat"><div class="hw-stat-val">3</div><div class="hw-stat-lbl">reproduktorů</div></div>
+    <div class="hw-stat"><div class="hw-stat-val">16</div><div class="hw-stat-lbl">zásuvek</div></div>
+    <div class="hw-stat"><div class="hw-stat-val">3</div><div class="hw-stat-lbl">TRV</div></div>
+    <div class="hw-stat"><div class="hw-stat-val">5</div><div class="hw-stat-lbl">tlačítek</div></div>
+  </div>
+  </div>
+
+  <div class="hw-note">
+    <strong>Bezpečnost a transparentnost:</strong> Stránka <strong>nezobrazuje</strong> interní device ID, IP adresy, MAC adresy ani API tokeny.
+    Zobrazena jsou pouze obecná data (název v systému, výrobce, model, protokol, zóna, role). Kamery jsou uvedené jen popisem role — stream není veřejný.
+  </div>
+
+  <div class="hw-controls" role="region" aria-label="Filtry hardwaru">
+    <label for="hw-cat">Kategorie:
+      <select id="hw-cat">
+        <option value="">vše</option>
+        <option value="senzory">Senzory</option>
+        <option value="svetla">Světla</option>
+        <option value="zasuvky">Zásuvky</option>
+        <option value="ovladace">Tlačítka</option>
+        <option value="topeni">Topení / klima</option>
+        <option value="audio">Audio</option>
+        <option value="rolety">Rolety</option>
+        <option value="spotrebice">Spotřebiče</option>
+        <option value="ostatni">Ostatní</option>
+      </select>
+    </label>
+    <label for="hw-zone">Zóna:
+      <select id="hw-zone">
+        <option value="">vše</option>
+        <option value="Home">Home</option>
+<option value="Jídelna">Jídelna</option>
+<option value="Kitchen">Kitchen</option>
+<option value="Koupelna">Koupelna</option>
+<option value="Ložnice">Ložnice</option>
+<option value="Pc Setup">Pc Setup</option>
+<option value="Pracovna">Pracovna</option>
+<option value="Prádelna">Prádelna</option>
+<option value="Předsíň">Předsíň</option>
+<option value="Spolecne">Spolecne</option>
+<option value="Toaleta">Toaleta</option>
+<option value="nefunkcni">nefunkcni</option>
+      </select>
+    </label>
+    <label for="hw-proto">Protokol:
+      <select id="hw-proto">
+        <option value="">vše</option>
+        <option value="Cloud (web)">Cloud (web)</option>
+<option value="Google Cast (Wi-Fi)">Google Cast (Wi-Fi)</option>
+<option value="Matter">Matter</option>
+<option value="Wi-Fi">Wi-Fi</option>
+<option value="Wi-Fi (Cloud)">Wi-Fi (Cloud)</option>
+<option value="Wi-Fi (HA)">Wi-Fi (HA)</option>
+<option value="Z-Wave">Z-Wave</option>
+<option value="Zigbee">Zigbee</option>
+<option value="Zigbee (Hue Bridge)">Zigbee (Hue Bridge)</option>
+      </select>
+    </label>
+    <label for="hw-state">Stav:
+      <select id="hw-state">
+        <option value="">vše</option>
+        <option value="active">active</option>
+        <option value="legacy">legacy</option>
+      </select>
+    </label>
+    <input type="search" id="hw-search" placeholder="Hledat (název, model, výrobce)" aria-label="Hledat zařízení" />
+    <span class="hw-count"><span id="hw-count-num">79</span> z 79</span>
+  </div>
+
+  <section aria-labelledby="hw-grid-h">
+    <h2 id="hw-grid-h" class="hw-section-h2">Karty zařízení</h2>
+    <div class="hw-grid" id="hw-grid">
+<article class="hw-card" data-category="senzory" data-zone="Jídelna" data-protocol="Zigbee" data-state="active" data-search="door/window sensor jidelna1 snzb-04 door/window sensor sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-snzb-04.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Door/Window Sensor Jidelna1</h3>
+    <p class="hw-model">Sonoff · SNZB-04 Door/Window Sensor</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Jídelna" data-protocol="Zigbee" data-state="active" data-search="light sensor okno jidelna1 light sensor mgl01 xiaomi">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="xiaomi-light-sensor.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Light Sensor Okno Jidelna1</h3>
+    <p class="hw-model">Xiaomi · Light Sensor MGL01</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Kitchen" data-protocol="Zigbee" data-state="active" data-search="light sensor kuchyně1 light sensor mgl01 xiaomi">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="xiaomi-light-sensor.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Light Sensor kuchyně1</h3>
+    <p class="hw-model">Xiaomi · Light Sensor MGL01</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Kitchen" data-protocol="Z-Wave" data-state="active" data-search="sensore kuchyně z-wave fgms-001 motion sensor plus fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgms-001.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Sensore kuchyně Z-wave</h3>
+    <p class="hw-model">Fibaro · FGMS-001 Motion Sensor Plus</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active" data-search="zasuvka varic kuchyne shelly plug / pro řada shelly">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="shelly-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Zasuvka Varic Kuchyne</h3>
+    <p class="hw-model">Shelly · Shelly Plug / Pro řada</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (Cloud)</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Kitchen" data-protocol="Zigbee" data-state="active" data-search="snimač digestoř th01 temperature sensor sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-th01.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">snimač digestoř</h3>
+    <p class="hw-model">Sonoff · TH01 Temperature Sensor</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Koupelna" data-protocol="Zigbee" data-state="active" data-search="sensore jsem v koupelne snzb-06p presence (mmwave 24ghz) sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-snzb-06p.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Sensore Jsem v koupelne</h3>
+    <p class="hw-model">Sonoff · SNZB-06P Presence (mmWave 24GHz)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Koupelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Koupelna" data-protocol="Zigbee" data-state="active" data-search="temperature and humidity sensor koupelna th01 temperature sensor sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-th01.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Temperature and Humidity Sensor koupelna</h3>
+    <p class="hw-model">Sonoff · TH01 Temperature Sensor</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Koupelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Koupelna" data-protocol="Zigbee" data-state="active" data-search="pohybove cidlo koupelna ms01 pir motion sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-ms01.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">pohybove cidlo koupelna</h3>
+    <p class="hw-model">Sonoff · MS01 PIR Motion</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Koupelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Ložnice" data-protocol="Zigbee" data-state="active" data-search="sensor spim loznice snzb-06p presence (mmwave 24ghz) sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-snzb-06p.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Sensor Spim Loznice</h3>
+    <p class="hw-model">Sonoff · SNZB-06P Presence (mmWave 24GHz)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Ložnice" data-protocol="Zigbee" data-state="active" data-search="sensore di movimento snzb-03 snzb-03 motion (pir) sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-snzb-03.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Sensore di movimento SNZB-03</h3>
+    <p class="hw-model">Sonoff · SNZB-03 Motion (PIR)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Ložnice" data-protocol="Zigbee" data-state="active" data-search="temperature and humidity sensor ložnice th01 temperature sensor sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-th01.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Temperature and Humidity Sensor ložnice</h3>
+    <p class="hw-model">Sonoff · TH01 Temperature Sensor</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Ložnice" data-protocol="Zigbee" data-state="active" data-search="xiaomi sensore di luce ložnice light sensor mgl01 xiaomi">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="xiaomi-light-sensor.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Xiaomi Sensore di Luce ložnice</h3>
+    <p class="hw-model">Xiaomi · Light Sensor MGL01</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Pracovna" data-protocol="Zigbee" data-state="active" data-search="motion sensor pracovna ms01 pir motion sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-ms01.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Motion Sensor pracovna</h3>
+    <p class="hw-model">Sonoff · MS01 PIR Motion</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Pracovna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Prádelna" data-protocol="Zigbee" data-state="active" data-search="motion sensor pradelna smart motion sensor lidl silvercrest">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="lidl-motion.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Motion Sensor pradelna</h3>
+    <p class="hw-model">Lidl Silvercrest · Smart Motion Sensor</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Prádelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Předsíň" data-protocol="Z-Wave" data-state="active" data-search="button away/home fgpb-101 button fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgpb-101.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Button away/home</h3>
+    <p class="hw-model">Fibaro · FGPB-101 Button</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Předsíň</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Předsíň" data-protocol="Zigbee" data-state="active" data-search="door/window sensor předsín1 ds01 door/window sensor sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-ds01.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Door/Window Sensor předsín1</h3>
+    <p class="hw-model">Sonoff · DS01 Door/Window Sensor</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Předsíň</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Předsíň" data-protocol="Zigbee" data-state="active" data-search="sensore di light pohybu p1 motion sensor p1 xiaomi/aqara">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="aqara-motion-p1.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Sensore di light pohybu P1</h3>
+    <p class="hw-model">Xiaomi/Aqara · Motion Sensor P1</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Předsíň</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Spolecne" data-protocol="Zigbee" data-state="active" data-search="cubo t1 pro cube t1 pro xiaomi/aqara">
+  <div class="hw-photo"><img src="assets/photos/aqara-cube-t1-pro.png" alt="Cube T1 Pro" loading="lazy" /></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Cubo T1 Pro</h3>
+    <p class="hw-model">Xiaomi/Aqara · Cube T1 Pro</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Spolecne</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Spolecne" data-protocol="Zigbee" data-state="active" data-search="sensore di presenza snzb-06p openspace snzb-06p presence (mmwave 24ghz) sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-snzb-06p.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Sensore di Presenza SNZB-06P openspace</h3>
+    <p class="hw-model">Sonoff · SNZB-06P Presence (mmWave 24GHz)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Spolecne</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Spolecne" data-protocol="Zigbee" data-state="active" data-search="termometro snzb-02p open space snzb-02p temp + humid sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-snzb-02p.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Termometro SNZB-02P Open Space</h3>
+    <p class="hw-model">Sonoff · SNZB-02P Temp + Humid</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Spolecne</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Spolecne" data-protocol="Cloud (web)" data-state="active" data-search="weather weather forecast yr.no">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="yr-weather.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Weather</h3>
+    <p class="hw-model">Yr.no · Weather forecast</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Cloud (web)</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Spolecne</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="Toaleta" data-protocol="Zigbee" data-state="active" data-search="pohybove cidlo toaleta snzb-03 motion (pir) sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-snzb-03.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">pohybove cidlo toaleta</h3>
+    <p class="hw-model">Sonoff · SNZB-03 Motion (PIR)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 Toaleta</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="nefunkcni" data-protocol="Wi-Fi (HA)" data-state="active" data-search="backup ha bridge device home assistant">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="home-assistant.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Backup</h3>
+    <p class="hw-model">Home Assistant · HA bridge device</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (HA)</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 nefunkcni</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="nefunkcni" data-protocol="Z-Wave" data-state="active" data-search="button fgpb-101 button fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgpb-101.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Button</h3>
+    <p class="hw-model">Fibaro · FGPB-101 Button</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 nefunkcni</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="senzory" data-zone="nefunkcni" data-protocol="Wi-Fi (HA)" data-state="active" data-search="sun ha bridge device home assistant">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="home-assistant.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Sun</h3>
+    <p class="hw-model">Home Assistant · HA bridge device</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (HA)</span>
+      <span class="hw-badge hw-cat">Senzor</span>
+      <span class="hw-badge hw-zone">📍 nefunkcni</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Jídelna" data-protocol="Zigbee" data-state="active" data-search="led pasek zbmini smart switch sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-zbmini.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Led pasek</h3>
+    <p class="hw-model">Sonoff · ZBMINI Smart Switch</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Jídelna" data-protocol="UNKNOWN" data-state="active" data-search="smart rgbtw bulb 1 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Smart RGBTW Bulb 1</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Jídelna" data-protocol="UNKNOWN" data-state="active" data-search="smart rgbtw bulb 2 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Smart RGBTW Bulb 2</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Jídelna" data-protocol="UNKNOWN" data-state="active" data-search="smart rgbtw bulb 3 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Smart RGBTW Bulb 3</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Kitchen" data-protocol="UNKNOWN" data-state="active" data-search="kuchyne 1 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Kuchyne 1</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Kitchen" data-protocol="UNKNOWN" data-state="active" data-search="kuchyne 2 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Kuchyne 2</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Kitchen" data-protocol="UNKNOWN" data-state="active" data-search="kuchyne 3 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Kuchyne 3</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Kitchen" data-protocol="Zigbee" data-state="active" data-search="sektorka1 rgb led strip lidl silvercrest">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="lidl-strip.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Sektorka1</h3>
+    <p class="hw-model">Lidl Silvercrest · RGB LED Strip</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Koupelna" data-protocol="Zigbee (Hue Bridge)" data-state="active" data-search="svetlo koupelna hue bulb philips">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="philips-hue.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">svetlo Koupelna</h3>
+    <p class="hw-model">Philips · Hue Bulb</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee (Hue Bridge)</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Koupelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active" data-search="1 žárovka lidl e14 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">1 žárovka lidl E14</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active" data-search="2 žárovka lidl e14 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">2 žárovka lidl E14</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Ložnice" data-protocol="Zigbee" data-state="active" data-search="led pasek postel smart plug (zigbee) lidl silvercrest">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="lidl-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Led pasek postel</h3>
+    <p class="hw-model">Lidl Silvercrest · Smart Plug (Zigbee)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active" data-search="zarovka loznice unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Zarovka Loznice</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active" data-search="lampicka unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">lampicka</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Pracovna" data-protocol="Zigbee" data-state="active" data-search="zarovka pracovna rgbw bulb e27 rgb bulb e27 lidl silvercrest">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="lidl-bulb.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">zarovka pracovna RGBW Bulb E27</h3>
+    <p class="hw-model">Lidl Silvercrest · RGB Bulb E27</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Pracovna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Prádelna" data-protocol="Zigbee (Hue Bridge)" data-state="active" data-search="pradelna naradí hue bulb philips">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="philips-hue.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Pradelna naradí</h3>
+    <p class="hw-model">Philips · Hue Bulb</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee (Hue Bridge)</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Prádelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Prádelna" data-protocol="Zigbee (Hue Bridge)" data-state="active" data-search="pradelna zarovka hue bulb philips">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="philips-hue.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Pradelna zarovka</h3>
+    <p class="hw-model">Philips · Hue Bulb</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee (Hue Bridge)</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Prádelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Předsíň" data-protocol="Zigbee (Hue Bridge)" data-state="active" data-search="predsin hue bulb philips">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="philips-hue.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Predsin</h3>
+    <p class="hw-model">Philips · Hue Bulb</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee (Hue Bridge)</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Předsíň</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="svetla" data-zone="Toaleta" data-protocol="Zigbee (Hue Bridge)" data-state="active" data-search="toaleta hue bulb philips">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="philips-hue.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Toaleta</h3>
+    <p class="hw-model">Philips · Hue Bulb</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee (Hue Bridge)</span>
+      <span class="hw-badge hw-cat">Světlo</span>
+      <span class="hw-badge hw-zone">📍 Toaleta</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active" data-search="forno ad aria calda shelly plug / pro řada shelly">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="shelly-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Forno ad aria calda</h3>
+    <p class="hw-model">Shelly · Shelly Plug / Pro řada</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (Cloud)</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active" data-search="kuchyn zasuvka mycka shelly plug / pro řada shelly">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="shelly-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Kuchyn zasuvka Mycka</h3>
+    <p class="hw-model">Shelly · Shelly Plug / Pro řada</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (Cloud)</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active" data-search="lednice shelly plug / pro řada shelly">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="shelly-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Lednice</h3>
+    <p class="hw-model">Shelly · Shelly Plug / Pro řada</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (Cloud)</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active" data-search="mikrovlnka shelly plug / pro řada shelly">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="shelly-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Mikrovlnka</h3>
+    <p class="hw-model">Shelly · Shelly Plug / Pro řada</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (Cloud)</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Kitchen" data-protocol="Zigbee" data-state="active" data-search="vypinac varic kuchyne smart plug (zigbee) lidl silvercrest">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="lidl-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Vypinac Varic Kuchyne</h3>
+    <p class="hw-model">Lidl Silvercrest · Smart Plug (Zigbee)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Kitchen" data-protocol="Matter" data-state="active" data-search="zasuvka kuchyne kaffe mss315 smart plug meross">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="meross-mss315.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Zasuvka Kuchyne Kaffe</h3>
+    <p class="hw-model">Meross · MSS315 Smart Plug</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Matter</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Kitchen" data-protocol="Zigbee" data-state="active" data-search="ventilatore basic zbr3 (relay) sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-basiczbr3.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">ventilatore</h3>
+    <p class="hw-model">Sonoff · Basic ZBR3 (relay)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Ložnice" data-protocol="Z-Wave" data-state="active" data-search="zasuvka soundbar loznice fgs-223 double switch fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgs-223.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Zasuvka Soundbar Loznice</h3>
+    <p class="hw-model">Fibaro · FGS-223 Double Switch</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Ložnice" data-protocol="Z-Wave" data-state="active" data-search="zasuvka tv loznice fgs-223 double switch fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgs-223.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Zasuvka TV Loznice</h3>
+    <p class="hw-model">Fibaro · FGS-223 Double Switch</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active" data-search="zvlhčovač1 unknown unknown">
+  <div class="hw-photo"><div class="hw-photo-ph">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Zvlhčovač1</h3>
+    <p class="hw-model">UNKNOWN · UNKNOWN</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">UNKNOWN</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Ložnice" data-protocol="Zigbee" data-state="active" data-search="zasuvka kamera smart plug (zigbee) lidl silvercrest">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="lidl-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">zasuvka kamera</h3>
+    <p class="hw-model">Lidl Silvercrest · Smart Plug (Zigbee)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Pc Setup" data-protocol="Zigbee" data-state="active" data-search="zasuvka počítač smart plug (zigbee) lidl silvercrest">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="lidl-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">zasuvka počítač</h3>
+    <p class="hw-model">Lidl Silvercrest · Smart Plug (Zigbee)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Pc Setup</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Pracovna" data-protocol="Wi-Fi (Cloud)" data-state="active" data-search="zasuvka pracovna shelly plug / pro řada shelly">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="shelly-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Zasuvka pracovna</h3>
+    <p class="hw-model">Shelly · Shelly Plug / Pro řada</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (Cloud)</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Pracovna</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Prádelna" data-protocol="Wi-Fi (Cloud)" data-state="active" data-search="boiler zasuvka shelly plug / pro řada shelly">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="shelly-plug.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Boiler zasuvka</h3>
+    <p class="hw-model">Shelly · Shelly Plug / Pro řada</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi (Cloud)</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Prádelna</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Prádelna" data-protocol="Z-Wave" data-state="active" data-search="fibaro kotel fgs-214 single switch fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgs-214.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Fibaro Kotel</h3>
+    <p class="hw-model">Fibaro · FGS-214 Single Switch</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Prádelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="zasuvky" data-zone="Prádelna" data-protocol="Z-Wave" data-state="active" data-search="zasuvka pracka pradelna fgwof-011 wall plug switch fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgwof-011.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Zasuvka pracka pradelna</h3>
+    <p class="hw-model">Fibaro · FGWOF-011 Wall Plug Switch</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Zásuvka</span>
+      <span class="hw-badge hw-zone">📍 Prádelna</span>
+      <span class="hw-badge hw-energy-real">⚡ REAL</span>
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="ovladace" data-zone="Jídelna" data-protocol="Zigbee" data-state="active" data-search="stul wb01 wireless button sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-wb01.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">stul</h3>
+    <p class="hw-model">Sonoff · WB01 Wireless Button</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Tlačítko</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="ovladace" data-zone="Kitchen" data-protocol="Zigbee" data-state="active" data-search="vypinac kuchyne1 wb01 wireless button sonoff">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="sonoff-wb01.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">vypinac kuchyne1</h3>
+    <p class="hw-model">Sonoff · WB01 Wireless Button</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Tlačítko</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="ovladace" data-zone="Ložnice" data-protocol="Zigbee" data-state="active" data-search="xiaomi interruttore wireless mini wireless switch (mini) xiaomi/aqara">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="aqara-switch.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Xiaomi Interruttore Wireless Mini</h3>
+    <p class="hw-model">Xiaomi/Aqara · Wireless Switch (mini)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Tlačítko</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="ovladace" data-zone="Pc Setup" data-protocol="Zigbee" data-state="active" data-search="xiaomi wireless switch (mini) xiaomi/aqara">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="aqara-switch.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Xiaomi</h3>
+    <p class="hw-model">Xiaomi/Aqara · Wireless Switch (mini)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Tlačítko</span>
+      <span class="hw-badge hw-zone">📍 Pc Setup</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="ovladace" data-zone="Spolecne" data-protocol="Zigbee" data-state="active" data-search="interruttore telecomando senza fili h1 doppio wireless remote switch xiaomi/aqara">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="aqara-remote.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Interruttore Telecomando Senza Fili H1 Doppio</h3>
+    <p class="hw-model">Xiaomi/Aqara · Wireless Remote Switch</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Tlačítko</span>
+      <span class="hw-badge hw-zone">📍 Spolecne</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="topeni" data-zone="Home" data-protocol="Wi-Fi" data-state="active" data-search="air purifier 4 lite (zhimi.airp.rmb1) air purifier 4 lite xiaomi">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="xiaomi-airpurifier.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Air Purifier 4 Lite (zhimi.airp.rmb1)</h3>
+    <p class="hw-model">Xiaomi · Air Purifier 4 Lite</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi</span>
+      <span class="hw-badge hw-cat">Čistička</span>
+      <span class="hw-badge hw-zone">📍 Home</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="topeni" data-zone="Jídelna" data-protocol="Z-Wave" data-state="active" data-search="fibaro radiator jidelna fgt-001 heat controller (trv) fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgt-001.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Fibaro Radiator jidelna</h3>
+    <p class="hw-model">Fibaro · FGT-001 Heat Controller (TRV)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Termostat / TRV</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="topeni" data-zone="Koupelna" data-protocol="Z-Wave" data-state="active" data-search="fibaro radiator koupelna fgt-001 heat controller (trv) fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgt-001.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Fibaro Radiator koupelna</h3>
+    <p class="hw-model">Fibaro · FGT-001 Heat Controller (TRV)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Termostat / TRV</span>
+      <span class="hw-badge hw-zone">📍 Koupelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="topeni" data-zone="Toaleta" data-protocol="Z-Wave" data-state="active" data-search="fibaro radiator toaleta fgt-001 heat controller (trv) fibaro">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="fibaro-fgt-001.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Fibaro Radiator toaleta</h3>
+    <p class="hw-model">Fibaro · FGT-001 Heat Controller (TRV)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Z-Wave</span>
+      <span class="hw-badge hw-cat">Termostat / TRV</span>
+      <span class="hw-badge hw-zone">📍 Toaleta</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="audio" data-zone="Kitchen" data-protocol="Google Cast (Wi-Fi)" data-state="active" data-search="kuchyn nest / cast speaker google">
+  <div class="hw-photo"><img src="assets/photos/nest-mini.png" alt="Nest / Cast speaker" loading="lazy" /></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Kuchyn</h3>
+    <p class="hw-model">Google · Nest / Cast speaker</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Google Cast (Wi-Fi)</span>
+      <span class="hw-badge hw-cat">Reproduktor</span>
+      <span class="hw-badge hw-zone">📍 Kitchen</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="audio" data-zone="Koupelna" data-protocol="Google Cast (Wi-Fi)" data-state="active" data-search="speaker koupelna nest / cast speaker google">
+  <div class="hw-photo"><img src="assets/photos/nest-mini.png" alt="Nest / Cast speaker" loading="lazy" /></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Speaker koupelna</h3>
+    <p class="hw-model">Google · Nest / Cast speaker</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Google Cast (Wi-Fi)</span>
+      <span class="hw-badge hw-cat">Reproduktor</span>
+      <span class="hw-badge hw-zone">📍 Koupelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="audio" data-zone="Ložnice" data-protocol="Google Cast (Wi-Fi)" data-state="active" data-search="nest max ložnice 2 nest / cast speaker google">
+  <div class="hw-photo"><img src="assets/photos/nest-mini.png" alt="Nest / Cast speaker" loading="lazy" /></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">nest max Ložnice 2</h3>
+    <p class="hw-model">Google · Nest / Cast speaker</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Google Cast (Wi-Fi)</span>
+      <span class="hw-badge hw-cat">Reproduktor</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="rolety" data-zone="Jídelna" data-protocol="Zigbee" data-state="active" data-search="roleta fyrtur1 fyrtur roller blind ikea">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="ikea-fyrtur.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Roleta Fyrtur1</h3>
+    <p class="hw-model">IKEA · FYRTUR Roller Blind</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Zigbee</span>
+      <span class="hw-badge hw-cat">Roleta</span>
+      <span class="hw-badge hw-zone">📍 Jídelna</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="spotrebice" data-zone="Koupelna" data-protocol="Wi-Fi" data-state="legacy" data-search="giuseppe v7 robot vacuum viomi">
+  <div class="hw-photo"><img src="assets/photos/viomi-v7-vacuum.png" alt="V7 Robot Vacuum" loading="lazy" /></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Giuseppe</h3>
+    <p class="hw-model">Viomi · V7 Robot Vacuum</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi</span>
+      <span class="hw-badge hw-cat">Robot vysavač</span>
+      <span class="hw-badge hw-zone">📍 Koupelna</span>
+      
+      <span class="hw-badge hw-state-legacy">legacy</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="spotrebice" data-zone="Ložnice" data-protocol="Wi-Fi" data-state="active" data-search="televize v ložnici android tv remote android tv">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="android-tv.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">Televize v ložnici</h3>
+    <p class="hw-model">Android TV · Android TV remote</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi</span>
+      <span class="hw-badge hw-cat">TV</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="ostatni" data-zone="Ložnice" data-protocol="Wi-Fi" data-state="active" data-search="indoor pan/tilt camera foscam">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="foscam-pt.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">indoor</h3>
+    <p class="hw-model">Foscam · Pan/Tilt camera</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi</span>
+      <span class="hw-badge hw-cat">Ostatní</span>
+      <span class="hw-badge hw-zone">📍 Ložnice</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="ostatni" data-zone="Pc Setup" data-protocol="Wi-Fi" data-state="active" data-search="hp printer hp printer (network) hp">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="hp-printer.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">HP Printer</h3>
+    <p class="hw-model">HP · HP printer (network)</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi</span>
+      <span class="hw-badge hw-cat">Ostatní</span>
+      <span class="hw-badge hw-zone">📍 Pc Setup</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+<article class="hw-card" data-category="ostatni" data-zone="Předsíň" data-protocol="Wi-Fi" data-state="active" data-search="camera 1 dome camera foscam">
+  <div class="hw-photo"><div class="hw-photo-ph" data-name="foscam-dome.webp">Foto doplnit</div></div>
+  <div class="hw-card-body">
+    <h3 class="hw-card-title">camera 1</h3>
+    <p class="hw-model">Foscam · Dome camera</p>
+    <div class="hw-badges">
+      <span class="hw-badge hw-proto">Wi-Fi</span>
+      <span class="hw-badge hw-cat">Ostatní</span>
+      <span class="hw-badge hw-zone">📍 Předsíň</span>
+      
+      <span class="hw-badge hw-state-active">active</span>
+    </div>
+  </div>
+</article>
+    </div>
+  </section>
+
+  <section aria-labelledby="hw-zone-h">
+    <h2 id="hw-zone-h" class="hw-section-h2">Hardware podle zón</h2>
+    <p style="opacity:0.85; max-width:780px;">Hardware je distribuovaný po reálných obytných zónách. Zóny jako <em>TOPENI</em>, <em>SMART HOME</em>, <em>Home</em> jsou meta-skupiny pro logiku a nepočítají se mezi obytné prostory.</p>
+    <div class="hw-table-wrap">
+      <table class="hw-table">
+        <thead><tr><th>Zóna</th><th>Počet zařízení</th><th>Co tam je</th></tr></thead>
+        <tbody>
+<tr><td><strong>Jídelna</strong></td><td>9</td><td>4× Světlo, 2× Senzor, 1× Tlačítko, 1× Termostat / TRV, 1× Roleta</td></tr>
+<tr><td><strong>Kitchen</strong></td><td>17</td><td>7× Zásuvka, 4× Senzor, 4× Světlo, 1× Tlačítko, 1× Reproduktor</td></tr>
+<tr><td><strong>Koupelna</strong></td><td>7</td><td>3× Senzor, 1× Světlo, 1× Termostat / TRV, 1× Reproduktor, 1× Robot vysavač</td></tr>
+<tr><td><strong>Ložnice</strong></td><td>17</td><td>5× Světlo, 4× Senzor, 4× Zásuvka, 1× Tlačítko, 1× Reproduktor, 1× TV, 1× Ostatní</td></tr>
+<tr><td><strong>Pc Setup</strong></td><td>3</td><td>1× Zásuvka, 1× Tlačítko, 1× Ostatní</td></tr>
+<tr><td><strong>Pracovna</strong></td><td>3</td><td>1× Senzor, 1× Světlo, 1× Zásuvka</td></tr>
+<tr><td><strong>Prádelna</strong></td><td>6</td><td>3× Zásuvka, 2× Světlo, 1× Senzor</td></tr>
+<tr><td><strong>Předsíň</strong></td><td>5</td><td>3× Senzor, 1× Světlo, 1× Ostatní</td></tr>
+<tr><td><strong>Spolecne</strong></td><td>5</td><td>4× Senzor, 1× Tlačítko</td></tr>
+<tr><td><strong>Toaleta</strong></td><td>3</td><td>1× Senzor, 1× Světlo, 1× Termostat / TRV</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="hw-proto-h">
+    <h2 id="hw-proto-h" class="hw-section-h2">Použité protokoly</h2>
+    <div class="hw-table-wrap">
+      <table class="hw-table">
+        <thead><tr><th>Protokol</th><th>Počet zařízení</th><th>K čemu / co na něm běží</th></tr></thead>
+        <tbody>
+<tr><td><strong>Cloud (web)</strong></td><td>1</td><td>Yr.no weather forecast feed (text).</td></tr>
+<tr><td><strong>Google Cast (Wi-Fi)</strong></td><td>3</td><td>—</td></tr>
+<tr><td><strong>Matter</strong></td><td>1</td><td>Nový standard přes Homey Matter bridge. Meross plug + 7 virtuálních RGBTW bulbů.</td></tr>
+<tr><td><strong>Wi-Fi</strong></td><td>6</td><td>Spotřebiče (čistička, vysavač, HP tiskárna, kamery Foscam, AndroidTV).</td></tr>
+<tr><td><strong>Wi-Fi (Cloud)</strong></td><td>7</td><td>Shelly Plug S přes cloud relay (Pro řada). Měřené zásuvky.</td></tr>
+<tr><td><strong>Wi-Fi (HA)</strong></td><td>2</td><td>Home Assistant bridge — Sun + Person device pro presence.</td></tr>
+<tr><td><strong>Z-Wave</strong></td><td>10</td><td>Stabilní mesh pro kritická zařízení — TRV hlavice, Fibaro motion (kuchyně), kotel relé.</td></tr>
+<tr><td><strong>Zigbee</strong></td><td>33</td><td>Mesh síť, baterie + USB hub. Hlavně senzory, tlačítka, Hue světla, Lidl, Sonoff Zigbee.</td></tr>
+<tr><td><strong>Zigbee (Hue Bridge)</strong></td><td>5</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="hw-table-h">
+    <h2 id="hw-table-h" class="hw-section-h2">Detailní tabulka (všechna zařízení)</h2>
+    <p style="opacity:0.85;">Filtry nahoře platí i pro tuto tabulku.</p>
+    <div class="hw-table-wrap">
+      <table class="hw-table" id="hw-table">
+        <thead><tr>
+          <th>Zařízení</th><th>Kategorie</th><th>Zóna</th><th>Protokol</th><th>Role</th><th>Automat.</th><th>Energie</th><th>Stav</th>
+        </tr></thead>
+        <tbody>
+<tr data-category="senzory" data-zone="Jídelna" data-protocol="Zigbee" data-state="active"><td>Door/Window Sensor Jidelna1</td><td>Senzor</td><td>Jídelna</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Jídelna" data-protocol="Zigbee" data-state="active"><td>Light Sensor Okno Jidelna1</td><td>Senzor</td><td>Jídelna</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Kitchen" data-protocol="Zigbee" data-state="active"><td>Light Sensor kuchyně1</td><td>Senzor</td><td>Kitchen</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Kitchen" data-protocol="Z-Wave" data-state="active"><td>Sensore kuchyně Z-wave</td><td>Senzor</td><td>Kitchen</td><td>Z-Wave</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active"><td>Zasuvka Varic Kuchyne</td><td>Senzor</td><td>Kitchen</td><td>Wi-Fi (Cloud)</td><td>sensor</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Kitchen" data-protocol="Zigbee" data-state="active"><td>snimač digestoř</td><td>Senzor</td><td>Kitchen</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Koupelna" data-protocol="Zigbee" data-state="active"><td>Sensore Jsem v koupelne</td><td>Senzor</td><td>Koupelna</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Koupelna" data-protocol="Zigbee" data-state="active"><td>Temperature and Humidity Sensor koupelna</td><td>Senzor</td><td>Koupelna</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Koupelna" data-protocol="Zigbee" data-state="active"><td>pohybove cidlo koupelna</td><td>Senzor</td><td>Koupelna</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Ložnice" data-protocol="Zigbee" data-state="active"><td>Sensor Spim Loznice</td><td>Senzor</td><td>Ložnice</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Ložnice" data-protocol="Zigbee" data-state="active"><td>Sensore di movimento SNZB-03</td><td>Senzor</td><td>Ložnice</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Ložnice" data-protocol="Zigbee" data-state="active"><td>Temperature and Humidity Sensor ložnice</td><td>Senzor</td><td>Ložnice</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Ložnice" data-protocol="Zigbee" data-state="active"><td>Xiaomi Sensore di Luce ložnice</td><td>Senzor</td><td>Ložnice</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Pracovna" data-protocol="Zigbee" data-state="active"><td>Motion Sensor pracovna</td><td>Senzor</td><td>Pracovna</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Prádelna" data-protocol="Zigbee" data-state="active"><td>Motion Sensor pradelna</td><td>Senzor</td><td>Prádelna</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Předsíň" data-protocol="Z-Wave" data-state="active"><td>Button away/home</td><td>Senzor</td><td>Předsíň</td><td>Z-Wave</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Předsíň" data-protocol="Zigbee" data-state="active"><td>Door/Window Sensor předsín1</td><td>Senzor</td><td>Předsíň</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Předsíň" data-protocol="Zigbee" data-state="active"><td>Sensore di light pohybu P1</td><td>Senzor</td><td>Předsíň</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Spolecne" data-protocol="Zigbee" data-state="active"><td>Cubo T1 Pro</td><td>Senzor</td><td>Spolecne</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Spolecne" data-protocol="Zigbee" data-state="active"><td>Sensore di Presenza SNZB-06P openspace</td><td>Senzor</td><td>Spolecne</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Spolecne" data-protocol="Zigbee" data-state="active"><td>Termometro SNZB-02P Open Space</td><td>Senzor</td><td>Spolecne</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Spolecne" data-protocol="Cloud (web)" data-state="active"><td>Weather</td><td>Senzor</td><td>Spolecne</td><td>Cloud (web)</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="Toaleta" data-protocol="Zigbee" data-state="active"><td>pohybove cidlo toaleta</td><td>Senzor</td><td>Toaleta</td><td>Zigbee</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="nefunkcni" data-protocol="Wi-Fi (HA)" data-state="active"><td>Backup</td><td>Senzor</td><td>nefunkcni</td><td>Wi-Fi (HA)</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="nefunkcni" data-protocol="Z-Wave" data-state="active"><td>Button</td><td>Senzor</td><td>nefunkcni</td><td>Z-Wave</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="senzory" data-zone="nefunkcni" data-protocol="Wi-Fi (HA)" data-state="active"><td>Sun</td><td>Senzor</td><td>nefunkcni</td><td>Wi-Fi (HA)</td><td>sensor</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Jídelna" data-protocol="Zigbee" data-state="active"><td>Led pasek</td><td>Světlo</td><td>Jídelna</td><td>Zigbee</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Jídelna" data-protocol="UNKNOWN" data-state="active"><td>Smart RGBTW Bulb 1</td><td>Světlo</td><td>Jídelna</td><td>UNKNOWN</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Jídelna" data-protocol="UNKNOWN" data-state="active"><td>Smart RGBTW Bulb 2</td><td>Světlo</td><td>Jídelna</td><td>UNKNOWN</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Jídelna" data-protocol="UNKNOWN" data-state="active"><td>Smart RGBTW Bulb 3</td><td>Světlo</td><td>Jídelna</td><td>UNKNOWN</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Kitchen" data-protocol="UNKNOWN" data-state="active"><td>Kuchyne 1</td><td>Světlo</td><td>Kitchen</td><td>UNKNOWN</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Kitchen" data-protocol="UNKNOWN" data-state="active"><td>Kuchyne 2</td><td>Světlo</td><td>Kitchen</td><td>UNKNOWN</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Kitchen" data-protocol="UNKNOWN" data-state="active"><td>Kuchyne 3</td><td>Světlo</td><td>Kitchen</td><td>UNKNOWN</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Kitchen" data-protocol="Zigbee" data-state="active"><td>Sektorka1</td><td>Světlo</td><td>Kitchen</td><td>Zigbee</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Koupelna" data-protocol="Zigbee (Hue Bridge)" data-state="active"><td>svetlo Koupelna</td><td>Světlo</td><td>Koupelna</td><td>Zigbee (Hue Bridge)</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active"><td>1 žárovka lidl E14</td><td>Světlo</td><td>Ložnice</td><td>UNKNOWN</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active"><td>2 žárovka lidl E14</td><td>Světlo</td><td>Ložnice</td><td>UNKNOWN</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Ložnice" data-protocol="Zigbee" data-state="active"><td>Led pasek postel</td><td>Světlo</td><td>Ložnice</td><td>Zigbee</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active"><td>Zarovka Loznice</td><td>Světlo</td><td>Ložnice</td><td>UNKNOWN</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active"><td>lampicka</td><td>Světlo</td><td>Ložnice</td><td>UNKNOWN</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Pracovna" data-protocol="Zigbee" data-state="active"><td>zarovka pracovna RGBW Bulb E27</td><td>Světlo</td><td>Pracovna</td><td>Zigbee</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Prádelna" data-protocol="Zigbee (Hue Bridge)" data-state="active"><td>Pradelna naradí</td><td>Světlo</td><td>Prádelna</td><td>Zigbee (Hue Bridge)</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Prádelna" data-protocol="Zigbee (Hue Bridge)" data-state="active"><td>Pradelna zarovka</td><td>Světlo</td><td>Prádelna</td><td>Zigbee (Hue Bridge)</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Předsíň" data-protocol="Zigbee (Hue Bridge)" data-state="active"><td>Predsin</td><td>Světlo</td><td>Předsíň</td><td>Zigbee (Hue Bridge)</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="svetla" data-zone="Toaleta" data-protocol="Zigbee (Hue Bridge)" data-state="active"><td>Toaleta</td><td>Světlo</td><td>Toaleta</td><td>Zigbee (Hue Bridge)</td><td>light</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active"><td>Forno ad aria calda</td><td>Zásuvka</td><td>Kitchen</td><td>Wi-Fi (Cloud)</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active"><td>Kuchyn zasuvka Mycka</td><td>Zásuvka</td><td>Kitchen</td><td>Wi-Fi (Cloud)</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active"><td>Lednice</td><td>Zásuvka</td><td>Kitchen</td><td>Wi-Fi (Cloud)</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Kitchen" data-protocol="Wi-Fi (Cloud)" data-state="active"><td>Mikrovlnka</td><td>Zásuvka</td><td>Kitchen</td><td>Wi-Fi (Cloud)</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Kitchen" data-protocol="Zigbee" data-state="active"><td>Vypinac Varic Kuchyne</td><td>Zásuvka</td><td>Kitchen</td><td>Zigbee</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Kitchen" data-protocol="Matter" data-state="active"><td>Zasuvka Kuchyne Kaffe</td><td>Zásuvka</td><td>Kitchen</td><td>Matter</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Kitchen" data-protocol="Zigbee" data-state="active"><td>ventilatore</td><td>Zásuvka</td><td>Kitchen</td><td>Zigbee</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Ložnice" data-protocol="Z-Wave" data-state="active"><td>Zasuvka Soundbar Loznice</td><td>Zásuvka</td><td>Ložnice</td><td>Z-Wave</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Ložnice" data-protocol="Z-Wave" data-state="active"><td>Zasuvka TV Loznice</td><td>Zásuvka</td><td>Ložnice</td><td>Z-Wave</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Ložnice" data-protocol="UNKNOWN" data-state="active"><td>Zvlhčovač1</td><td>Zásuvka</td><td>Ložnice</td><td>UNKNOWN</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Ložnice" data-protocol="Zigbee" data-state="active"><td>zasuvka kamera</td><td>Zásuvka</td><td>Ložnice</td><td>Zigbee</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Pc Setup" data-protocol="Zigbee" data-state="active"><td>zasuvka počítač</td><td>Zásuvka</td><td>Pc Setup</td><td>Zigbee</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Pracovna" data-protocol="Wi-Fi (Cloud)" data-state="active"><td>Zasuvka pracovna</td><td>Zásuvka</td><td>Pracovna</td><td>Wi-Fi (Cloud)</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Prádelna" data-protocol="Wi-Fi (Cloud)" data-state="active"><td>Boiler zasuvka</td><td>Zásuvka</td><td>Prádelna</td><td>Wi-Fi (Cloud)</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Prádelna" data-protocol="Z-Wave" data-state="active"><td>Fibaro Kotel</td><td>Zásuvka</td><td>Prádelna</td><td>Z-Wave</td><td>energy</td><td>ano</td><td>UNKNOWN</td><td>active</td></tr>
+<tr data-category="zasuvky" data-zone="Prádelna" data-protocol="Z-Wave" data-state="active"><td>Zasuvka pracka pradelna</td><td>Zásuvka</td><td>Prádelna</td><td>Z-Wave</td><td>energy</td><td>ano</td><td>REAL</td><td>active</td></tr>
+<tr data-category="ovladace" data-zone="Jídelna" data-protocol="Zigbee" data-state="active"><td>stul</td><td>Tlačítko</td><td>Jídelna</td><td>Zigbee</td><td>control</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="ovladace" data-zone="Kitchen" data-protocol="Zigbee" data-state="active"><td>vypinac kuchyne1</td><td>Tlačítko</td><td>Kitchen</td><td>Zigbee</td><td>control</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="ovladace" data-zone="Ložnice" data-protocol="Zigbee" data-state="active"><td>Xiaomi Interruttore Wireless Mini</td><td>Tlačítko</td><td>Ložnice</td><td>Zigbee</td><td>control</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="ovladace" data-zone="Pc Setup" data-protocol="Zigbee" data-state="active"><td>Xiaomi</td><td>Tlačítko</td><td>Pc Setup</td><td>Zigbee</td><td>control</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="ovladace" data-zone="Spolecne" data-protocol="Zigbee" data-state="active"><td>Interruttore Telecomando Senza Fili H1 Doppio</td><td>Tlačítko</td><td>Spolecne</td><td>Zigbee</td><td>control</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="topeni" data-zone="Home" data-protocol="Wi-Fi" data-state="active"><td>Air Purifier 4 Lite (zhimi.airp.rmb1)</td><td>Čistička</td><td>Home</td><td>Wi-Fi</td><td>heating</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="topeni" data-zone="Jídelna" data-protocol="Z-Wave" data-state="active"><td>Fibaro Radiator jidelna</td><td>Termostat / TRV</td><td>Jídelna</td><td>Z-Wave</td><td>heating</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="topeni" data-zone="Koupelna" data-protocol="Z-Wave" data-state="active"><td>Fibaro Radiator koupelna</td><td>Termostat / TRV</td><td>Koupelna</td><td>Z-Wave</td><td>heating</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="topeni" data-zone="Toaleta" data-protocol="Z-Wave" data-state="active"><td>Fibaro Radiator toaleta</td><td>Termostat / TRV</td><td>Toaleta</td><td>Z-Wave</td><td>heating</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="audio" data-zone="Kitchen" data-protocol="Google Cast (Wi-Fi)" data-state="active"><td>Kuchyn</td><td>Reproduktor</td><td>Kitchen</td><td>Google Cast (Wi-Fi)</td><td>audio</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="audio" data-zone="Koupelna" data-protocol="Google Cast (Wi-Fi)" data-state="active"><td>Speaker koupelna</td><td>Reproduktor</td><td>Koupelna</td><td>Google Cast (Wi-Fi)</td><td>audio</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="audio" data-zone="Ložnice" data-protocol="Google Cast (Wi-Fi)" data-state="active"><td>nest max Ložnice 2</td><td>Reproduktor</td><td>Ložnice</td><td>Google Cast (Wi-Fi)</td><td>audio</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="rolety" data-zone="Jídelna" data-protocol="Zigbee" data-state="active"><td>Roleta Fyrtur1</td><td>Roleta</td><td>Jídelna</td><td>Zigbee</td><td>safety</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="spotrebice" data-zone="Koupelna" data-protocol="Wi-Fi" data-state="legacy"><td>Giuseppe</td><td>Robot vysavač</td><td>Koupelna</td><td>Wi-Fi</td><td>appliance</td><td>—</td><td>N/A</td><td>legacy</td></tr>
+<tr data-category="spotrebice" data-zone="Ložnice" data-protocol="Wi-Fi" data-state="active"><td>Televize v ložnici</td><td>TV</td><td>Ložnice</td><td>Wi-Fi</td><td>appliance</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="ostatni" data-zone="Ložnice" data-protocol="Wi-Fi" data-state="active"><td>indoor</td><td>Ostatní</td><td>Ložnice</td><td>Wi-Fi</td><td>infrastructure</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="ostatni" data-zone="Pc Setup" data-protocol="Wi-Fi" data-state="active"><td>HP Printer</td><td>Ostatní</td><td>Pc Setup</td><td>Wi-Fi</td><td>infrastructure</td><td>ano</td><td>N/A</td><td>active</td></tr>
+<tr data-category="ostatni" data-zone="Předsíň" data-protocol="Wi-Fi" data-state="active"><td>camera 1</td><td>Ostatní</td><td>Předsíň</td><td>Wi-Fi</td><td>infrastructure</td><td>ano</td><td>N/A</td><td>active</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="hw-section-h2">Odkazy</h2>
+    <p><a href="senzory.html">Senzory →</a> · <a href="svetla.html">Světla →</a> · <a href="topeni-klima.html">Topení a klima →</a> · <a href="audio.html">Audio a TTS →</a> · <a href="ovladace.html">Ovladače →</a> · <a href="rolety.html">Rolety →</a> · <a href="zasuvky.html">Zásuvky →</a> · <a href="dashboard.html">Dashboard →</a> · <a href="ai-brain.html">AI Brain →</a></p>
+  </section>
+</main>
+
+<script>
+(function() {
+  const cat=document.getElementById('hw-cat'),
+        zone=document.getElementById('hw-zone'),
+        proto=document.getElementById('hw-proto'),
+        state=document.getElementById('hw-state'),
+        search=document.getElementById('hw-search'),
+        countEl=document.getElementById('hw-count-num'),
+        cards=document.querySelectorAll('#hw-grid .hw-card'),
+        rows=document.querySelectorAll('#hw-table tbody tr');
+  function apply() {
+    const c=cat.value, z=zone.value, p=proto.value, s=state.value;
+    const q=(search.value||'').trim().toLowerCase();
+    let shown=0;
+    cards.forEach(el => {
+      let ok=true;
+      if (c && el.dataset.category!==c) ok=false;
+      if (ok && z && el.dataset.zone!==z) ok=false;
+      if (ok && p && el.dataset.protocol!==p) ok=false;
+      if (ok && s && el.dataset.state!==s) ok=false;
+      if (ok && q && (el.dataset.search||'').indexOf(q)<0) ok=false;
+      el.style.display = ok?'':'none';
+      if (ok) shown++;
+    });
+    rows.forEach(el => {
+      let ok=true;
+      if (c && el.dataset.category!==c) ok=false;
+      if (ok && z && el.dataset.zone!==z) ok=false;
+      if (ok && p && el.dataset.protocol!==p) ok=false;
+      if (ok && s && el.dataset.state!==s) ok=false;
+      if (ok && q && (el.textContent||'').toLowerCase().indexOf(q)<0) ok=false;
+      el.style.display = ok?'':'none';
+    });
+    countEl.textContent = shown;
+  }
+  [cat,zone,proto,state].forEach(el => el.addEventListener('change', apply));
+  search.addEventListener('input', apply);
+})();
+</script>
+<footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+    </div>
+  </footer>
+</body>
+</html>
