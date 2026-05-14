@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tři zdroje počasí ve jednom systému, briefing recitující 13 °C zatímco venku bylo 6 °C, a 'dobré ráno' v noci. Jak vznikla vrstva LOCATION_TIME_GUARD a yr.no se stalo jediným zdrojem pravdy." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Tři zdroje počasí → jeden | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">12. května 2026 · Architektura · 10 min čtení</p>
+        <h1>Tři zdroje počasí → jeden. LOCATION_TIME_GUARD den.</h1>
+
+        <p>
+          Briefing mi v pondělí ráno recitoval, že je venku 13 °C. Ve skutečnosti bylo
+          6 °C. V noci ve 3:03 — kdy jsem ještě tvrdě spal — se sám spustil ranní
+          briefing, rozsvítil světla a začal mi přehrávat zprávy do prázdné kuchyně.
+          A kdyby to nestačilo: ten samý systém uměl říct „dobré ráno" v půl třetí
+          v noci, pokud něco zachytilo pohyb v ložnici.
+        </p>
+
+        <p>
+          Tři problémy. Dva dny. Tenhle post je o tom, jak jeden den oprav vyústil
+          ve vrstvu <code>LOCATION_TIME_GUARD</code> a yr.no se stalo jediným zdrojem
+          pravdy pro lokaci, čas a počasí v celém systému.
+        </p>
+
+        <h2>Symptom #1 — Třináct stupňů v zataženém ránu</h2>
+
+        <p>
+          Briefing skript ráno přečetl: „Venku je 13 stupňů, polojasno." Vykoukl jsem
+          z okna. Mlha, déšť, 6 °C podle teploměru. Skript nelhal — jen četl prázdnou
+          cache (<code>sh_weather_3d_json = []</code>) a spadl na fallback hodnotu,
+          která byla hardcoded někde v kódu z dávných časů.
+        </p>
+
+        <p>
+          Co se ukázalo bylo horší než „cache je prázdná". Audit odhalil
+          <strong>tři paralelní zdroje počasí v jednom systému</strong>:
+        </p>
+
+        <ol>
+          <li>
+            <strong>yr.no aplikace</strong> v Homey (norský met. ústav, free, native
+            forecast). Měla v sobě 18 capabilities a fungovala perfektně — ale nikdo
+            z ní nečetl.
+          </li>
+          <li>
+            <strong>OpenWeatherMap fetch</strong> v <code>sh_context_full_v1.js</code>.
+            HTTP volání na <code>api.openweathermap.org</code> s hardcoded GPS souřadnicemi
+            Semily (50.6012, 15.4950). Klíč v Homey proměnné. Funkční, ale duplicate.
+          </li>
+          <li>
+            <strong>Open-Meteo fetch</strong> v <code>sh_weather_fetcher_v1</code>.
+            Můj vlastní HTTP fetcher ze začátku týdne, který jsem přidal než jsem věděl,
+            že yr.no už tam je. Lokace: <strong>Praha</strong> (default 50.0875, 14.4213).
+          </li>
+        </ol>
+
+        <p>
+          Tři zdroje. Dvě různá města. Žádný z nich nebyl jednoznačně „ten správný".
+          A nejhorší: dashboard mezitím v browseru přímo volal OpenWeatherMap (third HTTP fetch
+          v UI vrstvě). Plus jeden hardcoded fallback v kódu pro případ, že
+          se nic z toho nepovede.
+        </p>
+
+        <h2>Symptom #2 — Ranní rutina v 3:03</h2>
+
+        <p>
+          V úterý ráno se mi rozsvítila lampa a spustil briefing. Pohledem na hodiny:
+          3:03. Budík měl jít v 3:13 (po-pá). Nevstal jsem. Co se stalo?
+        </p>
+
+        <p>
+          Diagnostika přes EventLog:
+        </p>
+
+        <pre><code>03:03:00  motion bedroom (SNZB-03) — TRUE
+03:03:02  sh_morning_brain_v1  → brain_invoked (motion, briefing2 audit)
+03:03:02  sh_morning_brain_v1  → morning_score_bypass (score=85, bypass 180s debounce)
+03:03:05  sh_audio_brain_v2    → audio_dispatch (radio_kitchen)
+03:03:22  sh_morning_brain_v1  → morning_routine (9 actions executed)
+03:13:01  alarm "Do Prace" fires
+03:13:02  sh_morning_brain_v1  → alarm_late_ignored (already up)</code></pre>
+
+        <p>
+          Score scorer dal pohybu skóre 85 (z 100). Pro spuštění stačilo 8 raw bodů.
+          Rozpis:
+        </p>
+
+        <pre><code>+2  cas&gt;=03:00 (morning window)
++10 wake_confidence_score=50          ← bedroom motion
++1  jsem_vstal=yes
++3  open_space_dual (FP2+motion)      ← BUG
++1  telefon_doma
+= raw 17 → final 85 (multiplier ×5)</code></pre>
+
+        <p>
+          Klíčový hřebík: <strong>open_space_dual (FP2+motion) +3</strong>. FP2 je
+          mmWave presence sensor v jídelně/kuchyni. Motion je Fibaro PIR. Zone Activity
+          ukázal něco děsivého:
+        </p>
+
+        <pre><code>00:04 UTC  snzb06p=TRUE  fibaro_motion=TRUE  idle_open_space_s=17161
+00:14 UTC  snzb06p=TRUE  fibaro_motion=TRUE  idle_open_space_s=17761
+00:24 UTC  snzb06p=TRUE  fibaro_motion=TRUE  idle_open_space_s=18361
+...
+01:03 UTC  snzb06p=TRUE  fibaro_motion=TRUE  idle_open_space_s=20760  ← motion bedroom
+01:04 UTC  snzb06p=TRUE  fibaro_motion=TRUE  bedroom_active=TRUE</code></pre>
+
+        <p>
+          Oba senzory zůstaly <code>TRUE</code> celou noc. Idle counter rostl (= nikdo
+          se nehýbal), ale flag byl pořád TRUE. Stuck state z předchozího večera.
+          Když pak ráno SNZB-03 v ložnici detekoval mikropohyb (otoč v posteli? průvan?
+          kočka?), scorer si odškrtl všech 17 bodů a dal mi <strong>final score 85</strong>.
+        </p>
+
+        <p>
+          Bug nebyl v senzorech. Bug byl v tom, že scorer <em>počítal stuck-TRUE flag
+          jako čerstvý signál</em>.
+        </p>
+
+        <h2>Symptom #3 — „Dobré ráno" v půl třetí</h2>
+
+        <p>
+          Posledním kapesním nepřítelem byla pevně hardcoded greeting funkce v briefing
+          skriptu:
+        </p>
+
+        <pre><code>function buildIntro(hour) {
+  if (hour &lt; 6) return 'Dobré ráno, Luďku.';
+  if (hour &lt; 12) return 'Dobré ráno, Luďku.';
+  ...
+}</code></pre>
+
+        <p>
+          „Hour &lt; 6" znamenalo, že kdyby se cokoli spustilo ve 2:30 (například
+          výše popsaný false-positive wake), systém by zahájil ranní briefing
+          slovy „Dobré ráno". V noci. Nedávalo to smysl.
+        </p>
+
+        <h2>Fix — Konsolidace na jeden zdroj pravdy</h2>
+
+        <h3>Krok 1: YR.no jako single weather source</h3>
+
+        <p>
+          Nový skript <code>sh_weather_yr_bridge_v1.js</code>: čte přímo z Homey Weather
+          device (yr.no driver), každých 10 minut, zapisuje do 22 proměnných:
+          <code>sh_weather_temp_now</code>, <code>sh_weather_temp_feels_like</code>,
+          <code>sh_weather_temp_min_6h</code>, <code>sh_weather_temp_max_6h</code>,
+          <code>sh_weather_humidity</code>, <code>sh_weather_pressure</code>,
+          <code>sh_weather_wind_speed</code>, <code>sh_weather_wind_dir</code>,
+          <code>sh_weather_rain_1h</code>, <code>sh_weather_rain_6h</code>,
+          <code>sh_weather_cloud_pct</code>, <code>sh_weather_uv</code>,
+          <code>sh_weather_now_desc</code> (anglicky), <code>sh_weather_now_desc_cs</code>
+          (česky), <code>sh_sunrise_hhmm</code>, <code>sh_sunset_hhmm</code> a další.
+        </p>
+
+        <p>
+          Český překlad popisu počasí v bridge skriptu („Cloudy" → „Zataženo",
+          „Light rain" → „Slabý déšť", atd. — 30 hodnot v translation map). Lokalita
+          se bere z yr.no device settings (Homey UI → Weather → Advanced → lat/lon/altitude).
+          Když user opraví lokalitu v aplikaci, bridge to automaticky chytne — žádný HTTP fetch,
+          žádný API klíč.
+        </p>
+
+        <p>
+          Smazáno:
+        </p>
+
+        <ul>
+          <li><code>sh_weather_fetcher_v1.js</code> (Open-Meteo) + cron flow — duplicate</li>
+          <li><code>fetchOWMWeather()</code> v <code>sh_context_full_v1</code> (−2 868 znaků dead code)</li>
+          <li>Proměnná <code>sh_owm_api_key</code></li>
+          <li>Konstanta <code>WX_LAT</code>, <code>WX_LON</code> v dashboards (legacy hardcoded GPS)</li>
+          <li>Direct OpenWeatherMap HTTP call v dashboard JS (browser už nepoužívá API klíč)</li>
+        </ul>
+
+        <h3>Krok 2: Score scorer fresh-trigger guard</h3>
+
+        <p>
+          <code>sh_morning_score_v1</code> bumpnut na v1.6 s novými ochranami:
+        </p>
+
+        <pre><code>// Před: value === true OR ageS &lt;= 300
+const recent = (info, windowS) =&gt; info.exists &amp;&amp; (info.value === true || info.ageS &lt;= windowS);
+
+// Po: jen čerstvá detekce (motion fired v posledních 300s)
+const fresh = (info, windowS) =&gt; info.exists &amp;&amp; info.ageS &lt;= windowS;
+
+// Plus stuck-presence detector
+const isStuckPresence = (info) =&gt; info.exists &amp;&amp; info.value === true &amp;&amp; info.ageS &gt; 3600;</code></pre>
+
+        <p>
+          Open-space bonus se uplatní jen pokud FP2 i motion fired v posledních 5 minutách.
+          Pokud byly TRUE od večera (stuck), bonus se neuplatní:
+        </p>
+
+        <pre><code>+0  open_space_stuck_skipped (FP2_age=111315s, kitch_age=337s)</code></pre>
+
+        <p>
+          Plus PRE_ALARM_HARD_CAP — pokud je hodina 3 a nejbližší alarm víc jak 5 min daleko,
+          score se zastropuje na 6 (stav <code>pre_wakeup</code>, ne <code>morning_confirmed</code>).
+          Žádné spuštění routine.
+        </p>
+
+        <h3>Krok 3: LOCATION_TIME_GUARD vrstva</h3>
+
+        <p>
+          Tady byl ten hlavní zlom. Místo per-script time/phase logiky vytvořen centrální
+          skript <code>sh_location_time_context_v1.js</code>, který každých 5 minut počítá:
+        </p>
+
+        <pre><code>{
+  "timezone":      "Europe/Prague",
+  "is_dst":        true,
+  "utc_offset":    "+02:00",
+  "local_time_iso": "2026-05-12T07:32:41",
+  "local_hour":    7,
+  "latitude":      50.6012,    ← Semily
+  "longitude":     15.495,
+  "altitude":      489,
+  "city":          "Semily",
+  "country":       "CZ",
+  "sunrise_local": "05:14",
+  "sunset_local":  "20:35",
+  "day_phase":     "morning",   ← smart-computed
+  "weather_source":"yr.no",
+  "weather_health":"ok",
+  "location_health":"ok",
+  "time_health":   "ok",
+  "status":        "ok"
+}</code></pre>
+
+        <p>
+          Den se nedělí podle hardcoded hodin („morning = 5–10"), ale podle skutečného
+          východu a západu slunce z yr.no. <code>morning</code> = od (sunrise − 1h) do
+          (sunrise + 4h). <code>night</code> = mezi (sunset + 1h) a (sunrise − 1h).
+          V Semilech 12. května 2026: sunrise 5:14, sunset 20:35 — takže morning =
+          4:14–9:14, evening = 18:35–21:35.
+        </p>
+
+        <h3>Krok 4: Briefing greeting guard</h3>
+
+        <pre><code>function buildIntroByPhase(phase, hour) {
+  if (phase === 'night')   return 'Vítej, Luďku.';       // NIKDY "dobré ráno" v noci
+  if (phase === 'morning') return 'Dobré ráno, Luďku.';
+  if (phase === 'day')     return 'Dobrý den, Luďku.';
+  if (phase === 'evening') return 'Dobrý večer, Luďku.';
+  // Fallback: hour-based, ale 0–5 = "Vítej"
+  if (hour &lt; 5)  return 'Vítej, Luďku.';
+  ...
+}</code></pre>
+
+        <p>
+          Briefing teď čte <code>sh_day_phase_context</code> z master JSON a v noci řekne
+          „Vítej, Luďku" místo „Dobré ráno".
+        </p>
+
+        <h3>Krok 5: Morning brain phase_guard</h3>
+
+        <p>
+          Defensive vrstva v <code>sh_morning_brain_v1</code>. Pokud
+          <code>sh_day_phase_context === 'night'</code> a alarm dnes neproběhl, motion-trigger
+          se ignoruje:
+        </p>
+
+        <pre><code>if (event === 'motion_detected' && alreadyTriggered !== 'yes') {
+  if (dayPhase === 'night' && !alarmFiredToday) {
+    return 'PHASE_GUARD_BLOCKED';
+    // Log EventLog: event='morning_routine_blocked_wrong_phase'
+  }
+}</code></pre>
+
+        <h2>Před / Po</h2>
+
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-family:var(--mono);font-size:14px;">
+          <thead>
+            <tr style="border-bottom:2px solid var(--bd);">
+              <th style="text-align:left;padding:8px;">Aspekt</th>
+              <th style="text-align:left;padding:8px;color:#ff8080;">Před 12.5.</th>
+              <th style="text-align:left;padding:8px;color:#64f4d8;">Po 12.5.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--bd2);">
+              <td style="padding:8px;">Zdrojů počasí</td>
+              <td style="padding:8px;">3 (yr.no + OWM + Open-Meteo)</td>
+              <td style="padding:8px;">1 (yr.no)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--bd2);">
+              <td style="padding:8px;">HTTP fetch calls</td>
+              <td style="padding:8px;">2 backend + 1 browser</td>
+              <td style="padding:8px;">0 (yr.no native v Homey)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--bd2);">
+              <td style="padding:8px;">API klíče potřebné</td>
+              <td style="padding:8px;">1 (OpenWeatherMap)</td>
+              <td style="padding:8px;">0</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--bd2);">
+              <td style="padding:8px;">Vars pro počasí</td>
+              <td style="padding:8px;">3 (fragmentní)</td>
+              <td style="padding:8px;">22 (rich + sunrise/sunset)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--bd2);">
+              <td style="padding:8px;">Day phase computer</td>
+              <td style="padding:8px;">7+ skriptů, každý vlastní</td>
+              <td style="padding:8px;">1 (LOCATION_TIME_GUARD)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--bd2);">
+              <td style="padding:8px;">„Dobré ráno" v noci</td>
+              <td style="padding:8px;">možné</td>
+              <td style="padding:8px;">blokované (phase guard)</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--bd2);">
+              <td style="padding:8px;">Falsy-positive wake</td>
+              <td style="padding:8px;">FP2 stuck → score 85 → spustí</td>
+              <td style="padding:8px;">FP2 stuck → +0 → score 6 → block</td>
+            </tr>
+            <tr>
+              <td style="padding:8px;">Dead code v context_full</td>
+              <td style="padding:8px;">— —</td>
+              <td style="padding:8px;">−2 868 znaků smazáno</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Live briefing 12.5. 07:33</h2>
+
+        <p>Reálný TTS výstup po deployi:</p>
+
+        <blockquote style="border-left:4px solid var(--cyan);padding:12px 20px;margin:16px 0;background:var(--bg2);font-style:italic;">
+          „Dobré ráno, Luďku. Je 7 hodin 33 minut, datum 12. května 2026.
+          <strong>Venku je 5 stupňů, pocitově 2, zataženo. Během dne mezi 5 a 8 stupňů.
+          Slunce zapadá v 20 hodin 35 minut.</strong> Zdraví systému je 92 procent…"
+        </blockquote>
+
+        <p>
+          Briefing teď čte pět zdrojů, kterým rozumí. Teplota správně. Pocitově (rozdíl
+          ≥2 °C). Min/max během dne. Východ/západ slunce (podle denní doby — ráno řekne
+          vychází, večer zapadá). A v noci by řekl „Vítej, Luďku", ne „Dobré ráno".
+        </p>
+
+        <h2>Co jsem se naučil</h2>
+
+        <ol>
+          <li>
+            <strong>Smart home má tendenci kupit zdroje pravdy.</strong> Když přidám
+            funkci, většinou si v hlavě nesouložím s tím, jestli už podobná data nikde
+            v systému jsou. Audit po nějaké době ukáže, že stejný údaj počítám třikrát
+            různě. Konsolidace bolí, ale šetří hodiny diagnostiky.
+          </li>
+          <li>
+            <strong>Stuck-TRUE flag není čerstvý signál.</strong> mmWave radary a PIR
+            sensory mohou zůstat TRUE celé hodiny. Když je beru jako „pohyb se právě
+            stal", lžu si. Rozdíl je v <code>ageS</code> — kdy se hodnota naposled
+            změnila, ne jakou má aktuální value.
+          </li>
+          <li>
+            <strong>„Dobré ráno" v noci je víc než UX bug.</strong> Je to symptom toho,
+            že systém neví, kdy je den. Greeting funkce počítala hour. Ale 3:00 ráno
+            má být <em>night</em>, ne <em>morning</em>. Centrální vrstva to ví správně —
+            podle sunrise z yr.no, ne hardcoded „&lt; 6".
+          </li>
+          <li>
+            <strong>Memory pravidlo „REUSE FIRST".</strong> yr.no aplikace v Homey
+            byla nainstalovaná od založení systému. Měla 18 capabilities a fungovala.
+            Já jsem o ní nevěděl a přidal Open-Meteo HTTP fetch ze začátku týdne.
+            Audit najde tyhle duplicity a vyhází je.
+          </li>
+        </ol>
+
+        <h2>Co je dál</h2>
+
+        <p>
+          Centrální vrstva LOCATION_TIME_GUARD je nasazená. Refresh každých 5 minut
+          přes cron flow. Pokud status spadne na <code>watch</code> nebo <code>warning</code>,
+          další flow zaloguje varování. Pokud spadne na <code>critical</code> (například
+          yr.no offline na déle než 2 hodiny), nesmí se spustit plná ranní rutina bez
+          dodatečné kontroly. Safety guard.
+        </p>
+
+        <p>
+          Audit konzumentů — sedm dalších skriptů, které dosud měly vlastní time/phase
+          logiku — postupně migruje na single source. Sync proměnné <code>sh_cast_dne</code>
+          z <code>sh_day_phase_context</code> už dnes řeší většinu legacy readů bez
+          nutnosti per-script patche (NO REGRESSION pravidlo).
+        </p>
+
+        <p>
+          Zítra ráno (středa, alarm v 3:11 po-pá schedule) udělám automatický check —
+          jestli phase_guard zachytí motion-trigger v night phase, jestli rádio
+          hraje po druhém briefingu (TTS resume v1.9 — další bug, samostatný post),
+          jestli briefing zase má správnou teplotu z yr.no.
+        </p>
+
+        <p class="post-footnote">
+          <em>Marker: <code>LOCATION_TIME_GUARD_2026-05-12</code>.
+          Source: <code>sh_location_time_context_v1.js</code>,
+          <code>sh_weather_yr_bridge_v1.js</code>,
+          <code>sh_gemini_daily_briefing_v1.js</code> v1.3.
+          Memory: <code>reference_location_time_guard_2026-05-12.md</code> +
+          <code>reference_weather_yr_single_source_2026-05-12.md</code>.</em>
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>SMART HOME — Homey Pro 2026 + osobní deníky bugů a oprav. <a href="../blog.html">Blog</a> · <a href="../index.html">Hlavní</a></p>
+    </div>
+  </footer>
+</body>
+</html>

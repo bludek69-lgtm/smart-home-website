@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Crawl-delay je nepovinný; ponecháno nezadáno (GitHub Pages spravuje rate-limit sám)
+
+Sitemap: https://bludek69-lgtm.github.io/smart-home-website/sitemap.xml

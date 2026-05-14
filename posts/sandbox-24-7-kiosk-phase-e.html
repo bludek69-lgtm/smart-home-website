@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="14. května 2026 — den, kdy se RPi/HAOS proměnil v plnohodnotnou testovací bránu. Python sandbox runner 24/7, kiosk Phase E s cache fallback chain, dashboard cache retry fix v2.1. 20/20 testů PASS, 0 Homey writes." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Sandbox 24/7 + kiosk Phase E + cache retry — den úklidu | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">14. května 2026 · Infrastructure · 10 min čtení</p>
+        <h1>Sandbox 24/7 + kiosk Phase E + cache retry — den úklidu</h1>
+
+        <p>
+          Den, kdy se RPi/HAOS přestal hrát na servisního pomocníka a stal se z něj
+          plnohodnotná testovací brána mezi vývojem a produkcí. Tři vrstvy zároveň:
+          Python sandbox runner běžící 24/7, RPi kiosek s cache-first fallback chainem
+          a dashboard cache pipeline, která už netrucuje při občasném 417 z Athom relay.
+        </p>
+
+        <p>
+          Žádný Homey write, žádný edit dashboardů na HAOS, žádné device renames. Tři
+          gatey současně — <code>SANDBOX-FIRST</code>, <code>AUTO-REGISTRY</code>,
+          <code>SAFE_REPAIR_MODE</code> — drží celý postup v sandboxu, dokud se nepotvrdí,
+          že to nic nerozbije.
+        </p>
+
+        <h2>Node.js do HAOS bez bolesti</h2>
+
+        <p>
+          První ranní zjištění: HA SSH addon na RPi nemá Node. Sandbox dostane Node až
+          do persistentní vrstvy <code>core_ssh apks</code> config — tj. Supervisor ho
+          automaticky reinstaluje při každém startu addonu, takže addon rebuild ho
+          neodfoukne.
+        </p>
+
+        <pre><code># Before
+apks: ["python3"]
+# After (LIVE, persistent přes Supervisor)
+apks: ["python3", "nodejs", "npm"]</code></pre>
+
+        <p>
+          Verifikace: <code>node -v → v24.14.1</code>, <code>npm -v → 11.11.0</code>,
+          smoke test čte všech 6 snapshot fixtures (devices/variables/zones/scripts_index/
+          sh_dashboard_data/sh_device_map) bez chyby. Po addon restartu Node přežil →
+          persistence potvrzena.
+        </p>
+
+        <h2>Sandbox emulator — Phase B a C</h2>
+
+        <p>
+          Vrstva Node mocku Homey světa: <code>homey_mock.js</code> s <code>Homey.logic</code>,
+          <code>Homey.devices</code>, <code>Homey.flow</code>, plus <code>Homey.scripts.runScript()</code>
+          a <code>Homey.apps.restart()</code> jako schválně vyhazující funkce (zrcadlí
+          reálné sandbox omezení v Homey). <code>fetch()</code> disabled, dokud test
+          neposkytne explicit mock.
+        </p>
+
+        <p>
+          Phase B postavila 6 testů a 4 replay scénáře, Phase C přidala 10 dalších:
+          T1-T16 pokrývá dashboard schemu, bathroom vacancy, Prague timezone, light router
+          guards, roleta fallback, cron schema validation, audio vacancy, motion+presence
+          off, morning alarm variants, anti-UTC regression, sleep window guard, kitchen
+          scenes, dynamic temperature, dashboard cache fallback, cron invalid detection,
+          HomeyScript crash resilience.
+        </p>
+
+        <pre><code>[PASS] T1_dashboard_schema           — 26 keys present, 0 missing
+[PASS] T2_bathroom_vacancy           — proposed light_off + audio_stop
+[PASS] T3_morning_prague_date        — 4/4 Prague vs UTC correct
+[PASS] T4_light_router_guards        — 8/8 guards enforced
+[PASS] T5_device_map_roleta_fallback — sh_device_map.BLIND_DINING resolves
+[PASS] T6_cron_schema                — 83 cron cards, all valid
+... 14 more PASS
+PASS 20/20  FAIL 0</code></pre>
+
+        <h2>Phase D — sandbox 24/7 v HA automation</h2>
+
+        <p>
+          Sandbox-side testy běží jednou. Pravidelný runner za nás 24/7 čekal —
+          shell_command volaný HA automation každou celou hodinu. První pokus selhal
+          úsměvným způsobem.
+        </p>
+
+        <pre><code>2026-05-14 07:00:00.341 ERROR (MainThread)
+  [shell_command] Error running command:
+  `node /config/smart-home/sandbox/runner/sandbox_runner.js`,
+  return code: 127</code></pre>
+
+        <p>
+          Exit 127 = <code>node: command not found</code>. HA Core kontejner Node nemá
+          — naše Node persistence byla v <code>core_ssh</code> addonu, ne v hlavním HA
+          Core. Dvě izolované docker vrstvy. Pivot: runner přepsán do Pythonu (HA Core
+          má Python 3.12 nativně), Node sandbox vrstva zůstává jako vývojová.
+        </p>
+
+        <p>
+          F1-A naprogramoval Python orchestrátor pure-stdlib, mirror 16-test matrix
+          + replay JSON validator + 8-step gate logic (snapshot → tests → replay →
+          regression → rollback → user_go). F1-B přepojil HA shell_command z node na
+          python3. <code>ha core check</code> PASS, restart, čekání na :00 cron, runs
+          přeskočilo z 4 na 5 v 06:00:00.956Z přesně na hraně minuty:
+        </p>
+
+        <pre><code>[runner_py] runs=5 tests=16/16 replay=OK
+            blockers=0 gate=DEPLOY_GATE_OPEN</code></pre>
+
+        <p>
+          Gate semantika: <code>DEPLOY_GATE_OPEN</code> znamená „všechny technické
+          checky prošly", ale stále vyžaduje <code>user_go: REQUIRED</code> per change.
+          Runner nikdy sám nezasahuje do live Homey. Jen verdict v markdown reportu.
+        </p>
+
+        <h2>Auto-registry — gate proti tichým novým entitám</h2>
+
+        <p>
+          Kdykoliv v systému přibude nová scéna, automatizace, Flow, HomeyScript,
+          dashboard widget, modul, časový režim, tlačítko, gesto nebo trigger, runner
+          ji detekuje při diffu vs. baseline registry a označí jako
+          <code>BLOCKED_UNTIL_TEST_EXISTS</code> s návrhem názvu testu i replay scénáře.
+        </p>
+
+        <p>
+          Baseline registry teď drží 8 scenes + 132 scripts + 232 advanced_flows =
+          372 entit. Když přibude 133. script, runner pošle do MD reportu řádek typu
+          „<code>scripts: sh_new_thing</code> → propose <code>tests_py/test_sh_new_thing.py</code>".
+          Live deploy bez registry změny zablokovaný.
+        </p>
+
+        <h2>Dashboard cache retry — fix přes weekend</h2>
+
+        <p>
+          Stranou samotného sandboxu jeden konkrétní pipeline bug: dashboard cache
+          script <code>homey_dashboard_cache.py</code> občas vrátil exit 1 v cca 5 %
+          cron firings kvůli transientním errors z Athom cloud relay
+          (<code>vars fetch status=417</code> nebo connection drop). Failures byly
+          vždy přechodné — následující call (do 60 s) uspěl. Data loss = 0, jen
+          šum v HA logu.
+        </p>
+
+        <p>
+          Fix v2.1: <code>homey_get</code> rozdělen na <code>_homey_get_once</code>
+          + retry wrapper. Transient retry na <code>{0, 417, 502, 503, 504}</code>
+          s backoff 0.5 s + 1.5 s, max 3 attempts. Permanent statusy (401, 404, …)
+          raise immediately bez retry.
+        </p>
+
+        <pre><code>RETRY_STATUSES = {0, 417, 502, 503, 504}
+RETRY_BACKOFFS = (0.5, 1.5)  # 3 total attempts</code></pre>
+
+        <p>
+          Sandbox test T17 ověřil 5 case matrix (200 first try / 417+200 / 0+0+200 /
+          401 immediate raise / 417×3 exhausts) — 5/5 PASS. Po deploy dnes ráno
+          error rate spadl z ~5 % na <strong>1.8 %</strong> a HA log už neukazuje
+          každohodinový červený řádek.
+        </p>
+
+        <h2>Kiosk Phase E — RPi-only rebuild</h2>
+
+        <p>
+          Kiosek (RPi 192.168.1.122 s 1024×600 WaveShare displayem) běžel HTML z 11. 5.
+          v 19:25 — verze, která nikdy neznala dashboard cache. Když HAOS-side cache
+          pipeline začala produkovat čerstvý JSON, kiosek o tom neměl jak vědět.
+          Pořád polloval direct přes <code>server.py</code> proxy na Homey REST.
+        </p>
+
+        <p>
+          Pravidlo bylo přísné: <strong>NEČTI NIC Z PC</strong>. Phase E patch
+          se musí znovu vytvořit přímo ze samotného kiosk HTML, ne kopírovat z PC
+          dashboards/. Důvod: PC nemusí být online a má staré verze.
+        </p>
+
+        <p>
+          Workflow:
+        </p>
+
+        <ol>
+          <li>SSH na kiosek, pull <code>/home/smart/dashboard/index.html</code> +
+              <code>server.py</code> na HAOS staging dir.</li>
+          <li>Binary-mode Python patcher zachovává CRLF line endings (kiosk file
+              natively CRLF) — první pokus s LF-only způsobil false 29 822-line diff
+              místo skutečných 112 řádků.</li>
+          <li>Patch HTML: nahradit 7-řádkové <code>fetchDashboardData()</code> za
+              60-řádkovou verzi se 3-stage chainem cache→Homey REST→localStorage.
+              Přidat <code>#sourceBadge</code> CSS + DOM element top-right fixed.</li>
+          <li>Patch server.py: přidat <code>/cache/dashboard-data.json</code> route
+              proxying HAOS <code>/local/smart-home/dashboard-data.json</code>,
+              timeout 2.5 s, 502/504 fallback. Existující <code>/api/*</code> Homey
+              proxy intact, <code>HOMEY_TOKEN</code> count nezměněn.</li>
+          <li>Sandbox tests T18 (loader fallback), T19 (cache proxy), T20 (visual
+              contract). Run all 20 → 20/20 PASS.</li>
+          <li>Backup do <code>_backup_before_kiosk_phase_e_&lt;timestamp&gt;/</code>
+              s SHA256 manifest + chromium command line snapshot.</li>
+          <li>Atomic swap, restart <code>server.py</code> (pkill + nohup), F5 reload
+              Chromium via xdotool přes DevTools port 9222.</li>
+        </ol>
+
+        <p>
+          Po reloadu badge skutečně tam je. Oranžový <code>◐ CACHE OLD</code>
+          top-right — protože HAOS cache vrátila JSON, ale s <code>_stale: true</code>
+          (bridge_age_s > 300 s). Phase E chain se zachoval správně, dashboard
+          nezůstal blank, všechny ovládací prvky preservovány.
+        </p>
+
+        <p>
+          Badge stavy:
+        </p>
+
+        <ul>
+          <li><strong>● CACHE</strong> — zelená, data čerstvá z HAOS cache</li>
+          <li><strong>◐ CACHE OLD</strong> — oranžová, cache OK ale data starší než 5 min</li>
+          <li><strong>○ HOMEY</strong> — modrá, fallback na Homey REST</li>
+          <li><strong>○ LOCAL</strong> — červená, fallback na localStorage last-good</li>
+          <li><strong>✕ ERR</strong> — všechny tři stages selhaly</li>
+        </ul>
+
+        <h2>R0 preflight — co teď zbývá</h2>
+
+        <p>
+          Phase R0 byla read-only diagnostika, kam dál v repair loopu. Sandbox PASS
+          20/20, snapshot 3 h, kiosek LIVE, cache 1.8 %. Ale HomeyScript memory
+          watchdog log ukazuje <strong>1906 cumulative restartů</strong> a oscilaci
+          110-149 MB každých 5-10 min. To je systémový tlak, který sandbox sám
+          nevyřeší — vyžaduje patch na úrovni HomeyScript runtime.
+        </p>
+
+        <p>
+          R1-R3 plán:
+        </p>
+
+        <ul>
+          <li><strong>R1</strong> — bathroom vacancy hardening (user-visible problem,
+              edge cases kdy zůstane svítit/hrát po opuštění)</li>
+          <li><strong>R2</strong> — HomeyScript memory pressure root cause + reduction</li>
+          <li><strong>R3</strong> — morning routine deterministic audit (alarm/no-alarm,
+              before/after 03:00, late_motion_ignored pattern)</li>
+        </ul>
+
+        <h2>Compliance audit dnešního dne</h2>
+
+        <table>
+          <thead>
+            <tr><th>Rule</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SANDBOX-FIRST (každá změna přes sandbox)</td><td>✓</td></tr>
+            <tr><td>AUTO-REGISTRY (T17-T20 v ALL_TESTS)</td><td>✓</td></tr>
+            <tr><td>SAFE_REPAIR_MODE (backup + SHA256 + rollback)</td><td>✓</td></tr>
+            <tr><td>RPi/HAOS infrastructure role (Homey untouched)</td><td>✓</td></tr>
+            <tr><td>No PC reads (kiosk Phase E rebuilt fresh)</td><td>✓</td></tr>
+            <tr><td>0 Homey REST writes</td><td>✓</td></tr>
+            <tr><td>0 HomeyScript edits</td><td>✓</td></tr>
+            <tr><td>0 Advanced Flow edits</td><td>✓</td></tr>
+            <tr><td>0 device renames</td><td>✓</td></tr>
+            <tr><td>0 tokens v reportech</td><td>✓</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Takeaway</h2>
+
+        <p>
+          Pro tenhle systém už není „opravím to v Homey" první volbou. První je
+          „postavím sandbox test, který to reprodukuje, a teprve když projde,
+          připravím staging patch a počkám na explicit GO". To není byrokracie —
+          to je rozdíl mezi domem, kde se občas v noci sám rozsvítí pásek u postele,
+          a domem, který se dá testovat bez toho, aby si o tom obyvatel ráno četl
+          v build logu.
+        </p>
+
+        <p>
+          Sandbox runner pokračuje hourly. Další běh na :00 zařadí T17-T20 do registry
+          baseline. Live deploy gate zůstává OPEN — pending explicit per-change GO.
+        </p>
+
+        <p class="post-meta" style="margin-top:48px;">
+          Související posty:
+          <a href="dum-pozoruje-sam-sebe.html">Dům, který sám sebe pozoruje</a> ·
+          <a href="bathroom-misroute.html">Bathroom misroute — 4 hodiny diagnostiky</a> ·
+          <a href="yr-single-source.html">Tři zdroje počasí → jeden</a>
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Smart Home build log — Luděk Budínský. Postaveno jako product, ne jako koníček.</p>
+    </div>
+  </footer>
+</body>
+</html>

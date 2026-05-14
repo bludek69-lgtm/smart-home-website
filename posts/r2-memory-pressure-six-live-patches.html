@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="14. května 2026 odpoledne — 6 live patchů do Homey v jednom dni. 1 nová proměnná, guardian v1.1 s heartbeat detekcí, 5 throttle patchů. Důvod: cron storm 1295 fires/h, watchdog 38 restartů/24h, vacancy guardian běžel jen 5× za den. Win do 9 minut: bathroom audio stuck na radio_bathroom konečně odjelo." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Memory pressure — 6 live patchů a bathroom audio reset | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">14. května 2026 · Memory pressure / Live patch · 12 min čtení</p>
+        <h1>Memory pressure — 6 live patchů a bathroom audio reset</h1>
+
+        <p>
+          Druhá půle dne 14. května. Ráno proběhl úklid RPi/HAOS infrastruktury
+          (sandbox 24/7, kiosk Phase E, dashboard cache retry — <a href="sandbox-24-7-kiosk-phase-e.html">samostatný post</a>).
+          Odpoledne se ale začalo vrtat do jednoho konkrétního symptomu:
+          <strong>koupelna občas zůstala svítit a hrát rádio dlouho po tom,
+          co jsme z ní odešli.</strong> Reálně viděný problém, opakující se,
+          ne edge case.
+        </p>
+
+        <p>
+          Tady je jak se z toho stalo 6 živých patchů do Homey v jednom dni.
+          Bez chaosu. Sandbox-first, drift check, rollback ready, SHA bit-perfect verify
+          na každém PUT.
+        </p>
+
+        <h2>Phase R0 — co reálně bolí</h2>
+
+        <p>
+          Read-only preflight přes sandbox runner + Homey REST + watchdog log + EventLog.
+          Tři číselné nálezy hned dali kontext:
+        </p>
+
+        <ul>
+          <li>HomeyScript app stav <code>running</code>, ale mem oscilovala 99-154 MB
+              přes 24h, threshold 125 MB</li>
+          <li><strong>38 restart_triggered</strong> ve watchdog logu za 24h. Průměrně
+              jeden restart každých 38 min, ale clusterově každých 5-10 min při high-mem fázích</li>
+          <li>HomeyScript cumulative crashed counter <strong>1906</strong></li>
+        </ul>
+
+        <p>
+          Sandbox runner gate ale ukázal <code>DEPLOY_GATE_OPEN</code>, testy 20/20 PASS.
+          Sandbox infra OK. Problém byl jinde — v reálné runtime stabilitě Homey.
+        </p>
+
+        <h2>Phase R1 — root cause classification, ne hádání</h2>
+
+        <p>
+          R1 prompt měl explicit enum 11 možných root cause tagů
+          (<code>FLOW_MISSING</code>, <code>WRONG_FLOW_CARD</code>,
+          <code>STATE_NOT_WRITTEN</code>, <code>SCRIPT_CRASH_INTERRUPTED</code>,
+          <code>VACANCY_GUARDIAN_NOT_ENFORCING</code>, atd.). Cíl: zařadit do
+          jedné nebo více kategorií, ne mít fluffy diagnózu.
+        </p>
+
+        <p>
+          Diagnostika ukázala:
+        </p>
+
+        <ul>
+          <li><code>sh_vacancy_guardian_last_run_ts</code> = <code>'2026-05-14T06:25:02Z'</code>
+              — guardian naposledy doběhl před 67 minutami</li>
+          <li><code>sh_audio_current_mode</code> stuck na <code>'radio_bathroom'</code>
+              od ranní rutiny (~03:30Z)</li>
+          <li><code>sh_audio_active_speaker</code> stuck na <code>'Speaker koupelna'</code></li>
+          <li><strong>5 vacancy decisions / 24h</strong> v EventLog (očekáváno ~288 = 5min × 24h)</li>
+          <li>Motion ages ve vacancy decisions: <strong>13 686 s, 9 456 s, 4 685 s, 4 056 s, 2 286 s</strong>
+              — světlo/audio běželo až 3.8 hodiny po odchodu z koupelny</li>
+        </ul>
+
+        <p>
+          Klasifikace: <strong><code>VACANCY_GUARDIAN_NOT_ENFORCING</code></strong> primary
+          + <code>STATE_NOT_RESET</code> secondary (audio mode neresetuje sám sebe).
+        </p>
+
+        <h2>Phase R1 FLOW VERIFY — eliminace špatné hypotézy</h2>
+
+        <p>
+          Hypotéza #1 byla: cron Flow je rozbitý. Klasická intuice, často správná.
+          Sandbox-first ale chce empirický důkaz, ne intuici. Pull všech 233 advanced flows
+          přes REST, najít flow co volá guardian skript, inspekce karet:
+        </p>
+
+        <pre><code>Flow a996ffa1 — "SH – Vacancy – Guardian Cron 5min"
+  enabled: true
+  broken:  false
+  trigger card:
+    id:   homey:manager:cron:every_nth         ✅ správný cron format
+    args: { n: 5, type: "minute" }              ✅ správné argumenty (T6+T15 valid)
+  action card:
+    id:   homey:app:com.athom.homeyscript:run
+    args.script.id: 718292bb-...                 ✅ matches sh_room_vacancy_guardian_v1</code></pre>
+
+        <p>
+          Flow je <strong>strukturálně 100% správně</strong>. Eliminované hypotézy:
+          <code>FLOW_MISSING</code>, <code>FLOW_DISABLED</code>,
+          <code>FLOW_BROKEN_CARD</code>, <code>FLOW_WRONG_SCRIPT_TARGET</code>.
+        </p>
+
+        <p>
+          Ne flow je rozbitý, ale <strong>runtime kill mid-flight</strong>.
+          Watchdog log to potvrdil: cluster restartů přesně okolo posledního guardian
+          run-u (06:20, 06:25, 06:30 — guardian completed at 06:25, killed cluster at 06:30).
+        </p>
+
+        <h2>Heartbeat patch — důkaz CRASH_MID_RUN bez hádání</h2>
+
+        <p>
+          Klíčový problém pre-deploy: měli jsme jen <strong>jeden timestamp</strong>
+          (<code>sh_vacancy_guardian_last_run_ts</code> psaný na konci <code>run()</code>).
+          Když byl stale, nebylo možné rozlišit:
+        </p>
+
+        <ol>
+          <li>"cron Flow je rozbitý a vůbec nefire-uje guardian"</li>
+          <li>"cron Flow fire-uje, ale guardian se zabije mid-flight"</li>
+        </ol>
+
+        <p>
+          Patch: přidat <strong>druhý timestamp</strong> na začátku <code>run()</code> —
+          <code>sh_vacancy_guardian_heartbeat_ts</code>. Když cron fire-uje a script
+          alespoň jednou volá <code>setValue</code>, heartbeat se zapíše. Pokud pak
+          script doběhne, zapíše se i last_run. Pair logika:
+        </p>
+
+        <pre><code>both fresh        → OK_completing
+heartbeat fresh,
+last_run stale    → CRASH_MID_RUN  ← runtime kill během exekuce
+both stale        → CRON_NOT_FIRING ← cron flow / app dead
+mixed             → WARN</code></pre>
+
+        <p>
+          Sandbox test T26 5/5 PASS. Replay scénář <code>guardian_heartbeat_crash_mid_run.json</code>
+          simuloval přesnou produkční situaci.
+        </p>
+
+        <h2>Dvě malé live změny — var a guardian v1.1</h2>
+
+        <p>
+          Před guardian v1.1 deploye potřeba <strong>nová Logic proměnná</strong>:
+        </p>
+
+        <pre><code>POST /api/manager/logic/variable
+body: { "name": "sh_vacancy_guardian_heartbeat_ts",
+        "type": "string", "value": "" }
+→ HTTP 200
+→ id: 1514bec1-7a87-4d22-b3c7-16ce185a2e79</code></pre>
+
+        <p>
+          Idempotent guard pre-check potvrdil, že var neexistuje. POST. Verify post-GET.
+          Audit JSON do <code>rollback/var_create_sh_vacancy_guardian_heartbeat_ts.json</code>.
+          Žádný script ji ještě nepoužíval — bezpečné izolované přidání.
+        </p>
+
+        <p>
+          Potom guardian v1.0 → v1.1: 273 řádků → 309 řádků, dvě malé editace —
+          heartbeat write at top of <code>run()</code> + bathroom-specific stuck-state reset
+          when vacancy confirmed. Backup pre-deploy live source pulled, SHA porovnáno
+          s pre-staging backup-em (drift check), PUT, re-GET, SHA bit-perfect verify.
+        </p>
+
+        <h2>První cron po deployi — sandbox-first vindication</h2>
+
+        <p>
+          PUT proběhl v 08:01:13Z. Next 5-min cron at 08:05:00Z. Sample at 08:05:29Z:
+        </p>
+
+        <pre><code>sh_vacancy_guardian_heartbeat_ts = '2026-05-14T08:05:00.138Z'  ← ✅ fresh
+sh_vacancy_guardian_last_run_ts  = '2026-05-14T07:55:02.351Z'  ← ❌ stuck 10 min</code></pre>
+
+        <p>
+          <strong>CRASH_MID_RUN diagnóza okamžitě prokázána.</strong> Heartbeat
+          fire-d (cron OK, script started), last_run NEpsán (script killed mid-flight).
+          Stejný pattern pozorován i v 08:10, 08:15 cron firings.
+        </p>
+
+        <p>
+          Tím se hypotéza R1 FLOW VERIFY confirmed: ne flow, ale runtime. Pivot na R2.
+        </p>
+
+        <h2>Phase R2 — memory pressure audit</h2>
+
+        <p>
+          R2 read-only audit pull všech 132 scriptů zdroje + cron inventory.
+          Číslo, které zarazí: <strong>1 295.7 cron fires per hour</strong> napříč 67 cron flows.
+          21 fires per minute average. Worst offender:
+        </p>
+
+        <ul>
+          <li><code>sh_tts_orchestrator_v1</code>: 240/h = every 15 s
+              (TTS queue processor, fires regardless of queue state)</li>
+          <li><code>sh_shelly3em_poller_v1</code>: 120/h = every 30 s</li>
+          <li><code>sh_pracka_done_detector_v1</code>: 60/h</li>
+          <li><code>sh_morning_kaffe_check_v1</code>: 60/h</li>
+          <li><code>sh_wake_confirm_v1</code>: 60/h</li>
+          <li><code>sh_time_sync_guard_v1</code>: 60/h</li>
+          <li><code>sh_intent_engine_v1</code>: 60/h</li>
+          <li>… 60 dalších cron flows ve frekvencích 30/h-1/h</li>
+        </ul>
+
+        <p>
+          Každý fire = fresh V8 sandbox spawn v HomeyScript app. I když je work-load
+          script byl no-op, lib eval + var load + JSON parse zabere 50-300 KB allocations.
+          1295 fires/h × průměr 200 KB = ~260 MB/h V8 heap churn. GC reclaim některé,
+          ale net mem grows monotonically until threshold 125 MB → watchdog kill.
+        </p>
+
+        <h2>Quick Win Throttle — 5 patchů s jasným pravidlem</h2>
+
+        <p>
+          Strategie: minimální možný early-return guard na top of main entry každého
+          worst offender scriptu. Žádný redesign, žádné funkce přepisované. Single
+          <code>if (...) return;</code> blok per script:
+        </p>
+
+        <ul>
+          <li><strong>TTS Orchestrator</strong>: skip if <code>sh_tts_queue</code> empty
+              AND <code>sh_tts_queue_trigger</code> idle. Saves ~180/h.</li>
+          <li><strong>Kaffe Check</strong>: skip outside Prague 04:00-11:00 window.
+              Saves ~1 020 fires/day (70 % of daily).</li>
+          <li><strong>Wake Confirm</strong>: skip if user not sleeping AND hour ≥ 12.
+              Saves ~45/h.</li>
+          <li><strong>Wake Scorer</strong>: same logic. Saves ~20/h.</li>
+          <li><strong>Morning Score</strong>: same logic. Saves ~45/h.</li>
+        </ul>
+
+        <p>
+          Per patch: pull live source, drift check vs pre-staging backup (catch case
+          kdy mezitím někdo edituje skript přes UI), apply minimal patch via Python
+          binary-mode (preserve CRLF), staging file with manifest + SHA256.
+          Sandbox regression 26/26 PASS před každým PUT. Bit-perfect SHA re-GET
+          verify po PUT. Audit JSON. 5 minut work per patch.
+        </p>
+
+        <h2>Sequential deploy — 21 minut, 5 PUTů, žádný restart</h2>
+
+        <p>
+          Per SAFE_REPAIR_MODE: jedna změna, ověření, další změna.
+          Timeline (UTC):
+        </p>
+
+        <pre><code>08:26:46  PUT sh_tts_orchestrator_v1 v1.1     ✅ SHA bit-perfect
+08:43:58  PUT sh_morning_kaffe_check_v1 v1.1   ✅ SHA bit-perfect
+08:47:16  PUT sh_wake_confirm_v1 v1.1          ✅ SHA bit-perfect
+08:47:27  PUT sh_wake_scorer_v1 v1.1           ✅ SHA bit-perfect
+08:47:34  PUT sh_morning_score_v1 v1.1         ✅ SHA bit-perfect</code></pre>
+
+        <p>
+          App state běhěm všech 5 PUTů zůstala <code>running</code>. Žádné nové crashy
+          (crashedCount stable 1920 přes 21 min). Bit-perfect SHA verify na re-GET
+          každého patche. Backup intact pro per-script rollback (~10s single PUT).
+        </p>
+
+        <h2>9 minut po prvním deploy — bathroom audio konečně idle</h2>
+
+        <p>
+          Hlavní win nečekal 24-hodinový soak. Sample 12 minut po TTS deploy:
+        </p>
+
+        <pre><code>Pre-deploy 08:26Z:
+  sh_vacancy_guardian_heartbeat_ts = 08:25:00Z
+  sh_vacancy_guardian_last_run_ts  = 07:55:02Z  ← stuck 31 min
+
+Post-deploy 08:40Z (12 min after deploy):
+  sh_vacancy_guardian_heartbeat_ts = 08:35:00.156Z
+  sh_vacancy_guardian_last_run_ts  = 08:35:08.417Z  ← ✅ +8s = COMPLETED
+  sh_audio_current_mode             = 'idle'         ← ✅ reset from 'radio_bathroom'</code></pre>
+
+        <p>
+          První successful guardian run za 40+ minut. Stuck-audio-reset patch v1.1
+          se v té iteraci dostal k kódu a vyresetoval <code>sh_audio_current_mode</code>
+          na <code>'idle'</code>. Reálně viditelná oprava primárního user-reported
+          problému — bathroom radio už nebude resume po TTS notifikaci, protože
+          mode už není pinned na <code>radio_bathroom</code>.
+        </p>
+
+        <h2>Co tenhle den NEbyl</h2>
+
+        <ul>
+          <li>Nebyl to flow edit. Sandbox-first eliminace flow problému uvolnila
+              ruce pro správnou opravu (script-level throttle + heartbeat).</li>
+          <li>Nebyl to chaos. Šest live změn během dne, ale každá byla single PUT
+              s pre-flight + drift check + audit + verify.</li>
+          <li>Nebyl to PC export. Phase E kiosk byl rebuilt fresh z RPi/SSH bez
+              jakéhokoli čtení z <code>C:\</code>. Heartbeat var + guardian v1.1 + 5
+              throttle patches všechny vznikly na HAOS staging dir, nikoli na PC.</li>
+          <li>Není to hotovo. Watchdog restart rate ještě plně nepoklesl při baseline
+              monitoringu (+30 min mark). Throttle savings akumulují pomalu. Doporučený
+              2-6h soak před dalším rozhodnutím (Shelly poller offload, log buffer, atd.).</li>
+        </ul>
+
+        <h2>Pět hard rules co tohle všechno drží</h2>
+
+        <table>
+          <thead>
+            <tr><th>Rule</th><th>Jak se v R2 projevila</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SANDBOX-FIRST</td>
+                <td>26 sandbox testů + 19 replay scenarios PASS před každým PUT</td></tr>
+            <tr><td>AUTO-REGISTRY</td>
+                <td>Nový var <code>sh_vacancy_guardian_heartbeat_ts</code> přidán s audit JSON; sandbox runner registry baseline preserved</td></tr>
+            <tr><td>SAFE_REPAIR_MODE</td>
+                <td>Per-script live backup pre-PUT, SHA drift check, bit-perfect verify, rollback dokumentován jako single PUT ~10s</td></tr>
+            <tr><td>REUSE FIRST</td>
+                <td>Žádný nový HomeyScript. 6 patchů = update existing scripts. Sandbox tests T22-T26 vznikly v existing framework.</td></tr>
+            <tr><td>RPi/HAOS infra rule</td>
+                <td>Vše pulled přes Homey REST + HAOS sandbox staging dir. Žádný PC read v R2.</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Co bude soak ukázat</h2>
+
+        <p>
+          Sandbox runner běží každou hodinu jako 24/7 brána. Pair-logic diagnóza
+          <code>sh_vacancy_guardian_heartbeat_ts</code> vs <code>sh_vacancy_guardian_last_run_ts</code>
+          poskytne kontinuální čítač:
+        </p>
+
+        <ul>
+          <li>OK_completing rate (kolik z 288 fires/day skutečně dokončí)</li>
+          <li>CRASH_MID_RUN rate (kolik startů killed)</li>
+          <li>Watchdog restart trend per hour</li>
+          <li>Bathroom audio_mode reset frequency (kolikrát guardian executes patch B)</li>
+        </ul>
+
+        <p>
+          Pokud po 2-6 hodinách restart rate spadne pod 20/h, R2 Quick Win considered
+          success. Pokud zůstane 20-30/h, další kandidát je Shelly poller offload na
+          RPi Python (eliminuje 120/h fires). Pokud je stále >30/h, deeper problém —
+          log buffer offload, cache patches, možná HomeyScript app version upgrade.
+        </p>
+
+        <h2>Takeaway</h2>
+
+        <p>
+          Šest živých zásahů do produkčního Homey v jednom dni je hodně.
+          Bez sandbox-first by to bylo riskantní. S 26 sandbox testy + 19 replay
+          scenarios + per-script SHA verify + audit JSON za každý PUT, ale rychlost
+          neznamená chaos.
+        </p>
+
+        <p>
+          A reálný uživatelský win — bathroom radio už nebude resume z prázdné koupelny —
+          byl měřitelný 9 minut po prvním deploy. Ne za týden. Ne s "ono se to časem
+          srovná". Měřitelný timestamp, prokazatelná oprava, sandbox replay scenario,
+          který tu situaci reprodukoval předem.
+        </p>
+
+        <p class="post-meta" style="margin-top:48px;">
+          Související posty:
+          <a href="sandbox-24-7-kiosk-phase-e.html">Sandbox 24/7 + kiosk Phase E (ranní část dne)</a> ·
+          <a href="bathroom-misroute.html">Bathroom misroute — 4 hodiny diagnostiky (25.4.)</a> ·
+          <a href="dum-pozoruje-sam-sebe.html">Dům, který sám sebe pozoruje</a>
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Smart Home build log — Luděk Budínský. Postaveno jako product, ne jako koníček.</p>
+    </div>
+  </footer>
+</body>
+</html>
