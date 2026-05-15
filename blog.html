@@ -57,6 +57,15 @@
         </header>
 
         <div class="buildlog-list" role="list">
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-15</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Dashboard Config Center + Weather restore — 8 vln v jeden den</h3>
+            <p>15. května večer. Po sérii R2-R6A oprav Homey runtime se přesun na dashboard. <strong>Wave 1</strong> přidal <code>__CANON_ENUMS</code> guard — dashboard přestal psát czech literály (<code>doma</code>, <code>pryc</code>, <code>ano</code>, <code>strong_yes</code>) do logických proměnných, 9 zakázaných tokenů blokováno na write path. <strong>Wave 2A</strong> obnovil cache-first weather renderer (po SSD migraci RPi se vrátila stará OWM verze — deploy-channel regression, ne code bug); <strong>Wave 2B</strong> oživil cron <code>sh_weather_yr_bridge_v1</code> z yr.no, žádné API klíče. <strong>Wave 3</strong> udělal z rolety PURE LUX truth (odstraněný short-circuit <code>sh_house_state='home_normal'</code>, který občas držel roletu nahoře i v noci). <strong>Wave 6</strong> propagoval enum guard na desktop v7_1920 + v7_2880. <strong>Wave 4A → 4B-6</strong> Config Center: <code>DASHBOARD_CONFIG_SCHEMA</code> + <code>writeVarValidated</code> + <code>writeCfg</code> dispatcher, růst z 18 entries na 128+ (min/max/enum/crossField/softWarnings), pokrývá morning/heating/audio/light/occupancy/roleta/energy/scenes. Aktuálně soft-reject, po 24h soaku hard-mode flip. Final RPi sha <code>e3216213…</code>. <a href="posts/dashboard-config-center.html">Číst delší post →</a></p>
+          </article>
+
           <article class="buildlog-entry bl-fix" role="listitem">
             <div class="buildlog-meta">
               <span class="buildlog-date">2026-05-14</span>

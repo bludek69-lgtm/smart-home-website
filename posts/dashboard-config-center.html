@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="15. května 2026 večer — 8 vln dashboard stabilizace v jeden den. Canonical enum guard, weather restore, Config Center se schema-validated writes (128+ schema záznamů), roleta jako PURE LUX truth. Dashboard přestal psát „doma“/„pryc“ a začal odmítat 9 zakázaných literálů na write path." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Dashboard Config Center + Weather restore — 8 vln v jeden den | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="canonical" href="https://bludek69-lgtm.github.io/smart-home-website/posts/dashboard-config-center.html">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <ul class="nav-list">
+          <li><a href="../blog.html">← Zpět na blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="container">
+      <a href="../blog.html" class="post-page-back">← Všechny příspěvky</a>
+
+      <article class="post-content">
+        <p class="post-meta">15. května 2026 · Dashboard / Config Center · 6 min čtení</p>
+        <h1>Dashboard Config Center + Weather restore — 8 vln v jeden den</h1>
+
+        <p>
+          15. května večer. Po sérii R2-R6A oprav Homey runtime jsme se přesunuli
+          na druhou stranu — dashboard. Tři výstupy, tři rozlišení:
+          WaveShare 10.1″ 1024×600 (RPi kiosk), 14″ notebook 1920×1080,
+          32″ master 2880×1800. Cíl: stabilní render, žádné silent-fail buttony,
+          a hlavně <strong>žádný zápis czech literálů</strong> jako
+          <code>doma</code>, <code>pryc</code>, <code>ano</code> do logických proměnných.
+        </p>
+
+        <h2>Wave 1 — canonical enum guard</h2>
+
+        <p>
+          Před vlnou 1 mohl dashboard psát do <code>sh_rezim_doma</code> hodnotu
+          <code>'doma'</code>, zatímco zbytek systému (sh_morning_brain, sh_audio_brain,
+          sh_light_router) pracoval s <code>'home'</code>. Tichý mismatch — žádný error,
+          jen automatika neudělala to, co měla. Stejné u <code>'pryc'</code> vs <code>'away'</code>,
+          <code>'ano'</code> vs <code>'yes'</code>, <code>'strong_yes'</code> vs <code>'yes'</code>.
+        </p>
+
+        <p>
+          Wave 1 přidal helper <code>__CANON_ENUMS</code> přímo do HTML. Před každým
+          <code>writeVar</code> dashboard porovná hodnotu s povoleným enumem
+          (anglické tokeny). Pokud najde czech literál nebo <code>true</code>/<code>false</code>,
+          zablokuje write a logne. 9 zakázaných literálů celkem.
+        </p>
+
+        <h2>Wave 2A + 2B — weather restore</h2>
+
+        <p>
+          Po nedávné migraci RPi na SSD se kiosk renderer vrátil ke staré verzi
+          počasí (OpenWeatherMap proxy přes Homey), která mezitím přestala fungovat.
+          Diagnostika nebyl kód bug — byl to <strong>deploy-channel regression</strong>.
+          SSD rebuild přepsal patched canonical soubor starším OWM file-em.
+        </p>
+
+        <p>
+          Wave 2A: cache-first renderer (čte přímo <code>sh_weather_3d_json</code>
+          z Homey logic vars) byl re-deployed na RPi přes SSH. Wave 2B oživil
+          cron <code>sh_weather_yr_bridge_v1</code>, který každých 10 min stahuje
+          yr.no JSON a píše ho do té same var. Žádné API klíče, žádné OWM,
+          žádný proxy hop — yr.no je free a stabilní.
+        </p>
+
+        <h2>Wave 3 — roleta = PURE LUX truth</h2>
+
+        <p>
+          Roleta v Jídelně měla dvě protichůdné podmínky: <code>sh_house_state</code>
+          a venkovní lux. Když <code>sh_house_state</code> bylo <code>'home_normal'</code>,
+          short-circuit a roleta nahoře bez ohledu na lux. Reálně to ale způsobovalo
+          drift — roleta zůstala nahoře i v noci, když lux byl 0. Wave 3 odstranil
+          ten short-circuit. Teď jediná pravda je lux + hysteresis (R3 throttle deploy
+          z 13.5. zůstal in place).
+        </p>
+
+        <h2>Wave 6 — desktop parity</h2>
+
+        <p>
+          v7_1920 (notebook) a v7_2880 (32″ master) dostaly stejný <code>__CANON_ENUMS</code>
+          guard jako RPi. Tři výstupy, identický write contract.
+        </p>
+
+        <h2>Wave 4A → 4B-6 — Config Center</h2>
+
+        <p>
+          Tady byla největší změna. Místo aby každý config tile měl vlastní
+          inline write logiku, Wave 4A přidal <code>DASHBOARD_CONFIG_SCHEMA</code>
+          objekt + helper <code>writeVarValidated(varName, value)</code>. Schema
+          definuje pro každou logic var: typ, min, max, enum, cross-field závislosti,
+          soft warnings.
+        </p>
+
+        <p>
+          Wave 4B postupně rozšířil schema z 18 entries (4B-1) na 128+ entries (4B-6).
+          Pokrývá: morning routine cfg (alarm window, kaffe immediate, score boost),
+          heating cfg (target_temp s <code>min:5</code> pro frostsave 7°C,
+          <code>manual_override_temp</code> s <code>min:-99</code> pro sentinel),
+          audio cfg, light cfg, occupancy thresholds, vacancy guardian timeouts,
+          roleta lux thresholds, energy budget caps, scene engine modes
+          (<code>idle, reset, romantika, relax, kino, vareni, work</code>).
+        </p>
+
+        <p>
+          <code>writeCfg</code> dispatcher unifikoval všechny config write paths.
+          Aktuálně běží v <em>soft-reject</em> módu — log warning, ale write pustí.
+          Po 24h soaku přepneme na hard-reject (true block). Final RPi sha:
+          <code>e3216213e4b9f73772c1a555d790cd5e411bac5b2031c290ffaf36e791bd7aec</code>.
+        </p>
+
+        <h2>Čemu jsem se vyhnul přitom</h2>
+
+        <p>
+          B11 misdiagnóza: chtěl jsem na začátku přidat nový helper
+          <code>setHeatingBoost(30)</code> do dashboardu. Při čtení live source jsem
+          ale zjistil, že už existuje a je správně wired. Žádný nový kód, REUSE FIRST,
+          revert. Stejně tak scene engine — dashboardy chtěly nabízet
+          <code>comfort</code> a <code>night</code> jako scene IDs, ale engine je nezná.
+          Sedm IDs only. Wave 5 (Homey-side scene enumeration) je naplánovaný
+          ale ne tonight.
+        </p>
+
+        <h2>Co dál</h2>
+
+        <p>
+          Overnight soak. Ráno automatický <code>OVERNIGHT_SOAK_REPORT_2026-05-16_0600.md</code>
+          fire-ne v 06:00 Prague. Po něm: Wave 4B hard-mode flip,
+          R6A morning verify (čte EventLog za poslední morning routine), pak
+          R6B (Gemini brain + morning score heartbeat) a R5 SIGABRT main hunt
+          (~7-8 crashů/h baseline, root cause nevyřešen).
+        </p>
+
+        <p>
+          Dashboard je teď v stavu, kdy odmítá psát glupost. To je první milník
+          od kdy nemusím při review pull request-ů hlídat enum hodnoty ručně.
+        </p>
+
+        <p class="post-meta" style="margin-top:48px;">
+          Související posty:
+          <a href="r2-memory-pressure-six-live-patches.html">R2 memory pressure — 6 live patchů (14.5.)</a> ·
+          <a href="sandbox-24-7-kiosk-phase-e.html">Sandbox 24/7 + kiosk Phase E</a> ·
+          <a href="yr-single-source.html">YR — single source of truth pro počasí</a>
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Smart Home build log — Luděk Budínský. Postaveno jako product, ne jako koníček.</p>
+    </div>
+  </footer>
+</body>
+</html>
