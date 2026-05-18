@@ -34,7 +34,7 @@ PILLARS = [
         'icon': '📦',
         'label': 'Zařízení',
         'title': 'Zařízení',
-        'lead': 'Hardware co řídí dům — Homey Pro 2026, 77 zařízení, infrastruktura okolo.',
+        'lead': 'Hardware co řídí dům — Homey Pro 2026, 60+ zařízení, infrastruktura okolo.',
         'sub': ['senzory', 'ovladace', 'svitidla', 'repro', 'rolety', 'zasuvky', 'hardware', 'infra'],
         'is_existing': True,  # zarizeni.html already exists, don't overwrite content
     },
@@ -359,7 +359,7 @@ def build():
     out = page_template(
         'home',
         'SMART HOME — projekt Luďka Budínského',
-        'Domácnost řízená script-first architekturou nad Homey Pro 2026. Garsonka v přízemí, 77 zařízení, 110 skriptů, vlastní AI Brain Guardian.',
+        'Domácnost řízená script-first architekturou nad Homey Pro 2026. Garsonka v přízemí, 60+ zařízení, 100+ skriptů, vlastní AI Brain Guardian.',
         new_index_content,
     )
     index_path.write_text(out, encoding='utf-8')
