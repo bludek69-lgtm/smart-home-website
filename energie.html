@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, plánovaný Shelly 3EM pro reálné měření." />
+  <meta name="description" content="Runtime-based kWh estimate kotle, plug devices s power metering, daily/yearly tracking, Shelly Pro 3EM v rozvaděči pro reálné 3-fázové měření (live od 12. 5. 2026)." />
   <meta name="theme-color" content="#0a0e14" />
   <title>Energie a spotřeba | SMART HOME</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -81,8 +81,8 @@
           <p>
             Cíl není absolutní přesnost faktura-grade — cíl je vědět, který spotřebič žere
             kolik a kdy. Z toho jde odvodit, že kotel ročně sebere ~3 500 kWh, ledničce
-            stačí ~250, počítač v idle ~80, ostatní zanedbatelně. Pro reálné fakturační
-            měření je v plánu Shelly 3EM (CT clamp na 3 fáze v rozvaděči).
+            stačí ~250, počítač v idle ~80, ostatní zanedbatelně. Reálné fakturační
+            měření jede paralelně přes Shelly Pro 3EM (CT clamps na 3 fáze v rozvaděči, live od 12. 5. 2026).
           </p>
         </div>
       </div>
@@ -219,13 +219,13 @@
             <p class="hw-tag">Z-wave switch · runtime tracking</p>
             <p>
               Hlavní switch pro kotel. Sám nemá power metering (jen on/off + status),
-              proto runtime-based estimate. Při budoucím Shelly 3EM se runtime estimate
-              kombinuje s real measurement pro cross-check.
+              proto runtime-based estimate. Live Shelly Pro 3EM (od 12. 5. 2026) doplňuje
+              runtime estimate o reálné per-fáze měření pro cross-check.
             </p>
           </article>
           <article class="hw-card">
             <div class="hw-icon" aria-hidden="true">🌡</div>
-            <h3>4× Fibaro FGT-001 (TRV)</h3>
+            <h3>3× Fibaro FGT-001 (TRV)</h3>
             <p class="hw-tag">Termo hlavice · battery powered</p>
             <p>
               Nemá power metering pro topný okruh — měří jen sebe (battery level). Užitečné

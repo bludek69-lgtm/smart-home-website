@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří." />
+  <meta name="description" content="Elektrický kotel 9 kW, 3 zónové TRV s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří. Reálné měření přes Shelly Pro 3EM (live od 12. 5. 2026)." />
   <meta name="theme-color" content="#0a0e14" />
   <title>Topení a klima | SMART HOME</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,13 +44,13 @@
         <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🏠 Prožívání · Topení a klima</p>
         <h1 class="hero-title">Topení které <span class="grad-text">předvídá a šetří</span></h1>
         <p class="hero-lead">
-          Elektrický kotel 9 kW, čtyři zóny s vlastním týdenním rozvrhem, tři režimy
+          Elektrický kotel 9 kW, tři zónové TRV s vlastním týdenním rozvrhem, tři režimy
           a tři AI vrstvy. Místo termostatu na zdi rozhoduje skript každé dvě minuty —
           podle toho, jestli zrovna spím, kolik je venku stupňů, a jestli za půl hodiny
           zazvoní budík.
         </p>
         <div class="uc-stats">
-          <div class="uc-stat"><span class="uc-stat-num">4</span><span class="uc-stat-label">Topné zóny</span></div>
+          <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Zónové TRV</span></div>
           <div class="uc-stat"><span class="uc-stat-num">9 kW</span><span class="uc-stat-label">Příkon kotle</span></div>
           <div class="uc-stat"><span class="uc-stat-num">3</span><span class="uc-stat-label">Režimy</span></div>
           <div class="uc-stat"><span class="uc-stat-num">41</span><span class="uc-stat-label">Proměnných</span></div>
@@ -106,9 +106,9 @@
         </div>
         <figure class="uc-screenshot">
           <img src="assets/screenshots/after/1920/heating.png"
-               alt="Heating stránka v dashboardu — master toggle, 4 zóny, kotel runtime + kWh dnes"
+               alt="Heating stránka v dashboardu — master toggle, topné zóny, kotel runtime + kWh dnes"
                loading="lazy" class="zoomable" />
-          <figcaption>Heating stránka v dashboardu — master toggle, 4 zóny, kotel state + runtime + kWh dnes</figcaption>
+          <figcaption>Heating stránka v dashboardu — master toggle, topné zóny, kotel state + runtime + kWh dnes</figcaption>
         </figure>
       </div>
     </section>
@@ -221,7 +221,7 @@
         <header class="section-header">
           <p class="section-eyebrow">Hardware</p>
           <h2 class="section-title">Co reálně topí</h2>
-          <p class="section-lead">Jeden kotel, jedno relé, jeden stykač, čtyři termo hlavice. Plus jeden plánovaný měřák.</p>
+          <p class="section-lead">Jeden kotel, jedno Z-Wave relé, tři termo hlavice, jeden 3-fázový měřák.</p>
         </header>
         <div class="hw-grid">
           <article class="hw-card">
@@ -237,41 +237,36 @@
           <article class="hw-card">
             <div class="hw-icon" aria-hidden="true">⚡</div>
             <h3>Fibaro FGS-214</h3>
-            <p class="hw-tag">Z-Wave Single Switch · 8 A relé</p>
+            <p class="hw-tag">Z-Wave Single Switch · spínací prvek kotle</p>
             <p>
-              Spíná cívku stykače (~5 W zátěž), ne kotel přímo. Čisté oddělení
-              řídicího signálu od silových fází. Bezpečnější než pouštět 9 kW
-              přes spotřební relé. Jediný kus, co Homey přímo ovládá.
-            </p>
-          </article>
-          <article class="hw-card">
-            <div class="hw-icon" aria-hidden="true">🔌</div>
-            <h3>ABB ESB 24-40</h3>
-            <p class="hw-tag">Stykač · 24 A / 3~400 V · 230 V cívka</p>
-            <p>
-              Tichý stykač co skutečně spíná silové fáze kotle. Kdyby přestala
-              relé fungovat, žádný teplotní problém — jen zvuk cvaknutí navíc.
-              Klasická průmyslová elektroinstalace, ne spotřební elektronika.
+              Jediný řídicí prvek, co Homey přímo ovládá. Spíná kotel
+              přes ovládací vstup — nepouští silové fáze, jen dává signál
+              „topit / netopit". Kotel si přepínání 3 / 6 / 9 kW řeší sám
+              vnitřní modulací.
             </p>
           </article>
           <article class="hw-card">
             <div class="hw-icon" aria-hidden="true">🌡</div>
-            <h3>4× Fibaro FGT-001</h3>
-            <p class="hw-tag">Termoradiátorové hlavice · Z-Wave</p>
+            <h3>3× Fibaro FGT-001</h3>
+            <p class="hw-tag">Termoradiátorové hlavice · Z-Wave · Jídelna / Koupelna / Toaleta</p>
             <p>
               Per-zóna regulace toku do radiátoru. Vlastní teplotní senzor,
               vlastní schedule. Když je „toaleta 18 °C" splněno, hlavice ventil
               přivře, i kdyby kotel ještě jel. Bateriově napájené, výměna ~ročně.
+              Ložnice + open space (Kuchyně/Jídelna) jedou bez TRV — vytápěné
+              difuzí přes otevřené prostory.
             </p>
           </article>
-          <article class="hw-card hw-future">
+          <article class="hw-card">
             <div class="hw-icon" aria-hidden="true">📊</div>
-            <h3>Shelly 3EM <span class="hw-badge">Plánováno</span></h3>
-            <p class="hw-tag">3-fázový měřák · CT clamp · Wi-Fi</p>
+            <h3>Shelly Pro 3EM Triphase <span class="hw-badge hw-badge-live">LIVE</span></h3>
+            <p class="hw-tag">3-fázový měřák · CT clamps · Wi-Fi · od 12. 5. 2026</p>
             <p>
-              Reálný odečet kWh ze tří fází kotle. Aktuálně počítáme runtime ×
-              příkon (přesnost ~95 % protože kotel vnitřně moduluje 3/6/9 kW),
-              s 3EM dostaneme přesnou spotřebu kotle bez odhadu.
+              Reálný odečet kWh ze tří fází kotle přes HTTP polling na
+              <code>192.168.1.172</code>. Doplňuje runtime-based estimate (kotel
+              vnitřně moduluje 3 / 6 / 9 kW podle teploty vody, runtime sám
+              o sobě dosahuje ~95 % přesnosti). 3EM dává přesnou skutečnou
+              spotřebu bez odhadu.
             </p>
           </article>
         </div>
@@ -364,8 +359,9 @@
             </p>
             <p>
               <code>kwh_today = (runtime_today_s / 3600) × kotel_kw</code>. Přesnost ~95 %,
-              protože kotel interně moduluje stage 3 / 6 / 9 kW podle teploty vody. Real
-              measurement čeká na Shelly 3EM (CT clamp na 3 fáze v rozvaděči).
+              protože kotel interně moduluje stage 3 / 6 / 9 kW podle teploty vody. Reálné
+              měření jede paralelně přes <strong>Shelly Pro 3EM Triphase</strong> (HTTP polling
+              na 192.168.1.172, CT clamps na 3 fáze v rozvaděči, live od 12. 5. 2026).
             </p>
           </details>
 
