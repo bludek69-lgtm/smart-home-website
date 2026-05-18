@@ -18,8 +18,9 @@ import re
 ROOT = Path(__file__).resolve().parent
 
 # ─── PILLAR / NAV ARCHITECTURE ─────────────────────────────────
-# Top-level nav items.  Each pillar can have subpages (mega-menu).
-# Sub-pages keep their own .html files; pillar pages are hubs.
+# Top-level nav items.  Each pillar can have subpages used to BUILD the
+# corresponding hub page and the technicka-mapa.html page; nav strip itself
+# is LEAN (7 flat items, no mega-menu) — see MAIN_NAV below.
 PILLARS = [
     {
         'id': 'prozivani',
@@ -27,7 +28,7 @@ PILLARS = [
         'label': 'Prožívání',
         'title': 'Prožívání — co systém umožňuje',
         'lead': 'Use-case pohled na celý systém — co dům dělá pro ty, kdo v něm žijí. Funkce, dashboardy a AI vrstva v jednom.',
-        'sub': ['topeni-klima', 'svetla', 'audio', 'bezpecnost-kamery', 'atmosfera', 'energie', 'funkce', 'dashboard', 'digital-twin', 'ai-brain'],
+        'sub': ['topeni-klima', 'svetla', 'audio', 'bezpecnost-kamery', 'atmosfera', 'energie', 'funkce', 'digital-twin', 'ai-brain'],
     },
     {
         'id': 'zarizeni',
@@ -66,6 +67,18 @@ PILLARS = [
     },
 ]
 
+# Lean top-level navigation — 7 flat items, no mega-menu.
+# Order: Domů, Jak to funguje (=prozivani), Zařízení, Dashboard, Příběh, Blog, Kontakt.
+MAIN_NAV = [
+    {'id': 'home',      'href': 'index.html',     'label': 'Domů'},
+    {'id': 'prozivani', 'href': 'prozivani.html', 'label': 'Jak to funguje'},
+    {'id': 'zarizeni',  'href': 'zarizeni.html',  'label': 'Zařízení'},
+    {'id': 'dashboard', 'href': 'dashboard.html', 'label': 'Dashboard'},
+    {'id': 'pribeh',    'href': 'pribeh.html',    'label': 'Příběh'},
+    {'id': 'blog',      'href': 'blog.html',      'label': 'Blog'},
+    {'id': 'kontakt',   'href': 'kontakt.html',   'label': 'Kontakt'},
+]
+
 # Sub-page metadata (existing pages that became sub-pages under pillars).
 SUBPAGES = {
     'topeni-klima': ('Topení a klima', 'Topení a klima',        'Elektrický kotel 9 kW, 4 zóny s vlastním rozvrhem, 3 režimy a tři AI vrstvy. Topení které předvídá a šetří.'),
@@ -97,6 +110,13 @@ SUBPAGES = {
     'ai-brain':     ('AI Brain',       'AI Brain Guardian',     'Meta-vrstva nad systémem — state validator, expected state engine, self-healing, Gemini.'),
 }
 
+# Extra technical pages that exist but aren't built from <main> extraction.
+# They appear on technicka-mapa.html as link cards only.
+EXTRA_TECH = {
+    'hardware-komplet': ('Kompletní hardware', 'Katalog všech 82 zařízení z živého Homey exportu — filtry, fotky, role, protokol, zóna.'),
+    'dashboard':        ('Dashboard',          'Tři obrazovky, jeden systém. 1024×600 RPi kiosek, 1920×1080 notebook, 2880×1800 monitor.'),
+}
+
 # Reverse map: subpage id → parent pillar id (for is-active highlighting).
 SUB_TO_PILLAR = {sub: p['id'] for p in PILLARS for sub in p['sub']}
 
@@ -111,54 +131,24 @@ def extract_main(html: str) -> str:
 
 
 def build_nav(active_id: str | None) -> str:
-    """Build mega-menu navigation.
+    """Build LEAN top-level navigation — 7 flat items, no mega-menu.
 
-    active_id is either a pillar id or a sub-page id.  When it's a sub-page,
-    the parent pillar gets highlighted.
+    active_id is either one of MAIN_NAV ids, a sub-page id, or 'home'.
+    Sub-pages highlight their parent pillar in the strip.
+    Technical sub-pages live on technicka-mapa.html, linked from footer.
     """
     # Resolve sub-page → its pillar for highlight purposes
     active_pillar = SUB_TO_PILLAR.get(active_id, active_id)
 
     items = []
-    home_cls = ' class="is-active"' if active_id == 'home' else ''
-    items.append(f'<li><a href="index.html"{home_cls}>Domů</a></li>')
-
-    for p in PILLARS:
-        is_active = (p['id'] == active_pillar) or (p['id'] == active_id)
-        li_cls = 'has-mega' if p['sub'] else ''
-        a_cls_parts = []
-        if p['sub']:
-            a_cls_parts.append('mega-trigger')
+    for item in MAIN_NAV:
+        is_active = (item['id'] == active_id) or (item['id'] == active_pillar)
+        attrs = []
         if is_active:
-            a_cls_parts.append('is-active')
-        a_cls = f' class="{" ".join(a_cls_parts)}"' if a_cls_parts else ''
-
-        if p['sub']:
-            sub_links = []
-            for sub_id in p['sub']:
-                label, _t, lead = SUBPAGES[sub_id]
-                cur = ' aria-current="page"' if sub_id == active_id else ''
-                sub_links.append(
-                    f'<a href="{sub_id}.html"{cur}>'
-                    f'<strong>{label}</strong>'
-                    f'<span>{lead}</span>'
-                    f'</a>'
-                )
-            mega = (
-                f'<div class="mega-panel" role="menu">'
-                f'<div class="mega-grid">{"".join(sub_links)}</div>'
-                f'</div>'
-            )
-            items.append(
-                f'<li class="{li_cls}">'
-                f'<a href="{p["id"]}.html"{a_cls}>{p["icon"]} {p["label"]}</a>'
-                f'{mega}'
-                f'</li>'
-            )
-        else:
-            items.append(
-                f'<li><a href="{p["id"]}.html"{a_cls}>{p["icon"]} {p["label"]}</a></li>'
-            )
+            attrs.append('class="is-active"')
+            attrs.append('aria-current="page"')
+        attr_str = (' ' + ' '.join(attrs)) if attrs else ''
+        items.append(f'<li><a href="{item["href"]}"{attr_str}>{item["label"]}</a></li>')
 
     return '\n          '.join(items)
 
@@ -214,6 +204,7 @@ def page_template(active_id: str | None, page_title: str, lead: str, content: st
     <div class="container footer-inner">
       <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
       <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+      <p class="footer-meta"><a href="technicka-mapa.html">Technická mapa →</a> · <a href="index.html">Domů</a></p>
     </div>
   </footer>
 
@@ -256,6 +247,101 @@ def hub_content(pillar: dict) -> str:
         </div>
       </div>
     </section>'''
+
+
+# ─── TECHNICKA MAPA (full site index, replaces mega-menu surface) ─────
+def technicka_mapa_content() -> str:
+    """Build content for technicka-mapa.html — full index of every page,
+    grouped by pillar.  Replaces the surface area lost from the mega-menu.
+    """
+    sections = []
+    sections.append('''    <section class="section section-hero hub-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🗺 Technická mapa</p>
+        <h1 class="hero-title">Všechny stránky webu</h1>
+        <p class="hero-lead">Kompletní rozcestník — každá podstránka, seskupená podle pilíře. Hlavní menu je úmyslně krátké; tady je všechno.</p>
+      </div>
+    </section>''')
+
+    for p in PILLARS:
+        if p['id'] == 'kontakt':
+            continue
+        sub_ids = list(p['sub'])
+        # zarizeni pillar also surfaces hardware-komplet (extra tech page)
+        extras_for_pillar = []
+        if p['id'] == 'zarizeni':
+            extras_for_pillar.append('hardware-komplet')
+        if not sub_ids and not extras_for_pillar:
+            continue
+        cards = []
+        for sub_id in sub_ids:
+            if sub_id not in SUBPAGES:
+                continue
+            label, _t, lead = SUBPAGES[sub_id]
+            cards.append(
+                f'''      <a href="{sub_id}.html" class="home-card">
+        <h3>{label}</h3>
+        <p>{lead}</p>
+        <span class="home-card-cta">Otevřít stránku →</span>
+      </a>''')
+        for ex_id in extras_for_pillar:
+            if ex_id in EXTRA_TECH:
+                label, lead = EXTRA_TECH[ex_id]
+                cards.append(
+                    f'''      <a href="{ex_id}.html" class="home-card">
+        <h3>{label}</h3>
+        <p>{lead}</p>
+        <span class="home-card-cta">Otevřít stránku →</span>
+      </a>''')
+        cards_html = '\n'.join(cards)
+        sections.append(f'''    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">{p['icon']} Pilíř</p>
+          <h2 class="section-title">{p['label']}</h2>
+          <p class="section-lead"><a href="{p['id']}.html">Otevřít hub →</a></p>
+        </header>
+        <div class="home-grid">
+{cards_html}
+        </div>
+      </div>
+    </section>''')
+
+    # Standalones (Dashboard at top-level + Blog + Kontakt)
+    standalones = [
+        ('dashboard', '📊 Dashboard'),
+        ('blog',      '📝 Blog'),
+        ('kontakt',   '✉ Kontakt'),
+    ]
+    standalone_cards = []
+    for sid, sicon in standalones:
+        if sid in SUBPAGES:
+            label, _t, lead = SUBPAGES[sid]
+        elif sid == 'blog':
+            label, lead = 'Blog', 'Pravidelné poznámky o tom, co se v systému změnilo.'
+        elif sid == 'kontakt':
+            label, lead = 'Kontakt / O projektu', 'Kdo, proč, stack.'
+        else:
+            continue
+        standalone_cards.append(
+            f'''      <a href="{sid}.html" class="home-card">
+        <h3>{sicon} {label}</h3>
+        <p>{lead}</p>
+        <span class="home-card-cta">Otevřít stránku →</span>
+      </a>''')
+    sections.append(f'''    <section class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Samostatné</p>
+          <h2 class="section-title">Top-level stránky</h2>
+        </header>
+        <div class="home-grid">
+{chr(10).join(standalone_cards)}
+        </div>
+      </div>
+    </section>''')
+
+    return '\n\n'.join(sections)
 
 
 # ─── BUILD ────────────────────────────────────────────────────
@@ -364,6 +450,18 @@ def build():
     )
     index_path.write_text(out, encoding='utf-8')
     written.append('index.html')
+
+    # 5) Build / rebuild technicka-mapa.html — full site index page.
+    tm_path = ROOT / 'technicka-mapa.html'
+    tm_content = technicka_mapa_content()
+    tm_out = page_template(
+        'technicka-mapa',
+        'Technická mapa — všechny stránky webu',
+        'Kompletní rozcestník — každá podstránka, seskupená podle pilíře. Hlavní menu je úmyslně krátké; tady je všechno.',
+        tm_content,
+    )
+    tm_path.write_text(tm_out, encoding='utf-8')
+    written.append('technicka-mapa.html')
 
     # Report (ASCII-safe for Windows cp1250 console)
     for n in written:

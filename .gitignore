@@ -7,3 +7,6 @@ Thumbs.db
 # Hardware page refresh artifacts (kept locally, not in public repo)
 _archive/
 _qa/
+_audit_patches/
+__pycache__/
+*.pyc

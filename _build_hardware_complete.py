@@ -262,7 +262,32 @@ extra_css = '''
 '''
 
 new_head = head_block + extra_css + '\n</head>'
-header_block = index_html[m_nav_start:m_nav_end + len('</header>')]
+
+# Single-source nav: build fresh from _build_pages.build_nav so active state is correct.
+# hardware-komplet is an EXTRA_TECH sub-page surfaced under "Zařízení" pillar
+# (see _build_pages.py: extras_for_pillar 'hardware-komplet' under pillar 'zarizeni').
+# We pass 'zarizeni' as active_id so the Zařízení nav item gets is-active highlight.
+from _build_pages import build_nav as _build_nav  # noqa: E402
+_nav_html = _build_nav('zarizeni')
+header_block = (
+    '<header class="site-header" id="site-header">\n'
+    '    <div class="container header-inner">\n'
+    '      <a href="index.html" class="brand" aria-label="SMART HOME – home">\n'
+    '        <span class="brand-mark" aria-hidden="true"></span>\n'
+    '        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>\n'
+    '      </a>\n'
+    '      <nav class="primary-nav" aria-label="Hlavní navigace">\n'
+    '        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">\n'
+    '          <span class="sr-only">Otevřít menu</span>\n'
+    '          <span class="nav-toggle-bars" aria-hidden="true"></span>\n'
+    '        </button>\n'
+    '        <ul id="nav-list" class="nav-list">\n'
+    f'          {_nav_html}\n'
+    '        </ul>\n'
+    '      </nav>\n'
+    '    </div>\n'
+    '  </header>'
+)
 footer_block = index_html[m_footer_start:m_footer_end + len('</footer>')]
 
 body_main = f'''
