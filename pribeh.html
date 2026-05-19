@@ -103,6 +103,73 @@
         </div>
       </div>
     </section>
+
+    <section class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Osobní text</p>
+          <h2 class="section-title">Jak jsem začal stavět vlastní OS SMART HOME pomocí AI</h2>
+          <p class="section-lead">Můj příběh o smart home, vibe codingu a jedné důležité lekci: AI je silný pomocník, ale pořád potřebuje člověka.</p>
+        </header>
+
+        <article class="uc-prose">
+          <h3>Začátek: všechno ručně</h3>
+          <p>Když jsem začínal tvořit svůj SMART HOME systém, byla to hlavně ruční práce. V Homey jsem vytvářel proměnné, Flow a HomeyScript skripty. AI mi sice pomáhala psát logiku, ale já jsem musel všechno ručně vkládat, překládat do správných karet, hledat správné podmínky a hlídat, jestli se někde nepřepsal název zařízení nebo proměnné.</p>
+          <p>Nejtěžší nebylo jen napsat samotný skript. Nejtěžší bylo vysvětlit AI, co v systému opravdu existuje, jak se zařízení jmenují, jak jsou propojené proměnné, které Flow co spouští a co se má stát v konkrétní situaci. Jakmile v zadání chyběl detail, AI si ho často domyslela. A domyšlená automatizace v chytré domácnosti není pomocník, ale budoucí problém.</p>
+
+          <h3>Vibe coding v praxi</h3>
+          <p>Postupně jsem přešel na styl práce, kterému se dnes často říká vibe coding. Nejde o to, že člověk umí perfektně programovat každý řádek. Jde o to, že přesně popíše cíl, pravidla, omezení a očekávaný výsledek. AI potom navrhne skript, dokumentaci, test nebo postup opravy.</p>
+          <p>Na začátku jsem ještě všechno přepisoval ručně. Později jsem začal přesouvat podmínky z Flow do skriptů, protože se tím systém stal přehlednější. Flow zůstala hlavně jako spouštěče a hlavní rozhodovací logika se přesunula do HomeyScriptu. Tím se práce zrychlila, ale pořád bylo potřeba dávat pozor na názvy, návaznosti a chyby v systému.</p>
+          <p>Další velký krok přišel ve chvíli, kdy jsem AI umožnil pracovat se systémem přes API. Od té doby už nejde jen o radění v chatu. AI může připravit skripty, zkontrolovat návaznosti, vytvořit zálohy, pomoci s GitHubem, připravit konfiguraci Raspberry Pi a zapisovat výsledky do reportů. Já už tolik nepíšu kód ručně, ale řídím směr práce, dávám pokyny a hlídám, aby se nezměnila funkčnost domu.</p>
+
+          <h3>Z domácnosti se stal řízený systém</h3>
+          <p>Můj SMART HOME dnes není jen pár žárovek a senzorů. Je to postupně budovaný systém, který má vlastní pravidla, vrstvy, kontroly a dokumentaci. Používá Homey Pro, HomeyScript, Flow, Raspberry Pi, lokální SSD logování, zálohy na GitHubu a různé pomocné nástroje. Cílem není mít co nejvíc automatizací, ale mít stabilní systém, který ví, co dělá a proč to dělá.</p>
+          <p>Jedna z nejdůležitějších změn byla přechod na přístup „script-first“. Znamená to, že Flow nemají být plné složité logiky. Flow mají hlavně spustit správný skript. Skript potom rozhodne podle stavu domu, přítomnosti, času, režimu spánku, čidel a priorit. Je to přehlednější, lépe testovatelné a méně náchylné na chyby v jednotlivých kartách Flow.</p>
+          <p>Postupem času přibyl i lokální logovací systém na Raspberry Pi a SSD. Dříve se hodně dat zapisovalo do Google Sheets. To bylo užitečné pro začátek, ale u většího systému je lepší mít rychlé lokální logování do JSONL a SQLite. Díky tomu jde rychleji hledat chyby, sledovat historii a systém není tolik závislý na externí službě.</p>
+
+          <h3>Proč AI lidem často nefunguje</h3>
+          <p>AI není kouzelná krabička, která sama pochopí celý dům, firmu nebo život člověka. Když dostane špatné zadání, vytvoří špatný výsledek. Když nemá reálná data, začne odhadovat. Když ji nikdo nekontroluje, může velmi přesvědčivě vysvětlovat i chybný směr.</p>
+          <ul>
+            <li>AI potřebuje přesný kontext: co existuje, co neexistuje a co se nesmí změnit.</li>
+            <li>AI potřebuje pravidla: například žádné zásahy bez zálohy, žádný deploy bez ověření a žádné domýšlení zařízení.</li>
+            <li>AI potřebuje zpětnou vazbu z reality: logy, screenshoty, chování systému a konkrétní chyby.</li>
+            <li>AI nesmí nahrazovat selský rozum. Má pomáhat, zrychlovat a třídit práci, ale člověk musí držet směr.</li>
+          </ul>
+          <p>Největší chyba je čekat, že AI vyřeší problém sama jen proto, že dostane dlouhý úkol. Správný prompt musí říct nejen „co udělej“, ale i „co nesmíš udělat“, jak ověřit výsledek, kam uložit report a kdy se zastavit.</p>
+
+          <h3>Příklad z praxe: pád HomeyScriptu</h3>
+          <p>Nejlepší příklad toho, proč je kontrola člověka důležitá, byl problém s pády HomeyScriptu. Systém se pravidelně přetěžoval, HomeyScript spadl na chybu SIGABRT a zhruba dvě minuty trvalo, než se znovu nastartoval. Během té doby nefungovaly skripty a automatizace závislé na HomeyScriptu. V chytré domácnosti je to zásadní problém, protože dům nesmí být každých pár minut bez mozku.</p>
+          <p>AI se nejdříve dívala na logy, připravovala audity, hledala chyby v knihovnách a analyzovala paměť. Některé opravy byly užitečné, například odstranění rizikového timeout patternu v logovací knihovně. Přesto hlavní problém nezmizel. Po několika dnech testování jsem se do toho vložil sám a udělal jednoduchou věc: otevřel jsem HomeyScript aplikaci a vizuálně sledoval, kdy přesně padá.</p>
+          <p>Zásadní zlom ale nepřišel z dalšího automatického auditu. Přišel ve chvíli, kdy jsem si sám otevřel HomeyScript aplikaci a začal pád sledovat vizuálně v reálném čase. Během zhruba dvaceti minut bylo jasné, že nejde o náhodný problém: HomeyScript padal přesně každých pět minut. Kdybych do toho nevstoupil tímto jednoduchým pozorováním, AI by pravděpodobně dál generovala další audity, testy a reporty, ale pořád by řešila hlavně následky, ne pravidelný spouštěč problému.</p>
+          <p>Díky tomuto pozorování bylo jasné, že pád není náhodný. Opakoval se přesně každých pět minut. To změnilo celé zadání. Už nešlo o otázku „který skript je obecně vadný“, ale o otázku „co se každých pět minut spouští najednou“.</p>
+
+          <h3>Skutečná příčina a oprava</h3>
+          <p>Následná izolace ukázala, že hlavní příčinou nebyl jeden konkrétní skript. Problém byl v souběhu. V systému běželo více pětiminutových Advanced Flow, které spouštěly mnoho HomeyScriptů ve stejném okamžiku. Vznikla špička zátěže, paměť vyskočila a HomeyScript runtime spadl.</p>
+          <p>Oprava proto nebyla ve stylu „přepiš celý systém“. Naopak. Nejdřív jsme vypnuli celou pětiminutovou skupinu a ověřili, že crashe přestanou. Potom se kritické Flow vracely postupně a dostaly vlastní časové zpoždění. Topení, presence failsafe a Brain Guardian se vrátily jako první. Pak se rozložila i lehčí skupina Flow, aby už nic neběželo ve stejnou sekundu. Nakonec se u několika méně kritických Flow snížila kadence z pěti minut na deset minut.</p>
+          <p>Tím se systém výrazně stabilizoval. Důležité bylo, že se neměnila samotná business logika domu. Neměnilo se, jak topení rozhoduje, jak fungují světla nebo jak se vyhodnocuje přítomnost. Měnilo se hlavně časování: kdo smí běžet kdy, aby se HomeyScript nepřetížil.</p>
+
+          <h3>Co mi tato zkušenost ukázala</h3>
+          <p>Tato chyba byla důležitá lekce. AI může napsat mnoho reportů a projít mnoho logů, ale člověk někdy během pár minut uvidí vzor, který se v tabulkách ztrácí. V tomto případě byl klíčový obyčejný postřeh: „padá to přesně každých pět minut“. Teprve potom začala AI opravdu pomáhat správným směrem.</p>
+          <p>Neznamená to, že AI je k ničemu. Naopak. Jakmile byl směr jasný, AI pomohla velmi rychle připravit izolaci, bezpečný postup, rollback, úpravy Flow, reporty a další kroky. Problém byl v tom, že bez správného lidského nasměrování hledala příliš složitě.</p>
+          <p>Proto dnes AI používám jako velmi silného pomocníka, ale ne jako autopilota. Já určuji cíl, priority a hranice. AI dělá rutinní práci, připravuje kód, dokumentaci a kontroly. Když se začne motat v kruhu, musí přijít člověk a vrátit ji do správných mantinelů.</p>
+
+          <h3>Jak s AI pracovat bezpečně</h3>
+          <p>Pokud má AI pomáhat na reálném systému, nestačí napsat „oprav to“. Lepší je pracovat strukturovaně.</p>
+          <ul>
+            <li>Nejdřív popsat problém a ověřená fakta.</li>
+            <li>Oddělit produkční systém od testování a vždy mít zálohu.</li>
+            <li>Dát AI přesná pravidla: co smí měnit, co nesmí měnit a kdy má zastavit.</li>
+            <li>Vyžadovat report s důkazy, ne jen obecné shrnutí.</li>
+            <li>Nezveřejňovat tokeny, API klíče, interní URL, osobní údaje ani citlivé finanční informace.</li>
+            <li>Po každé změně zkontrolovat, jestli funguje původní logika, nejen jestli zmizela jedna chyba.</li>
+          </ul>
+
+          <h3>Závěr</h3>
+          <p>AI mi umožnila vytvořit systém, který bych ručně stavěl mnohem déle. Pomohla mi s návrhem architektury, psaním skriptů, zálohami, dokumentací, webem, logováním i opravami. Zároveň mě naučila, že nejlepší výsledky nepřicházejí ve chvíli, kdy člověk všechno přenechá AI, ale ve chvíli, kdy se z člověka stane dobrý dirigent.</p>
+          <p>SMART HOME není hotový produkt z krabice. Je to živý systém, který se postupně učí, opravuje a zlepšuje. A přesně v tom je AI užitečná: dokáže urychlit práci, ale člověk musí stále vědět, čeho chce dosáhnout. Selský rozum, přesné zadání a kontrola reality jsou pořád důležitější než nejdelší prompt na světě.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <!-- LIGHTBOX -->
