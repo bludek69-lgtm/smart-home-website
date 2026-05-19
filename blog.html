@@ -57,6 +57,33 @@
         </header>
 
         <div class="buildlog-list" role="list">
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-19</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>SIGABRT každých 5 minut — group concurrency, ne vadný script</h3>
+            <p>Čtyři dny audit memory, knihoven a logování. Nasazený forensic patch na 80 hot-path scriptech (odstranění <code>Promise.race + wait()</code> z inline <code>fetchWithTimeout</code>). Crash cyklus pokračoval. Teprve když uživatel vizuálně oznámil <strong>„padá to přesně každých 5 minut"</strong>, příčina začala konvergovat. Nešlo o jeden vadný script — bylo to <strong>skupinová souběžná zátěž</strong>: 17 Advanced Flow s triggerem <code>cron:every_nth {n:5, type:minute}</code> spouštělo HomeyScript synchronně na 00s 5min hranici, runtime nezvládl souběh. <strong>Emergency 5-min isolation</strong> (vypnutí celé /5min HomeyScript skupiny) zastavila pády — crashedCount +0 za 12 minut. Pak <strong>R1</strong> obnovil 3 kritické flows s delay 30/60/90s (Heating, Presence Failsafe, Brain Guardian). <strong>R1B</strong> rozprostřel 8 lehkých flows přes delays 5–195s. <strong>R1C</strong> snížil kadenci 3 nejtěžších na <code>/10m</code> (Device Availability, Health Monitor, OpenSpace Autoheal) — mem peak spadl z 235 MB na ~145 MB median (−38 %). <strong>ENABLE-ALL sequential</strong> vrátil zbývajících 6 heavy flows (Dashboard, Health Alert, Context Full, Diagnostic, Meta, AI Guard) na <code>/15m</code> nebo <code>/30m</code> s offsetem 215–320s, 1 PUT na flow + reálné fire ověření + 10 min observační okno. Tři hodiny, 6 kroků, 0 crashes během deploye. Žádný HomeyScript PUT, žádná business logika dotčená, žádný manual restart. Klíčová lekce: <strong>před hlubší crash analýzou nejdřív spočítej intervaly mezi pády</strong> — pravidelný interval = trigger-driven cause. <a href="posts/sigabrt-5min-group-concurrency.html">Číst delší post →</a></p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-19</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Context Full chain — 7-day stale článek opraven Flow bypassem</h3>
+            <p>Audit po SIGABRT odhalil další pre-existing bug: Flow <code>SH – System – Context Full</code> mělo chain <code>trigger /30m → delay 215s → runWithArg sh_context_full_v1("get") → run sh_context_history_v1</code>, ale první článek dlouhodobě silent-failoval. Skript <code>sh_context_full_v1</code> byl ~12.5. ručně smazán z Homey UI (vrácel <code>false</code> i bez exception), Flow card si ale držela orphan SID. <code>sh_context_history_v1</code> tak nedostal control přes <code>outputSuccess</code> chain — jeho <code>lastExecuted</code> ustrnulo na <strong>2026-05-12 18:25</strong> (7 dní stale). Restore-with-patch (recreate skript s <code>Promise.race+wait</code> odstraněním v <code>fetchWithTimeout</code>) ani defensive try/catch wrap kolem koncových <code>setValueSafe</code> volání chování nezměnily — debug ukázal že throw je <strong>před</strong> hypotetizovaným řádkem. Mezitím <code>sh_context_weather_sync_v1</code> (separate /10m bridge, existující 3 týdny jako workaround) drží <code>sh_context_json</code> fresh nezávisle. Finální fix: <strong>atomický Flow bypass</strong> — z 4-card chain odstraněno card #1 (runWithArg), delay přepojen přímo na sh_context_history_v1. První /30m fire @ <strong>11:33:35.979</strong> (exact schedule match, +979 ms latency) — chain obnoven. <code>sh_context_full_v1</code> ponechán jako legacy artifact (per hard rule nemazat). Slot 215s zachován pro no-overlap plán. <strong>Lekce</strong>: Pokud Flow míří na smazaný skript, Homey ho NEMUSÍ označit jako <code>broken=true</code> — ověřuj action-level SID reference přes <code>GET /script/&lt;sid&gt;</code>.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-18</span>
+              <span class="buildlog-tag">INFRASTRUCTURE</span>
+            </div>
+            <h3>SSD logging cutover — 1 var flip migroval 91+ logEvent callerů</h3>
+            <p>2026-05-18 v 07:09 CEST proběhl migrační moment, na který se v Homey velmi obtížně reaguje retroaktivně. Až do tohoto okamžiku všechny <code>logEvent(...)</code> hovory napříč 91+ skripty směřovaly na Google Sheets Apps Script web app — pomalý, rate-limited a závislý na cloudu. Nasazená architektura umístila <strong>SQLite receiver</strong> na HA RPi (<code>http://192.168.1.241:9080/log/sheets-compat</code>) s daily JSONL files + WAL-enabled SQLite (4.2 MB po prvním dni). Migrace bez touching jediného skriptu: stačila změna jediné Logic proměnné <code>sh_sheets_url</code> z Apps Script URL na receiver URL. Skripty si target endpoint čtou per-call přes <code>getValue('sh_sheets_url')</code>, takže <strong>všechny callery se přepojily okamžitě</strong>. Google Sheets endpoint zůstává jako záložní fallback (revert = swap původní URL zpět). Schema kompatibilita 100 % (payload format <code>sheets-compat</code>), zero data loss. Po cutover proběhla séria operací na vrácení Energy Dashboard R1 aggregatoru + UI a osobní web AI page deploye.</p>
+          </article>
+
           <article class="buildlog-entry bl-feature" role="listitem">
             <div class="buildlog-meta">
               <span class="buildlog-date">2026-05-15</span>
