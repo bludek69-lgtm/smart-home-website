@@ -67,16 +67,18 @@ PILLARS = [
     },
 ]
 
-# Lean top-level navigation — 7 flat items, no mega-menu.
-# Order: Domů, Jak to funguje (=prozivani), Zařízení, Dashboard, Příběh, Blog, Kontakt.
+# Lean top-level navigation — 8 flat items, no mega-menu.
+# Order: Domů, Jak to funguje, Zařízení, Hardware (kompletní katalog), Dashboard, Příběh, Blog, Kontakt.
+# 2026-05-20: Hardware-komplet vrácen do hlavního menu (uživatel hledal katalog s obrázky zařízení).
 MAIN_NAV = [
-    {'id': 'home',      'href': 'index.html',     'label': 'Domů'},
-    {'id': 'prozivani', 'href': 'prozivani.html', 'label': 'Jak to funguje'},
-    {'id': 'zarizeni',  'href': 'zarizeni.html',  'label': 'Zařízení'},
-    {'id': 'dashboard', 'href': 'dashboard.html', 'label': 'Dashboard'},
-    {'id': 'pribeh',    'href': 'pribeh.html',    'label': 'Příběh'},
-    {'id': 'blog',      'href': 'blog.html',      'label': 'Blog'},
-    {'id': 'kontakt',   'href': 'kontakt.html',   'label': 'Kontakt'},
+    {'id': 'home',              'href': 'index.html',             'label': 'Domů'},
+    {'id': 'prozivani',         'href': 'prozivani.html',         'label': 'Jak to funguje'},
+    {'id': 'zarizeni',          'href': 'zarizeni.html',          'label': 'Zařízení'},
+    {'id': 'hardware-komplet',  'href': 'hardware-komplet.html',  'label': 'Hardware'},
+    {'id': 'dashboard',         'href': 'dashboard.html',         'label': 'Dashboard'},
+    {'id': 'pribeh',            'href': 'pribeh.html',            'label': 'Příběh'},
+    {'id': 'blog',              'href': 'blog.html',              'label': 'Blog'},
+    {'id': 'kontakt',           'href': 'kontakt.html',           'label': 'Kontakt'},
 ]
 
 # Sub-page metadata (existing pages that became sub-pages under pillars).
