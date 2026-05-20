@@ -10,6 +10,13 @@ from pathlib import Path
 
 ROOT = Path(r"C:\Users\lbudi\code\smart-home-website")
 INVENTORY_JSON = ROOT / 'data' / 'hardware_inventory.json'
+ICONS_MAPPING_JSON = ROOT / 'assets' / 'hardware' / 'icons_mapping.json'
+
+# Load icon mapping (device name → SVG path) — restored 2026-05-20 after icons were lost in ed77354 nav refactor
+try:
+    ICONS_MAP = json.load(open(ICONS_MAPPING_JSON, encoding='utf-8'))
+except Exception:
+    ICONS_MAP = {}
 
 CLASS_LABELS = {
     'sensor': 'Senzor', 'light': 'Světlo', 'socket': 'Zásuvka', 'button': 'Tlačítko',
@@ -65,11 +72,20 @@ CATEGORY_ICON = {
 
 def card_html(it):
     photo_html = ''
+    # 1) Real photo from inventory.image (e.g. assets/photos/aqara-cube-t1-pro.png) — preferred
     photo_path = it.get('image', '')
     if photo_path and photo_path != 'UNKNOWN':
         local = ROOT / photo_path
         if local.exists():
             photo_html = f'<img src="{photo_path}" alt="{_html.escape(it["model"])}" loading="lazy" />'
+    # 2) SVG icon from icons_mapping.json (restored 2026-05-20) — fallback when no real photo exists
+    if not photo_html:
+        icon_svg_path = ICONS_MAP.get(it.get('name', ''))
+        if icon_svg_path:
+            local = ROOT / icon_svg_path
+            if local.exists():
+                photo_html = f'<img src="{icon_svg_path}" alt="{_html.escape(it["model"])}" loading="lazy" class="hw-photo-svg-icon" />'
+    # 3) Category emoji placeholder — last resort
     if not photo_html:
         icon = CATEGORY_ICON.get(it.get('category', ''), '📦')
         photo_html = f'<div class="hw-photo-ph"><div class="hw-photo-ph-icon">{icon}</div><div class="hw-photo-ph-text">Foto doplnit</div></div>'
@@ -227,6 +243,7 @@ extra_css = '''
 .hw-card:hover { transform:translateY(-2px); border-color:rgba(124,214,255,0.3); }
 .hw-photo { aspect-ratio:16/10; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .hw-photo img { width:100%; height:100%; object-fit:contain; padding:0.5rem; }
+.hw-photo img.hw-photo-svg-icon { padding:1rem; opacity:0.92; }
 .hw-photo-ph { color:rgba(255,255,255,0.45); font-size:0.8rem; font-style:italic; text-align:center; }
 .hw-card-body { padding:0.9rem 1rem 1rem; }
 .hw-card-title { font-size:0.98rem; margin:0 0 0.25rem; line-height:1.25; }
