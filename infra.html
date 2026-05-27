@@ -101,10 +101,11 @@
               <li><strong>NEW (14.5.):</strong> Dashboard cache pipeline (Python, cron 1×/min) →
                   <code>/local/smart-home/dashboard-data.json</code> jako mirror+enhance vrstva
                   mezi Homey a frontendem. Snižuje Homey HTTP load, kiosek čte cache místo přímo.</li>
-              <li><strong>Plánováno (10.5.):</strong> Intenso SSD Premium 256 GB USB 3.2 koupen,
-                  čeká na fyzickou instalaci. Hybrid setup: SD karta zůstane jako OS, SSD
-                  ponese HA recorder DB + backupy + sandbox + git mirrors. Cíl: prodloužit
-                  životnost SD (HA recorder dělá stovky writes/min, SD má 3-10k cyklů, SSD 1M+).</li>
+              <li><strong>LIVE od 27.5.2026:</strong> Intenso SSD Premium 256 GB USB 3.2 nainstalován
+                  jako <code>/dev/sda1</code> (~234 GB ext4). Hybrid setup: SD karta zůstává OS, SSD
+                  drží EventLog JSONL (primární logging vrstva), HA recorder DB, backupy, sandbox a git
+                  mirrors. Cíl byl prodloužit životnost SD (HA recorder dělá stovky writes/min, SD má
+                  3–10k cyklů, SSD 1M+) — splněno.</li>
             </ul>
             <p>
               Komunikace: HA přistupuje k Homey přes REST API (Bearer token),
