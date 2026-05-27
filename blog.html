@@ -58,6 +58,42 @@
         </header>
 
         <div class="buildlog-list" role="list">
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-28</span>
+              <span class="buildlog-tag">WEB</span>
+            </div>
+            <h3>Sekce „Moje aplikace" živá — 7 aplikací, 50 screenů, audit drift sweep</h3>
+            <p>Dvoudenní intenzivní práce na osobním webu <a href="https://cestovatel69.cz/aplikace/" target="_blank" rel="noopener">cestovatel69.cz/aplikace</a>. Nová hub sekce prezentuje sedm vlastních aplikací: <strong>Config Center</strong>, <strong>Italia Travel Planner</strong>, <strong>Účetní kniha</strong>, <strong>Finance Analytik</strong>, <strong>Krabičková dieta</strong>, <strong>Energy Dashboard</strong> a <strong>Domácí panel na zdi</strong> (RPi kiosk). Celkem 50 screenů (14 ITP, 8 UK, 8 Analytik, 8 Meal Planner, 7 CC, 4 RPi, 1 Energy), plně lokalizováno CS/EN/IT (21 stránek = 7×3). Texty pro běžné lidi — tech jargon vždy vysvětlený v 1 větě (DCF, FIFO, AES, ZTL zóny, BMR/TDEE). Site-wide vanilla JS lightbox — klikni na kterýkoli obrázek, otevře se fullscreen modal, ESC zavře. Po finišování proběhl <strong>audit drift sweep</strong> obou webů (osobni + smart-home-website): nalezeno 25 driftů ve 3 prioritách, opraveno 13 (P0+P1). Hlavní motivy: RPi kiosk umístění (kuchyně → předsíň, oprava i v EN/IT mirrorech), Sheets → SSD framing na 5 stránkách smart-home webu (po 27.5. cutover), Shelly Plug S Gen3 status z „na cestě" → „LIVE od 30.4.", Door/Window Sensor diakritika („Jídelna1" → „Jidelna1") sjednocena, Intenso SSD z „plánováno" → „LIVE od 27.5.2026" (verified <code>/dev/sda1</code>).</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-27</span>
+              <span class="buildlog-tag">DEPLOY</span>
+            </div>
+            <h3>Energy Dashboard one-click launcher — PC webová aplikace bez blikajícího monitoru</h3>
+            <p>Standalone projekt v <code>C:\.Projekt\.Energy\</code> dostal kompletní Windows webapp wrapper. Jeden klik na desktop shortcut <strong>Energy Dashboard</strong> → spustí se hidden pythonw proxy (port 5177) → otevře se Edge/Chrome v <code>--app</code> módu na čistém dashboardu (žádný taskbar, žádné menu). Proxy je server-side reverse fetcher pro <code>http://192.168.1.241:8123/local/smart-home/energy-dashboard.json</code> — řeší CORS problém (HA Core neposílá ACAO header) a poskytuje on-disk fallback když je HA RPi nedostupný (<code>X-Energy-Source: cached-stale</code> header + viditelný alert). Původně byl design „PC scheduled task každých 60 s sync" — vyřazeno, protože blikalo okno. Nahrazeno on-demand proxy: data si stahuje až browser tab je otevřený. RPi data live od 28.5., port přesunut z 5176 (kolize s Meal Plannerem) na 5177. Vlastní programaticky generovaná multi-res ICO ikona (16/32/48/64/128/256, cyan blesk na navy panelu). Repo: <code>bludek69-lgtm/energy-dashboard</code> (private).</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-27</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Roleta zavírala přes otevřené okno — paralelní writer v sh_light_router_v1</h3>
+            <p>User report: „roleta se zavírá i když je otevřené okno". SSD log z 19:12 přesně diagnostikoval problém: <code>sh_jidelna_roleta_router_v2</code> zafungoval správně (<code>roleta_window_safety skipped</code> v 19:12:48 — window contact = open detected) — ale o sekundu později <code>sh_light_router_v1</code> zavřel roletu PŘÍMO bez window kontroly (<code>roleta_auto_close_privacy 100% → 15%</code>, trigger <code>evening_deadlock_fix</code>). Root cause: <code>canAutoClose</code> branch (L1009) checkoval jen <code>phase + mode + sleep</code>, žádný <code>alarm_contact</code> guard. Sandbox-first oprava — 8-case test scenarios v <code>_backup_window_safety_fix/test_roleta_window_safety.js</code> (closed/open/sensor-offline/getDevice-throws/null/day-phase/away/sleep) → 8/8 PASS → live PUT v1.16. <strong>Fail-CLOSED policy</strong>: když je senzor nedostupný / vyhodí exception → považuj okno za otevřené, raději nezavřít. Nový log event <code>roleta_auto_close_skip_window_open</code>. Pure-function logic replica, žádná funkční změna jiných cest. Backup pair pre/post v <code>_backup_window_safety_fix/</code>.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-05-22</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Roleta jídelna zavřela přes otevřené okno (P1) — silent-fail kvůli rename device</h3>
+            <p>Předchozí incident stejného typu, jiný root cause. <code>sh_jidelna_roleta_router_v2</code> měl v lokálním <code>D</code> constu hardcoded starý device name <code>'Door/Window Sensor (SNZB-04)1'</code>, ale device byl mezitím přejmenován na <code>'Door/Window Sensor Jidelna1'</code>. <code>getDev()</code> vrátil <code>null</code>, <code>try/catch(_)</code> ho potichu spolkl, <code>windowOpen</code> defaultoval na <code>false</code> (unsafe default) → SAFETY skip se nespustil → roleta zavřela přes otevřené okno. Fix commit <code>349532d</code>: dva string replaces (oba název senzoru), commit + push. <strong>Pravidla z incidentu</strong>: (1) safety guards musí default-to-fail-CLOSED (<code>windowOpen=true</code> při fetch failu), (2) <code>catch</code> bloky musí volat <code>logEvent</code> aby silent fail šel vidět, (3) device names číst ze <code>sh_device_map</code> namísto hardcoded stringů. Memory entry <code>feedback_device_rename_silent_fail_2026-05-22.md</code> dokumentuje pravidla pro reuse v dalších scriptech.</p>
+          </article>
+
           <article class="buildlog-entry bl-fix" role="listitem">
             <div class="buildlog-meta">
               <span class="buildlog-date">2026-05-19</span>
