@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Webová aplikace pro správu numismatické a filatelistické sbírky. DEMO verze veřejně, PRIVATE instance chráněná přihlášením." />
+  <meta name="description" content="Dashboard smart home systému a sbírka numismatiky + filatelie. Přístup chráněný přes Cloudflare Access — Google + TOTP." />
   <meta name="theme-color" content="#0a0e14" />
-  <title>Sbírka — numismatika a filatelie | SMART HOME</title>
+  <title>Přihlášení — soukromé aplikace | SMART HOME</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
@@ -43,11 +43,11 @@
   <main id="main">
 <section class="section section-hero hub-hero" id="aplikace-hero">
       <div class="container">
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🗃 Aplikace · Sbírka</p>
-        <h1 class="hero-title">Numismatika &amp; Filatelie</h1>
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🔒 Soukromé aplikace</p>
+        <h1 class="hero-title">Přihlášení</h1>
         <p class="hero-lead">
-          Webová aplikace pro správu sbírky mincí, bankovek, poštovních známek a pohlednic.
-          AI rozpoznávání z fotky, oceňování, exporty, přístup odkudkoli.
+          Soukromé aplikace chráněné přes Cloudflare Access.
+          Přihlášení přes Google&nbsp;+&nbsp;2FA (Authenticator app) — přístup pouze pro vlastníka.
         </p>
       </div>
     </section>
@@ -55,26 +55,26 @@
     <section class="section section-alt" id="aplikace-access">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Přístup</p>
-          <h2 class="section-title">Dvě verze</h2>
-          <p class="section-lead">DEMO je veřejné a otevřené. PRIVATE je chráněné přihlášením — přístup jen pro vlastníka.</p>
+          <p class="section-eyebrow">Aplikace</p>
+          <h2 class="section-title">Soukromý přístup</h2>
+          <p class="section-lead">Každý odkaz vyžaduje ověření přes Google + TOTP kód z Authenticatoru.</p>
         </header>
 
         <div class="home-grid" style="--grid-cols: 2;">
-          <div class="home-card" style="opacity:.6;cursor:default;">
-            <h3>🌐 DEMO verze</h3>
+          <a href="https://dashboard.cestovatel69.cz" class="home-card home-card-featured" target="_blank" rel="noopener">
+            <h3>📊 Smart Home Dashboard</h3>
             <p>
-              Veřejná ukázková verze s fiktivními demo daty.
-              Žádná reálná sbírka, žádné přihlášení.
+              Živý přehled smart home systému — topení, světla, audio, senzory, AI Brain Guardian.
+              RPi kiosek + PC verze. Přístup přes Cloudflare Access.
             </p>
-            <span class="home-card-cta">Připravujeme…</span>
-          </div>
+            <span class="home-card-cta">Přihlásit se →</span>
+          </a>
 
           <a href="https://collection.cestovatel69.cz" class="home-card home-card-featured" target="_blank" rel="noopener">
-            <h3>🔒 PRIVATE instance</h3>
+            <h3>🗃 Sbírka — numismatika &amp; filatelie</h3>
             <p>
-              Živá instance s reálnou sbírkou. Chráněna přihlášením přes Google&nbsp;+&nbsp;2FA.
-              Přístup pouze pro vlastníka po ověření identity.
+              Správa sbírky mincí, bankovek a známek. AI rozpoznávání z fotky,
+              oceňování, exporty. Přístup přes Cloudflare Access.
             </p>
             <span class="home-card-cta">Přihlásit se →</span>
           </a>
@@ -85,8 +85,51 @@
     <section class="section" id="aplikace-features">
       <div class="container">
         <header class="section-header">
-          <p class="section-eyebrow">Co aplikace umí</p>
-          <h2 class="section-title">Funkce</h2>
+          <p class="section-eyebrow">Smart Home Dashboard</p>
+          <h2 class="section-title">Co dashboard ukazuje</h2>
+        </header>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>📊 Live data</h3>
+            <p>
+              Aktuální stav celého systému — topení, světla, audio, přítomnost,
+              stav zón, senzory, rolety. Načítá data přímo z Homey přes API.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>🧠 AI Brain Guardian</h3>
+            <p>
+              Meta-vrstva nad systémem — state validator, expected state engine,
+              self-healing detekce. Health score a otevřené problémy v reálném čase.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>🎛 Ovládání</h3>
+            <p>
+              Scény, kill switch, audio stop, override přítomnosti.
+              Runtime akce — zap/vyp, scéna, nastavení režimu.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>⚙️ Config Center</h3>
+            <p>
+              Trvalé nastavení systému — thresholds, intervaly, lux hodnoty,
+              AI toggles. Editovatelné z dashboardu přes sh_cfg_* proměnné.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="sbirka-features">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Sbírka App</p>
+          <h2 class="section-title">Co sbírka umí</h2>
         </header>
 
         <div class="contact-grid">
@@ -104,7 +147,6 @@
             <p>
               Fotka → AI návrh identifikace (typ, země, rok, nominál, motiv, stav, varianta).
               Každý návrh čeká na review — uživatel potvrdí, opraví nebo zamítne.
-              AI nikdy sama nepřepíše potvrzená data.
             </p>
           </div>
 
@@ -112,7 +154,7 @@
             <h3>💰 Oceňování</h3>
             <p>
               Orientační odhad low/mid/high se zdrojem a datem.
-              Varování na staré ceny (starší 1 rok) a ceny bez ověřeného zdroje.
+              Varování na staré ceny a ceny bez ověřeného zdroje.
             </p>
           </div>
 
@@ -120,7 +162,7 @@
             <h3>📤 Exporty</h3>
             <p>
               CSV, Excel (.xlsx), PDF seznam, ZIP archiv s fotkami.
-              PRIVATE MODE only — žádná reálná data na GitHub.
+              Reálná data nikdy na GitHub — pouze lokálně.
             </p>
           </div>
         </div>
