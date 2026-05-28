@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Webová aplikace pro správu numismatické a filatelistické sbírky. DEMO verze veřejně, PRIVATE instance chráněná přihlášením." />
+  <meta name="theme-color" content="#0a0e14" />
+  <title>Sbírka — numismatika a filatelie | SMART HOME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Přeskočit na obsah</a>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="SMART HOME – home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">SMART<span class="brand-name-accent">HOME</span></span>
+      </a>
+      <nav class="primary-nav" aria-label="Hlavní navigace">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+          <span class="sr-only">Otevřít menu</span>
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="index.html">Domů</a></li>
+          <li><a href="prozivani.html">Jak to funguje</a></li>
+          <li><a href="zarizeni.html">Zařízení</a></li>
+          <li><a href="hardware-komplet.html">Hardware</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="pribeh.html">Příběh</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+          <li><a href="aplikace.html" class="is-active" aria-current="page">Sbírka App</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+<section class="section section-hero hub-hero" id="aplikace-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>🗃 Aplikace · Sbírka</p>
+        <h1 class="hero-title">Numismatika &amp; Filatelie</h1>
+        <p class="hero-lead">
+          Webová aplikace pro správu sbírky mincí, bankovek, poštovních známek a pohlednic.
+          AI rozpoznávání z fotky, oceňování, exporty, přístup odkudkoli.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="aplikace-access">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Přístup</p>
+          <h2 class="section-title">Dvě verze</h2>
+          <p class="section-lead">DEMO je veřejné a otevřené. PRIVATE je chráněné přihlášením — přístup jen pro vlastníka.</p>
+        </header>
+
+        <div class="home-grid" style="--grid-cols: 2;">
+          <a href="https://bludek69-lgtm.github.io/collection/" class="home-card" target="_blank" rel="noopener">
+            <h3>🌐 DEMO verze</h3>
+            <p>
+              Veřejná ukázková verze aplikace s fiktivními demo daty.
+              Žádná reálná sbírka, žádné přihlášení — jen pohled na to, jak aplikace funguje.
+            </p>
+            <span class="home-card-cta">Otevřít DEMO →</span>
+          </a>
+
+          <a href="https://collection.cestovatel69.cz" class="home-card home-card-featured" target="_blank" rel="noopener">
+            <h3>🔒 PRIVATE instance</h3>
+            <p>
+              Živá instance s reálnou sbírkou. Chráněna přihlášením přes Google&nbsp;+&nbsp;2FA.
+              Přístup pouze pro vlastníka po ověření identity.
+            </p>
+            <span class="home-card-cta">Přihlásit se →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="aplikace-features">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Co aplikace umí</p>
+          <h2 class="section-title">Funkce</h2>
+        </header>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>🪙 Katalog sbírky</h3>
+            <p>
+              Mince, bankovky, filatelie, pohlednice.
+              Filtry podle kategorie, země, roku, stavu, AI confidence.
+              Fulltext přes ID, motiv, text na kusu.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>🤖 AI rozpoznávání</h3>
+            <p>
+              Fotka → AI návrh identifikace (typ, země, rok, nominál, motiv, stav, varianta).
+              Každý návrh čeká na review — uživatel potvrdí, opraví nebo zamítne.
+              AI nikdy sama nepřepíše potvrzená data.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>💰 Oceňování</h3>
+            <p>
+              Orientační odhad low/mid/high se zdrojem a datem.
+              Varování na staré ceny (starší 1 rok) a ceny bez ověřeného zdroje.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>📤 Exporty</h3>
+            <p>
+              CSV, Excel (.xlsx), PDF seznam, ZIP archiv s fotkami.
+              PRIVATE MODE only — žádná reálná data na GitHub.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="aplikace-tech">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Pod kapotou</p>
+          <h2 class="section-title">Architektura</h2>
+        </header>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Stack</h3>
+            <ul class="stack-list">
+              <li>Frontend: HTML/JS (PapaParse pro DEMO CSV)</li>
+              <li>Backend: Python + FastAPI (PRIVATE MODE)</li>
+              <li>Databáze: SQLite — lokálně, nikdy na GitHub</li>
+              <li>AI: Vision API (OpenAI GPT-4o / Anthropic)</li>
+              <li>Export: openpyxl, fpdf2, zipfile</li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Bezpečnost</h3>
+            <ul class="stack-list">
+              <li>Reálná data nikdy mimo lokální PC</li>
+              <li>GitHub: pouze zdrojový kód + demo data</li>
+              <li>PRIVATE instance: Cloudflare Tunnel + Access</li>
+              <li>Auth: Google login + TOTP (Authenticator app)</li>
+              <li>Pre-commit scanner — blokuje privátní data</li>
+            </ul>
+          </div>
+
+          <div class="contact-card">
+            <h3>Fáze vývoje</h3>
+            <ul class="stack-list">
+              <li>A: Bezpečná architektura + scaffold ✅</li>
+              <li>B: Read-only MVP (58/58 QA) ✅</li>
+              <li>C: Editor sbírky (93/93 QA) ✅</li>
+              <li>D: AI rozpoznávání ✅</li>
+              <li>E: Oceňování ✅</li>
+              <li>F: Exporty ✅</li>
+              <li>G: Windows launcher ✅</li>
+              <li>H: GitHub CI + Pages + Cloudflare ✅</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zvětšený obrázek">
+    <button class="lightbox-close" aria-label="Zavřít zvětšení">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-cap"></p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> SMART HOME projekt · Semily · Vyrobeno s ❤️ a script-first myšlením.</p>
+      <p class="footer-meta">Veřejná prezentace · žádné API klíče · žádné lokální IP · žádné ovládání odtud.</p>
+      <p class="footer-meta"><a href="technicka-mapa.html">Technická mapa →</a> · <a href="index.html">Domů</a></p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

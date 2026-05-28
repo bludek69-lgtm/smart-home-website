@@ -65,6 +65,15 @@ PILLARS = [
         'sub': [],
         'is_existing': True,
     },
+    {
+        'id': 'aplikace',
+        'icon': '🗃',
+        'label': 'Sbírka App',
+        'title': 'Sbírka — numismatika a filatelie',
+        'lead': 'Webová aplikace pro správu numismatické a filatelistické sbírky. DEMO verze veřejně, PRIVATE instance chráněná přihlášením.',
+        'sub': [],
+        'is_existing': True,
+    },
 ]
 
 # Lean top-level navigation — 8 flat items, no mega-menu.
@@ -79,6 +88,7 @@ MAIN_NAV = [
     {'id': 'pribeh',            'href': 'pribeh.html',            'label': 'Příběh'},
     {'id': 'blog',              'href': 'blog.html',              'label': 'Blog'},
     {'id': 'kontakt',           'href': 'kontakt.html',           'label': 'Kontakt'},
+    {'id': 'aplikace',          'href': 'aplikace.html',          'label': 'Sbírka App'},
 ]
 
 # Sub-page metadata (existing pages that became sub-pages under pillars).
