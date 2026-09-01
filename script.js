@@ -75,7 +75,7 @@
     const closeLightbox = () => {
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
-      lbImg.src = '';
+      lbImg.removeAttribute('src');
       document.body.style.overflow = '';
     };
 
