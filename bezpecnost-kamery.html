@@ -206,6 +206,23 @@
         </header>
         <div class="hw-grid">
           <article class="hw-card">
+            <div class="hw-icon" aria-hidden="true">🚗</div>
+            <h3>Car Guard — kamera + vision na NASu</h3>
+            <p class="hw-tag">Foscam MDS2011 · YOLOv8n + ALPR · Docker na NASu</p>
+            <p>
+              Snímky z kamery před domem se zpracovávají na NASu (CPU-only kontejner,
+              2,02&nbsp;GB): YOLO najde osoby a auta, ALPR čte SPZ na výřezu auta.
+              <strong>Hlídaná zóna není nakreslená</strong> — auto na sdíleném dvoře parkuje
+              pokaždé jinde, takže se počítá za běhu kolem něj (kotva držená barvou a místem).
+              Rozhodovací test používá <strong>měřítko jako míru hloubky</strong>: kdo stojí
+              u auta, je v obraze úměrně velký; kdo je o patnáct metrů dál, je malý — i když
+              je v obraze hned vedle. Na reálných snímcích to srazilo falešné poplachy
+              <strong>26 → 0</strong>. Dvě úrovně hlášení: nahlas při osobě přímo u auta,
+              tišší zpráva na mobil při postávání. Deploy enginu je pouhé <code>scp</code> —
+              watch smyčka si všimne změny zdroje a kontejner se sám restartuje.
+            </p>
+          </article>
+          <article class="hw-card">
             <div class="hw-icon" aria-hidden="true">🚪</div>
             <h3>Door/Window Sensor Jidelna1</h3>
             <p class="hw-tag">Aqara · Zigbee · contact</p>

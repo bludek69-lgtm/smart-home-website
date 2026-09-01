@@ -54,11 +54,47 @@
       <div class="container">
         <header class="section-header">
           <p class="section-eyebrow">Recent releases</p>
-          <h2 class="section-title">Posledních 30 dní</h2>
+          <h2 class="section-title">Poslední změny</h2>
           <p class="section-lead">Kombinace feature ship, bugfix, deploy a roadmap entries. Tagged barevně podle typu.</p>
         </header>
 
         <div class="buildlog-list" role="list">
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-09-01</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Auto návštěvy se pozná bez SPZ — a dveře pak uvítají jménem</h3>
+            <p>Kamarád jezdí nepravidelně, parkuje na sdíleném dvoře a chtěl jsem, aby systém ohlásil jeho příjezd a při vstupu ho uvítal jménem. <strong>SPZ se z toho místa přečíst nedá</strong>: tabulka má v záběru ~40 px a engine ji za jeden den přečetl <strong>16× a pokaždé jinak</strong> (<code>LTE8247</code>, <code>ITE5743</code>, <code>1T58240</code>, <code>LTF5341</code>…). Rozpoznání proto stojí na <strong>místě a tmavosti</strong>: naměřeno, že jeho Octavia má střed boxu (1200–1207, 75–76) a rgb max 58–72, zatímco bílá Fabia na témž místě 134–174. Prahy leží uprostřed té mezery. <code>GUEST_HITS=1</code> je záměr — snímky chodí řídce (naměřená mezera 7,5 min) a potvrzování druhým snímkem by uvítání zpozdilo za příchod hosta. Ověřeno jednotkově 10/10 a <strong>přehráním celého dne (171 snímků): přesně dvě události</strong> — příjezd 11:21:41, odjezd 12:13:30, nula falešných. Uvítání řeší <code>sh_guest_welcome_v1</code> + flow na dveřní senzor předsíně, s cooldownem 10 min (dveře se během návštěvy otevřou vícekrát).</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-08-30</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Car Guard — hlídaná zóna se počítá sama kolem auta, falešné poplachy 26 → 0</h3>
+            <p>Původní návrh měl kreslené polygony. <strong>Uživatel ho opravil</strong>: auto na sdíleném dvoře parkuje pokaždé jinde, takže pevná zóna je principiálně špatný model. Zóna se teď počítá za běhu kolem auta tam, kde zrovna stojí (<strong>kotva</strong> držená barvou a místem, SPZ jen jako občasná pojistka). <strong>Nejdůležitější poučení: 2D blízkost není skutečná blízkost.</strong> První pokus — prostý prstenec kolem bboxu auta — byl <strong>měřeně horší: 26 → 44 falešných alertů</strong>. Proč, ukázala až čísla: auto 527×336 px, „narušitelé" 44×127 px s nohama 200 px nad zemní čárou auta — v obraze vedle sebe, v prostoru ~15 m od sebe. Rozhodovací test proto stojí na <strong>měřítku jako míře hloubky</strong> (výška osoby ≥ 0,50 × výška auta), poloze nohou u zemní čáry a vodorovném pruhu. Na týchž 54 reálných snímcích, které předtím vyrobily 6 hlášení: <strong>26 → 0 falešných</strong>, a auto přitom sledované v 53/54 snímcích místo 19/54. Doplněna <strong>tišší úroveň</strong> „někdo se zdržuje u auta" — spouští ji postávání (≥3 různé snímky přes ≥60 s), ne výskyt; dvůr je průchozí, 137 průchodů za den by jinak modul utopilo v šumu.</p>
+          </article>
+
+          <article class="buildlog-entry bl-perf" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-08-30</span>
+              <span class="buildlog-tag">PERF</span>
+            </div>
+            <h3>Vision image 6,03 → 2,02 GB, model přestal se stahovat, hlášení o minutu rychleji</h3>
+            <p>Změřeno místo odhadu: v původním image bylo <code>nvidia/*</code> <strong>2,7 GB</strong> a <code>triton</code> <strong>691 MB</strong> — 3,4 GB CUDA balíků na NASu, který GPU nemá. Torch z CPU indexu (<code>download.pytorch.org/whl/cpu</code>) to srazil na <strong>2,02 GB</strong>; verze se nezměnila (2.13.0 → 2.13.0+cpu), takže nejde o upgrade, jen o absenci CUDA. ⚠️ Instalace torche <strong>musí být před</strong> <code>pip install ultralytics</code>, jinak si ho ultralytics přitáhne z PyPI ve verzi s CUDA. Druhá věc byl jeden řádek ve špatném pořadí: předstažení <code>yolov8n.pt</code> bylo <strong>nad</strong> <code>WORKDIR /app</code>, takže model spadl do <code>/</code>, runtime ho v <code>/app</code> nenašel a <strong>stahoval si ho při každém startu</strong>. Ověřeno: 0 výskytů „Downloading" v logu, detekce beze změny (35 reálných snímků, KIA 34/35, nula falešných alertů). Zpoždění hlášení zkráceno <strong>~2 min → ~1 min</strong> (sync <code>*/2</code> → <code>* * * * *</code>; podloženo tím, že sync trvá 11,8 s a engine skenuje po 3 s).</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-08-30</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Zdraví systému 48 % bylo ze tří čtvrtin planý poplach — a dvě tiché chyby k tomu</h3>
+            <p>Přišlo hlášení „systémové zdraví kleslo na 48 %". Ukázalo se, že <strong>36 ze 48 ztracených bodů bylo falešných</strong>: tři záměrně vypnutá zařízení se počítala jako offline a čtyři termohlavice hlásily prázdnou baterii. <strong>Fibaro FGT-001 ale nemá vyměnitelné baterky</strong> — má integrovaný akumulátor dobíjený přes USB a mimo topnou sezónu se schválně nechá vybít (tohle jsem měl nejdřív špatně a opravil mě uživatel). <code>sh_system_health_v1</code> dostal tři síta: ignore-list, detekci „zařízení mlčí" (jen pro periodickou telemetrii — <code>measure_power</code> a tlačítka schválně ne) a sezónní gate podle <code>sh_heating_mode</code>. Cesta čísel 48 → 84 → 68 → <strong>100/100</strong>, a ověřeno i opačně: po vyprázdnění sezónního seznamu spadne na 68/critical, takže mrtvá hlavice v zimě se ozve. ⚠️ Mezitím se našly dvě chyby, které nedělaly nic hlasitě: <code>lastUpdated</code> je v HomeyScriptu <strong>objekt</strong>, ne string, takže feature tiše nedělala nic přes to, že deploy prošel; a v dashboardu byla proměnná deklarovaná uvnitř větve <code>else</code>, ale používaná mimo ni — <code>ReferenceError</code> spolkl prázdný <code>catch</code> a <strong>všechny přepínače nastavení se roky tvářily vypnuté</strong> bez ohledu na skutečnou konfiguraci.</p>
+          </article>
+
           <article class="buildlog-entry bl-feature" role="listitem">
             <div class="buildlog-meta">
               <span class="buildlog-date">2026-05-28</span>
