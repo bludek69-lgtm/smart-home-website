@@ -97,6 +97,78 @@
 
           <article class="buildlog-entry bl-feature" role="listitem">
             <div class="buildlog-meta">
+              <span class="buildlog-date">2026-08-16</span>
+              <span class="buildlog-tag">DEPLOY</span>
+            </div>
+            <h3>Config Center v1.8.0 beta — z webové stránky vlastní program</h3>
+            <p>Config Center byl dosud stránka, kterou bylo potřeba někde naservírovat. Nově má <strong>vlastní instalátor</strong> a spouští se jako běžná aplikace: launcher otevře okno, uvnitř běží lokální server a Config Center pak volá Homey API přímo z prohlížecího jádra. Přihlášení se ukládá do profilu aplikace, takže <strong>přežije restart i přeinstalaci</strong>. Přibyla <strong>tichá automatická aktualizace</strong> — zkontroluje se, jestli na domácím úložišti není novější verze, ověří se podle SHA-256 a nainstaluje se na pozadí. Vedle balení i obsah: <strong>sedm dosud „neviditelných" knobů</strong> se zaregistrovalo do katalogu (drift kategorie A ze 7 na 0) — třeba okno pro automatické vysávání, odchodový přehled nebo držení přítomnosti v open space. A testovací hlášení v Config Centru přešlo z přímého zápisu stavu na <strong>request</strong>, aby UI nepsalo do stavu systému, ale jen o něj žádalo.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-08-14</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Kamera na panelu přes celou obrazovku</h3>
+            <p>Náhled kamery na dotykovém panelu byl malý — dobrý na „něco se děje", špatný na „co se děje". Build <strong>8.1.9</strong> přidal fullscreen: buď tlačítkem, nebo prostě ťuknutím do obrazu, který se roztáhne přes celou plochu. Nasazeno na Pi a ověřeno kontrolním součtem, že na panelu běží přesně to, co je v repozitáři.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-08-07</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Tichý default je past — jak se tajemství dostane do repozitáře</h3>
+            <p>Skript měl heslo zapsané jako <strong>výchozí hodnotu</strong> proměnné prostředí: <code>${HA_PASS:-…}</code>. Důsledek je zákeřný — skript <strong>„funguje" i když proměnnou nikdo nenastaví</strong>, protože si tiše sáhne po vloženém defaultu. A přesně proto se ta hodnota vůbec dostala do kódu: nic si nikdy nestěžovalo. Oprava je jednoznaková: <code>${HA_PASS:?…}</code> — bez nastavené proměnné skript <strong>spadne s jasnou hláškou</strong> místo tiché záruky. Historie repozitáře byla přepsána napříč všemi 51 referencemi a ověřeno, že řetězec nikde nezůstal. Poučení se hodí i mimo tenhle projekt: <strong>tichý fallback na tajemství je horší než chybějící konfigurace</strong>, protože se nikdy neprojeví jako chyba. Stejného dne se srovnal i build panelu — bajtově věrná archivace přes <code>.gitattributes</code>, aby porovnání „na zdi vs. v repu" nekazily konce řádků.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-07-13</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Kiosk V8.1.7 — scény se tvářily, že se spustily, i když neproběhly</h3>
+            <p>Panel na zdi hlásil úspěch i tam, kde se scéna ve skutečnosti nespustila — potvrzení bylo <strong>optimistické, ne pravdivé</strong>. Oprava scene-launch obchází proxy a potvrzení se nově váže na skutečný výsledek volání, ne na to, že se odeslal požadavek. Do hlavičky přibyl <strong>vždy viditelný build tag</strong>, takže je na první pohled jasné, jaká verze na panelu běží — bez toho se špatně rozlišovalo, jestli se oprava vůbec dostala na zeď. Součástí i oprava diagnostiky tokenu.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-07-07</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Dům se sám přepnul na „pryč“ — a zapnul vnitřní kameru, když jsem byl doma</h3>
+            <p>Stížnost zněla „smart home si sám mění prezenci". Ve 12:40 dům přešel do AWAY: topení off, světla blokovaná a <strong>vnitřní privacy kamera ZAPNUTÁ</strong> — zatímco uživatel byl doma a hýbal se. Root cause: <code>sh_presence_router_v1</code> věřil <strong>výhradně telefonnímu geofencu</strong>, bez jakékoli kontroly pohybu. Stačilo, aby telefon zaškubl (WiFi drop / GPS drift). Data to potvrdila tvrdě: všechny změny prezence za šest dní měly zdroj <code>phone</code>, 6.7. dokonce <strong>flap away→home→away během tří minut</strong>, a v okamžiku přepnutí hlásil <code>sh_occupancy_dimmer</code> <code>occupied:true, bath:true</code>. Čidla říkala „někdo doma", telefon „pryč" — <strong>vyhrál telefon</strong>. Fix je dvoustupňový: <strong>motion veto</strong> (přijde-li „away" z neexplicitního zdroje a pohyb byl mladší než 120 s, nepřepínej a ulož „pending") + <strong>deferred resolver</strong> (běží á 2 min; když je dům opravdu tichý, teprve potvrdí odchod, jinak pending po 30 min vyprší a zůstaneš doma). Explicitní tlačítko se nevetuje. Sandbox 11/11, živě ověřeny všechny tři větve. ⚠️ Verifikace přitom chytila past: <code>setValue</code> chybějící proměnnou <strong>nevytvoří</strong>, takže <code>sh_presence_pending_away_ts</code> musela vzniknout předem — jinak by resolver pending nenašel a dům by uvízl v „doma".</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-07-01</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Křížová kontrola Config Center ↔ systém — drift 46 → 1</h3>
+            <p>Otázka od uživatele: „nejsou některé úpravy ve smart home v rozporu s Config Centrem?" Byly. Živě existovalo <strong>140 proměnných <code>sh_cfg_*</code></strong>, ale Config Center jich znalo zhruba <strong>102</strong> — rozdíl byly neviditelné knoby, mrtvé proměnné, hodnoty mimo rozsah a dokonce <strong>AI přepisující konfiguraci</strong>, kterou spravovat neměla. Vznikl offline nástroj <code>tools/config_reconcile.py</code>, který porovnává <strong>tři zdroje pravdy</strong>: katalog v Config Centru, živé hodnoty na hubu a <strong>skutečné čtenáře</strong> (grep <code>getValue('sh_cfg_…')</code> napříč živými skripty). Drift třídí do sedmi kategorií — od „čte skript, ale v UI není" přes „v UI je, ale nikdo to nečte" až po „zapisuje to někdo neoprávněný". Výsledek se ukládá do reportu i do živé proměnné pro panel. Během následujících dnů se drift dostal ze 46 na 1 a stal se součástí governance ekosystému.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-06-30</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Prádelna se rozsvěcela od páry ze sprchy — steam interlock</h3>
+            <p>„Prádelna se rozsvítila, i když jsem tam vůbec nebyl." Klíč byla uživatelova věta <em>„děje se to, když jsme v koupelně ve sprše"</em>. Prádelna je tmavá místnost bez oken, takže obvyklé pojistky (lux brána, čekání na druhý pohyb) nešlo použít. Data z 16:40 to potvrdila přesně: PIR v prádelně dal <strong>jediný ~67sekundový impuls</strong>, celý <strong>uvnitř okna koupelnového pohybu</strong>, a koupelna měla v tu chvíli <strong>86 % vlhkosti</strong>. PIR detekuje pohyb tepla — a teplý vlhký vzduch ze sprchy je pro něj pohyb. Automatika fungovala správně, jen reagovala na falešný signál. Fix je <strong>steam interlock</strong>: při pohybu v prádelně se zeptáme, jestli neprobíhá sprcha (nedávný pohyb v koupelně nebo vysoká vlhkost) — pokud ano, světlo se nerozsvítí a zaloguje se <code>laundry_motion_steam_suppressed</code>. Jinak svítí okamžitě, bez čekání. Prahy jsou laditelné: 180 s po koupelnovém pohybu a 70 % vlhkosti.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-06-29</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Velký úklid — privacy interlock, NAS discovery, databáze 69 MB → 0 a plynulé ztišení</h3>
+            <p>Jednodenní běh přes celý ekosystém. <strong>Privacy interlock fail-CLOSED</strong> (<code>sh_light_router_v1</code> v1.17): otevřené okno teď světlo <strong>blokuje</strong> — a když je senzor nedostupný nebo vyhodí výjimku, považuje se okno za otevřené. Raději nerozsvítit než svítit do otevřeného okna. <strong>NAS discovery</strong>: záložní server <code>192.168.1.140</code> se ukázal být <strong>ASUSTOR AS6302T, ne Synology</strong>, jak předpokládal původní prompt — Synology API i DSM porty odpověděly 404 nebo byly zavřené. Read-only sken, žádné hádání přihlašovacích údajů. (SSH klíč tam později padal na <code>seccomp SIGSYS</code> v ASUSTOR sshd, takže cestou k datům je SMB.) <strong>Databáze EventLogu</strong>: WAL soubor narostl na 69 MB — po opravě 0, dotazy naživu, data neporušená. <strong>Ducking ložnice</strong> dostal plynulý fade místo skoku (živě ověřený round-trip 0.65 → 0.15 → 0.65, hudba se nezastavila). A repo se srovnalo se skutečností: 74 skriptů synchronizováno z živého systému, 11 scratch souborů do archivu — <strong>živý systém je autorita, ne repo</strong>.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem">
+            <div class="buildlog-meta">
               <span class="buildlog-date">2026-05-28</span>
               <span class="buildlog-tag">WEB</span>
             </div>
