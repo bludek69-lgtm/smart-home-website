@@ -59,6 +59,259 @@
         </header>
 
         <div class="buildlog-list" role="list">
+          <!-- WEB_UPDATE_20261108: září–listopad 2026 (28 zápisů z reportů) -->
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261108-0">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-11-08</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>AI dozor: dům sám pozná, že nespím a sedím po tmě a v zimě</h3>
+            <p>V noci na 8. 11. jsem vstal ve 02:35 a hodinu seděl v open space po tmě při 17 °C. Deník ukázal, že systém to <strong>věděl už ve 02:41</strong> (skóre probuzení 98, prázdná postel), jenže wake scorer je od dubna jen pozorovací, sleep guard zablokoval noční světlo a jediný AI modul, který smí jednat, se při spánku vypíná. Chyběla vrstva, která signály spojí a rozhodne. Nový <strong>AI dozor</strong> běží každých 5 minut na HA RPi a s Homey mluví po LAN. Levný detektor bez AI hledá nesoulad (vzhůru, ale „spí“; obsazená tmavá místnost; zima při bdění) a teprve pak se ptá <strong>Gemini 2.5 Flash</strong>, která vrátí JSON s akcemi z povoleného seznamu. Tvrdá pravidla AI nepřebije: v posteli nic, max 6 akcí za hodinu, co do 10 minut vrátím, se 24 h neopakuje, a topení zapne, až když si ho po upozornění <strong>do 10 minut nepustím sám</strong>. Přehrání té noci 29/29; <strong>první skutečný zásah zatím čeká</strong>. Hned první ráno se našla chyba: zablokovaná akce se přesto ohlásila v kuchyni, opraveno. Režim jde přepnout v Config Centru 1.10.1 i na kiosku.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261108-1">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-11-08</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Kiosk dostal stránku 🧠 AI a tlačítka „⚡ Hned“ — bez zapínání počítače</h3>
+            <p>Z 827 proměnných v Homey je 181 přepínačů, většina ale jsou interní stavy a příkazy, na které se ručně sahat nemá. Na kiosk šly jen <strong>skutečné volby ověřené ve skriptech</strong>: pět skupin (AI, režimy, ráno a večer, hlášení, automatika 8 místností), každá se vejde na displej bez posouvání. V červenci se tyhle volby zamkly jako „jen Config Center na PC“; to rozhodnutí se změnilo. Zápis je poctivý: „uloženo ✓“ se ukáže až po <strong>zpětném čtení z Homey</strong>. Druhá vlna přidala sekci <strong>⚡ Hned</strong>: Jdu spát / Vstávám, Doma / Odcházím, <strong>Ticho na 2 hodiny</strong> (brána <code>sh_tts_gate_v1</code> hlášení zahodí, požár, únik a přehřátí projdou) a roletu jedním ťuknutím s kontrolou okna. Pod přepínači AI je seznam posledních zásahů AI dozoru s tlačítkem <strong>↩ Vrátit</strong>. Posuvník se prstem ovládal špatně, nahradila ho velká tlačítka ▲/▼ jako na stránce Média. Testy 55/55, regrese 42/42; <strong>naostro se zatím nic nepřepínalo</strong>, dům byl obsazený.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261108-2">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-11-08</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Jsi vzhůru, ale topení ještě spí — upozornění místo automatiky</h3>
+            <p>Ráno 8. 11. ve 04:40: „je tady docela zima“. V jídelně 17,1 °C, venku −0,6 °C a rozvrh drží noční útlum 15 °C do 05:00. Cíle topení jsem <strong>neměnil</strong>, chci rozvrh a ruční přitopení. Přibylo jen upozornění z <code>sh_heating_scheduler_v1</code>, jednou denně na mobil a nově i <strong>hlasem v kuchyni</strong> přes frontu a bránu TTS (při spánku mlčí, čísla čte česky). Podmínky jsou přísné, aby nehlásilo noční cestu na záchod: ráno, doma, nespím, <strong>ranní rutina dnes už proběhla</strong> (tedy potvrzené vstání po třetí), jídelna je v nočním slotu a do jeho konce zbývá aspoň 20 minut, cíl je pod denním (ruční přitopení už nehlásit) a v místnosti je chladněji než denní cíl. Testy 17/17 a 22/22, předchozí verze je neprojdou; po nasazení první běh bez chyby a správně bez hlášení. <strong>První skutečné upozornění čeká</strong> na příští brzké vstání.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261108-3">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-11-08</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Světlo na záchodě zhaslo samo — a nebyl to Homey</h3>
+            <p>Ve 02:35 se na toaletě a v koupelně rozsvítilo a <strong>za sekundu zhaslo</strong>. Deník ukázal, že Homey žádné vypnutí neposlal: první vlastní zhasnutí přišlo až o 90 s později a žádné flow tato světla nevypíná. Obě jsou <strong>Philips Hue</strong>, povel tedy přišel ze strany Hue bridge (vypínač nebo automatizace v aplikaci Hue). Za posledních ~25 rozsvícení jediný případ, ale s nepříjemným vedlejším rizikem: Homey pak „ví“, že je zhasnuto, a pozdější stejný příkaz nepošle. Příčinu na straně Hue Homey neodstraní, přibyla <strong>pojistka</strong>: zhasne-li světlo, zatímco je zóna aktivní, čidlo vidí pohyb (teď nebo do 120 s) a jsem doma, router ho rozsvítí zpět na noční jas. Druhé vypnutí do 5 minut už zůstane, to beru jako úmysl. Při běžném zhasnutí se skript vůbec nespustí. Test 25/25, stará verze 14/25; <strong>živá zkouška zatím čeká</strong>.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261108-4">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-11-08</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Kiosk blikal celou noc: dva hlídači se přetahovali o displej</h3>
+            <p>Hlášení: „kiosk se pořád resetuje a v noci nezhasl“. Reset to nebyl, šlo o <strong>ping-pong dvou daemonů</strong> <code>kiosk_watchdog.py</code>. Pi nemá hodiny reálného času: po startu 5. 11. naběhl s datem 1. 1., cron na hlídání daemonu se spustil dřív, než první daemon zapsal svůj PID, a pustil druhý. Každý měl vlastní stav displeje. Jeden po vypršení dotykového okna zhasl, druhý ještě v okně panel rozsvítil, první to vyhodnotil jako dotyk… <strong>každých ~25 s dokola</strong>. Záznamů za den: 11 → 338 → 470 → 752. Oprava: zámek přes <code>flock</code>, který drží jádro a po pádu procesu se uvolní sám. Druhý daemon hned skončí a hlídací cron nový nespustí, když zámek někdo drží. Test se skutečným zámkem ve dvou procesech 11/11, tři minuty po nasazení panel zhasnutý. <strong>Celonoční ověření čeká</strong> na ranní log.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261105-5">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-11-05</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Sonda cloudu: Homey tvrdil „connected“, cloud přitom neodpovídal</h3>
+            <p>Při kontrole restartů vracel cloud relay asi 2 minuty na všech endpointech <code>homey_offline</code>, zatímco Homey na vlastním stavovém endpointu hlásil <strong>„connected“</strong>. Příznak zase lhal. Nikde po tom nezůstala stopa, protože cloudová adresa ve watchdogu navzdory jménu míří <strong>do lokální sítě</strong>, takže výpadek cloudu z principu neviděl. Do existujícího runtime watchdogu na HA RPi přibyla sonda, která dělá <strong>skutečné volání přes cloud</strong> na nejlevnější endpoint stavu systému. Ten navíc vrací ID bootu, takže zadarmo odhalí i restart Homey. Nikdy neléčí restartem (cloud by to neopravilo, hlídá to invariant) a push pošle po LAN až po ~15 minutách trvalého výpadku. Testy 22/22, regrese 32/32, ověřeno z reálného ticku. Poučení z hlídače invariantů: <strong>„LIVE_OK“ samo nic nedokazuje</strong>, chybějící soubor se tiše přeskočí a filtr <code>--only</code> se v živém režimu ignoruje.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261029-6">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-29</span>
+              <span class="buildlog-tag">DEPLOY</span>
+            </div>
+            <h3>Domácnost se opraví sama, bez AI — Config Center 1.10.0</h3>
+            <p>Požadavek: přestat záviset na tom, že opravu každé ráno udělá AI. Rozšířil se <strong>existující dohled v Home Assistantu</strong>, který běží každých 5 minut nezávisle na PC i na HomeyScriptu. Koupelna: když po doloženém odchodu svítí světlo nebo hraje rádio, nechá nejdřív čas původní automatice a pak pošle <code>vacancy_off</code> přes existující flow. <strong>Nejvýš dva pokusy</strong>, pokus se zapíše na disk ještě před API voláním a za úspěch se počítá jen čerstvé čtení, že je opravdu vypnuto. Respektuje spánek, návštěvu, scény, TTS i ruční ovládání, po vyčerpání pokusů pošle jediné upozornění. Hlídá i pády HomeyScriptu a střídání rolety (4 polohy za hodinu = „uprav parametry“, sám je nepřepisuje). Config Center 1.10.0 před uložením <strong>znovu načte živé hodnoty</strong>, a když je mezitím změnil jiný klient, zápis zastaví. PC a notebook tak sdílí jednu pravdu z Homey. Testy 13/13, 14/14, 22/22, upgrade 49/49. <strong>Ověření na skutečné poruše čeká</strong>; budíky dohled nikdy nemění.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261029-7">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-29</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Počítadlo chyb ukazovalo 0, skutečně jich bylo 30</h3>
+            <p>Audit spolehlivosti našel řadu hlídačů, které hlídaly špatně. <strong>Samooprava Cast byla blokovaná falešně</strong>: 11 odkladů s důvodem „mluví TTS“, přitom fronta byla prázdná a termín v minulosti, zůstalo jen jméno reproduktoru. <strong>Watchdogy chodily přes cloud relay</strong>, i když stejné přihlášení po LAN odpovídalo hned. Health monitor se ptal na neexistující adresu a <strong>SQL počítal jen kompaktní JSON</strong> <code>"result":"error"</code> bez mezery, takže za 24 h ukazoval 0 chyb proti skutečným 30. A light router při timeoutu vypnutí vrátil false, ale pokračoval a nakonec hlásil úspěch; za dva dny 23 selhání. Nově TTS blokuje restart jen když opravdu mluví, sonda s chybou nesmí hlásit „healed“, statistiky sedí 30 = 30, oprava opožděného skriptu má fáze <code>requested → verified / failed</code> podle nového heartbeatu a vypínání skupiny běží paralelně s jedním ověřeným opakováním. Cílené scénáře 55/55, regrese 41/41. Poruchové větve (skutečný zombie, skutečný timeout) zůstávají <strong>WATCH</strong>.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261029-8">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-29</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Rádio mlčelo, i když všechno hlásilo „ok“</h3>
+            <p>Ráno se opakovalo <code>speaker_play=ok</code>, ale fyzicky nehrál žádný ze tří reproduktorů. Pomohl až <strong>restart aplikace Chromecast</strong>, stav „running“ zdravé přehrávání nedokazoval. Audio watchdog dosud hlídal jen čekající požadavky v proměnných. Nově <strong>porovnává očekávané rádio se skutečným zařízením</strong> a při přetrvávajícím tichu restartuje Cast přes nativní flow akci (přímé volání z HomeyScriptu selhalo na chybějících oprávněních a ten neúspěch zůstal v důkazech). Týž den roleta otevřela, zatímco jedna žárovka nedokončila vypnutí. Router proto před pohybem nahoru <strong>ověří vypnutí všech čtyř světel</strong>, jinak otevření odloží. A hlášení spotřeby už nečte „dva tečka jedna“: <code>2.1 kW</code> zní jako „dvě celé jedna desetina kilowattu“ a IP adresy se z řeči vypouští. Testy 30/30 a 21/21, obnova rádia ověřena živě. Nová podmínka rolety je <strong>WATCH</strong> do prvního přirozeného otevření.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261029-9">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-29</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Koupelna svítila, protože čidlo „vidělo“ člověka, který tam nebyl</h3>
+            <p>Koupelnové mmWave čidlo hlásilo přítomnost od 08:57 nepřetržitě a hlídač prázdné místnosti potřeboval, aby <strong>oba signály byly false</strong>. Při trvalé přítomnosti tedy nikdy nezasáhl a světlo i rádio běžely dál. Samotná délka přítomnosti ale důkaz odchodu není. Nová pojistka hledá <strong>nezávislý důkaz</strong>: čerstvý skutečný pohyb kuchyňského PIR (ne polling, ne mmWave), novější než poslední vstup do koupelny, a jen když není návštěva, host, scéna ani ruční režim. Router před vypnutím všechno znovu ověří a příznaky přehrávání uklidí až po zpětném čtení, že reproduktor opravdu mlčí. Opraveno i to, že vypnutí rádia neuklízelo stav a cluster hledal světlo podle názvu zóny. První test po nasazení odhalil, že SDK vrací čas jako objekt Date, ne číslo. 45 testů prošlo, reálná cesta flow ověřena; scénář „falešná přítomnost → pohyb v kuchyni → vypnutí“ je <strong>WATCH</strong>. HomeyScript ten den skutečně padal na paměti, koupelna ale jeho důsledek nebyla.</p>
+          </article>
+
+          <article class="buildlog-entry bl-perf" role="listitem" id="z-20261029-10">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-29</span>
+              <span class="buildlog-tag">PERF</span>
+            </div>
+            <h3>Roleta 7× za 100 minut → v modelu 2×</h3>
+            <p>Za slunného dopoledne se roleta střídala mezi stíněním a otevřením <strong>sedmkrát za zhruba 100 minut</strong>, většinou hned po vypršení 15minutové ochrany. Data z 1 337 řádků routeru ukázala proč: lux se mezi sousedními vzorky mění až o <strong>26 000 lx za minutu</strong> a medián krátkého výkyvu je asi 3 600 lx. Hystereze 4 000 lx tedy odpovídala běžnému šumu, ne oddělení stavů. Přehrání téhož dne s různými parametry: 20 000 lx a 45 minut dá 2 změny, stejně jako hodina, ale s kratším omezením běžných reakcí. Práh pro stínění (30 000 lx) zůstal. Změna proběhla <strong>standardním formulářem Config Centra</strong> včetně validace a historie, žádný zásah do kódu. Živý router nový interval hned použil (<code>roleta_anticyclo_suppressed</code> s 2 700 s). Dlouhodobé snížení počtu pohybů je zatím <strong>WATCH</strong>, přehrání je odhad, ne důkaz.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261028-11">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-28</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Přítomnost není vstávání — ranní rutina chce skutečný pohyb</h3>
+            <p>mmWave čidlo v open space drží stav přítomnosti, takže pouhé „někdo je tu“ umělo spustit ranní rutinu i bez skutečného vstání. Brána v <code>sh_morning_brain_v1</code> nově přijme jen <strong>čerstvé <code>alarm_motion=true</code></strong> s platným časem po ranní hodině. Přítomnost, neplatný nebo budoucí čas ani chyba čtení neprojdou. Spuštění budíkem zůstalo beze změny. Testy celých skriptů 25/25 včetně reprodukce incidentu a plánovaný běh hned po nasazení už použil novou filtraci. Další ráno, 29. 10., rutina odstartovala ve 04:47 na pohyb kuchyňského PIR starý 53 s, tedy <strong>poprvé doloženě kvůli pohybu, ne přítomnosti</strong>. Navazuje na zářijovou bránu, po které rutina přestala startovat sama ve tři.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261025-12">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-25</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Bojler na jedno ťuknutí — a vypne ho Homey, ne prohlížeč</h3>
+            <p>Na kiosku přibyla záložka <strong>⚡ Rychlé</strong>. První akce: ohřev vody na 30–120 minut s velkým příkonem ve W a větou „Ohřívá se.“ nebo „Zapnuto, ale neodebírá“, aby bylo vidět, že voda opravdu hřeje. Klíčové rozhodnutí: <strong>vypnutí hlídá Homey</strong>, ne JavaScript na stránce, protože zavřený tab nebo restart kiosku by nechal bojler puštěný. Stránka zapíše čas vypnutí a blok v existujícím scheduleru (běží každou minutu) zásuvku vypne. Stojí v cyklu úplně první, aby ho nepřeskočil preview lock ani okenní logika. Pořadí zápisů je záměrné: <strong>nejdřív čas vypnutí, pak zapnout</strong>. Tarif NT/VT je jen odhad podle hodin, HDO signál v Homey není. Pozor na dvě zařízení se slovem „boiler“: topný kotel je jiné relé a test hlídá, že na něj boost nikdy nesáhne. Živě 1 563 W, voda za dvě minuty z 24,9 na 30,3 °C a automatické vypnutí včas.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261022-13">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-22</span>
+              <span class="buildlog-tag">DEPLOY</span>
+            </div>
+            <h3>Config Center 1.9.1: audit bezpečnosti a „Uložit“, které přepisovalo 180 proměnných</h3>
+            <p>Kompletní audit architektury našel pět nejkritičtějších bodů. Nejvážnější: <strong>proxy na kiosku přeposílala do Homey jakýkoli požadavek z celé domácí sítě</strong> s plným tokenem a bez ověření. Nově slouží API jen samotnému kiosku. V aplikaci <strong>„Uložit“ bez změn přepisovalo asi 180 proměnných</strong> včetně ručních voleb z kiosku (od 1.9.0 tím rušilo nastavení termostatu); teď ukládá jen čekající změny, jinak napíše „Nic k uložení“. Data z Homey se vypisovala bez escapování na ~40 místech a stránka neměla CSP; testovací <code>&lt;img onerror&gt;</code> v názvu zařízení se teď na žádné z 21 stránek nespustí. Updater přijme jen manifest přesného formátu a jen vyšší verzi. Testy 22/22, install-test 41/41, PC aktualizováno updaterem. Otevřené zůstává: <strong>klíč Gemini</strong> uniklý v zálohách proměnných v gitu čeká na rotaci.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261020-14">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-20</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Tichý log, který lhal — a tři díry na kioskovém Pi</h3>
+            <p>Ranní kontrola hlásila 0 chyb a to vypadalo podezřele. <strong>Filtr chyb nevidí varování</strong> a tam se schovávaly výpadky kamery u auta, 2–8× denně. Síť byla čistá, kamera běžně odpovídá do 0,2 s, engine ale překlopil stav po jediném neúspěšném dotazu a důvod zahodil. Nově hlásí až výpadek <strong>delší než 30 s</strong> i s typem chyby a hlídání při oslepnutí jde do klidu hned. Při pátrání po chronické chybě 502 se našlo horší: dashboard server servíroval celý adresář, takže <strong>token k Homey i heslo ke kameře byly čitelné z čehokoli v síti</strong>. Opraveno allowlistem přípon a zákazem tečkových souborů, token je mimo zdroják a údaje je nutné vyměnit. API Car Guardu navíc přijímalo zápis bez ověření, kdokoli v síti mohl <strong>tiše vypnout hlídání auta</strong>. Zápis teď projde jen z povolených adres a odmítnutí se loguje; 25. 10. tak zachytilo skenování zranitelností z jiného zařízení v síti.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261020-15">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-20</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>„Roleta nahoře = nesvítit“: pravidlo, které se dvakrát ztratilo</h3>
+            <p>Moje stálé zadání zní: <strong>světla v open space se nesmí rozsvítit, když je roleta nahoře</strong>. Za deset dní se o něj přetahovaly dvě souběžné opravy. 10. 10. ráno jsem kontrolu rolety odstranil (roleta hlásí jen setpoint), o tři hodiny později ji jiná relace vrátila, ale <strong>bez pushnutí</strong>, takže v repu zůstala moje verze. Hlídač invariantů pak týden hlásil porušení, protože jsem mu zadal pravidlo zakazující čtení polohy: <strong>můj vlastní invariant chránil špatné chování</strong>. Audit 16. 10. vrátil živý kód na verzi z repa a 20. 10. v 16:31 se open space rozsvítil při roletě nahoře. Regresní test existoval, jen <strong>nebyl zaregistrovaný v gate</strong> a mířil na starou kopii. Teď: guard převzatý doslova z opravy z 10. 10. (220 kontrol), světelná cesta roletou nikdy nehýbe, tři chybné invarianty nahrazeny, test zapojen, gate 39/39. Živě: roleta nahoře, požadavek na světla zablokován, všechna 4 světla zhasnutá.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261020-16">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-20</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Roleta si pamatuje ruku a příkaz posílá dvakrát</h3>
+            <p>Dvě hlášení za dva dny. „Roleta se nechce zavřít“: router <strong>neměl ruční override</strong>, takže moje zavření nad 200 lux do sedmi minut vrátil. Nově pozná, že setpoint změnil člověk, a podrží to <strong>6 hodin</strong>; nedořešený stav (okno, přerušený pohyb) dál řeší opakování příkazu. Při té příležitosti se pohledem z okna ověřilo, že <strong>0 = dole</strong>, jak kód předpokládal. Druhý den: „hlásilo to, že se otevře roleta, a neotevřela se.“ Ztratil se Zigbee příkaz: Fyrtur je spící zařízení a příkaz ve frontě tiše vyprší. A <strong>stejná hodnota znovu se na Zigbee vůbec neodešle</strong>, Homey ji bere jako „žádná změna“. Po hlavním pohybu proto přijde potvrzovací dvojice: za 6 s hodnota o 2 % vedle a hned nato přesný cíl. Test chytil, že jsem volal neexistující funkci, takže by se potvrzení tiše nikdy neprovedlo. Testy 38/38 a 16/16, obojí ověřeno živě.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261020-17">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-20</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Ztlumování při klidu nikdy nefungovalo — log přitom psal „ok“</h3>
+            <p>Ranní kontrola hlásila <code>light_unknown_request</code>. Byla to slepá ulička: <code>sh_occupancy_dimmer_v1</code> každé 2 minuty posílal požadavky jako <code>occupancy_dim_20</code> nebo <code>occupancy_off</code>, ale light router pro ně <strong>neměl jedinou větev</strong> a požadavek zahodil. Dimmer sám žádné zařízení neovládá, takže <strong>ztlumování při klidu nefungovalo nikdy</strong>, přestože byl v režimu „active“. Nikdo si nevšiml, protože závěrečný log routeru psal „ok“ bez ohledu na výsledek. Doplněny čtyři větve a pomocník, který <strong>jen ztlumí, co už svítí, a nikdy nic nerozsvítí</strong>; jinak by noční cesta na záchod rozsvítila obývák. Ložnice zůstává nedotčená, zhasnutí projde vždy a log už „ok“ u nezpracovaného požadavku nenapíše. Testy 21/21. První deploy zablokoval vlastní anti-cascade guard v minutovém okně, nasazeno o pět minut později.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261020-18">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-20</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Panel na zdi v noci zhasne a probudí se dotykem</h3>
+            <p>Kiosk svítil celou noc do místnosti. Panel je HDMI monitor <strong>bez ovladače podsvícení</strong>, jas jde měnit jen softwarově, a startovací skript záměrně vypíná úsporný režim, aby panel nikdy nezhasl. Chyběla jen noční výjimka. Noční režim je proto tick v <strong>už běžícím</strong> watchdogu kiosku, ne nová služba. Řídí se stavem domu z Homey: ráno a ve dne plný jas, večer 35 %, v noci nebo při spánku zhasnuto, <strong>dotyk rozsvítí na 120 s</strong> při 12 %. Když stav domu není k dispozici, rozhodne čas, a při nejistotě plný jas, protože černý panel ve dne je horší chyba než svítící v noci. Testy 33/33 odhalily před nasazením dvě chyby, mimo jiné nekonečné probouzení po vypršení dotyku. První noc se ověřit nestihla (nasazeno až ráno), o týden později log ukázal přechody do tmy a zpět na plný jas.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261019-19">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-19</span>
+              <span class="buildlog-tag">DEPLOY</span>
+            </div>
+            <h3>Config Center 1.8.4–1.9.0: topení se nastavuje z PC i z panelu</h3>
+            <p>Říjnová série vydání se točila kolem topení. <strong>1.8.4</strong> přidal stavový řádek (režim, požadavek, skutečný stav relé kotle), <strong>1.8.5</strong> dočasné vyřazení zóny na 1, 4 nebo 24 h, <strong>1.8.6</strong> opravil ukládání, které tiše zahazovalo změny jiných režimů a přitom hlásilo „Uloženo ✓“, a <strong>1.8.7–1.8.8</strong> ukazují stáří posledního hlášení hlavice („nehlásí N dní“). <strong>1.8.16</strong> konečně umožnil trvale uložit denní a noční teplotu na kartách hlavic; dřív to byly jen hodnoty živého testu. <strong>1.9.0</strong> přinesl termostat s otočným prstencem a režimy Comfort / Noc / Odchod / Rozvrh, ruční volba platí do dalšího přechodu rozvrhu. Živě na jídelní hlavici: Comfort 21, Noc 18, Odchod 16, otočení na 20 °C a po vypršení <strong>automatický návrat na 15 °C</strong> za 3,5 minuty bez ručního zásahu. Stejný ovladač běží i na kiosku jako samostatná stránka Topení.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261016-20">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-16</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Notifikace se deset dní nedoručovaly kvůli jednomu názvu proměnné</h3>
+            <p>Audit celého systému: jádro zdravé (64 aplikací běží, 249 flows, žádné rozbité), ale <strong>notifikace se nedoručovaly nejméně 10 dní</strong>. Flow budil router na změnu <code>sh_notification_request</code>, router ale četl <code>sh_notif_request</code>, kterou nikdo neplnil, viděl „idle“ a skončil. Šest skriptů včetně health monitoru tak psalo do prázdna; podle stop prošla poslední zpráva v dubnu a ranní kritický alert ležel nepřečtený. Oprava je jeden řádek: router čte proměnnou, kterou používají všichni zapisovatelé, a dvojče je smazané. Živě byla testovací zpráva <strong>spotřebovaná do 1 sekundy</strong> a odeslaná. Zároveň health přestal počítat hlavice vypnutých zón jako závadu: <strong>skóre 60 → 92/100</strong>. Poučení navíc: PUT proměnné s tělem ve špatném tvaru vrátí HTTP 200 a <strong>nic nezmění</strong>, takže vždy číst zpátky.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261014-21">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-14</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Topení topilo naslepo: tři ze čtyř hlavic byly mrtvé a Homey hlásil „dostupné“</h3>
+            <p>První den topné sezóny začal auditem. Logika je postavená dobře (hystereze, anti-cycling, 4h pojistka, útlum při odchodu), ale <strong>tři ze čtyř termohlavic</strong> neodpověděly 2,5–4 měsíce a Homey u nich dál hlásil <code>available: true</code>. Jídelna chtěla 19 °C se zavřeným ventilem a teplo šlo do ložnice, která měla být vypnutá. Zneviditelnily to dvě chyby: zone sync hlásil <strong>„synced 4“</strong>, i když zápis selhal, a kvůli neshodě českých a anglických klíčů v device mapě četla koupelna <strong>20,2 °C staré 86 dní</strong> místo živých 17,1 °C, takže netopila. Otevřené okno topení neřešilo vůbec. Opraveno: aliasy klíčů, selhaný zápis a mlčící hlavice jsou vidět v logu (podle stáří dat, ne příznaku dostupnosti) a otevřené okno srazí zónu na protimrazových 7 °C. 23 testů, nasazeno. Nabití hlavic zůstalo na mně, FGT-001 má akumulátor na USB. Další noc v režimu auto proběhla bez nálezu a předehřev koupelny naskočil přesně ve 02:45.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20261010-22">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-10</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Roleta Fyrtur nehlásí polohu, jen poslední příkaz</h3>
+            <p>Večer 9. 10. tři příznaky najednou: světlo se rozsvítilo při otevřeném okně, roleta se po zavření okna nestáhla a po ručním stažení se světla nerozsvítila. Společná příčina: <code>windowcoverings_set</code> držel <strong>0 celých 36 hodin</strong>, přestože se roletou hýbalo. Řízený pohyb to potvrdil, hodnota se změní okamžitě po příkazu z Homey, ruční pohyb ale nevidí. Je to <strong>setpoint, ne měřená poloha</strong>. K tomu si dva skripty tutéž nulu vykládaly opačně (0 = zavřeno vs. 0 = otevřeno). Opraveno ve dvou vlnách: router při neshodě setpointu a vlastního stavu <strong>příkaz zopakuje</strong> (dřív stav naopak „srovnal“ a zahladil důkaz) a konvence je sjednocená na 0 = dole. Testy 56/56 a 22/22, světla i roleta ověřené živě. Poučení: na zařízení bez zpětné vazby nestavět logiku jako na čidle. A jak ukázaly další dny, otázka „svítit, když nevím, kde roleta je“ je rozhodnutí, ne bug.</p>
+          </article>
+
+          <article class="buildlog-entry bl-feature" role="listitem" id="z-20261010-23">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-10-10</span>
+              <span class="buildlog-tag">FEATURE</span>
+            </div>
+            <h3>Zombie reproduktor: dostupný, ale hluchý — a hlídač, který to pozná</h3>
+            <p>Už 2. 9. se ukázalo, že koupelnový reproduktor je „zombie“: Homey ho hlásí jako dostupný, ale každý příkaz <strong>vyprší po 30 s</strong>, zatímco ostatní odpoví za 0,4 s. 18. 9. stejný stav v kuchyni: 22× „play ok“ a ráno ticho. Léčba se ukázala jednoduchá, <strong>restart aplikace Chromecast</strong> v Homey, ne zásuvky. Existující <code>cast_watchdog.py</code> na HA RPi ale hledal jen offline zařízení. Nová logika měří <strong>odezvu</strong>: v okně 02:30–03:05 před ranní rutinou nebo po dvou nesouladech pošle neslyšný příkaz hlasitosti na stávající hodnotu s timeoutem 8 s. Restart jen po potvrzení ve dvou bězích, když nehraje jiný reproduktor ani TTS, nejvýš jednou za 6 hodin, a další běh výsledek ověří. Test 32/32, nasazeno 10. 10. Ranní kontroly pak noc co noc ukazovaly 8 sond s latencí do 0,6 s a žádný zbytečný restart.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20260921-24">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-09-21</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Ranní rutina startovala sama ve tři — nově jen na budík nebo potvrzené vstání</h3>
+            <p>Zadání: spouštět jen podle budíku, nebo po třetí ráno, ale s detekovaným pohybem. Log ukázal dvě příčiny. Ve všední dny brána pouštěla rutinu <strong>30 minut před budíkem</strong>, takže s budíkem na 03:10 běžela 12.–17. 9. každý den v 03:00:41. O víkendu stačilo <strong>otočení v posteli</strong>: slabé probuzení jen z ložnice spustilo rádio i briefing a pohyb v koupelně přišel až o pět minut později. Oprava: předokno 30 → 0 a přirozené probuzení chce potvrzené vstání, tedy pohyb mimo ložnici. Hned další ráno se ukázal zbytek: rutina naběhla ve 03:00:35 na <strong>doznívající přítomnosti z 02:34</strong>, kterou mmWave čidlo drží. Doplněk proto vyžaduje <strong>čerstvou změnu čidla až po třetí</strong> (povolené stáří roste od 03:00 do 15 minut) a ložnice v seznamu záměrně není. Sandbox 9/9 a 8/8. 15. 10. brána správně zablokovala pokus ve 03:00 na pohyb starý 47 minut a pustila až budík.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20260919-25">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-09-19</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Odchod z bytu se od července potichu neuplatnil</h3>
+            <p>Geofencing telefonu fungoval a časy odchodů seděly na odjezdy auta z kamery. Když ale doma ještě doznívalo čidlo pohybu, router odchod správně zadržel a předal ho resolveru, a to přes <code>runScript()</code>, které <strong>z HomeyScriptu tiše selže</strong>. Resolver zapsal „potvrzeno“, dům ale zůstal v režimu doma. Za týden 9 zadržení, 7 „potvrzení“ a <strong>0 skutečných odchodů</strong>. Režim „pryč“ tak od 7. 7. fungoval jen z tlačítka u dveří a Car Guard mezitím hlásil poplachy s příznakem „uživatel doma“. Oprava vede orchestraci přes flow, stejně jako funkční telefonní odchod, a událost prochází přes <code>idle</code>, aby trigger vystřelil i u zaseknuté hodnoty. Sandbox 12/12. Audit topení o měsíc později potvrdil, že se odložené odchody ze zdroje <code>phone_deferred</code> uplatňují, a 16. 10. dům poprvé naživo prošel cestou „odchod z bytu“.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20260918-26">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-09-18</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>Car Guard: auto se pozná podle SPZ kdekoli, ne podle místa a barvy</h3>
+            <p>Září přineslo sérii falešných poplachů „někdo u auta“, když tam auto nestálo. 1. 9. engine vzal za moje auto <strong>cizí modrou Škodu</strong>, protože SPZ přečtená z dálky se lišila o 3 znaky ze 7 a bonus za barvu ji dotlačil přes práh. 2. 9. se ukázalo, že notifikace se ptaly, <strong>kde jsem já, ale ne, jestli tam je auto</strong>. 16. 9. převzala kotvu cizí Octavia a „přijel Zdeněk“ hlásil každé tmavé auto po setmění, takže rozpoznání hosta je vypnuté. Pak přišlo měření na 1 302 snímcích: čtení SPZ se skóre <strong>≥ 0,80 měla jen moje KIA (237×), cizí auta ani jednou</strong>, a nezávisí na vzdálenosti. Barvou ani vektorem vzhledu z YOLO se KIA od podobných aut odlišit nedá. Nové pravidlo: silná SPZ kdekoli v záběru, bonus za barvu zrušen, zóna jde s autem. V simulaci týdne se hlídaný čas zvedl <strong>ze 42 % na 67 %</strong>, cizí auto nikdy. Bez čitelné SPZ zůstává auto nepoznané.</p>
+          </article>
+
+          <article class="buildlog-entry bl-fix" role="listitem" id="z-20260902-27">
+            <div class="buildlog-meta">
+              <span class="buildlog-date">2026-09-02</span>
+              <span class="buildlog-tag">FIX</span>
+            </div>
+            <h3>„Zase nehrají reproduktory“: samooprava audia nikdy nefungovala</h3>
+            <p>Ve tři ráno tři marné pokusy o rádio, reproduktory přitom online. Pátrání odhalilo tři vady pod sebou. Samooprava posílala <strong>nepřeložený vnitřní název</strong> (<code>radio_bathroom</code> místo <code>play_bathroom_radio</code>), na který žádné cast flow neslyší, takže <strong>od svého vzniku v červenci nikdy nic neopravila</strong>. Zotavení čekalo na přechod offline → online, jenže reproduktor byl online a jen nehrál. A hlídač prázdné koupelny při rozhodnutí o koupelně vypínal zvuk <strong>v celém bytě</strong>: 10× STOP_ALL za dva dny, i uprostřed ranních pokusů. Navazující oprava: <code>sh_audio_playing</code> zůstávala „yes“ i v tichu a meta brain kvůli ní <strong>zabíjel nové požadavky</strong>; zdrojem pravdy je teď zařízení. Chybu v první verzi našel až běh na ostrém systému, sandbox byl zelený. A self-healing každých 30 minut „opravoval“ neexistující zaseknutí TTS: sekundy četl jako milisekundy a do číselné proměnné zapisoval řetězec, takže oprava tiše nic neudělala.</p>
+          </article>
+
           <article class="buildlog-entry bl-feature" role="listitem">
             <div class="buildlog-meta">
               <span class="buildlog-date">2026-09-01</span>

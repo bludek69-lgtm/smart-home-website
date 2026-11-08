@@ -155,6 +155,44 @@
             Pro uživatele to znamená jediné: dashboard se nikdy nezasekne na blank screen,
             ani když Homey má rušnou chvíli. A pokud něco není v pořádku, badge to řekne nahlas.
           </p>
+
+          <!-- [KIOSK_AI_PAGE_20261108] [KIOSK_HNED_20261108] -->
+          <h3 style="margin-top:32px;">Záložka 🧠 AI — nastavení bez počítače (8. 11. 2026)</h3>
+          <p>
+            Dřív se každý vypínač (dovolená, ranní volby, AI vrstvy, automatika místností) přepínal v Config Centru
+            na PC. Teď má panel na zdi vlastní záložku <strong>🧠 AI</strong> se šesti sekcemi a 31 přepínači.
+            Hodnota se po zápisu <strong>čte z Homey zpátky</strong> — „uloženo ✓" se ukáže, až když ji Homey opravdu má.
+            Dovolená, Jdu spát, Odcházím a vypnutí AI dozoru chtějí <strong>druhé ťuknutí</strong>, aby je nespustil omylem ťuknutý panel.
+          </p>
+          <ul style="margin:8px 0 8px 24px;">
+            <li><strong>⚡ Hned</strong> — Jdu spát / Vstávám (stejně jako tlačítko u postele), Jsem doma / Odcházím (když se splete telefon),
+                Ticho na 2 hodiny (požár, únik vody a přehřátí se ohlásí i tak) a roleta jídelny jedním ťuknutím — jen při zavřeném okně.</li>
+            <li><strong>🧠 AI</strong> — režim AI dozoru, AI vrstvy a seznam posledních zásahů dozoru s tlačítkem <strong>↩ Vrátit</strong>.</li>
+            <li><strong>🏠 Režimy · 🌅 Ráno a večer · 🔔 Hlášení · 🚪 Místnosti</strong> — dovolená, návštěva, host, ranní volby, hlášení,
+                spotřebiče a automatika osmi místností.</li>
+          </ul>
+          <p>
+            Co se nevejde na displej, se listuje velkými kulatými tlačítky ▲/▼ s počítadlem stránek — tenký posuvník
+            se na dotykovém panelu prstem netrefí. Budíky na panelu záměrně nejsou, nastavují se v telefonu.
+          </p>
+          <div class="screenshot-grid">
+            <figure class="screenshot-item">
+              <img src="assets/screenshots/2026-11/kiosk-ai-hned.png" alt="Panel — sekce Hned: spánek, doma/pryč, ticho, roleta" loading="lazy" class="zoomable" />
+              <figcaption><strong>⚡ Hned</strong><span>Spánek, doma/pryč, ticho na 2 h a roleta jídelny — živá data.</span></figcaption>
+            </figure>
+            <figure class="screenshot-item">
+              <img src="assets/screenshots/2026-11/kiosk-ai-prepinace.png" alt="Panel — sekce AI: AI dozor a AI vrstvy, listování tlačítky" loading="lazy" class="zoomable" />
+              <figcaption><strong>🧠 AI</strong><span>AI dozor ve třech režimech, AI vrstvy; vpravo listování ▲/▼ (1/2).</span></figcaption>
+            </figure>
+            <figure class="screenshot-item">
+              <img src="assets/screenshots/2026-11/kiosk-ai-rezimy.png" alt="Panel — sekce Režimy: dovolená, návštěva, host, bez ranní rutiny" loading="lazy" class="zoomable" />
+              <figcaption><strong>🏠 Režimy</strong><span>Dovolená, návštěva, host a „zítra bez ranní rutiny".</span></figcaption>
+            </figure>
+            <figure class="screenshot-item">
+              <img src="assets/screenshots/2026-11/kiosk-lista-ai.png" alt="Panel — lišta záložek s novou záložkou AI a sekcí Místnosti" loading="lazy" class="zoomable" />
+              <figcaption><strong>Lišta panelu</strong><span>Nová záložka 🧠 AI vedle Rychlé, Topení, Média, Auto a Krypto; sekce Místnosti.</span></figcaption>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
@@ -287,6 +325,25 @@
             </figcaption>
           </figure>
         </div>
+      </div>
+    </section>
+    
+    <!-- WEB_UPDATE_20261108 -->
+    <section class="section section-alt" id="novinky-podzim-2026">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Deník · září–listopad 2026</p>
+          <h2 class="section-title">Co je tu nového</h2>
+          <p class="section-lead">Změny z posledních týdnů, které se týkají téhle části domu. Podrobnosti v deníku.</p>
+        </header>
+        <ul class="news-list">
+            <li><span class="news-date">8. listopadu</span> — <a href="blog.html#z-20261108-1">Kiosk dostal stránku 🧠 AI a tlačítka „⚡ Hned“ — bez zapínání počítače →</a></li>
+            <li><span class="news-date">8. listopadu</span> — <a href="blog.html#z-20261108-4">Kiosk blikal celou noc: dva hlídači se přetahovali o displej →</a></li>
+            <li><span class="news-date">25. října</span> — <a href="blog.html#z-20261025-12">Bojler na jedno ťuknutí — a vypne ho Homey, ne prohlížeč →</a></li>
+            <li><span class="news-date">20. října</span> — <a href="blog.html#z-20261020-14">Tichý log, který lhal — a tři díry na kioskovém Pi →</a></li>
+            <li><span class="news-date">20. října</span> — <a href="blog.html#z-20261020-18">Panel na zdi v noci zhasne a probudí se dotykem →</a></li>
+            <li><span class="news-date">19. října</span> — <a href="blog.html#z-20261019-19">Config Center 1.8.4–1.9.0: topení se nastavuje z PC i z panelu →</a></li>
+        </ul>
       </div>
     </section>
   </main>

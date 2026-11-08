@@ -207,6 +207,73 @@
       </div>
     </section>
 
+    <!-- [AI_DOZOR_20261108] -->
+    <section id="ai-dozor" class="section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">🧠 Novinka · 8. 11. 2026</p>
+          <h2 class="section-title">AI dozor — systém, který si všimne a zařídí to sám</h2>
+          <p class="section-lead">
+            Guardian vrstva hlídá, jestli systém funguje. AI dozor hlídá, jestli se v bytě děje to,
+            co se dít má. Vznikl po noci, kdy jsem byl vzhůru už ve tři ráno, seděl v tmavé a chladné kuchyni,
+            systém to věděl — a nic neudělal.
+          </p>
+        </header>
+
+        <div class="module-grid">
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE (8. 11.)</span>
+              <code class="module-name">ai_dozor.py</code>
+            </div>
+            <h3>Nejdřív fakta, pak AI</h3>
+            <p>
+              Každých 5 minut se na Home Assistant RPi porovná stav bytu s tím, co by mělo být:
+              <strong>jsi vzhůru, ale dům je v režimu spánku</strong>, <strong>v obsazené místnosti je tma</strong>,
+              <strong>jsi vzhůru a je pod 18,5 °C</strong>. Teprve když nesoulad trvá (3–5 minut — cesta na WC nic nespustí)
+              a nejsi v posteli, dostane situaci Gemini a navrhne, co udělat.
+            </p>
+          </article>
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">tvrdá pravidla</code>
+            </div>
+            <h3>AI navrhuje, pravidla rozhodují</h3>
+            <p>
+              V noci jen jemné světlo, nikdy v posteli, nikdy když nejsem doma, nemluví při spánku, topení jen 15–23 °C
+              a nejvýš na 4 hodiny, max 6 zásahů za hodinu. <strong>Topení:</strong> nejdřív upozorní na mobil a v kuchyni,
+              zapne ho, až když si ho do 10 minut nepustím sám. Co vrátím (zhasnu, zruším topení), to 24 hodin nezopakuje.
+              Hlášení o akci, kterou pravidla zablokovala, se nepošle.
+            </p>
+          </article>
+          <article class="module-card">
+            <div class="module-head">
+              <span class="module-status module-status-live">LIVE</span>
+              <code class="module-name">sh_cfg_ai_dozor_mode</code>
+            </div>
+            <h3>Přepínač a „vrátit" na panelu</h3>
+            <p>
+              Tři režimy: <strong>Zasahuje</strong>, <strong>Jen zapisuje</strong> (nic nedělá, jen píše do deníku)
+              a <strong>Vypnuto</strong>. Přepíná se v Config Centru i na panelu na zdi, kde je i seznam
+              posledních zásahů s tlačítkem <strong>↩ Vrátit</strong>. Každý zásah přijde jako zpráva na mobil.
+            </p>
+          </article>
+        </div>
+
+        <div class="screenshot-grid">
+          <figure class="screenshot-item">
+            <img src="assets/screenshots/2026-11/kiosk-ai-prepinace.png" alt="Panel na zdi — stránka AI s přepínačem AI dozoru a AI vrstvami" loading="lazy" class="zoomable" />
+            <figcaption>Panel na zdi: AI dozor (Zasahuje / Jen zapisuje / Vypnuto) a přepínače AI vrstev — živá data</figcaption>
+          </figure>
+          <figure class="screenshot-item">
+            <img src="assets/screenshots/2026-11/config-center-ai-dozor.png" alt="Config Center 1.10.1 — sekce AI Control s přepínačem AI dozor" loading="lazy" class="zoomable" />
+            <figcaption>Config Center 1.10.1 — sekce AI Control s přepínačem a popisem (náhled bez připojení k Homey)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <div class="container">
         <header class="section-header">
@@ -225,6 +292,22 @@
           <p><strong>Lepší dotaz:</strong> Napiš krátký, srozumitelný text pro laiky o tom, proč AI někdy odpovídá špatně, a vysvětli, že kvalita odpovědi závisí na kvalitě zadání.</p>
           <p>Proto lidem vždy říkám: AI není náhrada za přemýšlení. Je to zesilovač přemýšlení. Když jí dáme chaos, vrátí nám chaos. Když jí dáme jasné zadání, může nám výrazně pomoci.</p>
         </article>
+      </div>
+    </section>
+    
+    <!-- WEB_UPDATE_20261108 -->
+    <section class="section section-alt" id="novinky-podzim-2026">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-eyebrow">Deník · září–listopad 2026</p>
+          <h2 class="section-title">Co je tu nového</h2>
+          <p class="section-lead">Změny z posledních týdnů, které se týkají téhle části domu. Podrobnosti v deníku.</p>
+        </header>
+        <ul class="news-list">
+            <li><span class="news-date">8. listopadu</span> — <a href="blog.html#z-20261108-0">AI dozor: dům sám pozná, že nespím a sedím po tmě a v zimě →</a></li>
+            <li><span class="news-date">8. listopadu</span> — <a href="blog.html#z-20261108-1">Kiosk dostal stránku 🧠 AI a tlačítka „⚡ Hned“ — bez zapínání počítače →</a></li>
+            <li><span class="news-date">29. října</span> — <a href="blog.html#z-20261029-6">Domácnost se opraví sama, bez AI — Config Center 1.10.0 →</a></li>
+        </ul>
       </div>
     </section>
   </main>

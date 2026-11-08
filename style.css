@@ -3235,3 +3235,9 @@ img.zoomable:hover { opacity: 0.85; }
 .twin-detail.tz-laundry   { --zone-accent: #f59e0b; --zone-glow: rgba(245,158,11,.3); --zone-bg: rgba(245,158,11,.1); --zone-border: rgba(245,158,11,.3); }
 .twin-detail.tz-office    { --zone-accent: #ec4899; --zone-glow: rgba(236,72,153,.3); --zone-bg: rgba(236,72,153,.1); --zone-border: rgba(236,72,153,.3); }
 .twin-detail.tz-entry     { --zone-accent: #84cc16; --zone-glow: rgba(132,204,22,.3); --zone-bg: rgba(132,204,22,.1); --zone-border: rgba(132,204,22,.3); }
+
+/* [WEB_UPDATE_20261108] Přehled novinek na stránkách (září–listopad 2026) */
+.news-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.news-list li{padding:12px 16px;border-radius:12px;border:1px solid rgba(148,163,184,.22);background:rgba(148,163,184,.06);line-height:1.55}
+.news-list .news-date{font-family:'JetBrains Mono',monospace;font-size:.85em;opacity:.75;white-space:nowrap}
+.news-list a{white-space:normal;font-weight:600}
